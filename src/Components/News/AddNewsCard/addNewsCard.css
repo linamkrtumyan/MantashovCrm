@@ -1,0 +1,27 @@
+.add_newscard_container {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  height: 100px;
+  background: #e7e6e6;
+  /* width: 100%; */
+}
+
+.add_newscard_container:hover {
+  background: #b9b8b8;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+.add_newscard_icon {
+}
+.add_newscard_text {
+}
+.svg-plus {
+  height: 40px;
+  stroke: #343333;
+}

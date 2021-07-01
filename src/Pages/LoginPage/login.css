@@ -1,0 +1,47 @@
+.login_container {
+  display: flex;
+  background: linear-gradient(45deg, #000, #343333);
+}
+.login_container_fragment {
+  width: 50%;
+  height: 100vh;
+  position: relative;
+  /* background-color: #343333; */
+}
+.login_centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login_img {
+  width: 300px;
+  animation-duration: 3s;
+  animation-name: zoom;
+}
+@keyframes zoom {
+  from {
+    width: 500px;
+  }
+
+  to {
+    width: 300px;
+  }
+}
+
+.login_form_conntainer {
+  background-color: #fff;
+  height: 400px;
+  width: 400px;
+  padding: 50px;
+}
+
+.login_title {
+  text-align: center;
+  font-size: 35px;
+  font-weight: 600;
+}
+.login_button {
+  padding: 20px 0px;
+}

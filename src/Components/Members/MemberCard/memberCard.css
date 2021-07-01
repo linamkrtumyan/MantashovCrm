@@ -1,0 +1,44 @@
+.membercard_container {
+  position: relative;
+  background: #e7e6e6;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  margin-left: 0;
+  margin: 0 20px 20px 0;
+  width: 350px;
+}
+.membercard_img_container {
+}
+.membercard_img {
+  width: 120px;
+}
+.membercard_text_container {
+  padding: 0px 20px;
+}
+.membercard_title {
+  font-size: 22px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.membercard_subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  font-style: oblique;
+  text-transform: capitalize;
+}
+.membercard_text {
+}
+.membercard_action_component {
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px;
+}
+.membercard_icon {
+  width: 18px;
+  margin: 5px;
+}

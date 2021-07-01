@@ -1,0 +1,44 @@
+.eventcard_container {
+  background-color: #e7e6e6;
+  width: 250px;
+  height: 300px;
+  margin: 0px 20px 20px 0px;
+  position: relative;
+}
+.evantcard_img_container {
+  /* background-repeat: no-repeat;
+  background-position: center; */
+  /* background-image:url(image.jpg); */
+  /* background-size: cover;
+  width: 250px;
+  height: 150px; */
+  /* width: 250px; */
+  /* height: 150px;
+  width: 250px; */
+}
+.evantcard_img {
+  width: 250px;
+  height: 150px;
+  object-fit: cover;
+}
+.eventcard_text_container {
+  padding: 10px;
+}
+.eventcard_title {
+  font-size: 22px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.eventcard_text {
+  max-height: 50px;
+  overflow: hidden;
+}
+.eventcard_action_container {
+  display: flex;
+  background: #343333;
+  position: absolute;
+  bottom: 0;
+  justify-content: center;
+  width: 100%;
+  padding: 5px;
+}
