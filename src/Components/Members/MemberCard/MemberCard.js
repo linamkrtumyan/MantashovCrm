@@ -1,7 +1,7 @@
 import React from "react";
 import "./memberCard.css";
 
-function MemberCard() {
+function MemberCard({ memberByPage }) {
   return (
     <div className="membercard_container">
       <div className="membercard_img_container">
@@ -13,14 +13,14 @@ function MemberCard() {
       </div>
       <div className="membercard_text_container">
         <div className="membercard_title">
-          <p>Lorem Ipsum</p>
+          <p>
+            {memberByPage.firstName} {memberByPage.lastName}
+          </p>
         </div>
         <div className="membercard_subtitle">
-          <p>Occupation</p>
+          <p>{memberByPage.location}</p>
         </div>
-        <div className="membercard_text">
-          Lorem Ipsum is simply dummy text of the
-        </div>
+        <div className="membercard_text">{memberByPage.birthDate} </div>
       </div>
       <div className="membercard_action_component">
         <div>

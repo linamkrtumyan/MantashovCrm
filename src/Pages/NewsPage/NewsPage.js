@@ -2,6 +2,7 @@ import React from "react";
 import "./newsPage.css";
 import NewsCard from "../../Components/News/NewsCard/NewsCard";
 import AddNewsCard from "../../Components/News/AddNewsCard/AddNewsCard";
+import Pagination from "../../Components/Pagination/Pagination";
 
 function NewsPage() {
   return (
@@ -14,6 +15,7 @@ function NewsPage() {
         <NewsCard />
         <NewsCard />
         <NewsCard />
+        <Pagination/>
       </div>
     </div>
   );

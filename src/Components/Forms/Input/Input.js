@@ -1,11 +1,12 @@
 import React from "react";
 import "./input.css";
 
-function Input({ placeholder = "", type = "text" }) {
+function Input({ placeholder = "", type = "text", defaultValue="", className="" }) {
   return (
-    <div className="input_container">
+    <div className="input_container" >
       <input
-        className="input_component"
+      defaultValue={defaultValue}
+        className={`input_component ${className}` }
         placeholder={placeholder}
         type={type}
         required

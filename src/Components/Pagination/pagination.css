@@ -1,0 +1,45 @@
+.pagination_container{
+    display: flex;
+    justify-content: flex-end;
+}
+.pgn_item {
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #f7f7f7;
+    background-color: #343333;
+    border: none;
+    height: 40px;
+    margin: 2px;
+}
+.pgn_container{
+    display: flex;
+    margin: 10px 0px;
+}
+.pgn_nav{
+    display: flex;
+}
+.link{
+    color: white;
+}
+.pgn_link{
+    margin: 2px;
+    height: 40px;
+    background: #343333;
+    display: flex;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+}
+.pgn_nav_title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 10px 10px 0;
+
+}
+.pgn_input{
+    width: 100px ;
+    height: 40px;
+    margin:  0px 5px;
+}
