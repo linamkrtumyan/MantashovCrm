@@ -39,6 +39,7 @@ body {
   font-size: 100%;
   line-height: 1;
   font-size: 14px;
+  font-family: "Encode Sans SC", sans-serif;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -84,4 +85,14 @@ h6 {
 }
 p {
   margin: 0 !important;
+}
+
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #aaa;
+  margin-right: 0.5em;
+}
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+  content: "";
 }

@@ -1,4 +1,6 @@
 .header_component {
+  position: fixed;
+  z-index: 1;
   background: #343333;
   height: 70px;
   width: 100%;

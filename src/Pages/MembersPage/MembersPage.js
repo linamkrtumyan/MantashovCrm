@@ -12,11 +12,11 @@ function MembersPage({
   membersByPage,
   loading,
   noMembers,
+  count,
+  currentPage,
 }) {
-  const [currentPage, setCurrentPage] = useState(0);
-
   useEffect(() => {
-    fetchMembersByPage(currentPage);
+    fetchMembersByPage();
   }, [currentPage]);
   if (loading) {
     return <Loading />;
@@ -42,25 +42,27 @@ function MembersPage({
             <MemberCard key={memberByPage.id} memberByPage={memberByPage} />
           ))}
         </div>
-        <Pagination />
+
+        <Pagination totalPosts={count} />
       </div>
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     membersByPage: state.membersReducer.membersByPage,
     loading: state.membersReducer.loading,
     noMembers: state.membersReducer.membersByPage.length === 0,
+    count: state.membersReducer.count,
+    currentPage: state.paginationReducer.currentPage,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchMembersByPage: (currentPage) =>
-      dispatch(fetchMembersByPage(currentPage)),
+    fetchMembersByPage: () => dispatch(fetchMembersByPage()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MembersPage);

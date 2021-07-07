@@ -6,24 +6,34 @@ import NewsPage from "./Pages/NewsPage/NewsPage";
 import Header from "../src/Components/Header/Header";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import MembersPage from "./Pages/MembersPage/MembersPage";
+import AddMember from "./Pages/AddMemberPage/AddMember";
+import Footer from "./Components/Footer/Footer";
+import EditMember from "./Pages/EditMemberPage/EditMember";
+import AddNews from "./Pages/AddNewsPage/AddNews";
+import NewsDetails from "./Pages/NewsDetailsPage/NewsDetails";
 
 function Routes({ isLogin }) {
-  console.log(isLogin, "islogin");
+  // console.log(isLogin, "islogin");
   if (isLogin) {
     return (
       <>
         <Header />
         <Sidebar />
 
-        <div style={{ marginLeft: "100px" }}>
+        <div style={{ marginLeft: "100px", paddingTop: "100px" }}>
           <Switch>
             <Route path="/news" component={NewsPage} exact />
             <Route path="/events" component={EventsPage} exact />
             <Route path="/members" component={MembersPage} exact />
+            <Route path="/add-member" component={AddMember} exact />
+            <Route path="/edit-member" component={EditMember} exact />
+            <Route path="/add-news" component={AddNews} exact />
+            <Route path="/news-details/:id" component={NewsDetails} exact />
 
             <Redirect to="/news" />
           </Switch>
         </div>
+        {/* <Footer /> */}
       </>
     );
   } else {

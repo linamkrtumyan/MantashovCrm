@@ -1,10 +1,10 @@
 import React from "react";
 import "./button.css";
 
-function Button({ title = "" }) {
+function Button({ title = "", className = "" }) {
   return (
     <div className="button_container">
-      <button className="button">{title}</button>
+      <button className={`button ${className} `}>{title}</button>
     </div>
   );
 }

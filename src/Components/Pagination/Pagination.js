@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Input from "../../Components/Forms/Input/Input"
-import "./pagination.css"
+import Input from "../../Components/Forms/Input/Input";
+import "./pagination.css";
+import { connect } from "react-redux";
+import { changeCurrentPage } from "../../store";
 
 // const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
-    const Pagination = () => {
-        const postsPerPage = 10
-        const totalPosts =50
-        const [currentPage,setCurrentPage] = useState(1)
+const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
+  // console.log(totalPosts, "totalPosts");
+  const postsPerPage = 10;
+  // const totalPosts =50
+  // const [currentPage, setCurrentPage] = useState(1);
 
-        const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const pageNumbers = [];
 
@@ -25,63 +27,45 @@ import "./pagination.css"
         <div className="pagination_container">
           <div className="pgn_nav">
             <div className="pgn_nav_title"></div>
-            <Input type="number" defaultValue={currentPage} className="pgn_input"/>
-
-            {/* <input
-              type="number"
-              onWheel={() => document.activeElement.blur()}
-              defaultValue={currentPage}
-              max={pageNumbers[pageNumbers.length - 1]}
-              min="1"
-              onChange={(e) => {
-                const page =
-                  e.target.value <= pageNumbers[pageNumbers.length - 1] &&
-                  e.target.value > 0
-                    ? Number(e.target.value)
-                    : 1;
-
-                paginate(page);
-              }}
-              style={{ width: "100px" }}
-            /> */}
           </div>
           <div className="pgn_container">
             <button
               className="pgn_item"
-              onClick={() => paginate(1)}
+              onClick={() => changeCurrentPage(1)}
               disabled={currentPage - 1 <= 0}
             >
               {"<<"}
             </button>
             <button
               className="pgn_item"
-              onClick={() => paginate(currentPage - 1)}
+              onClick={() => changeCurrentPage(currentPage - 1)}
               disabled={currentPage - 1 <= 0}
             >
               {"<"}
             </button>
             <div className="pgn_link">
-            <Link
-              style={{ pointerEvents: "none" }}
-              className="link"
-              disabled={true}
-              to=""
-            >
-              {currentPage} / {pageNumbers[pageNumbers.length - 1]}
-            </Link>
+              <Link
+                style={{ pointerEvents: "none" }}
+                className="link"
+                disabled={true}
+                to=""
+              >
+                {currentPage} / {pageNumbers[pageNumbers.length - 1]}
+              </Link>
             </div>
-           
 
             <button
               className="pgn_item"
-              onClick={() => paginate(currentPage + 1)}
+              onClick={() => changeCurrentPage(currentPage + 1)}
               disabled={currentPage >= pageNumbers[pageNumbers.length - 1]}
             >
               {">"}
             </button>
             <button
               className="pgn_item"
-              onClick={() => paginate(pageNumbers[pageNumbers.length - 1])}
+              onClick={() =>
+                changeCurrentPage(pageNumbers[pageNumbers.length - 1])
+              }
               disabled={currentPage >= pageNumbers[pageNumbers.length - 1]}
             >
               {">>"}
@@ -93,4 +77,17 @@ import "./pagination.css"
   );
 };
 
-export default Pagination;
+const mapStateToProps = (state) => {
+  // console.log(state, "pagination state");
+  return {
+    currentPage: state.paginationReducer.currentPage,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeCurrentPage: (currentPage) =>
+      dispatch(changeCurrentPage(currentPage)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Pagination);

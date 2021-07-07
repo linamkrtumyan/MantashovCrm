@@ -4,7 +4,7 @@
   height: 200px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   padding: 0 20px;
   animation-name: slidein;
   margin-left: 0;
@@ -24,6 +24,8 @@
 .newscard_img_container {
 }
 .newscard_img {
+  /* height: 200px; */
+  object-fit: cover;
   width: 200px;
 }
 .newscard_text_container {

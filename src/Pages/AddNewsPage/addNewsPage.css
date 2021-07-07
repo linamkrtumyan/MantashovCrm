@@ -1,0 +1,36 @@
+.add_member_container {
+  /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-40%, -60%);
+}
+.add_member_component {
+  margin: 0 auto;
+}
+
+.arrow_left {
+  display: inline;
+  margin-left: 30px;
+  background: transparent;
+}
+.add_member_title {
+  text-align: center;
+  font-size: 22px;
+}
+
+.action_container {
+  display: flex;
+  justify-content: space-between;
+}
+.action_btn {
+  width: 130px;
+  font-size: 16px;
+  font-weight: 400;
+}
+.cancel_btn {
+  background: rgba(0, 0, 0, 0.44) !important;
+}

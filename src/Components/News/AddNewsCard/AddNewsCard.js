@@ -1,9 +1,14 @@
 import React from "react";
 import "./addNewsCard.css";
+import { useHistory } from "react-router-dom";
 
 function AddNewsCard() {
+  let history = useHistory();
+  function handleClick() {
+    history.push("/add-news");
+  }
   return (
-    <div className="add_newscard_container">
+    <div className="add_newscard_container" onClick={handleClick}>
       <div className="add_newscard_icon">
         <svg fill="#343333" className="svg-plus" viewBox="0 0 100 100">
           <line x1="32.5" y1="50" x2="67.5" y2="50" strokeWidth="5"></line>

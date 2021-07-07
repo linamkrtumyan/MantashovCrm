@@ -1,20 +1,25 @@
 import request from "../../request";
+import store from "../../../store";
 import {
   FETCH_MEMBERS_BY_PAGE_REQUEST,
   FETCH_MEMBERS_BY_PAGE_SUCCESS,
   FETCH_MEMBERS_BY_PAGE_FAILURE,
 } from "../types";
 
-export const fetchMembersByPage = (page) => {
+export const fetchMembersByPage = () => {
+  const page = store.getState().paginationReducer.currentPage - 1;
+  // console.log(page, "uxarkvox page");
+
   return (dispatch) => {
     dispatch(fetchMembersByPageRequest());
-    request(`/api/members/${page}`)
+    request(`/admin/members/${page}`)
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(fetchMembersByPageSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchMembersByPageFailure(e.message));
+        console.log(e);
       });
   };
 };

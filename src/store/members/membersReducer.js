@@ -2,12 +2,15 @@ import {
   FETCH_MEMBERS_BY_PAGE_REQUEST,
   FETCH_MEMBERS_BY_PAGE_SUCCESS,
   FETCH_MEMBERS_BY_PAGE_FAILURE,
+  CHANGE_CURRENT_PAGE,
 } from "./types";
 
 const initialState = {
   loading: false,
   membersByPage: [],
   error: null,
+  count: 0,
+  currentPage: 1,
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,7 +25,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
 
-        membersByPage: action.payload.membersByPage,
+        membersByPage: action.payload.membersByPage.members,
+        count: action.payload.membersByPage.count,
         // membersByPage: [],
 
         error: null,
