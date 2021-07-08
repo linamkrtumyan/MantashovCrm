@@ -6,7 +6,7 @@ export const onLoginFunction = (login) => {
 
   return (dispatch) => {
     dispatch(onLoginRequest());
-    request("/admin/login", "POST", login)
+    request("/admin/auth/login", "POST", login)
       .then((data) => {
         if (data.success) {
           console.log(data, "login data");

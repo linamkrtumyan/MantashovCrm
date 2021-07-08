@@ -6,13 +6,15 @@ import {
   FETCH_NEWS_DETAILS_FAILURE,
 } from "../types";
 
-export const fetchNewsDetails = () => {
+export const fetchNewsDetails = (id) => {
   //   const page = store.getState().paginationReducer.currentPage - 1;
   //   console.log(page, "uxarkvox page");
   //   ${id}
+
+  // console.log(id, "/////////////id");
   return (dispatch) => {
     dispatch(fetchNewsDetailsRequest());
-    request(`/admin/news/details/1`)
+    request(`/admin/news/details/${id}`)
       .then((data) => {
         // console.log(data, "**************");
         dispatch(fetchNewsDetailsSuccess(data));

@@ -3,6 +3,7 @@ import newsReducer from "./news/newsReducer";
 import paginationReducer from "./pagination/paginationReducer";
 import formReducer from "./form/formReducer";
 import loginReducer from "./login/loginReducer";
+import imageReducer from "./images/imageReducer";
 
 export const reducers = {
   membersReducer,
@@ -10,4 +11,5 @@ export const reducers = {
   paginationReducer,
   formReducer,
   loginReducer,
+  imageReducer,
 };
