@@ -14,10 +14,11 @@ function NewsPage({
   loading,
   noNews,
   currentPage,
+  action,
 }) {
   useEffect(() => {
     fetchNewsByPage();
-  }, [currentPage]);
+  }, [currentPage, action]);
 
   if (loading) {
     return <Loading />;
@@ -39,7 +40,7 @@ function NewsPage({
       <div className="all_newscard_container">
         <AddNewsCard />
         {newsByPage.map((news) => (
-          <NewsCard key={news.id} news={news} />
+          <NewsCard key={news.id}  news={news} />
         ))}
 
         <Pagination totalPosts={count} />
@@ -55,6 +56,7 @@ const mapStateToProps = (state) => {
     loading: state.newsReducer.loading,
     noNews: state.newsReducer.newsByPage.length === 0,
     currentPage: state.paginationReducer.currentPage,
+    action: state.modalReducer.action,
   };
 };
 

@@ -1,23 +1,45 @@
 import React from "react";
 import "./textarea.css";
+import { formOnChange } from "../../../store";
+import { connect } from "react-redux";
 
 function Textarea({
+  id,
   placeholder = "",
   type = "text",
   defaultValue = "",
   className = "",
+  value = "",
+  formOnChange,
 }) {
+  const handleOnChange = (e) => {
+    formOnChange(id, e.target.value);
+  };
   return (
     <div className="textarea_container">
       <textarea
-        defaultValue={defaultValue}
+        onChange={handleOnChange}
+        // defaultValue={defaultValue}
         className={`textarea_component ${className}`}
         placeholder={placeholder}
         type={type}
+        value={value}
         required
       />
     </div>
   );
 }
+const mapStateToProps = (state, ownProps) => {
+  // console.log(state, "state");
+  // console.log(ownProps, "ownProps");
+  return {
+    value: state.formReducer[ownProps.id],
+  };
+};
 
-export default Textarea;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Textarea);

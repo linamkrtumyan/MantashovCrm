@@ -18,7 +18,7 @@ export const fetchNewsByPage = () => {
       })
       .catch((e) => {
         dispatch(fetchNewsByPageFailure(e.message));
-        console.log(e);
+        // console.log(e);
       });
   };
 };

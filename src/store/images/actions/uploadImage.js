@@ -1,4 +1,3 @@
-import request from "../../request";
 import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
@@ -6,33 +5,30 @@ import {
 } from "../types";
 
 export const uploadImage = (img) => {
-  console.log(img, "stacoxy");
+  // console.log("mtav");
+  // console.log(img, "stacoxy");
   const data = new FormData();
-  //   const fileField = document.querySelector('input[type="file"]');
 
-  data.append("image", img, img.name);
-  // data.append()
+  for (let i = 0; i < img.length; i++) {
+    data.append(`image${i}`, img[i], img[i].name);
+  }
 
-  console.log(data, "uxarkvoxy");
+  // console.log(data, "uxarkvoxy");
 
   return (dispatch) => {
     dispatch(uploadImageRequest());
 
     fetch("/api/image", { method: "POST", body: data })
       .then((res) => {
-        // console.log(res.json());
-
-        // console.log(res, "res");
-        return res.text();
-        // )
+        return res.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         dispatch(uploadImageSuccess(data));
       })
       .catch((e) => {
         dispatch(uploadImageFailure(e.message));
-        console.log(e);
+        // console.log(e);
       });
   };
 };
@@ -44,8 +40,8 @@ const uploadImageRequest = () => {
 };
 
 const uploadImageSuccess = (data) => {
-  //   console.log(data, "res json");
   const image = data ? data : [];
+  // console.log(typeof image);
   return {
     type: UPLOAD_IMAGE_SUCCESS,
     payload: {

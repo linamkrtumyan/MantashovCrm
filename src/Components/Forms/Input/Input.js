@@ -13,6 +13,7 @@ function Input({
   value = "",
   formOnChange,
 }) {
+  // console.log(value, "value");
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
   };

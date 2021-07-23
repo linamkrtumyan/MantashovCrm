@@ -26,7 +26,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.login.token,
-
         loading: false,
         login: true,
         error: null,

@@ -24,7 +24,7 @@
 .newscard_img_container {
 }
 .newscard_img {
-  /* height: 200px; */
+  height: 160px;
   object-fit: cover;
   width: 200px;
 }
@@ -48,4 +48,14 @@
 .newscard_icon {
   width: 20px;
   margin: 5px;
+}
+
+.newscard_icon_container:hover {
+  cursor: pointer;
+  background: #b9b8b8;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
 }

@@ -46,7 +46,7 @@ function Login({ onLoginFunction }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "login state ");
+  // console.log(state, "login state ");
   return {};
 };
 

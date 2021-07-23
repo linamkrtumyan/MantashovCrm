@@ -4,6 +4,7 @@ import paginationReducer from "./pagination/paginationReducer";
 import formReducer from "./form/formReducer";
 import loginReducer from "./login/loginReducer";
 import imageReducer from "./images/imageReducer";
+import modalReducer from "./modal/modalReducer";
 
 export const reducers = {
   membersReducer,
@@ -12,4 +13,5 @@ export const reducers = {
   formReducer,
   loginReducer,
   imageReducer,
+  modalReducer,
 };

@@ -19,7 +19,7 @@ export const fetchMembersByPage = () => {
       })
       .catch((e) => {
         dispatch(fetchMembersByPageFailure(e.message));
-        console.log(e);
+        // console.log(e);
       });
   };
 };

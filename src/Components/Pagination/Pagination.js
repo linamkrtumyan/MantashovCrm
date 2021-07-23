@@ -34,14 +34,14 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
               onClick={() => changeCurrentPage(1)}
               disabled={currentPage - 1 <= 0}
             >
-              {"<<"}
+              ❮❮
             </button>
             <button
               className="pgn_item"
               onClick={() => changeCurrentPage(currentPage - 1)}
               disabled={currentPage - 1 <= 0}
             >
-              {"<"}
+              ❮
             </button>
             <div className="pgn_link">
               <Link
@@ -59,7 +59,7 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
               onClick={() => changeCurrentPage(currentPage + 1)}
               disabled={currentPage >= pageNumbers[pageNumbers.length - 1]}
             >
-              {">"}
+              ❯
             </button>
             <button
               className="pgn_item"
@@ -68,7 +68,7 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
               }
               disabled={currentPage >= pageNumbers[pageNumbers.length - 1]}
             >
-              {">>"}
+              ❯❯
             </button>
           </div>
         </div>

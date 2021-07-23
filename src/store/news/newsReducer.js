@@ -8,6 +8,11 @@ import {
   ADD_NEWS_REQUEST,
   ADD_NEWS_SUCCESS,
   ADD_NEWS_FAILURE,
+  DELETE_NEWS_REQUEST,
+  DELETE_NEWS_SUCCESS,
+  DELETE_NEWS_FAILURE,
+  TRANSFER_NEWS_DELETE,
+  DELETE_NEWS_IMAGE_FROM_STORE,
 } from "./types";
 
 const initialState = {
@@ -17,6 +22,9 @@ const initialState = {
   count: 0,
   currentPage: 1,
   newsDetails: [],
+  success: null,
+  news: {},
+  detailsImages: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -57,6 +65,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         newsDetails: action.payload.newsDetails,
+        detailsImages: action.payload.newsDetails.images,
         error: null,
       };
     case FETCH_NEWS_DETAILS_FAILURE:
@@ -83,6 +92,40 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+
+    case DELETE_NEWS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_NEWS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        success: true,
+      };
+    case DELETE_NEWS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+
+    case TRANSFER_NEWS_DELETE:
+      return {
+        ...state,
+        news: action.payload.news,
+      };
+
+    case DELETE_NEWS_IMAGE_FROM_STORE:
+      return {
+        ...state,
+        detailsImages: [
+          ...state.detailsImages.slice(0, action.payload.deleteId),
+          ...state.detailsImages.slice(action.payload.deleteId + 1),
+        ],
       };
 
     default:

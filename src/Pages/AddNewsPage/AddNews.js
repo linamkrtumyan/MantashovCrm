@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import { uploadImage } from "../../store";
 import store from "../../store";
 import { addNews } from "../../store/news/actions/addNews";
+import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 
 function AddNews({ uploadImage, addNews }) {
   const [image, setImage] = useState("");
@@ -15,18 +17,23 @@ function AddNews({ uploadImage, addNews }) {
 
   const onImageChange = (event) => {
     // console.log(event.target.files[0], "event");
-    setImage(event.target.files[0]);
+    // setImage(event.target.files[0]);
+    uploadImage(event.target.files[0]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let { title, text } = store.getState().formReducer;
-    const images = new Array();
+    // const images = new Array();
+    const image = store.getState().imageReducer.image;
+    const header = store.getState().imageReducer.header[0];
+
     // let {}
     let news = {
       title,
       text,
-      header: image,
+      header,
+      images: image,
     };
     // console.log(news, "***news***");
     addNews(news);
@@ -35,38 +42,18 @@ function AddNews({ uploadImage, addNews }) {
   return (
     <div>
       <button onClick={() => history.goBack()} className="arrow_left">
-        <svg
-          width="60px"
-          height="60px"
-          viewBox="0 0 50 80"
-          //   xml:space="preserve"
-        >
-          <polyline
-            fill="#343333"
-            stroke="#FFFFFF"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            points="
-	45.63,75.8 0.375,38.087 45.63,0.375 "
-          />
-        </svg>
+        ❮
       </button>
       {/* <button onClick={() => history.goBack()}>Go Back</button> */}
-      <form onSubmit={handleSubmit} className="add_member_container">
+      <form onSubmit={handleSubmit} className="add_news_container">
         <div className="add_member_title">Add News</div>
 
         <div className="add_member_component">
+          <OneImageUpload label="Upload Header Image" />
           <Input id="title" type="text" placeholder="Title" />
           <Input id="text" type="text" placeholder="Text" />
-
           {/* <Textarea type="text" placeholder="Text" /> */}
-          <input
-            type="file"
-            id="myfile"
-            name="myfile"
-            onChange={onImageChange}
-          />
+          <ImageUpload label="Upload Images" />
         </div>
 
         <div className="action_container">
@@ -80,7 +67,7 @@ function AddNews({ uploadImage, addNews }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "add news state ");
+  // console.log(state, "add news state ");
   return {};
 };
 

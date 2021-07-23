@@ -13,9 +13,9 @@
 }
 
 .arrow_left {
-  display: inline;
+  /* display: inline;
   margin-left: 30px;
-  background: transparent;
+  background: transparent; */
 }
 .edit_member_title {
   text-align: center;

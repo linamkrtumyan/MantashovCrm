@@ -1,5 +1,5 @@
+import { initForm } from "../../form/actions/initForm";
 import request from "../../request";
-import store from "../../../store";
 import {
   FETCH_NEWS_DETAILS_REQUEST,
   FETCH_NEWS_DETAILS_SUCCESS,
@@ -7,21 +7,16 @@ import {
 } from "../types";
 
 export const fetchNewsDetails = (id) => {
-  //   const page = store.getState().paginationReducer.currentPage - 1;
-  //   console.log(page, "uxarkvox page");
-  //   ${id}
-
-  // console.log(id, "/////////////id");
   return (dispatch) => {
     dispatch(fetchNewsDetailsRequest());
     request(`/admin/news/details/${id}`)
       .then((data) => {
-        // console.log(data, "**************");
+        dispatch(initForm(data));
         dispatch(fetchNewsDetailsSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchNewsDetailsFailure(e.message));
-        console.log(e);
+        // console.log(e);
       });
   };
 };

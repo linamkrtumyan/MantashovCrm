@@ -11,6 +11,7 @@ import Footer from "./Components/Footer/Footer";
 import EditMember from "./Pages/EditMemberPage/EditMember";
 import AddNews from "./Pages/AddNewsPage/AddNews";
 import NewsDetails from "./Pages/NewsDetailsPage/NewsDetails";
+import EditNews from "./Pages/EditNewsPage/EditNews";
 
 function Routes({ isLogin }) {
   // console.log(isLogin, "islogin");
@@ -29,6 +30,7 @@ function Routes({ isLogin }) {
             <Route path="/edit-member" component={EditMember} exact />
             <Route path="/add-news" component={AddNews} exact />
             <Route path="/news-details/:id" component={NewsDetails} exact />
+            <Route path="/edit-news/:id" component={EditNews} exact />
 
             <Redirect to="/news" />
           </Switch>
