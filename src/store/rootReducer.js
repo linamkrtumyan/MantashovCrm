@@ -5,6 +5,8 @@ import formReducer from "./form/formReducer";
 import loginReducer from "./login/loginReducer";
 import imageReducer from "./images/imageReducer";
 import modalReducer from "./modal/modalReducer";
+import eventReducer from "./event/eventReducer";
+import locationsReducer from "./locations/locationsReducer";
 
 export const reducers = {
   membersReducer,
@@ -14,4 +16,6 @@ export const reducers = {
   loginReducer,
   imageReducer,
   modalReducer,
+  eventReducer,
+  locationsReducer,
 };

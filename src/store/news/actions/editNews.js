@@ -1,7 +1,8 @@
 import request from "../../request";
 import { NEWS_EDIT_REQUEST, NEWS_EDIT_SUCCESS_FAILURE } from "../types";
+import { toast } from "react-toastify";
 
-export const editNews = (news) => {
+export const editNews = (news, changePath) => {
   // console.log(news, "edit news send");
   return (dispatch) => {
     dispatch({
@@ -14,16 +15,20 @@ export const editNews = (news) => {
           dispatch({
             type: NEWS_EDIT_SUCCESS_FAILURE,
           });
+          changePath();
+          toast.dark("News removed");
         } else {
           dispatch({
             type: NEWS_EDIT_SUCCESS_FAILURE,
           });
+          toast.error("Something bad happened");
         }
       })
       .catch((e) => {
         dispatch({
           type: NEWS_EDIT_SUCCESS_FAILURE,
         });
+        toast.error("Something bad happened");
       });
   };
 };

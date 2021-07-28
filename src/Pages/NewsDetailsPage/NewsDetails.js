@@ -38,9 +38,9 @@ function NewsDetails({ fetchNewsDetails, newsDetails, images }) {
           <div className="details_subtitle_icon">
             <svg viewBox="0 0 48 48" className="time">
               <g
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1"
                 fill="transparent"
                 stroke="#343333"
                 transform="translate(1 1)"

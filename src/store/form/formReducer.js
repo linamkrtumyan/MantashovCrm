@@ -1,4 +1,9 @@
-import { FORM_ON_CHANGE, INIT_FORM } from "./types";
+import {
+  FORM_ON_CHANGE,
+  INIT_FORM,
+  FORM_ON_CHANGE_ARRAY,
+  CLEAN_FROM,
+} from "./types";
 
 const initialState = {};
 
@@ -14,7 +19,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...action.payload.form,
       };
-
+    case FORM_ON_CHANGE_ARRAY:
+      return {
+        ...state,
+        [action.payload.firstKey]: {
+          ...state[action.payload.firstKey],
+          [action.payload.secondKey]: action.payload.value,
+        },
+      };
+    case CLEAN_FROM:
+      return {};
     default:
       return state;
   }

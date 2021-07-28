@@ -1,20 +1,27 @@
 import React from "react";
 import "./memberCard.css";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { deleteMember, transferMemberDelete, openModal } from "../../../store";
+import DeleteMember from "../DeleteMemberModal/DeleteMember";
 
-function MemberCard({ memberByPage }) {
+function MemberCard({ memberByPage, show, openModal, transferMemberDelete }) {
   let history = useHistory();
   function handleClick() {
     history.push("/edit-member");
   }
   // console.log(memberByPage);
+  if (show) {
+    // return <ModalComponent show={show} />;
+    return <DeleteMember show={show} />;
+  }
   return (
     <div className="membercard_container">
       <div className="membercard_img_container">
         <img
           alt=""
           className="membercard_img"
-          src={`/api/image/?page=profile&id=${memberByPage.id}&name=profile_picture.png`}
+          src={`/images/profile/${memberByPage.id}/profile_picture.png`}
           // src={require("../../../img/artashes_only.jpg").default}
         />
       </div>
@@ -38,7 +45,14 @@ function MemberCard({ memberByPage }) {
             src={require("../../../img/edit.svg").default}
           />
         </div>
-        <div className="membercard_icon_container">
+        <div
+          onClick={() => {
+            openModal(!show);
+            transferMemberDelete(memberByPage.id);
+            // pushId();
+          }}
+          className="membercard_icon_container"
+        >
           {" "}
           <img
             alt=""
@@ -51,4 +65,22 @@ function MemberCard({ memberByPage }) {
   );
 }
 
-export default MemberCard;
+const mapStateToProps = (state) => {
+  // console.log(state, "news card state");
+  return {
+    // currentPage: state.paginationReducer.currentPage,
+    show: state.modalReducer.show,
+    action: state.modalReducer.action,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // changeCurrentPage: (currentPage) =>
+    //   dispatch(changeCurrentPage(currentPage)),
+    openModal: (show) => dispatch(openModal(show)),
+    deleteMember: (id) => dispatch(deleteMember(id)),
+    transferMemberDelete: (id) => dispatch(transferMemberDelete(id)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(MemberCard);

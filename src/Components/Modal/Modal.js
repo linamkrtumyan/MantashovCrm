@@ -28,25 +28,6 @@ function ModalComponent({
           <div className="modal_title">Discard this item?</div>
           <div className="modal_subtitle">It will be gone forever</div>
 
-          {/* <Button
-            variant="secondary"
-            onClick={() => {
-              closeModal(!show);
-              // handleDelete();
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              closeModal(!show);
-              callAction(!action);
-              handleDelete(id);
-            }}
-          >
-            Yes
-          </Button> */}
           <div className="modal_action_container">
             <div
               // style={{ width: "100px" }}

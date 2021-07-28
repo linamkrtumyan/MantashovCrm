@@ -12,12 +12,19 @@ import EditMember from "./Pages/EditMemberPage/EditMember";
 import AddNews from "./Pages/AddNewsPage/AddNews";
 import NewsDetails from "./Pages/NewsDetailsPage/NewsDetails";
 import EditNews from "./Pages/EditNewsPage/EditNews";
+import PastEvents from "./Pages/PastEventsPage/PastEvents";
+import UpcomingEvents from "./Pages/UpcomingEventsPage/UpcomingEvents";
+import AddEvent from "./Pages/AddEventPage/AddEvent";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Routes({ isLogin }) {
   // console.log(isLogin, "islogin");
   if (isLogin) {
     return (
       <>
+        <ToastContainer style={{ zIndex: 10000000000 }} autoClose={4000} />
+
         <Header />
         <Sidebar />
 
@@ -25,6 +32,10 @@ function Routes({ isLogin }) {
           <Switch>
             <Route path="/news" component={NewsPage} exact />
             <Route path="/events" component={EventsPage} exact />
+            <Route path="/add-event" component={AddEvent} exact />
+            <Route path="/past-events" component={PastEvents} exact />
+            <Route path="/upcoming-events" component={UpcomingEvents} exact />
+            <Route path="/past-events" component={PastEvents} exact />
             <Route path="/members" component={MembersPage} exact />
             <Route path="/add-member" component={AddMember} exact />
             <Route path="/edit-member" component={EditMember} exact />

@@ -18,7 +18,7 @@ export const uploadImage = (img) => {
   return (dispatch) => {
     dispatch(uploadImageRequest());
 
-    fetch("/api/image", { method: "POST", body: data })
+    fetch("/admin/image", { method: "POST", body: data })
       .then((res) => {
         return res.json();
       })

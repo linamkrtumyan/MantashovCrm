@@ -40,7 +40,7 @@ function NewsPage({
       <div className="all_newscard_container">
         <AddNewsCard />
         {newsByPage.map((news) => (
-          <NewsCard key={news.id}  news={news} />
+          <NewsCard key={news.id} news={news} />
         ))}
 
         <Pagination totalPosts={count} />
@@ -49,7 +49,7 @@ function NewsPage({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
+  console.log(state, "state");
   return {
     newsByPage: state.newsReducer.newsByPage,
     count: state.newsReducer.count,

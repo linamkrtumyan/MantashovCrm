@@ -4,6 +4,7 @@ import {
   DELETE_NEWS_SUCCESS,
   DELETE_NEWS_FAILURE,
 } from "../types";
+import { toast } from "react-toastify";
 
 export const deleteNews = (id) => {
   // console.log(id, "uxarkvoxy");
@@ -13,9 +14,11 @@ export const deleteNews = (id) => {
       .then((data) => {
         // console.log(data, "data");
         dispatch(deleteNewsSuccess(data));
+        toast.dark("News removed");
       })
       .catch((e) => {
         dispatch(deleteNewsFailure(e.message));
+        toast.error("Something bad happened");
         // console.log(e);
       });
   };

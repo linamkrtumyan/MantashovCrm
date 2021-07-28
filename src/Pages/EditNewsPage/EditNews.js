@@ -28,6 +28,7 @@ function EditNews({
 }) {
   // console.log(news, "news");
   const history = useHistory();
+  const path = useHistory();
   let { id } = useParams();
   useEffect(() => {
     fetchNewsDetails(id);
@@ -41,6 +42,10 @@ function EditNews({
     const deleted = store.getState().imageReducer.deletedImages;
     const header = store.getState().imageReducer.header[0];
 
+    const changePath = () => {
+      path.push("/news");
+    };
+
     let news = {
       id,
       title,
@@ -49,8 +54,9 @@ function EditNews({
       addedImages: addedImages,
       deletedImages: deleted,
     };
+
     // console.log(news, "news send");
-    editNews(news);
+    editNews(news, changePath);
     cleanImages();
   };
 
@@ -151,7 +157,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchNewsDetails: (id) => dispatch(fetchNewsDetails(id)),
-    editNews: (news) => dispatch(editNews(news)),
+    editNews: (news, changePath) => dispatch(editNews(news, changePath)),
     cleanImages: () => dispatch(cleanImages()),
     deletedImages: (img) => dispatch(deletedImages(img)),
     deleteNewsImageFromStore: (id) => dispatch(deleteNewsImageFromStore(id)),

@@ -18,7 +18,7 @@ export const uploadOneImage = (img) => {
   return (dispatch) => {
     dispatch(uploadOneImageRequest());
     // console.log("stieq");
-    fetch("/api/image", { method: "POST", body: data })
+    fetch("/admin/image", { method: "POST", body: data })
       .then((res) => {
         // console.log(res, "res");
         return res.json();

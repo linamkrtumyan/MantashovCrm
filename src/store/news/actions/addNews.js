@@ -1,32 +1,25 @@
 import store from "../..";
 import request from "../../request";
 import { ADD_NEWS_REQUEST, ADD_NEWS_SUCCESS, ADD_NEWS_FAILURE } from "../types";
+import { toast } from "react-toastify";
 
-export const addNews = (news) => {
+export const addNews = (news, changePath) => {
   const data = new FormData();
-  // const image = store.getState().imageReducer.image;
-  //   const fileField = document.querySelector('input[type="file"]');
-
-  // !!news.header && data.append("header", news.header, news.header.name);
-  // data.append("title", news.title);
-  // data.append("text", news.text);
-  // data.append("header", image);
-
-  // console.log(news, "uxarkvoxy");
 
   return (dispatch) => {
     dispatch(addNewsRequest());
     request("/admin/news", "POST", news)
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
-          // console.log(data, "news data");
           dispatch(addNewsSuccess(data));
+          toast.dark("News added");
+          changePath();
+        } else {
         }
       })
       .catch((e) => {
         dispatch(addNewsFailure(e.message));
-        // console.log(e);
+        toast.error("Something bad happened");
       });
   };
 };
@@ -42,9 +35,7 @@ const addNewsSuccess = (data) => {
   //   const login = data ? data : [];
   return {
     type: ADD_NEWS_SUCCESS,
-    payload: {
-      //   login,
-    },
+    payload: {},
   };
 };
 

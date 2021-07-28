@@ -14,10 +14,11 @@ function MembersPage({
   noMembers,
   count,
   currentPage,
+  action,
 }) {
   useEffect(() => {
     fetchMembersByPage();
-  }, [currentPage]);
+  }, [currentPage, action]);
   if (loading) {
     return <Loading />;
   }
@@ -50,13 +51,14 @@ function MembersPage({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
+  console.log(state);
   return {
     membersByPage: state.membersReducer.membersByPage,
     loading: state.membersReducer.loading,
     noMembers: state.membersReducer.membersByPage.length === 0,
     count: state.membersReducer.count,
     currentPage: state.paginationReducer.currentPage,
+    action: state.modalReducer.action,
   };
 };
 
