@@ -1,36 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { cleanForm, formOnChange, formOnChangeArray } from "../../../store";
+import { formOnChangeArray } from "../../../store";
 import { connect } from "react-redux";
-import "./addPhone.css";
 
-function AddPhone({ contactType, formOnChange, value, cleanForm }) {
-  // console.log(value, "value");
+function AddEditNumber({
+  set,
+  contactType,
+  formOnChange,
+  value,
+  contacts,
+  index,
+}) {
+  const [inputik, setInputik] = useState(value[index]);
+
   useEffect(() => {
-    formOnChange("contacts", contactType.id, []);
-    // return () => {
-    // cleanForm();
-    // };
-  }, []);
-  const [inputik, setInputik] = useState("");
+    setInputik(value[index]);
+  }, [value]);
+
+  const deleteNumber = (contactType, index) => {
+    let c = contacts[contactType];
+    c.splice(index, 1);
+  };
+
   return (
     <div className="input_container">
       <div style={{ display: "flex" }}>
         <input
+          value={inputik}
           placeholder={`${contactType.name} `}
           className="input_component"
           onChange={(e) => {
             setInputik(e.target.value);
-            // cleanForm();
           }}
         />
 
         <div
           style={{ alignSelf: "center" }}
           onClick={() => {
+            deleteNumber(contactType.id, index);
             formOnChange("contacts", contactType.id, [...value, inputik]);
+            set(false);
           }}
         >
-          <svg viewBox="-5 -11 50 50" className="plus">
+          <svg viewBox="-5 -11 50 50" className="add_number_action_icon">
             <polyline
               points="0.4,15.3 12.4,27.3 39.3,0.4 "
               stroke="#343333"
@@ -42,20 +53,18 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
           </svg>
         </div>
       </div>
-      {value?.map((val) => (
-        <p key={val}>{val}</p>
-      ))}
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(ownProps, "ownProps");
   return {
     value:
       state.formReducer.contacts === undefined
         ? []
         : state.formReducer.contacts[ownProps.contactType.id],
+
+    contacts: state.formReducer.contacts,
   };
 };
 
@@ -63,7 +72,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     formOnChange: (firstKey, secondKey, value) =>
       dispatch(formOnChangeArray(firstKey, secondKey, value)),
-    cleanForm: () => dispatch(cleanForm()),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(AddPhone);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEditNumber);

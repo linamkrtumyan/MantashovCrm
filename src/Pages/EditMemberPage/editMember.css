@@ -1,12 +1,7 @@
 .edit_member_container {
-  /* position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
   position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-40%, -60%);
+  top: 150px;
+  left: 30%;
 }
 .edit_member_title {
   margin: 0 auto;
@@ -33,4 +28,28 @@
 }
 .cancel_btn {
   background: rgba(0, 0, 0, 0.44) !important;
+}
+.add_number,
+.edit_phone,
+.delete_phone,
+.add_number_action_icon {
+  width: 15px;
+  margin: 4px;
+  cursor: pointer;
+}
+.number_actions_container {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  padding: 10px 0 0 10px;
+}
+
+.number_type_container {
+  background-color: #f7f7f7;
+  width: 300px;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
 }

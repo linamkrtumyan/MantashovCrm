@@ -6,12 +6,12 @@ import {
 } from "../types";
 
 export const deleteEvent = (id) => {
-  console.log(id, "uxarkvoxy");
+  // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deleteEventRequest());
     request(`/admin/events/event/${id}`, "DELETE")
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         if (data.success) {
           dispatch(deleteEventSuccess(data));
         }

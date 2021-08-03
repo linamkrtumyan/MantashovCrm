@@ -13,7 +13,7 @@ export const fetchOrganizations = () => {
     dispatch(fetchOrganizationsRequest());
     request("/admin/members/organizations/all")
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(fetchOrganizationsSuccess(data));
       })
       .catch((e) => {

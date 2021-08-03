@@ -13,7 +13,7 @@ export const fetchMemberForm = () => {
     dispatch(fetchMembersFormRequest());
     request("/admin/members/member/form")
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(fetchMembersFormSuccess(data));
       })
       .catch((e) => {

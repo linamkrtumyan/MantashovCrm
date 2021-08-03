@@ -22,6 +22,12 @@ import {
   DELETE_MEMBER_SUCCESS,
   DELETE_MEMBER_FAILURE,
   TRANSFER_MEMBER_DELETE,
+  FETCH_MEMBER_DETAILS_REQUEST,
+  FETCH_MEMBER_DETAILS_SUCCESS,
+  FETCH_MEMBER_DETAILS_FAILURE,
+  FETCH_MEMBER_FOR_EDIT_REQUEST,
+  FETCH_MEMBER_FOR_EDIT_SUCCESS,
+  FETCH_MEMBER_FOR_EDIT_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -34,6 +40,8 @@ const initialState = {
   memberForm: [],
   contactTypes: [],
   member: null,
+  memberDetails: [],
+  memberForEdit: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -176,6 +184,45 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        error: action.payload.error,
+      };
+    case FETCH_MEMBER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_MEMBER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        memberDetails: action.payload.memberDetails,
+      };
+    case FETCH_MEMBER_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        memberDetails: [],
+        error: action.payload.error,
+      };
+
+    case FETCH_MEMBER_FOR_EDIT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_MEMBER_FOR_EDIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        memberForEdit: action.payload.memberForEdit,
+      };
+    case FETCH_MEMBER_FOR_EDIT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        memberForEdit: [],
         error: action.payload.error,
       };
 

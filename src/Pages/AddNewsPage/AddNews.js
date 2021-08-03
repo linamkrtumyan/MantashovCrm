@@ -56,7 +56,7 @@ function AddNews({ addNews }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {};
 };
 

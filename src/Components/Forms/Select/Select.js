@@ -1,38 +1,74 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { formOnChange } from "../../../store";
 import "./select.css";
+import { useOutsideClick } from "../../../Hooks/useOutsideClick";
 
 const Select = ({
   id = "",
   formOnChange,
   placeholder,
   name,
+  value,
   type = "text",
   items = [],
 }) => {
-  const [show, setShow] = useState(false);
-  const [value, setValue] = useState("");
+  const ref = useRef();
+  const ul = useRef();
 
-  const handleSelect = (item) => {
-    console.log(item, "item");
-    console.log(id, "id");
-    formOnChange(id, item.id);
-    setValue(item.name);
+  const [show, setShow] = useState(false);
+  // const [value, setValue] = useState("");
+  const [text, setText] = useState("");
+  // console.log(value, "value");
+  // console.log(items, "items");
+  useEffect(() => {
+    if (items.length > 0) {
+      let item = items.find((i) => i.id === value);
+      // console.log(item);
+
+      // setCurrent(item === undefined ? { id: 0, name: "" } : item);
+      // formOnChange(id, value);
+      setText(item?.name);
+    }
+  }, [items, value]);
+
+  // const handleSelect = (item) => {
+  //   console.log(item, "item");
+  //   console.log(id, "id");
+  //   formOnChange(id, item.id);
+  //   // setValue(item.name);
+  //   setText(item.name);
+  //   setShow(false);
+  // };
+
+  const handleSelect = () => {
     setShow(false);
+    // setText(current.name);
+
+    // handleFormChange(id, current.id);
   };
+
+  const handleClick = (item) => {
+    formOnChange(id, item.id);
+    // setCurrent(item);
+    setText(item.name);
+    setTimeout(() => setShow(false), 0);
+  };
+
+  useOutsideClick(ref, handleSelect);
+
   //   console.log(formOnChange);
   return (
-    <div className="select_container">
+    <div ref={ref} className="select_container">
       <input
         readOnly
         autoComplete="off"
-        //   id={id}
+        id={id}
         className="input_component"
         onFocus={() => {
           setShow(true);
         }}
-        value={value}
+        value={text}
         type={type}
         placeholder={placeholder}
       />
@@ -42,7 +78,7 @@ const Select = ({
             <li
               id={item.id}
               onClick={() => {
-                handleSelect(item);
+                handleClick(item);
               }}
               key={item.id}
             >
@@ -59,7 +95,7 @@ const mapStateToProps = (state, ownProps) => {
   // console.log(state, "state");
   // console.log(ownProps, "ownProps");
   return {
-    // value: state.formReducer[ownProps.id],
+    value: state.formReducer[ownProps.id],
   };
 };
 const mapDispatchToProps = (dispatch) => {

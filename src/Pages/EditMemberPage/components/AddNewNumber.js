@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { cleanForm, formOnChange, formOnChangeArray } from "../../../store";
+import { cleanForm, formOnChangeArray } from "../../../store";
 import { connect } from "react-redux";
-import "./addPhone.css";
 
-function AddPhone({ contactType, formOnChange, value, cleanForm }) {
-  // console.log(value, "value");
-  useEffect(() => {
-    formOnChange("contacts", contactType.id, []);
-    // return () => {
-    // cleanForm();
-    // };
-  }, []);
+function AddNewNumber({ set, contactType, formOnChange, value, cleanForm }) {
   const [inputik, setInputik] = useState("");
   return (
     <div className="input_container">
@@ -20,7 +12,6 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
           className="input_component"
           onChange={(e) => {
             setInputik(e.target.value);
-            // cleanForm();
           }}
         />
 
@@ -28,9 +19,10 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
           style={{ alignSelf: "center" }}
           onClick={() => {
             formOnChange("contacts", contactType.id, [...value, inputik]);
+            set(false);
           }}
         >
-          <svg viewBox="-5 -11 50 50" className="plus">
+          <svg viewBox="-5 -11 50 50" className="add_number_action_icon">
             <polyline
               points="0.4,15.3 12.4,27.3 39.3,0.4 "
               stroke="#343333"
@@ -42,15 +34,11 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
           </svg>
         </div>
       </div>
-      {value?.map((val) => (
-        <p key={val}>{val}</p>
-      ))}
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(ownProps, "ownProps");
   return {
     value:
       state.formReducer.contacts === undefined
@@ -66,4 +54,4 @@ const mapDispatchToProps = (dispatch) => {
     cleanForm: () => dispatch(cleanForm()),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(AddPhone);
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewNumber);

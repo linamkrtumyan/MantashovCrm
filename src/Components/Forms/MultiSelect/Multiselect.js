@@ -6,55 +6,84 @@ import { formOnChange } from "../../../store";
 function Multiselect({
   id,
   name,
-  className = "",
+  className = "form-group col-8",
   items,
   type = "text",
   errorMessage = "This field is required",
-  placeholder = "",
-  formOnChange,
+  placeholder,
   required = true,
   pattern = "[A-Za-z0-9]{2,30}",
-  handleFormChange,
+  formOnChange,
+  checkeds = [],
 }) {
+  // console.log(checkeds, "checkeds");
   const [text, setText] = useState("");
   const [show, setShow] = useState(false);
-  const [selected, setSelected] = useState([]);
+  // const [selected, setSelected] = useState([]);
   const [selectedName, setSelectedName] = useState([]);
   const [result, setResult] = useState([]);
 
   const ref = useRef();
   const ul = useRef();
 
+  // console.log(items, "items");
+
+  useEffect(() => {
+    if (items?.length > 0) {
+      let item = Array.from(items.find((i) => i.id) === checkeds.map((c) => c));
+      // console.log(item);
+
+      setText(item?.map((i) => i.name));
+    }
+  }, []);
+
   const handleSelect = () => {
     setShow(false);
-    // setSelected(...selected);
-    // setText(selected.name);
-    formOnChange(id, selected);
+    formOnChange(id, checkeds);
   };
   useEffect(() => {
     setResult(selectedName.map((a) => a.name));
   }, [selectedName]);
 
+  useEffect(() => {
+    const filtered = items?.filter(
+      (item) => !!checkeds?.some((s) => s === item.id)
+    );
+    setResult(
+      filtered?.map((item) => {
+        return item.name;
+      })
+    );
+  }, []);
+
   const handleClick = (thing) => {
-    if (!selected.some((s) => s.id == thing.id)) {
-      setSelected([
-        ...selected,
-        {
-          id: thing.id,
-        },
-      ]);
+    if (!checkeds.some((s) => s === thing.id)) {
+      // formOnChange(id, [
+      //   ...checkeds,
+      //   {
+      //     id: thing.id,
+      //   },
+      // ]);
+
+      formOnChange(id, [...checkeds, thing.id]);
       setSelectedName([...selectedName, { name: thing.name }]);
     } else {
-      setSelected(selected.filter((s) => thing.id !== s.id));
+      formOnChange(
+        id,
+        checkeds.filter((s) => thing.id !== s)
+      );
       setSelectedName(selectedName.filter((s) => thing.name !== s.name));
     }
   };
 
   useOutsideClick(ref, handleSelect);
   return (
-    <div className="select_container" ref={ref}>
+    <div ref={ref} className="select_container">
+      <label className="input-text-label" htmlFor={id}>
+        {name}
+      </label>
       <input
-        readOnly
+        // onKeyDown={handleKeyDown}
         autoComplete="off"
         id={id}
         className="input_component"
@@ -62,30 +91,32 @@ function Multiselect({
           setShow(true);
         }}
         required={required}
-        // onChange={handleChange}
+        // error er value ={text}
+        // defaultValue={text}
         value={text}
+        // placeholder={result}
         type={type}
         placeholder={placeholder}
-        value={result}
+        // value={result}
       />
       {show && (
         <ul style={{ zIndex: "100000" }} ref={ul} className="select">
-          {items.map((item) => (
+          {items?.map((item) => (
             <li id={item.id} key={item.id}>
-              <div
-                onClick={() => {
-                  handleClick(item);
-                }}
-                className="mb-3 form-check"
-              >
+              <div className="mb-3 form-check">
                 <input
+                  onClick={() => {
+                    handleClick(item);
+                  }}
                   type="checkbox"
                   className="form-check-input"
                   id={item.id}
-                  checked={selected.some((s) => s.id === item.id)}
-                  readOnly
+                  //error er  checked={checkeds?.some((s) => s.id === item.id)}
+                  defaultChecked={checkeds?.some((s) => s === item.id)}
                 />
-                <label htmlFor={item.id}>{item.name}</label>
+                <label className="form-check-label" htmlFor={item.id}>
+                  {item.name}
+                </label>
               </div>
             </li>
           ))}
@@ -95,10 +126,21 @@ function Multiselect({
   );
 }
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    checkeds: state.formReducer[ownProps.id],
+  };
+};
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     handleFormChange: (key, value) => dispatch(handleFormChange(key, value)),
+//   };
+// };
 const mapDispatchToProps = (dispatch) => {
   return {
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Multiselect);
+export default connect(mapStateToProps, mapDispatchToProps)(Multiselect);

@@ -29,7 +29,7 @@ function EventsPage({ fetchUpcomingEvents, upcomingEvents }) {
   );
 }
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     // pastEvents: state.eventReducer.pastEvents,
     upcomingEvents: state.eventReducer.upcomingEvents,

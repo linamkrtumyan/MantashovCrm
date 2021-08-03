@@ -49,7 +49,7 @@ function NewsPage({
   );
 }
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     newsByPage: state.newsReducer.newsByPage,
     count: state.newsReducer.count,

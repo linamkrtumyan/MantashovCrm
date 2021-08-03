@@ -7,9 +7,14 @@ import DeleteMember from "../DeleteMemberModal/DeleteMember";
 
 function MemberCard({ memberByPage, show, openModal, transferMemberDelete }) {
   let history = useHistory();
+  let details = useHistory();
   function handleClick() {
-    history.push("/edit-member");
+    history.push(`/edit-member/${memberByPage.id}`);
   }
+  function handleDetails() {
+    history.push(`/member-details/${memberByPage.id}`);
+  }
+
   // console.log(memberByPage);
   if (show) {
     // return <ModalComponent show={show} />;
@@ -25,7 +30,7 @@ function MemberCard({ memberByPage, show, openModal, transferMemberDelete }) {
           // src={require("../../../img/artashes_only.jpg").default}
         />
       </div>
-      <div className="membercard_text_container">
+      <div onClick={handleDetails} className="membercard_text_container">
         <div className="membercard_title">
           <p>
             {memberByPage.firstName} {memberByPage.lastName}
@@ -36,6 +41,7 @@ function MemberCard({ memberByPage, show, openModal, transferMemberDelete }) {
         </div>
         <div className="membercard_text">{memberByPage.description} </div>
       </div>
+
       <div className="membercard_action_component">
         <div className="membercard_icon_container" onClick={handleClick}>
           {" "}

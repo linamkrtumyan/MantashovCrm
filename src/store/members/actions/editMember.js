@@ -1,32 +1,34 @@
 import request from "../../request";
-import { NEWS_EDIT_REQUEST, NEWS_EDIT_SUCCESS_FAILURE } from "../types";
+import { MEMBER_EDIT_REQUEST, MEMBER_EDIT_SUCCESS_FAILURE } from "../types";
 import { toast } from "react-toastify";
 
-export const editNews = (news, changePath) => {
+export const editMember = (member, changePath) => {
   // console.log(news, "edit news send");
   return (dispatch) => {
     dispatch({
-      type: NEWS_EDIT_REQUEST,
+      type: MEMBER_EDIT_REQUEST,
     });
-    request("/admin/news", "PUT", news)
+    request("/admin/members/member", "PUT", member)
       .then((data) => {
-        // console.log(data, "res edit");
+        console.log(data, "res edit");
         if (data.success) {
           dispatch({
-            type: NEWS_EDIT_SUCCESS_FAILURE,
+            type: MEMBER_EDIT_SUCCESS_FAILURE,
           });
+          console.log("change path");
           changePath();
-          toast.dark("News edited");
+          console.log("toast");
+          toast.dark("Member edited");
         } else {
           dispatch({
-            type: NEWS_EDIT_SUCCESS_FAILURE,
+            type: MEMBER_EDIT_SUCCESS_FAILURE,
           });
           toast.error("Something bad happened");
         }
       })
       .catch((e) => {
         dispatch({
-          type: NEWS_EDIT_SUCCESS_FAILURE,
+          type: MEMBER_EDIT_SUCCESS_FAILURE,
         });
         toast.error("Something bad happened");
       });

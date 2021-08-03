@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 
 export const addMember = (member, changePath) => {
-  console.log(member, "stacav");
+  // console.log(member, "stacav");
   return (dispatch) => {
     dispatch(addMemberRequest());
     request("/admin/members/member", "POST", member)

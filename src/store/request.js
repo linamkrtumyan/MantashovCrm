@@ -4,6 +4,7 @@ export default async function request(
   body = null,
   headers = {}
 ) {
+  // url = "https://mantashov.herokuapp.com" + url;
   if (body) {
     body = JSON.stringify(body);
     headers["Content-Type"] = "application/json";

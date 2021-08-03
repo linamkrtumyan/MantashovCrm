@@ -13,7 +13,7 @@ export const fetchCountries = () => {
     dispatch(fetchCountriesRequest());
     request("/admin/locations/countries")
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(fetchCountriesSuccess(data));
       })
       .catch((e) => {

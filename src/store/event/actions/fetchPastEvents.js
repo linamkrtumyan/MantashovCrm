@@ -14,7 +14,7 @@ export const fetchPastEvents = () => {
     dispatch(fetchPastEventsRequest());
     request(`/admin/events/past/${page}`)
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(fetchPastEventsSuccess(data));
       })
       .catch((e) => {

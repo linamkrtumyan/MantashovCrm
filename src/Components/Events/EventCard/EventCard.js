@@ -17,7 +17,7 @@ function EventCard({
   // console.log(event, "event");
 
   if (show) {
-    console.log("shown true a");
+    // console.log("shown true a");
     // return <ModalComponent show={show} />;
     // return <DeleteEvent show={show} />;
     return <DeleteEvent show={show} />;

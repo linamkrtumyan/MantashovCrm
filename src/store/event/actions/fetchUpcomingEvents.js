@@ -14,7 +14,7 @@ export const fetchUpcomingEvents = () => {
     dispatch(fetchUpcomingEventsRequest());
     request(`/admin/events/upcoming/${page}`)
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(fetchUpcomingEventsSuccess(data));
       })
       .catch((e) => {

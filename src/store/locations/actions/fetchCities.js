@@ -7,15 +7,15 @@ import {
 } from "../types";
 
 export const fetchCities = (state) => {
-  console.log(state);
+  // console.log(state);
   //   const country = store.getState().paginationReducer.currentPage - 1;
   // console.log(page, "uxarkvox page");
   return (dispatch) => {
-    console.log("mtav");
+    // console.log("mtav");
     dispatch(fetchCitiesRequest());
     request(`/admin/locations/cities/${state}`)
       .then((data) => {
-        console.log(data, "state data");
+        // console.log(data, "state data");
         dispatch(fetchCitiesSuccess(data));
       })
       .catch((e) => {

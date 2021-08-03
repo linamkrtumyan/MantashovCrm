@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
 import {
+  cleanForm,
   fetchCities,
   fetchCountries,
   fetchEducations,
@@ -42,6 +43,7 @@ function AddMember({
   addMember,
   fetchContactTypes,
   contactTypes,
+  cleanForm,
 }) {
   const [showPhone, setShowPhone] = useState(false);
   const [showViber, setShowViber] = useState(false);
@@ -62,17 +64,18 @@ function AddMember({
     fetchStates(country);
   }, [country]);
   useEffect(() => {
-    console.log(state, "send state id");
+    // console.log(state, "send state id");
     fetchCities(state);
   }, [state]);
 
   const handleCreate = () => {
-    console.log("handle create");
+    // console.log("handle create");
     let {
       location,
       latitude,
       longitude,
       city,
+      description,
       firstName,
       lastName,
       birthDate,
@@ -88,16 +91,14 @@ function AddMember({
     const values = keys.map((key) => contacts[key]);
     const image = store.getState().imageReducer.header;
 
-    // Valodzya.map((Val,index) => ( t[index].map((o) => ({id:Val, value:o}) )))
     const contacts1 = keys.map((key, index) =>
       values[index].map((o) => ({ id: +key, value: o }))
     );
 
     let result = [];
     contacts1.forEach((contact1) => (result = result.concat(contact1)));
-    console.log(result, "result");
-    console.log(contacts1, "88888888");
-    // const t = Valodzya.map((v) =>  charValodzya[v])
+    // console.log(result, "result");
+    // console.log(contacts1, "88888888");
 
     let member = {
       location,
@@ -106,22 +107,28 @@ function AddMember({
       cityId: city,
       firstName,
       lastName,
-      // image: image[0],
-      image: null,
+      image: image[0],
+      // image: null,
       birthdate: new Date(birthDate),
+      description,
       email,
       password,
-      educationIds: educations?.map((education) => education.id),
-      organizationIds: organizations?.map((organization) => organization.id),
-      statusIds: statuses?.map((status) => status.id),
+      // educationIds: educations?.map((education) => education.id),
+      // organizationIds: organizations?.map((organization) => organization.id),
+      // statusIds: statuses?.map((status) => status.id),
+      educationIds: educations,
+      organizationIds: organizations,
+      statusIds: statuses,
       contacts: result,
     };
 
     const changePath = () => {
       history.push("/members");
     };
-    console.log(member, "uxarkvox member");
+    // console.log(member, "uxarkvox member");
     addMember(member, changePath);
+
+    cleanForm();
   };
 
   return (
@@ -230,6 +237,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchMemberForm: () => dispatch(fetchMemberForm()),
     addMember: (member, changePath) => dispatch(addMember(member, changePath)),
     fetchContactTypes: () => dispatch(fetchContactTypes()),
+    cleanForm: () => dispatch(cleanForm()),
     // addNews: (news) => dispatch(addNews(news)),
   };
 };

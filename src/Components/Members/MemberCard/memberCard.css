@@ -44,6 +44,7 @@
   right: 0;
   top: 0;
   padding: 10px;
+  z-index: 2;
 }
 .membercard_icon_container:hover {
   /* background-color: red; */

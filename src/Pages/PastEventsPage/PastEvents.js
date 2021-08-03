@@ -20,7 +20,7 @@ function PastEvents({ fetchPastEvents, pastEvents }) {
         <div className="events_title">Past Events </div>
         <div className="all_eventscard_container">
           <AddEventCard />
-          {pastEvents.map((pastEvent) => (
+          {pastEvents?.map((pastEvent) => (
             <EventCard key={pastEvent.id} event={pastEvent} />
           ))}
         </div>
@@ -31,7 +31,7 @@ function PastEvents({ fetchPastEvents, pastEvents }) {
 const mapStateToProps = (state) => {
   console.log(state, "state");
   return {
-    pastEvents: state.eventReducer.pastEvents,
+    pastEvents: state.eventReducer.pastEvents.events,
     // newsByPage: state.newsReducer.newsByPage,
     // count: state.newsReducer.count,
     // loading: state.newsReducer.loading,

@@ -6,6 +6,9 @@ export {
   fetchContactTypes,
   deleteMember,
   transferMemberDelete,
+  fetchMemberDetails,
+  fetchMemberForEdit,
+  editMember,
 } from "./members/actions";
 export {
   fetchNewsByPage,
