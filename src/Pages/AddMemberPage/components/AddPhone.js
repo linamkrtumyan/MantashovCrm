@@ -50,7 +50,7 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(ownProps, "ownProps");
+  console.log(ownProps, "ownProps");
   return {
     value:
       state.formReducer.contacts === undefined

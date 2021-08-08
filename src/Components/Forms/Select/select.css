@@ -1,5 +1,6 @@
 .select_container {
-  margin: 10px 0;
+  /* margin: 10px 0; */
+  margin: 10px;
 }
 .select {
   position: absolute;

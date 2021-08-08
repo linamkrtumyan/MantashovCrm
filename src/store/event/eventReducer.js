@@ -22,6 +22,8 @@ const initialState = {
   success: null,
   event: {},
   detailsImages: [],
+
+  addresses: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -36,8 +38,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        pastEvents: action.payload.pastEvents,
-        //   count: action.payload.newsByPage.count,
+        pastEvents: action.payload.pastEvents?.events,
+        pastEventsCount: action.payload.pastEvents.count,
         error: null,
       };
     case FETCH_PAST_EVENTS_FAILURE:
@@ -57,7 +59,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        upcomingEvents: action.payload.upcomingEvents,
+        // upcomingEvents: action.payload.upcomingEvents,
+
+        upcomingEvents: action.payload.upcomingEvents?.events,
+        upcomingEventsCount: action.payload.pastEvents.count,
+
         error: null,
       };
     case FETCH_UPCOMING_EVENTS_FAILURE:

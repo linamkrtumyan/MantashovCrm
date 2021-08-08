@@ -1,5 +1,6 @@
 .input_container {
-  margin: 10px 0px;
+  /* margin: 10px 0px; */
+  margin: 10px;
 }
 .input_component {
   border: none;
@@ -9,4 +10,3 @@
   height: 50px;
   outline: none;
 }
-

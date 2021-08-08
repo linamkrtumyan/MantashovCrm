@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./eventsPage.css";
 import EventCard from "../../Components/Events/EventCard/EventCard";
 import AddEventCard from "../../Components/Events/AddEventCard/AddEventCard";
@@ -18,6 +18,9 @@ function EventsPage({
   action,
   noPastEvents,
 }) {
+  const page = 0;
+  // const [page, setPage] = useState(0);
+  // console.log(page, "eventspage page");
   let history = useHistory();
   function toPastEventsPage() {
     history.push("/past-events");
@@ -27,8 +30,8 @@ function EventsPage({
   }
 
   useEffect(() => {
-    fetchPastEvents();
-    fetchUpcomingEvents();
+    fetchPastEvents(page);
+    fetchUpcomingEvents(page);
   }, []);
   if (loading) {
     return <Loading />;
@@ -50,7 +53,7 @@ function EventsPage({
         </div>
         <div className="all_eventscard_container">
           {/* <AddEventCard /> */}
-          {pastEvents.map((pastEvent) => (
+          {pastEvents?.map((pastEvent) => (
             <EventCard key={pastEvent.id} event={pastEvent} />
           ))}
         </div>
@@ -60,7 +63,7 @@ function EventsPage({
 
         <div className="all_eventscard_container">
           {/* <AddEventCard /> */}
-          {upcomingEvents.map((upcomingEvent) => (
+          {upcomingEvents?.map((upcomingEvent) => (
             <EventCard key={upcomingEvent.id} event={upcomingEvent} />
           ))}
 
@@ -73,7 +76,7 @@ function EventsPage({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
+  console.log(state, "state");
   return {
     pastEvents: state.eventReducer.pastEvents,
     upcomingEvents: state.eventReducer.upcomingEvents,
@@ -95,8 +98,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // fetchNewsByPage: () => dispatch(fetchNewsByPage()),
-    fetchPastEvents: () => dispatch(fetchPastEvents()),
-    fetchUpcomingEvents: () => dispatch(fetchUpcomingEvents()),
+    fetchPastEvents: (page) => dispatch(fetchPastEvents(page)),
+    fetchUpcomingEvents: (page) => dispatch(fetchUpcomingEvents(page)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EventsPage);

@@ -20,9 +20,9 @@ function EventsPage({ fetchUpcomingEvents, upcomingEvents }) {
         <div className="events_title">Upcoming Events </div>
         <div className="all_eventscard_container">
           <AddEventCard />
-          {upcomingEvents.map((upcomingEvent) => (
+          {/* {upcomingEvents.map((upcomingEvent) => (
             <EventCard key={upcomingEvent.id} event={upcomingEvent} />
-          ))}
+          ))} */}
         </div>
       </div>
     </>

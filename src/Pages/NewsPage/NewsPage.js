@@ -28,7 +28,6 @@ function NewsPage({
       <div className="noData">
         <div>
           <div className="nodata_text">No news, you can add a news</div>
-
           <AddNewsCard />
         </div>
       </div>
