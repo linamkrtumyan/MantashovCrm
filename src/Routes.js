@@ -18,6 +18,7 @@ import AddEvent from "./Pages/AddEventPage/AddEvent";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemberDetails from "./Pages/MemberDetailsPage/MemberDetails";
+import EventDetailsPage from "./Pages/EventDeatilsPage/EventDetailsPage";
 
 function Routes({ isLogin }) {
   // console.log(isLogin, "islogin");
@@ -36,7 +37,11 @@ function Routes({ isLogin }) {
             <Route path="/add-event" component={AddEvent} exact />
             <Route path="/past-events" component={PastEvents} exact />
             <Route path="/upcoming-events" component={UpcomingEvents} exact />
-            <Route path="/past-events" component={PastEvents} exact />
+            <Route
+              path="/event-details/:id"
+              component={EventDetailsPage}
+              exact
+            />
             <Route path="/members" component={MembersPage} exact />
             <Route path="/member-details/:id" component={MemberDetails} exact />
             <Route path="/add-member" component={AddMember} exact />

@@ -18,7 +18,6 @@ export const addEvent = (event, changePath) => {
           dispatch(addEventSuccess(data));
           toast.dark("Event added");
           changePath();
-        } else {
         }
       })
       .catch((e) => {

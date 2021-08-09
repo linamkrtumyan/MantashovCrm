@@ -5,10 +5,11 @@ import AddEventCard from "../../Components/Events/AddEventCard/AddEventCard";
 import { connect } from "react-redux";
 import { fetchUpcomingEvents } from "../../store";
 import { useHistory } from "react-router-dom";
+import Pagination from "../../Components/Pagination/Pagination";
 
-function EventsPage({ fetchUpcomingEvents, upcomingEvents }) {
+function EventsPage({ fetchUpcomingEvents, upcomingEvents, count, page }) {
   useEffect(() => {
-    fetchUpcomingEvents();
+    fetchUpcomingEvents(page);
   }, []);
   const history = useHistory();
   return (
@@ -24,6 +25,7 @@ function EventsPage({ fetchUpcomingEvents, upcomingEvents }) {
             <EventCard key={upcomingEvent.id} event={upcomingEvent} />
           ))} */}
         </div>
+        <Pagination totalPosts={count} />
       </div>
     </>
   );
@@ -33,6 +35,8 @@ const mapStateToProps = (state) => {
   return {
     // pastEvents: state.eventReducer.pastEvents,
     upcomingEvents: state.eventReducer.upcomingEvents,
+    count: state.eventReducer.upcomingEventsCount,
+    page: state.paginationReducer.currentPage,
     // newsByPage: state.newsReducer.newsByPage,
     // count: state.newsReducer.count,
     // loading: state.newsReducer.loading,
@@ -46,7 +50,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // fetchNewsByPage: () => dispatch(fetchNewsByPage()),
     // fetchPastEvents: () => dispatch(fetchPastEvents()),
-    fetchUpcomingEvents: () => dispatch(fetchUpcomingEvents()),
+    fetchUpcomingEvents: (page) => dispatch(fetchUpcomingEvents(page)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EventsPage);

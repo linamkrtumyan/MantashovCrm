@@ -9,6 +9,12 @@ import {
   DELETE_EVENT_SUCCESS,
   DELETE_EVENT_FAILURE,
   TRANSFER_EVENT_DELETE,
+  FETCH_EVENT_DETAILS_REQUEST,
+  FETCH_EVENT_DETAILS_SUCCESS,
+  FETCH_EVENT_DETAILS_FAILURE,
+  ADD_EVENT_REQUEST,
+  ADD_EVENT_SUCCESS,
+  ADD_EVENT_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -18,16 +24,15 @@ const initialState = {
   error: null,
   count: 0,
   currentPage: 1,
-
   success: null,
   event: {},
   detailsImages: [],
-
   addresses: [],
+  eventDetails: [],
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action, " action payload");
+  console.log(action, " action payload");
   switch (action.type) {
     case FETCH_PAST_EVENTS_REQUEST:
       return {
@@ -59,11 +64,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        // upcomingEvents: action.payload.upcomingEvents,
-
         upcomingEvents: action.payload.upcomingEvents?.events,
-        upcomingEventsCount: action.payload.pastEvents.count,
-
+        upcomingEventsCount: action.payload.upcomingEvents.count,
         error: null,
       };
     case FETCH_UPCOMING_EVENTS_FAILURE:
@@ -74,23 +76,44 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
       };
 
-    //   case ADD_NEWS_REQUEST:
-    //     return {
-    //       ...state,
-    //       loading: true,
-    //     };
-    //   case ADD_NEWS_SUCCESS:
-    //     return {
-    //       ...state,
-    //       loading: false,
-    //       error: null,
-    //     };
-    //   case ADD_NEWS_FAILURE:
-    //     return {
-    //       ...state,
-    //       loading: false,
-    //       error: action.payload.error,
-    //     };
+    case FETCH_EVENT_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_EVENT_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        eventDetails: action.payload.eventDetails,
+
+        error: null,
+      };
+    case FETCH_EVENT_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        eventDetails: [],
+        error: action.payload.error,
+      };
+
+    case ADD_EVENT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_EVENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case ADD_EVENT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
 
     case DELETE_EVENT_REQUEST:
       return {

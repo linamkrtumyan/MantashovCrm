@@ -15,6 +15,11 @@ function EventCard({
   transferEventDelete,
 }) {
   // console.log(event, "event");
+  let history = useHistory();
+
+  function handleClick() {
+    history.push(`/event-details/${event.id}`);
+  }
 
   if (show) {
     // console.log("shown true a");
@@ -42,7 +47,7 @@ function EventCard({
         /> */}
       </div>
       <div className="eventcard_text_container">
-        <div className="eventcard_title">
+        <div onClick={handleClick} className="eventcard_title">
           <p>{event.eventName}</p>
         </div>
         <div className="eventcard_text">{event.location}</div>

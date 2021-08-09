@@ -20,7 +20,7 @@ import {
 import AddAgendasAddress from "./components/AddAgendasAddress";
 
 function AddEvent({
-  addNews,
+  addEvent,
   fetchCities,
   fetchCountries,
   fetchStates,
@@ -102,7 +102,7 @@ function AddEvent({
       history.push("/events");
     };
     console.log(event, "uxarkvoxy");
-    // addEvent(event, changePath);
+    addEvent(event, changePath);
   };
 
   return (
@@ -172,7 +172,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addEvent: (news) => dispatch(addEvent(news)),
+    addEvent: (news, path) => dispatch(addEvent(news, path)),
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),
