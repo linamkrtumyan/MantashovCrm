@@ -71,13 +71,13 @@ function AddAgendasAddress({
           {addresses.map((address) => (
             <div>
               <div className="added_addresses_container">
-                <div style={{ marginRight: "5px" }} key={address}>
+                <div style={{ marginRight: "5px" }}>
                   <p>{address.location}</p>
                 </div>
-                <div style={{ marginRight: "5px" }} key={address}>
+                <div style={{ marginRight: "5px" }}>
                   <p>{address.latitude}</p>
                 </div>
-                <div key={address}>
+                <div>
                   <p> {address.longitude}</p>
                 </div>
               </div>
@@ -86,11 +86,11 @@ function AddAgendasAddress({
                 {address.agendas?.map((agenda) => (
                   <div className="added_agendas_container">
                     <div className="added_agendas_item">
-                      <svg viewBox="0 0 48 48" class="agendas_time_icon">
+                      <svg viewBox="0 0 48 48" className="agendas_time_icon">
                         <g
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="1"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1"
                           fill="transparent"
                           stroke="#343333"
                           transform="translate(1 1)"
@@ -160,10 +160,12 @@ function AddAgendasAddress({
               value={agendasAddresses?.agendasLocation}
               onChange={(e) => {
                 // setAgendasLocation(e.target.value);
-                formOnChangeArray("agendasAddresses", "location", [
-                  e.target.value,
-                ]);
-                formOnChangeArray("agendasAddresses", "cityId", [cityId]);
+                formOnChangeArray(
+                  "agendasAddresses",
+                  "location",
+                  e.target.value
+                );
+                formOnChangeArray("agendasAddresses", "cityId", cityId);
                 // cleanForm();
               }}
               id="agendasLocation"
@@ -176,9 +178,11 @@ function AddAgendasAddress({
               value={agendasAddresses?.agendasLatitude}
               onChange={(e) => {
                 // setAgendasLatitude(e.target.value);
-                formOnChangeArray("agendasAddresses", "latitude", [
-                  e.target.value,
-                ]);
+                formOnChangeArray(
+                  "agendasAddresses",
+                  "latitude",
+                  e.target.value
+                );
                 // cleanForm();
               }}
               id="agendasLatitude"
@@ -191,9 +195,11 @@ function AddAgendasAddress({
               value={agendasAddresses?.agendasLongitude}
               onChange={(e) => {
                 // setAgendasLongitude(e.target.value);
-                formOnChangeArray("agendasAddresses", "longitude", [
-                  e.target.value,
-                ]);
+                formOnChangeArray(
+                  "agendasAddresses",
+                  "longitude",
+                  e.target.value
+                );
                 // cleanForm();
               }}
               id="agendasLongitude"

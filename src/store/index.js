@@ -24,6 +24,7 @@ export {
   deleteEvent,
   transferEventDelete,
   fetchEventDetailsForEdit,
+  addEvent,
 } from "./event/actions";
 export { fetchCountries, fetchStates, fetchCities } from "./locations/actions";
 export { changeCurrentPage } from "./pagination/actions";

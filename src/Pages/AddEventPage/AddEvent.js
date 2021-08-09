@@ -5,7 +5,7 @@ import Button from "../../Components/Forms/Button/Button";
 import "./addEvent.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import store from "../../store";
+import store, { addEvent } from "../../store";
 import { addNews } from "../../store/news/actions/addNews";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
@@ -71,9 +71,6 @@ function AddEvent({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const image = store.getState().imageReducer.image;
-    const header = store.getState().imageReducer.header[0];
-
     let {
       location,
       latitude,
@@ -85,6 +82,7 @@ function AddEvent({
       endDate,
     } = store.getState().formReducer;
     let { addresses } = store.getState().eventReducer;
+    let { header, image } = store.getState().imageReducer;
 
     let event = {
       location,
@@ -96,13 +94,15 @@ function AddEvent({
       startDate,
       endDate,
       addresses,
+      header: header[0],
+      images: image,
+    };
+
+    const changePath = () => {
+      history.push("/events");
     };
     console.log(event, "uxarkvoxy");
-    // addNews(news);
-  };
-
-  const event = () => {
-    // let agendasAddress =
+    // addEvent(event, changePath);
   };
 
   return (
@@ -172,7 +172,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNews: (news) => dispatch(addNews(news)),
+    addEvent: (news) => dispatch(addEvent(news)),
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),

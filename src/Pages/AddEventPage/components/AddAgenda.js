@@ -27,7 +27,7 @@ function AddAgenda({
 
   useEffect(() => {
     addressesAgenda.map((agenda) => {
-      formOnChangeArray("agendas", agenda.name, []);
+      formOnChangeArray("agendas", agenda.name, "");
     });
   }, []);
 
@@ -40,7 +40,7 @@ function AddAgenda({
             value={agendas?.dateAndTime}
             onChange={(e) => {
               // setDateAndTime(e.target.value);
-              formOnChangeArray("agendas", "dateAndTime", [e.target.value]);
+              formOnChangeArray("agendas", "dateAndTime", e.target.value);
             }}
             id="dateAndTime"
             type="datetime-local"
@@ -54,9 +54,7 @@ function AddAgenda({
             value={agendas?.agendaDescription}
             onChange={(e) => {
               // setAgendaDescription(e.target.value);
-              formOnChangeArray("agendas", "agendaDescription", [
-                e.target.value,
-              ]);
+              formOnChangeArray("agendas", "agendaDescription", e.target.value);
             }}
             id="agendaDescription"
             type="text"
@@ -70,11 +68,11 @@ function AddAgenda({
             setAgendasAdded(true);
             setChange(change + 1);
             setNewAgenda(newAgenda + 1);
-            formOnChangeArray("agendas", "dateAndTime", []);
-            formOnChangeArray("agendas", "agendaDescription", []);
+            formOnChangeArray("agendas", "dateAndTime", "");
+            formOnChangeArray("agendas", "agendaDescription", "");
           }}
         >
-          <svg viewBox="-5 -11 50 50" class="add_item_icon">
+          <svg viewBox="-5 -11 50 50" className="add_item_icon">
             <polyline
               points="0.4,15.3 12.4,27.3 39.3,0.4 "
               stroke="#343333"
