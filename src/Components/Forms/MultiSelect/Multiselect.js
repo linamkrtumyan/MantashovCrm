@@ -78,15 +78,16 @@ function Multiselect({
 
   useOutsideClick(ref, handleSelect);
   return (
-    <div ref={ref} className="select_container">
+    <div ref={ref} className="input_container">
       <label className="input-text-label" htmlFor={id}>
-        {name}
+        {placeholder}
       </label>
       <input
         // onKeyDown={handleKeyDown}
         autoComplete="off"
         id={id}
-        className="input_component"
+        // className="input_component"
+        className="input "
         onFocus={() => {
           setShow(true);
         }}
@@ -96,11 +97,11 @@ function Multiselect({
         value={text}
         // placeholder={result}
         type={type}
-        placeholder={placeholder}
+        // placeholder={placeholder}
         // value={result}
       />
       {show && (
-        <ul style={{ zIndex: "100000" }} ref={ul} className="select">
+        <ul style={{ zIndex: "100000" }} ref={ul} className="select_items">
           {items?.map((item) => (
             <li id={item.id} key={item.id}>
               <div className="mb-3 form-check">

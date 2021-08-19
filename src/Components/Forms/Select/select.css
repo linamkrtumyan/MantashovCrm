@@ -1,8 +1,10 @@
 .select_container {
   /* margin: 10px 0; */
-  margin: 10px;
+  /* margin: 10px; */
+  margin: 0 10px 10px 10px;
+  /* width: 300px; */
 }
-.select {
+.select_items {
   position: absolute;
   background: #fff;
   width: 300px !important;
@@ -12,11 +14,11 @@
   max-height: 150px;
   overflow-y: auto;
 }
-.select li {
+.select_items li {
   height: 40px;
   padding: 10px;
   cursor: pointer;
 }
-.select li:hover {
+.select_items li:hover {
   background: #f7f7f7;
 }

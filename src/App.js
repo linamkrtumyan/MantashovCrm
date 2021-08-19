@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { authorize } from "./store";
 import Loading from "./Components/Loading/Loading";
+import "bulma/css/bulma.css";
+import "./myStyles.scss";
+
 function App({ isLogin, authorize, loading }) {
   useEffect(() => {
     authorize();

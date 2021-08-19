@@ -45,10 +45,7 @@ function AddMember({
   contactTypes,
   cleanForm,
 }) {
-  const [showPhone, setShowPhone] = useState(false);
-  const [showViber, setShowViber] = useState(false);
-  const [showWhatsApp, setShowWhatsApp] = useState(false);
-  const [showSkype, setShowSkype] = useState(false);
+  const [numberDiv, setNumberDiv] = useState(false);
 
   const history = useHistory();
   useEffect(() => {
@@ -133,73 +130,114 @@ function AddMember({
 
   return (
     <div>
-      <button onClick={() => history.goBack()} className="arrow_left">
-        ❮
-      </button>
-      {/* <button onClick={() => history.goBack()}>Go Back</button> */}
       <div className="add_member_container">
-        <div className="add_member_title">Add Member</div>
-
-        <div className="add_member_component">
-          <form autoComplete="off">
-            {/* <div>Add address</div> */}
-            <Select
-              placeholder="Select Country"
-              items={countries}
-              id="country"
-            />
-          </form>
-          <form autoComplete="off">
-            <Select placeholder="Select State" items={states} id="state" />
-          </form>
-
-          <form autoComplete="off">
-            <Select placeholder="Select City" items={cities} id="city" />
-          </form>
-          <Input id="location" type="text" placeholder="Location" />
-          <Input id="latitude" type="text" placeholder="Latitude" />
-          <Input id="longitude" type="text" placeholder="Longitude" />
-
-          <div>
-            <div>Add member</div>
+        <div>
+          <button onClick={() => history.goBack()} className="arrow_left">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div className="add_member_title">
+            <p>Add Member</p>
           </div>
-          <Input id="firstName" type="text" placeholder="First Name" />
-          <Input id="lastName" type="text" placeholder="Last Name" />
-          <OneImageUpload label="Upload Image" />
-          <Textarea id="description" type="text" placeholder="Description" />
-          <Input id="birthDate" type="date" placeholder="Birthdate" />
-          <Input id="email" type="text" placeholder="Email" />
-          <Input id="password" type="text" placeholder="Password" />
-          <form autoComplete="off">
-            <Multiselect
-              placeholder="Select Educations"
-              items={educations}
-              id="educations"
-            />
-          </form>
-          <form autoComplete="off">
-            <Multiselect
-              placeholder="Select Organizations"
-              items={organizations}
-              id="organizations"
-            />
-          </form>
-          <form autoComplete="off">
-            <Multiselect
-              placeholder="Select Statuses"
-              items={statuses}
-              id="statuses"
-            />
-          </form>
-
-          {contactTypes.map((contactType) => (
-            <AddPhone key={contactType.id} contactType={contactType} />
-          ))}
         </div>
 
-        {/* {contactTypes.map((contactType) => (
-          <li key={contactType.id}>{contactType.name}</li>
-        ))} */}
+        <div className="add_member_component">
+          <div className="location_container">
+            <div style={{ margin: "auto 0" }} className="">
+              <OneImageUpload label="Upload Image" />
+              <label class="checkbox my-2 is-flex is-justify-content-center is-align-items-center">
+                <input type="checkbox" />
+                Active
+              </label>
+            </div>
+            <div className="container_body">
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="firstName" type="text" placeholder="First Name" />
+                <Input id="lastName" type="text" placeholder="Last Name" />
+                <Input id="birthDate" type="date" placeholder="Birthdate" />
+              </div>
+
+              <div>
+                <Textarea
+                  id="description"
+                  type="text"
+                  placeholder="Description"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="location_container">
+            <div className="container_title">Location</div>
+            <div className="container_body">
+              <div style={{ display: "flex" }}>
+                <form className="location_item" autoComplete="off">
+                  <Select
+                    placeholder="Select Country"
+                    items={countries}
+                    id="country"
+                  />
+                </form>
+                <form className="location_item" autoComplete="off">
+                  <Select
+                    placeholder="Select State"
+                    items={states}
+                    id="state"
+                  />
+                </form>
+                <form className="location_item" autoComplete="off">
+                  <Select placeholder="Select City" items={cities} id="city" />
+                </form>
+              </div>
+              <div>
+                <form className="location_item" autoComplete="off">
+                  <Input id="location" type="text" placeholder="Address" />
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div className="location_container">
+            <div className="container_title">Occupation</div>
+            <div className="container_body">
+              <div style={{ display: "flex" }}>
+                <div>
+                  <Select
+                    placeholder="Select Field"
+                    // items={countries}
+                    // id="country"
+                  />
+                </div>
+
+                <form className="location_item" autoComplete="off">
+                  <Multiselect
+                    placeholder="Select Organizations"
+                    items={organizations}
+                    id="organizations"
+                  />
+                </form>
+                <div>
+                  <Input id="position" type="text" placeholder="Position" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="location_container">
+            <div className="container_title">Contact</div>
+            <div className="container_body">
+              <div style={{ display: "flex" }}>
+                <div className="" style={{ display: "flex" }}>
+                  {contactTypes.map((contactType) => (
+                    <AddPhone key={contactType.id} contactType={contactType} />
+                  ))}{" "}
+                </div>
+              </div>
+              <div className="">
+                <Input id="email" type="text" placeholder="Email" />
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="action_container">
           <Button title="Cancel" className="action_btn cancel_btn" />

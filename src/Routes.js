@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemberDetails from "./Pages/MemberDetailsPage/MemberDetails";
 import EventDetailsPage from "./Pages/EventDeatilsPage/EventDetailsPage";
+import WithBulma from "./Pages/BulmaExp/WithBulma";
 
 function Routes({ isLogin }) {
   // console.log(isLogin, "islogin");
@@ -30,7 +31,7 @@ function Routes({ isLogin }) {
         <Header />
         <Sidebar />
 
-        <div style={{ marginLeft: "100px", paddingTop: "100px" }}>
+        <div style={{ marginLeft: "200px", paddingTop: "100px" }}>
           <Switch>
             <Route path="/news" component={NewsPage} exact />
             <Route path="/events" component={EventsPage} exact />
@@ -49,6 +50,7 @@ function Routes({ isLogin }) {
             <Route path="/add-news" component={AddNews} exact />
             <Route path="/news-details/:id" component={NewsDetails} exact />
             <Route path="/edit-news/:id" component={EditNews} exact />
+            <Route path="/bulma" component={WithBulma} exact />
 
             <Redirect to="/news" />
           </Switch>

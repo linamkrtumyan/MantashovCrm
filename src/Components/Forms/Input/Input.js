@@ -19,12 +19,13 @@ function Input({
   };
   return (
     <div className="input_container">
+      <label htmlFor={id}>{placeholder}</label>
       <input
         id={id}
         // defaultValue={defaultValue}
         onChange={handleOnChange}
-        className={`input_component ${className}`}
-        placeholder={placeholder}
+        className={`input input_width ${className}`}
+        // placeholder={placeholder}
         type={type}
         value={value}
         // onfocus={}

@@ -13,7 +13,7 @@ function MemberDetails({ fetchMemberDetails, memberDetails, images }) {
   //   console.log(image, "image ");
   // });
   let { id } = useParams();
-  // console.log(id, "////id");
+  console.log(memberDetails, "memberDetails");
   useEffect(() => {
     fetchMemberDetails(id);
   }, []);
@@ -33,6 +33,7 @@ function MemberDetails({ fetchMemberDetails, memberDetails, images }) {
       <div className="details_container">
         <div className="details_title">
           <p>
+            {" "}
             {memberDetails.firstName} {memberDetails.lastName}{" "}
           </p>
         </div>
@@ -73,9 +74,14 @@ function MemberDetails({ fetchMemberDetails, memberDetails, images }) {
             return <p>{education}</p>;
           })}
         </div>
-        <div style={{ display: "flex" }}>
+        <div>
           {memberDetails?.contacts?.map((contact) => {
-            return <p>{contact}</p>;
+            return (
+              <div style={{ display: "flex" }}>
+                <p>{contact.type}</p>
+                {contact.values?.map((value) => value)}
+              </div>
+            );
           })}
         </div>
         <div className="news_details_all_images">
@@ -91,7 +97,7 @@ function MemberDetails({ fetchMemberDetails, memberDetails, images }) {
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
+  console.log(state, "state");
   return {
     // newsByPage: state.newsReducer.newsByPage,
     memberDetails: state.membersReducer.memberDetails,

@@ -1,8 +1,18 @@
 .header_component {
   position: fixed;
-  z-index: 6;
-  background: #343333;
+  z-index: 10;
+  background: #fff;
   height: 70px;
+  display: flex;
   width: 100%;
   /* position: absolute; */
+  justify-content: space-between;
+}
+.header_user_container {
+  background: #5d5c5c;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
 }

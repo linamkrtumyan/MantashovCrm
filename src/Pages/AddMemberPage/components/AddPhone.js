@@ -14,10 +14,11 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
   const [inputik, setInputik] = useState("");
   return (
     <div className="input_container">
+      <label>{contactType.name}</label>
       <div style={{ display: "flex" }}>
         <input
-          placeholder={`${contactType.name} `}
-          className="input_component"
+          // placeholder={`${contactType.name} `}
+          className="input"
           onChange={(e) => {
             setInputik(e.target.value);
             // cleanForm();
@@ -30,16 +31,7 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
             formOnChange("contacts", contactType.id, [...value, inputik]);
           }}
         >
-          <svg viewBox="-5 -11 50 50" className="plus">
-            <polyline
-              points="0.4,15.3 12.4,27.3 39.3,0.4 "
-              stroke="#343333"
-              fill="transparent"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <i class="fas fa-check is-middle m-1"></i>
         </div>
       </div>
       {value?.map((val) => (

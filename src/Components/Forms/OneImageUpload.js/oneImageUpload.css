@@ -1,9 +1,25 @@
 .upload_container {
-  margin: 10px;
+  /* margin: 10px; */
   /* margin: 10px 0; */
-  width: 300px;
+  /* width: 300px; */
 }
 .uploaded_image {
   width: 300px;
   object-fit: cover;
+}
+.upload_img {
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+}
+.p {
+  position: absolute;
+  /* width: 150px; */
+  top: 40%;
+  left: 10%;
+  /* height: 150px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

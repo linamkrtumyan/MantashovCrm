@@ -4,7 +4,7 @@ import "./button.css";
 function Button({ title = "", className = "" }) {
   return (
     <div className="button_container">
-      <button className={`button ${className} `}>{title}</button>
+      <button className={`button  is-primary ${className} `}>{title}</button>
     </div>
   );
 }

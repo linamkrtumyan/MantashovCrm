@@ -17,11 +17,14 @@ function Textarea({
   };
   return (
     <div className="textarea_container">
+      <label htmlFor={id}>{placeholder}</label>
+
       <textarea
+        id={id}
         onChange={handleOnChange}
         // defaultValue={defaultValue}
-        className={`textarea_component ${className}`}
-        placeholder={placeholder}
+        className={`textarea input_width ${className}`}
+        // placeholder={placeholder}
         type={type}
         value={value}
         required

@@ -36,7 +36,7 @@ function Login({ onLoginFunction }) {
             <Input id="email" placeholder="Username" />
             <Input id="password" placeholder="Password" type="password" />
             <div className="login_button">
-              <Button title="login" />
+              <Button className="login_btn" title="Login" />
             </div>
           </form>
         </div>

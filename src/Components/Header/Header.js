@@ -1,8 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import "./header.css";
 
 function Header() {
-  return <div className="header_component">header</div>;
+  const [dropdown, setDropdown] = useState(true);
+  console.log(dropdown);
+
+  const handleDropdown = () => {
+    setDropdown(!dropdown);
+  };
+  return (
+    <div className="header_component">
+      <div className="header_user_container">username</div>
+      <div style={{ display: "flex" }}>
+        <div
+          style={{ marginTop: "15px" }}
+          class="control has-icons-left has-icons-right"
+        >
+          <input class="input " type="text" placeholder="Search" />
+          <span class="icon is-left">
+            <i class="fas fa-search"></i>{" "}
+          </span>
+        </div>
+        <div style={{ margin: "25px 10px 25px 25px" }}>
+          <i class="far fa-bell"></i>
+        </div>
+        {/* <div style={{ margin: "25px 35px 25px 10px" }}>
+          <i class="fas fa-user"></i>{" "}
+        </div> */}
+        <div
+          style={{ margin: "15px 35px 15px 10px" }}
+          className={"dropdown  is-right " + (dropdown ? "" : "is-active")}
+        >
+          {/* <div class={"dropdown is-active"}> */}
+          <div class="dropdown-trigger">
+            <button
+              onClick={() => handleDropdown()}
+              class="button"
+              aria-haspopup="true"
+              aria-controls="dropdown-menu2"
+            >
+              <i class="fas fa-user"></i>{" "}
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <p>Log Out</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Header;

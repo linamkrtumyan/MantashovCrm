@@ -1,8 +1,7 @@
 .add_member_container {
-  position: absolute;
+  /* position: absolute;
   top: 150px;
-  /* left: 300px; */
-  left: 40%;
+  left: 40%; */
 }
 .add_member_component {
   margin: 0 auto;
@@ -33,4 +32,26 @@
 .number_container {
   display: flex;
   justify-content: space-between;
+}
+.location_item {
+  /* flex: 25%;
+  padding: 20px; */
+}
+.location_container {
+  padding: 15px;
+  margin: 15px;
+  display: flex;
+  border: 1px solid #efefef;
+  /* border: 1px solid #000; */
+  box-shadow: 0 1px 6px 1px rgb(0 0 0 / 6%);
+  justify-content: center;
+}
+.container_title {
+  width: 150px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.container_body {
+  width: 83%;
 }

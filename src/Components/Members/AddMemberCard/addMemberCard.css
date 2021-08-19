@@ -1,22 +1,17 @@
 .add_membercard_container {
-  cursor: pointer;
-  background: #e7e6e6;
-  width: 350px;
-  height: 200px;
-  margin-right: 20px;
-  margin-bottom: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  margin-right: 50px;
+  padding: 0 0 15px 0;
 }
-.add_membercard_container:hover {
+/* .add_membercard_container:hover {
   background: #b9b8b8;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
   -ms-transition: all 1s ease;
   transition: all 1s ease;
-}
+} */
 .add_membercard_icon {
 }
 .svg-plus {

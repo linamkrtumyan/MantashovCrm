@@ -59,21 +59,24 @@ const Select = ({
 
   //   console.log(formOnChange);
   return (
-    <div ref={ref} className="select_container">
+    <div ref={ref} className="input_container">
+      <label htmlFor={id}>{placeholder}</label>
+
       <input
         readOnly
         autoComplete="off"
         id={id}
-        className="input_component"
+        // className="input_component"
+        className="input "
         onFocus={() => {
           setShow(true);
         }}
         value={text}
         type={type}
-        placeholder={placeholder}
+        // placeholder={placeholder}
       />
       {show && (
-        <ul className="select">
+        <ul className="select_items">
           {items.map((item) => (
             <li
               id={item.id}
