@@ -9,9 +9,6 @@ import {
   FETCH_EDUCATIONS_REQUEST,
   FETCH_EDUCATIONS_SUCCESS,
   FETCH_EDUCATIONS_FAILURE,
-  FETCH_ORGANIZATIONS_REQUEST,
-  FETCH_ORGANIZATIONS_SUCCESS,
-  FETCH_ORGANIZATIONS_FAILURE,
   FETCH_MEMBERS_FORM_REQUEST,
   FETCH_MEMBERS_FORM_SUCCESS,
   FETCH_MEMBERS_FORM_FAILURE,
@@ -28,6 +25,7 @@ import {
   FETCH_MEMBER_FOR_EDIT_REQUEST,
   FETCH_MEMBER_FOR_EDIT_SUCCESS,
   FETCH_MEMBER_FOR_EDIT_FAILURE,
+  CLEAN_MEMBER,
 } from "./types";
 
 const initialState = {
@@ -45,7 +43,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  console.log(action, "action");
+  // console.log(action, "action");
   switch (action.type) {
     case FETCH_MEMBERS_BY_PAGE_REQUEST:
       return {
@@ -106,26 +104,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         educations: [],
-        error: action.payload.error,
-      };
-
-    case FETCH_ORGANIZATIONS_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case FETCH_ORGANIZATIONS_SUCCESS:
-      return {
-        ...state,
-        organizations: action.payload.organizations,
-        loading: false,
-        error: null,
-      };
-    case FETCH_ORGANIZATIONS_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        organizations: [],
         error: action.payload.error,
       };
 
@@ -231,6 +209,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         member: action.payload.member,
+      };
+    case CLEAN_MEMBER:
+      return {
+        ...state,
+        memberForEdit: [],
       };
 
     default:

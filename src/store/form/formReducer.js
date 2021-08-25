@@ -19,6 +19,14 @@ const reducer = (state = initialState, action) => {
       return {
         ...action.payload.form,
       };
+    // case FORM_ON_CHANGE_ARRAY:
+    //   return {
+    //     ...state,
+    //     [action.payload.firstKey]: {
+    //       ...state[action.payload.firstKey],
+    //       [action.payload.secondKey]: action.payload.value,
+    //     },
+    //   };
     case FORM_ON_CHANGE_ARRAY:
       return {
         ...state,

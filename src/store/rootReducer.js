@@ -7,6 +7,7 @@ import imageReducer from "./images/imageReducer";
 import modalReducer from "./modal/modalReducer";
 import eventReducer from "./event/eventReducer";
 import locationsReducer from "./locations/locationsReducer";
+import organizationsReducer from "./organizations/organizationsReducer";
 
 export const reducers = {
   membersReducer,
@@ -18,4 +19,5 @@ export const reducers = {
   modalReducer,
   eventReducer,
   locationsReducer,
+  organizationsReducer,
 };

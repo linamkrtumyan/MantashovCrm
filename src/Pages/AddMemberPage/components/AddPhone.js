@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { cleanForm, formOnChange, formOnChangeArray } from "../../../store";
+import { cleanForm, formOnChangeArray } from "../../../store";
 import { connect } from "react-redux";
 import "./addPhone.css";
 
 function AddPhone({ contactType, formOnChange, value, cleanForm }) {
-  // console.log(value, "value");
+  console.log(contactType, "contactType");
   useEffect(() => {
     formOnChange("contacts", contactType.id, []);
     // return () => {
@@ -21,33 +21,20 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
           className="input"
           onChange={(e) => {
             setInputik(e.target.value);
+            formOnChange("contacts", contactType.id - 1, [e.target.value]);
             // cleanForm();
           }}
         />
-
-        <div
-          style={{ alignSelf: "center" }}
-          onClick={() => {
-            formOnChange("contacts", contactType.id, [...value, inputik]);
-          }}
-        >
-          <i class="fas fa-check is-middle m-1"></i>
-        </div>
       </div>
-      {value?.map((val) => (
-        <p key={val}>{val}</p>
-      ))}
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps, "ownProps");
   return {
-    value:
-      state.formReducer.contacts === undefined
-        ? []
-        : state.formReducer.contacts[ownProps.contactType.id],
+    value: !state.formReducer.contacts
+      ? []
+      : state.formReducer?.contacts[ownProps.contactType.id - 1],
   };
 };
 

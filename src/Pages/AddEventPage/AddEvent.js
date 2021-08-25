@@ -101,7 +101,7 @@ function AddEvent({
     const changePath = () => {
       history.push("/events");
     };
-    console.log(event, "uxarkvoxy");
+    // console.log(event, "uxarkvoxy");
     addEvent(event, changePath);
   };
 
@@ -160,7 +160,7 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     country: state.formReducer.country,

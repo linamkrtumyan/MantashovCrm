@@ -8,6 +8,8 @@ import {
 } from "./types";
 
 const initialState = {
+  userName: null,
+
   loading: true,
   login: false,
   error: null,
@@ -46,7 +48,10 @@ const reducer = (state = initialState, action) => {
     case AUTHORIZE_SUCCESS:
       return {
         ...state,
-
+        userName:
+          action.payload.auth.firstNameArm +
+          " " +
+          action.payload.auth.lastNameArm,
         loading: false,
         login: true,
         error: null,

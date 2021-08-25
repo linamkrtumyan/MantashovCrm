@@ -13,7 +13,7 @@ export const fetchEventDetailsForEdit = (id) => {
     request(`/admin/events/event/detailsForEdit/${id}`)
       .then((data) => {
         // console.log("mtav");
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(initForm(data));
         dispatch(fetchEventDetailsForEditSuccess(data));
       })

@@ -93,7 +93,7 @@ label {
   margin: 0 !important;
 }
 
-input[type="date"]:before {
+/* input[type="date"]:before {
   content: attr(placeholder) !important;
   color: #aaa;
   margin-right: 0.5em;
@@ -101,7 +101,7 @@ input[type="date"]:before {
 input[type="date"]:focus:before,
 input[type="date"]:valid:before {
   content: "";
-}
+} */
 
 input[type="file"] {
   display: none;
@@ -112,7 +112,8 @@ input[type="file"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
+  background-color: #ffffff;
   padding: 5px 10px;
   color: #757575;
   cursor: pointer;

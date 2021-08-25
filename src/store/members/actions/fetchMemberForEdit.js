@@ -10,7 +10,7 @@ export const fetchMemberForEdit = (id) => {
   // console.log(id, "editiid");
   return (dispatch) => {
     dispatch(fetchMemberForEditRequest());
-    request(`/admin/members/member/details/${id}`)
+    request(`/admin/members/member/${id}`)
       .then((data) => {
         // console.log("mtav");
         // console.log(data, "data");

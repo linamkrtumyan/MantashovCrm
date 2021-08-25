@@ -1,87 +1,84 @@
 import {
-  FETCH_COUNTRIES_REQUEST,
-  FETCH_COUNTRIES_SUCCESS,
-  FETCH_COUNTRIES_FAILURE,
-  FETCH_STATES_REQUEST,
-  FETCH_STATES_SUCCESS,
-  FETCH_STATES_FAILURE,
-  FETCH_CITIES_REQUEST,
-  FETCH_CITIES_SUCCESS,
-  FETCH_CITIES_FAILURE,
-  CLEAN_LOCATION,
+  FETCH_ORGANIZATIONS_REQUEST,
+  FETCH_ORGANIZATIONS_SUCCESS,
+  FETCH_ORGANIZATIONS_FAILURE,
+  FETCH_CATEGORIES_REQUEST,
+  FETCH_CATEGORIES_SUCCESS,
+  FETCH_CATEGORIES_FAILURE,
+  FETCH_POSITIONS_REQUEST,
+  FETCH_POSITIONS_SUCCESS,
+  FETCH_POSITIONS_FAILURE,
 } from "./types";
 
 const initialState = {
   loading: false,
-  countries: [],
+  organizations: [],
   error: null,
-  states: [],
-  cities: [],
+  positions: [],
 };
 
 const reducer = (state = initialState, action) => {
+  // console.log(action, "action");
   switch (action.type) {
-    case FETCH_COUNTRIES_REQUEST:
+    case FETCH_ORGANIZATIONS_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case FETCH_COUNTRIES_SUCCESS:
+    case FETCH_ORGANIZATIONS_SUCCESS:
       return {
         ...state,
+        organizations: action.payload.organizations,
         loading: false,
-        countries: action.payload.countries,
         error: null,
       };
-    case FETCH_COUNTRIES_FAILURE:
+    case FETCH_ORGANIZATIONS_FAILURE:
       return {
         ...state,
         loading: false,
-        countries: [],
+        organizations: [],
         error: action.payload.error,
       };
 
-    case FETCH_STATES_REQUEST:
+    case FETCH_CATEGORIES_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case FETCH_STATES_SUCCESS:
+    case FETCH_CATEGORIES_SUCCESS:
       return {
         ...state,
+        categories: action.payload.categories,
         loading: false,
-        states: action.payload.states,
         error: null,
       };
-    case FETCH_STATES_FAILURE:
+    case FETCH_CATEGORIES_FAILURE:
       return {
         ...state,
         loading: false,
-        states: [],
+        categories: [],
         error: action.payload.error,
       };
 
-    case FETCH_CITIES_REQUEST:
+    case FETCH_POSITIONS_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case FETCH_CITIES_SUCCESS:
+    case FETCH_POSITIONS_SUCCESS:
       return {
         ...state,
+        positions: action.payload.positions,
         loading: false,
-        cities: action.payload.cities,
         error: null,
       };
-    case FETCH_CITIES_FAILURE:
+    case FETCH_POSITIONS_FAILURE:
       return {
         ...state,
         loading: false,
-        cities: [],
+        positions: [],
         error: action.payload.error,
       };
-    case CLEAN_LOCATION:
-      return {};
 
     default:
       return state;

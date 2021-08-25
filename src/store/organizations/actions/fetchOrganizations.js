@@ -6,12 +6,12 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
 } from "../types";
 
-export const fetchOrganizations = () => {
-  // console.log(page, "uxarkvox page");
+export const fetchOrganizations = (categoryId) => {
+  // console.log(categoryId, "categoryId");
 
   return (dispatch) => {
     dispatch(fetchOrganizationsRequest());
-    request("/admin/members/organizations/all")
+    request(`/admin/organizations/?categoryId=${categoryId}`)
       .then((data) => {
         // console.log(data, "data");
         dispatch(fetchOrganizationsSuccess(data));

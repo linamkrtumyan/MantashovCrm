@@ -16,14 +16,14 @@ function Textarea({
     formOnChange(id, e.target.value);
   };
   return (
-    <div className="textarea_container">
+    <div className="input_container">
       <label htmlFor={id}>{placeholder}</label>
 
       <textarea
         id={id}
         onChange={handleOnChange}
         // defaultValue={defaultValue}
-        className={`textarea input_width ${className}`}
+        className={`textarea  ${className}`}
         // placeholder={placeholder}
         type={type}
         value={value}

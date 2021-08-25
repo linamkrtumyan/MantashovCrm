@@ -48,7 +48,7 @@ function ImageUpload({
       return (
         <div className="upload_cont">
           <img className="uploaded_images" src={photo} alt="" key={photo} />
-          <div class="middle">
+          <div className="middle">
             <div onClick={() => deleteImage(source.indexOf(photo))}>
               <svg viewBox="0 0 24 24" className="close">
                 <path

@@ -29,7 +29,7 @@ function Input({
         type={type}
         value={value}
         // onfocus={}
-        required
+        required={true}
       />
     </div>
   );

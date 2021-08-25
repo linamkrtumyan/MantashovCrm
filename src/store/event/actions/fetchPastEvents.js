@@ -7,7 +7,7 @@ import {
 } from "../types";
 
 export const fetchPastEvents = (page) => {
-  console.log(page, "page");
+  // console.log(page, "page");
   //   const page = store.getState().paginationReducer.currentPage - 1;
   // const page = 0;
   // console.log(page, "uxarkvox page");
@@ -15,7 +15,7 @@ export const fetchPastEvents = (page) => {
     dispatch(fetchPastEventsRequest());
     request(`/admin/events/past/${page}`)
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(fetchPastEventsSuccess(data));
       })
       .catch((e) => {

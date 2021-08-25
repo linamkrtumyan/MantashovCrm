@@ -13,7 +13,7 @@ export const fetchEventDetails = (id) => {
     request(`/admin/events/event/details/${id}`)
       .then((data) => {
         // console.log("mtav");
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(initForm(data));
         dispatch(fetchEventDetailsSuccess(data));
       })
@@ -35,7 +35,7 @@ const fetchEventDetailsSuccess = (data) => {
   return {
     type: FETCH_EVENT_DETAILS_SUCCESS,
     payload: {
-        eventDetails,
+      eventDetails,
     },
   };
 };

@@ -24,7 +24,7 @@ function MembersPage({
   }, [currentPage, action]);
 
   function handleDetails(id) {
-    history.push(`/member-details/${id}`);
+    history.push(`/edit-member/${id}`);
   }
 
   if (loading) {
@@ -44,24 +44,30 @@ function MembersPage({
   return (
     <div>
       <div className="members_container">
-        <div className="members_title">All Members</div>
+        {/* <div className="members_title">All Members</div> */}
 
         <AddMemberCard />
 
         <div
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "0 50px",
+            overflowY: "scroll",
+            maxHeight: "65vh",
+          }}
           // className="all_members_container"
         >
           {/* // <MemberCard key={memberByPage.id} memberByPage={memberByPage} /> */}
-          <table class="table is-striped is-fullwidth is-hoverable">
+          <table className="table is-striped  is-fullwidth is-hoverable">
             <thead>
               <tr>
                 <th>Photo</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Birthdate</th>
+                <th>Full Name</th>
+                <th>Sphere</th>
                 <th>Organization</th>
-                <th>Loaction</th>
+                <th>Phone</th>
+                <th>Location</th>
               </tr>
             </thead>
 
@@ -69,27 +75,30 @@ function MembersPage({
               {membersByPage.length > 0 ? (
                 membersByPage.map((memberByPage, index) => {
                   return (
-                    <>
-                      <tr
-                        onClick={() => handleDetails(memberByPage.id)}
-                        key={index}
-                      >
-                        <td>
-                          {" "}
-                          <img
-                            alt=""
-                            className="membercard_img"
-                            src={`/images/profile/${memberByPage.id}/profile_picture.png`}
-                            // src={require("../../../img/artashes_only.jpg").default}
-                          />
-                        </td>
-                        <td>{memberByPage.firstName}</td>
-                        <td>{memberByPage.lastName}</td>
-                        <td>{memberByPage.birthDate}</td>
-                        <td>{memberByPage.organizations}</td>
-                        <td>{memberByPage.location}</td>
-                      </tr>
-                    </>
+                    // <>
+                    <tr
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDetails(memberByPage.id)}
+                      key={index}
+                    >
+                      <td>
+                        {" "}
+                        <img
+                          alt=""
+                          className="membercard_img"
+                          src={`/images/profile/${memberByPage.id}/profile_picture.png`}
+                          // src={require("../../../img/artashes_only.jpg").default}
+                        />
+                      </td>
+                      <td>
+                        {memberByPage.firstName} {memberByPage.lastName}
+                      </td>
+                      <td>{memberByPage.category}</td>
+                      <td>{memberByPage.organizations}</td>
+                      <td>{memberByPage.phone}</td>
+                      <td>{memberByPage.location}</td>
+                    </tr>
+                    // </>
                   );
                 })
               ) : (
@@ -108,7 +117,7 @@ function MembersPage({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     membersByPage: state.membersReducer.membersByPage,
     loading: state.membersReducer.loading,

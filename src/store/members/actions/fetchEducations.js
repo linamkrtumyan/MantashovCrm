@@ -13,7 +13,7 @@ export const fetchEducations = () => {
     dispatch(fetchEducationsRequest());
     request("/admin/members/educations/all")
       .then((data) => {
-        console.log(data, "data");
+        // console.log(data, "data");
         dispatch(fetchEducationsSuccess(data));
       })
       .catch((e) => {

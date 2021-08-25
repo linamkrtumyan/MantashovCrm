@@ -10,14 +10,14 @@ export const editMember = (member, changePath) => {
     });
     request("/admin/members/member", "PUT", member)
       .then((data) => {
-        console.log(data, "res edit");
+        // console.log(data, "res edit");
         if (data.success) {
           dispatch({
             type: MEMBER_EDIT_SUCCESS_FAILURE,
           });
-          console.log("change path");
+          // console.log("change path");
           changePath();
-          console.log("toast");
+          // console.log("toast");
           toast.dark("Member edited");
         } else {
           dispatch({

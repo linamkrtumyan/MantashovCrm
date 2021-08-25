@@ -9,8 +9,12 @@ export const authorize = () => {
   return (dispatch) => {
     dispatch(authorizeRequest());
     request("/admin/authorize")
-      .then(() => {
-        dispatch(authorizeSuccess());
+      .then((data) => {
+        if (data.success) {
+          dispatch(authorizeSuccess(data));
+        } else {
+          dispatch(authorizeFailure());
+        }
       })
       .catch((e) => {
         dispatch(authorizeFailure(e.message));
@@ -25,9 +29,11 @@ const authorizeRequest = () => {
   };
 };
 
-const authorizeSuccess = () => {
+const authorizeSuccess = (data) => {
+  let auth = data ? data : [];
   return {
     type: AUTHORIZE_SUCCESS,
+    payload: { auth },
   };
 };
 

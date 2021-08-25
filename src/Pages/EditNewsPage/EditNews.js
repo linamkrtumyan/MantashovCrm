@@ -105,7 +105,7 @@ function EditNews({
                   // }}
                 >
                   <img alt="" className="edit_news_images" src={imagePath} />
-                  <div class="middle">
+                  <div className="middle">
                     <div
                       onClick={() => {
                         deletedImages(image);

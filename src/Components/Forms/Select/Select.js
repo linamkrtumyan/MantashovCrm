@@ -73,6 +73,7 @@ const Select = ({
         }}
         value={text}
         type={type}
+        required={true}
         // placeholder={placeholder}
       />
       {show && (

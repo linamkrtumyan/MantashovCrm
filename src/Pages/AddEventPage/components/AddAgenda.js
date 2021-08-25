@@ -14,11 +14,11 @@ function AddAgenda({
   setChange,
   index,
 }) {
-  console.log(addressesAgenda, "addressesAgenda");
-  console.log(agendas, "agendas");
-  console.log(addresses, "addresses");
-  console.log(index, "index");
-  console.log(addresses[index - 1], " addresses[index - 1]");
+  // console.log(addressesAgenda, "addressesAgenda");
+  // console.log(agendas, "agendas");
+  // console.log(addresses, "addresses");
+  // console.log(index, "index");
+  // console.log(addresses[index - 1], " addresses[index - 1]");
 
   const [newAgenda, setNewAgenda] = useState(0);
   //   console.log(addressId, "addressId");
@@ -89,7 +89,7 @@ function AddAgenda({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     agendas: state.formReducer.agendas,
     agendasAddresses: state.formReducer.agendasAddresses,

@@ -232,7 +232,7 @@ function AddAgendasAddress({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps, "ownProps");
+  // console.log(ownProps, "ownProps");
   return {
     countries: state.locationsReducer.countries,
     country: state.formReducer.agendasCountry,

@@ -21,14 +21,14 @@ import MemberDetails from "./Pages/MemberDetailsPage/MemberDetails";
 import EventDetailsPage from "./Pages/EventDeatilsPage/EventDetailsPage";
 import WithBulma from "./Pages/BulmaExp/WithBulma";
 
-function Routes({ isLogin }) {
+function Routes({ isLogin, userName }) {
   // console.log(isLogin, "islogin");
   if (isLogin) {
     return (
       <>
         <ToastContainer style={{ zIndex: 10000000000 }} autoClose={4000} />
 
-        <Header />
+        <Header userName={userName} />
         <Sidebar />
 
         <div style={{ marginLeft: "200px", paddingTop: "100px" }}>

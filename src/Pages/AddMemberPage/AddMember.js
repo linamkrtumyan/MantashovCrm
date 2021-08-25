@@ -4,24 +4,25 @@ import Textarea from "../../Components/Forms/Textarea/Textarea";
 import Button from "../../Components/Forms/Button/Button";
 import "./addMember.css";
 import { connect } from "react-redux";
-
 import { useHistory } from "react-router-dom";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
 import {
   cleanForm,
+  cleanImages,
+  fetchCategories,
   fetchCities,
   fetchCountries,
-  fetchEducations,
+  fetchOrganizations,
+  fetchPositions,
   fetchStates,
+  cleanLocation,
 } from "../../store";
 import {
   addMember,
+  cleanMember,
   fetchContactTypes,
-  fetchMemberForm,
-  fetchOrganizations,
 } from "../../store/members/actions";
-import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 import store from "../../store";
 import AddPhone from "./components/AddPhone";
 
@@ -29,67 +30,91 @@ function AddMember({
   fetchCountries,
   fetchStates,
   countries,
-  country,
+  countryId,
   states,
-  state,
+  stateId,
   cities,
   fetchCities,
-  fetchEducations,
-  educations,
+
   fetchOrganizations,
   organizations,
-  fetchMemberForm,
+  cleanMember,
   statuses,
   addMember,
   fetchContactTypes,
   contactTypes,
   cleanForm,
+  fetchCategories,
+  categories,
+  categoryId,
+  fetchPositions,
+  positions,
+  cleanLocation,
 }) {
-  const [numberDiv, setNumberDiv] = useState(false);
-
+  const [isActive, setIsActive] = useState(true);
+  // console.log(isActive, "is active");
   const history = useHistory();
   useEffect(() => {
     fetchCountries();
-    fetchEducations();
-    fetchOrganizations();
-    fetchMemberForm();
     fetchContactTypes();
+    fetchCategories();
+    fetchPositions();
+    cleanForm();
+    cleanMember();
+    cleanLocation();
   }, []);
 
   useEffect(() => {
-    // console.log(country, "send id");
-    fetchStates(country);
-  }, [country]);
+    if (countryId) {
+      fetchStates(countryId);
+    }
+  }, [countryId]);
   useEffect(() => {
-    // console.log(state, "send state id");
-    fetchCities(state);
-  }, [state]);
+    if (stateId) {
+      fetchCities(stateId);
+    }
+  }, [stateId]);
+  useEffect(() => {
+    if (categoryId) {
+      fetchOrganizations(categoryId);
+    }
+  }, [categoryId]);
 
-  const handleCreate = () => {
-    // console.log("handle create");
+  const handleCreate = (e) => {
+    e.preventDefault();
     let {
-      location,
-      latitude,
-      longitude,
-      city,
-      description,
-      firstName,
-      lastName,
-      birthDate,
+      locationArm,
+      locationEng,
+      locationRu,
+
+      cityId,
+      descriptionArm,
+      descriptionEng,
+      descriptionRu,
+      firstNameArm,
+      lastNameArm,
+      firstNameEng,
+      lastNameEng,
+      firstNameRu,
+      lastNameRu,
+      birthdate,
       email,
-      password,
-      educations,
-      organizations,
-      statuses,
+      organizationId,
+      positionId,
       contacts,
     } = store.getState().formReducer;
-
-    let keys = Object.keys(contacts);
-    const values = keys.map((key) => contacts[key]);
     const image = store.getState().imageReducer.header;
 
+    let keys = Object.keys(contacts);
+    console.log(keys, "keys");
+
+    const values = keys.map((key) => contacts[key]);
+    console.log(values, "values");
+    let ok = false;
+    values.map((value) => (value ? (ok = true) : (ok = false)));
+
     const contacts1 = keys.map((key, index) =>
-      values[index].map((o) => ({ id: +key, value: o }))
+      ok ? values[index].map((o) => ({ id: 1 + +key, value: o })) : []
     );
 
     let result = [];
@@ -98,24 +123,26 @@ function AddMember({
     // console.log(contacts1, "88888888");
 
     let member = {
-      location,
-      latitude: +latitude,
-      longitude: +longitude,
-      cityId: city,
-      firstName,
-      lastName,
-      image: image[0],
-      // image: null,
-      birthdate: new Date(birthDate),
-      description,
+      locationArm,
+      locationEng,
+      locationRu,
+      cityId,
+
+      firstNameArm,
+      lastNameArm,
+      firstNameEng,
+      lastNameEng,
+      firstNameRu,
+      lastNameRu,
+      image,
+      descriptionArm,
+      descriptionEng,
+      descriptionRu,
+      birthdate,
       email,
-      password,
-      // educationIds: educations?.map((education) => education.id),
-      // organizationIds: organizations?.map((organization) => organization.id),
-      // statusIds: statuses?.map((status) => status.id),
-      educationIds: educations,
-      organizationIds: organizations,
-      statusIds: statuses,
+
+      organizationId,
+      positionId,
       contacts: result,
     };
 
@@ -130,10 +157,10 @@ function AddMember({
 
   return (
     <div>
-      <div className="add_member_container">
+      <form onSubmit={(e) => handleCreate(e)} className="add_member_container">
         <div>
           <button onClick={() => history.goBack()} className="arrow_left">
-            <i class="fas fa-chevron-left"></i>
+            <i className="fas fa-chevron-left"></i>
           </button>
           <div className="add_member_title">
             <p>Add Member</p>
@@ -142,26 +169,47 @@ function AddMember({
 
         <div className="add_member_component">
           <div className="location_container">
-            <div style={{ margin: "auto 0" }} className="">
+            <div style={{ margin: "20px 0" }} className="">
               <OneImageUpload label="Upload Image" />
-              <label class="checkbox my-2 is-flex is-justify-content-center is-align-items-center">
-                <input type="checkbox" />
-                Active
-              </label>
             </div>
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="firstName" type="text" placeholder="First Name" />
-                <Input id="lastName" type="text" placeholder="Last Name" />
-                <Input id="birthDate" type="date" placeholder="Birthdate" />
+                <Input id="firstNameEng" type="text" placeholder="First Name" />
+                <Input id="firstNameArm" type="text" placeholder="Անուն" />
+                <Input id="firstNameRu" type="text" placeholder="Имя" />
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="lastNameEng" type="text" placeholder="Last Name" />
+                <Input id="lastNameArm" type="text" placeholder="Ազգանուն" />
+                <Input id="lastNameRu" type="text" placeholder="Фамилия" />
               </div>
 
-              <div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Textarea
-                  id="description"
+                  id="descriptionEng"
                   type="text"
                   placeholder="Description"
                 />
+                <Textarea
+                  id="descriptionArm"
+                  type="text"
+                  placeholder="Նկարագիր"
+                />
+                <Textarea
+                  id="descriptionRu"
+                  type="text"
+                  placeholder="Описание"
+                />
+              </div>
+              <div style={{ display: "flex" }}>
+                <Input placeholder="Birthdate" id="birthdate" type="date" />
+                {/* <button
+                  onClick={() => setIsActive(!isActive)}
+                  style={{ width: "31%", margin: "0 14px" }}
+                  className={isActive ? "button red" : "button"}
+                >
+                  <p>{isActive ? "Active" : "Passive"}</p>
+                </button> */}
               </div>
             </div>
           </div>
@@ -169,29 +217,25 @@ function AddMember({
           <div className="location_container">
             <div className="container_title">Location</div>
             <div className="container_body">
-              <div style={{ display: "flex" }}>
-                <form className="location_item" autoComplete="off">
-                  <Select
-                    placeholder="Select Country"
-                    items={countries}
-                    id="country"
-                  />
-                </form>
-                <form className="location_item" autoComplete="off">
-                  <Select
-                    placeholder="Select State"
-                    items={states}
-                    id="state"
-                  />
-                </form>
-                <form className="location_item" autoComplete="off">
-                  <Select placeholder="Select City" items={cities} id="city" />
-                </form>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Select
+                  placeholder="Select Country"
+                  items={countries}
+                  id="countryId"
+                />
+
+                <Select
+                  placeholder="Select State"
+                  items={states}
+                  id="stateId"
+                />
+
+                <Select placeholder="Select City" items={cities} id="cityId" />
               </div>
-              <div>
-                <form className="location_item" autoComplete="off">
-                  <Input id="location" type="text" placeholder="Address" />
-                </form>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="locationEng" type="text" placeholder="Address" />
+                <Input id="locationArm" type="text" placeholder="Հասցե" />
+                <Input id="locationRu" type="text" placeholder="Адрес" />
               </div>
             </div>
           </div>
@@ -199,25 +243,24 @@ function AddMember({
           <div className="location_container">
             <div className="container_title">Occupation</div>
             <div className="container_body">
-              <div style={{ display: "flex" }}>
-                <div>
-                  <Select
-                    placeholder="Select Field"
-                    // items={countries}
-                    // id="country"
-                  />
-                </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Select
+                  placeholder="Select Field"
+                  items={categories}
+                  id="categoryId"
+                />
 
-                <form className="location_item" autoComplete="off">
-                  <Multiselect
-                    placeholder="Select Organizations"
-                    items={organizations}
-                    id="organizations"
-                  />
-                </form>
-                <div>
-                  <Input id="position" type="text" placeholder="Position" />
-                </div>
+                <Select
+                  placeholder="Select Organization"
+                  items={organizations}
+                  id="organizationId"
+                />
+
+                <Select
+                  placeholder="Select Position"
+                  items={positions}
+                  id="positionId"
+                />
               </div>
             </div>
           </div>
@@ -226,7 +269,7 @@ function AddMember({
             <div className="container_title">Contact</div>
             <div className="container_body">
               <div style={{ display: "flex" }}>
-                <div className="" style={{ display: "flex" }}>
+                <div className="" style={{ display: "flex", maxWidth: "100%" }}>
                   {contactTypes.map((contactType) => (
                     <AddPhone key={contactType.id} contactType={contactType} />
                   ))}{" "}
@@ -241,11 +284,13 @@ function AddMember({
 
         <div className="action_container">
           <Button title="Cancel" className="action_btn cancel_btn" />
-          <div onClick={handleCreate}>
-            <Button title="Create" className="action_btn" />
+          <div
+          // onClick={handleCreate}
+          >
+            <Button type="submit" title="Create" className="action_btn" />
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
@@ -254,14 +299,16 @@ const mapStateToProps = (state) => {
   console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
-    country: state.formReducer.country,
+    countryId: state.formReducer?.countryId,
     states: state.locationsReducer.states,
-    state: state.formReducer.state,
+    stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
-    educations: state.membersReducer.memberForm.educations,
-    organizations: state.membersReducer.memberForm.organizations,
     statuses: state.membersReducer.memberForm.statuses,
     contactTypes: state.membersReducer.contactTypes,
+    categories: state.organizationsReducer.categories,
+    categoryId: state.formReducer.categoryId,
+    organizations: state.organizationsReducer.organizations,
+    positions: state.organizationsReducer.positions,
   };
 };
 
@@ -270,13 +317,15 @@ const mapDispatchToProps = (dispatch) => {
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),
-    fetchEducations: () => dispatch(fetchEducations()),
-    fetchOrganizations: () => dispatch(fetchOrganizations()),
-    fetchMemberForm: () => dispatch(fetchMemberForm()),
+    fetchOrganizations: (categoryId) =>
+      dispatch(fetchOrganizations(categoryId)),
+    fetchCategories: () => dispatch(fetchCategories()),
     addMember: (member, changePath) => dispatch(addMember(member, changePath)),
     fetchContactTypes: () => dispatch(fetchContactTypes()),
     cleanForm: () => dispatch(cleanForm()),
-    // addNews: (news) => dispatch(addNews(news)),
+    fetchPositions: () => dispatch(fetchPositions()),
+    cleanMember: () => dispatch(cleanMember()),
+    cleanLocation: () => dispatch(cleanLocation()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddMember);

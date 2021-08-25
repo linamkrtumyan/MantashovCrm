@@ -19,7 +19,7 @@ function OneImageUpload({ uploadOneImage, label = "" }) {
         <img className="upload_img" src={image} />
       ) : (
         <div className="p">
-          <i class="fas fa-cloud-upload-alt"></i>
+          <i className="fas fa-cloud-upload-alt"></i>
           {label}
         </div>
       )}

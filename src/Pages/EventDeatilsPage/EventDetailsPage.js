@@ -27,7 +27,7 @@ function EventDetails({ fetchEventDetails, eventDetails, images }) {
         </div>
         <div className="details_subtitle">
           <div className="details_subtitle_icon">
-            <svg viewBox="0 0 50 49" class="map">
+            <svg viewBox="0 0 50 49" className="map">
               <g
                 strokeLinecap="round"
                 strokeLinejoin="round"
