@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import MemberDetails from "./Pages/MemberDetailsPage/MemberDetails";
 import EventDetailsPage from "./Pages/EventDeatilsPage/EventDetailsPage";
 import WithBulma from "./Pages/BulmaExp/WithBulma";
+import Information from "./Pages/InformationPage/Information";
 
 function Routes({ isLogin, userName }) {
   // console.log(isLogin, "islogin");
@@ -51,6 +52,7 @@ function Routes({ isLogin, userName }) {
             <Route path="/news-details/:id" component={NewsDetails} exact />
             <Route path="/edit-news/:id" component={EditNews} exact />
             <Route path="/bulma" component={WithBulma} exact />
+            <Route path="/information" component={Information} exact />
 
             <Redirect to="/news" />
           </Switch>

@@ -80,6 +80,10 @@ function AddMember({
     }
   }, [categoryId]);
 
+  const cancelAdd = () => {
+    history.push("/members");
+  };
+
   const handleCreate = (e) => {
     e.preventDefault();
     let {
@@ -245,7 +249,7 @@ function AddMember({
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Select
-                  placeholder="Select Field"
+                  placeholder="Select Sphere"
                   items={categories}
                   id="categoryId"
                 />
@@ -283,10 +287,15 @@ function AddMember({
         </div>
 
         <div className="action_container">
-          <Button title="Cancel" className="action_btn cancel_btn" />
-          <div
-          // onClick={handleCreate}
-          >
+          <div onClick={() => cancelAdd()}>
+            <Button
+              type="reset"
+              title="Cancel"
+              className="action_btn cancel_btn"
+            />
+          </div>
+
+          <div>
             <Button type="submit" title="Create" className="action_btn" />
           </div>
         </div>

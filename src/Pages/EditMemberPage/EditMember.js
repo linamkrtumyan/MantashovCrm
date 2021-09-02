@@ -58,7 +58,7 @@ function EditMember({
     fetchContactTypes();
     fetchCategories();
     fetchPositions();
-    // cleanForm();
+    cleanForm();
   }, []);
 
   useEffect(() => {
@@ -244,7 +244,7 @@ function EditMember({
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Select
-                  placeholder="Select Field"
+                  placeholder="Select Sphere"
                   items={categories}
                   id="category"
                 />

@@ -14,6 +14,12 @@ function AddPhone({ contactType, formOnChange, value, cleanForm }) {
   const [inputik, setInputik] = useState("");
   return (
     <div className="input_container">
+      <img
+        src={`/images/phoneTypes/messengers/${contactType.name}.png`}
+        alt=""
+        // className="member_edit_image"
+        style={{ width: "20px", verticalAlign: "middle", padding: "2px" }}
+      />
       <label>{contactType.name}</label>
       <div style={{ display: "flex" }}>
         <input

@@ -14,17 +14,19 @@ function OneImageUpload({ uploadOneImage, label = "" }) {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div>
       {image.length > 0 ? (
         <img className="upload_img" src={image} />
       ) : (
-        <div className="p">
-          <i className="fas fa-cloud-upload-alt"></i>
-          {label}
+        <div className="">
+          <label htmlFor="one-file-upload" className="custom-file-upload">
+            <i className="fas fa-cloud-upload-alt"></i>
+            <p>{label}</p>
+          </label>
         </div>
       )}
       {/* <div className="p"> */}
-      <label htmlFor="one-file-upload" className="custom-file-upload"></label>
+      {/* <label htmlFor="one-file-upload" className="custom-file-upload"></label> */}
       <input
         type="file"
         // id="myfile"

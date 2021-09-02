@@ -29,6 +29,7 @@ $twitter: #55acee;
 $twitter-invert: findColorInvert($twitter);
 $github: #333;
 $github-invert: findColorInvert($github);
+$body-background-color: #f4f4f4;
 
 // 5. Add new color variables to the color map.
 @import "bulma/sass/utilities/derived-variables";
@@ -48,5 +49,11 @@ $addColors: (
 );
 $colors: map-merge($colors, $addColors);
 
+// $modal-background-background-color: $blue;
+// $modal-card-head-background-color: $blue;
+// $modal-card-head-radius: $radius-large;
+$modal-card-head-background-color: #fff;
+$modal-card-foot-border-top: none;
+$modal-card-head-border-bottom: none;
 // 6. Import the rest of Bulma
 @import "bulma";

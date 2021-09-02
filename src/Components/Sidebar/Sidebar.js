@@ -114,6 +114,24 @@ function Sidebar() {
                 <img alt="" className="sidebar_icon" src={setting} />
               )}
             </NavLink>
+            <NavLink
+              className="menu_title"
+              to="/information"
+              activeClassName="active-link"
+              // onClick={() => closeMenu()}
+            >
+              {navbarOpen ? (
+                <div className="sidebar_title">
+                  <div className="open_sidebar_icon">
+                    {/* <img alt="" className="sidebar_icon" src={setting} /> */}
+                    <i className="fas fa-info is-medium"></i>
+                  </div>
+                  <div>Information</div>
+                </div>
+              ) : (
+                <img alt="" className="sidebar_icon" src={setting} />
+              )}
+            </NavLink>
           </ul>
         </nav>
       </div>

@@ -59,7 +59,7 @@ const Select = ({
 
   //   console.log(formOnChange);
   return (
-    <div ref={ref} className="input_container">
+    <div ref={ref} className="input_container control  has-icons-right">
       <label htmlFor={id}>{placeholder}</label>
 
       <input
@@ -76,6 +76,9 @@ const Select = ({
         required={true}
         // placeholder={placeholder}
       />
+      <span style={{ marginTop: "25px" }} className="icon is-small is-right">
+        <i className="fas fa-angle-down"></i>
+      </span>
       {show && (
         <ul className="select_items">
           {items.map((item) => (

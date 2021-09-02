@@ -49,6 +49,19 @@ export {
   fetchCategories,
   fetchOrganizations,
   fetchPositions,
+  fetchCategoriesAll,
+  addCategory,
+  editCategory,
+  deleteCategory,
+  fetchPositionsAll,
+  addPosition,
+  editPosition,
+  deletePosition,
+  fetchOrganizationsTable,
+  addOrganization,
+  deleteOrganization,
+  fetchOrganizationDetails,
+  cleanOrganization,
 } from "./organizations/actions";
 
 export { default } from "./configureStore";

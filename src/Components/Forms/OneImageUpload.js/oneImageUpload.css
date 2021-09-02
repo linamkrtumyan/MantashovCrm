@@ -8,7 +8,7 @@
   object-fit: cover;
 }
 .upload_img {
-  position: absolute;
+  /* position: absolute; */
   height: 150px;
   width: 150px;
   object-fit: cover;
