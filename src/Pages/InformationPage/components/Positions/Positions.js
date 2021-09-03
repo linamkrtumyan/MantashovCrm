@@ -19,13 +19,21 @@ function Spheres({
   cleanForm,
   loading,
 }) {
-  useEffect(() => {
-    fetchPositionsAll();
-  }, []);
   const [add, setAdd] = useState(false);
+  const [added, setAdded] = useState(0); //for upate table
   const [editingId, setEditingId] = useState(-1);
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  useEffect(() => {
+    fetchPositionsAll();
+  }, []);
+  useEffect(() => {
+    if (added > 0) {
+      fetchPositionsAll();
+    }
+  }, [added]);
+
+  console.log(added, "******added******");
 
   function handleClick() {
     setAdd(true);
@@ -71,6 +79,8 @@ function Spheres({
   return (
     <div>
       <DeletePositions
+        added={added}
+        setAdded={setAdded}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         id={deleteId}
@@ -107,11 +117,17 @@ function Spheres({
               </thead>
 
               <tbody>
-                {add ? <AddPosition setAdd={setAdd} /> : null}
+                {add ? (
+                  <AddPosition
+                    added={added}
+                    setAdded={setAdded}
+                    setAdd={setAdd}
+                  />
+                ) : null}
                 {positions.map((position, index) => {
                   if (editingId === position.id) {
                     return (
-                      <tr key={position.id}>
+                      <tr style={{ cursor: "default" }} key={position.id}>
                         <td>
                           <input
                             id="nameEng"
@@ -138,6 +154,7 @@ function Spheres({
                         </td>
 
                         <td
+                          style={{ cursor: "pointer" }}
                           onClick={() =>
                             handleSave(
                               position.id,
@@ -150,6 +167,7 @@ function Spheres({
                           Save
                         </td>
                         <td
+                          style={{ cursor: "pointer" }}
                           onClick={(e) => {
                             handleCancel();
                           }}
@@ -160,12 +178,13 @@ function Spheres({
                     );
                   } else {
                     return (
-                      <tr style={{ cursor: "pointer" }} key={position.id}>
+                      <tr style={{ cursor: "default" }} key={position.id}>
                         <td>{position.nameEng}</td>
                         <td>{position.nameArm}</td>
                         <td>{position.nameRu}</td>
                         <td style={{ width: "10px" }}>
                           <div
+                            style={{ cursor: "pointer" }}
                             onClick={(e) => {
                               handleEdit(position.id);
                             }}
@@ -176,6 +195,7 @@ function Spheres({
 
                         <td style={{ width: "10px" }}>
                           <div
+                            style={{ cursor: "pointer" }}
                             onClick={(e) => {
                               handleDelete(position.id);
                             }}

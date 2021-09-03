@@ -19,16 +19,22 @@ function Organizations({
   organizationsTable,
   cleanOrganization,
 }) {
-  let history = useHistory();
-  useEffect(() => {
-    fetchOrganizationsTable();
-  }, []);
-  const [add, setAdd] = useState(false);
+  const [added, setAdded] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [editId, setEditId] = useState(null);
+
+  useEffect(() => {
+    fetchOrganizationsTable();
+  }, []);
+
+  useEffect(() => {
+    if (added > 0) {
+      fetchOrganizationsTable();
+    }
+  }, [added]);
 
   function handleDelete(id) {
     setModalOpen(true);
@@ -52,17 +58,23 @@ function Organizations({
   return (
     <div>
       <EditOrganization
+        added={added}
+        setAdded={setAdded}
         modalOpen={editModalOpen}
         setModalOpen={setEditModalOpen}
         id={editId}
         setEditId={setEditId}
       />
       <DeleteOrganization
+        added={added}
+        setAdded={setAdded}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         id={deleteId}
       />
       <AddOrganization
+        added={added}
+        setAdded={setAdded}
         modalOpen={addModalOpen}
         setModalOpen={setAddModalOpen}
       />
@@ -103,12 +115,13 @@ function Organizations({
               <tbody>
                 {organizationsTable.map((organization, index) => {
                   return (
-                    <tr style={{ cursor: "pointer" }} key={organization.id}>
+                    <tr style={{ cursor: "default" }} key={organization.id}>
                       <td>{organization.nameEng}</td>
                       <td>{organization.categoryNameEng}</td>
                       <td>{organization.address}</td>
                       <td style={{ width: "10px" }}>
                         <div
+                          style={{ cursor: "pointer" }}
                           onClick={(e) => {
                             handleEdit(organization.id);
                           }}
@@ -119,6 +132,7 @@ function Organizations({
 
                       <td style={{ width: "10px" }}>
                         <div
+                          style={{ cursor: "pointer" }}
                           onClick={(e) => {
                             handleDelete(organization.id);
                           }}

@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { deleteCategory, fetchCategoriesAll } from "../../../../store";
 
 function DeleteSphere({
+  added,
+  setAdded,
   modalOpen,
   setModalOpen,
   id,
@@ -16,7 +18,8 @@ function DeleteSphere({
     if (id) {
       setModalOpen(false);
       deleteCategory(id);
-      fetchCategoriesAll();
+      // fetchCategoriesAll();
+      setAdded(added + 1);
     }
   };
   return (

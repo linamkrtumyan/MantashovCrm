@@ -37,6 +37,8 @@ function EditOrganization({
   cleanForm,
   cleanOrganization,
   setEditId,
+  added,
+  setAdded,
 }) {
   console.log(modalOpen, "modalOpen");
   console.log(id, "id");
@@ -80,8 +82,10 @@ function EditOrganization({
     };
     setModalOpen(false);
     editOrganization(organization);
+    setAdded(added + 1);
+
     cleanForm();
-    fetchOrganizationsTable();
+    // fetchOrganizationsTable();
     setEditId(null);
     cleanOrganization();
   };

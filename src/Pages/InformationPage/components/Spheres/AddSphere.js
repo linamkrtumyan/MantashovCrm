@@ -8,9 +8,11 @@ import store, {
 } from "../../../../store";
 
 function AddSphere({
+  added,
+  setAdded,
   setAdd,
   addCategory,
-  added,
+
   cleanForm,
   fetchCategoriesAll,
 }) {
@@ -33,7 +35,9 @@ function AddSphere({
     addCategory(category, changePath);
     setAdd(false);
     cleanForm();
-    fetchCategoriesAll();
+    setAdded(added + 1);
+
+    // fetchCategoriesAll();
   };
 
   return (
@@ -48,12 +52,12 @@ function AddSphere({
         <Input id="nameRu" type="text" />
       </td>
       <td>
-        <div onClick={handleCreate}>
+        <div style={{ cursor: "pointer" }} onClick={handleCreate}>
           <i className="fas fa-plus is-large"></i>
         </div>
       </td>
       <td>
-        <div onClick={() => setAdd(false)}>
+        <div style={{ cursor: "pointer" }} onClick={() => setAdd(false)}>
           <i className="fas fa-times is-large"></i>
         </div>
       </td>
@@ -65,7 +69,7 @@ const mapStateToProps = (state) => {
   console.log(state, "state");
   return {
     // spheres: state.organizationsReducer.categoriesAll,
-    added: state.organizationsReducer.added,
+    // added: state.organizationsReducer.added,
   };
 };
 

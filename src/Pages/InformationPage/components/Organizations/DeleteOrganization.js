@@ -8,6 +8,8 @@ function DeleteOrganization({
   id,
   deleteOrganization,
   fetchOrganizationsTable,
+  added,
+  setAdded,
 }) {
   console.log(modalOpen, "modalOpen");
   console.log(id, "id");
@@ -16,7 +18,8 @@ function DeleteOrganization({
     if (id) {
       setModalOpen(false);
       deleteOrganization(id);
-      fetchOrganizationsTable();
+      // fetchOrganizationsTable();
+      setAdded(added + 1);
     }
   };
   return (

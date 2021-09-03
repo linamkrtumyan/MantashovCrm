@@ -34,6 +34,9 @@ function AddOrganization({
   addOrganization,
   cleanForm,
   cleanLocation,
+
+  added,
+  setAdded,
 }) {
   console.log(modalOpen, "modalOpen");
 
@@ -75,7 +78,9 @@ function AddOrganization({
     };
     setModalOpen(false);
     addOrganization(organization);
-    fetchOrganizationsTable();
+    setAdded(added + 1);
+
+    // fetchOrganizationsTable();
     cleanForm();
   };
   return (

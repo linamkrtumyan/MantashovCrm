@@ -7,8 +7,17 @@ import store, {
   fetchPositionsAll,
 } from "../../../../store";
 
-function AddPosition({ setAdd, addPosition, cleanForm, fetchPositionsAll }) {
+function AddPosition({
+  added,
+  setAdded,
+  setAdd,
+  addPosition,
+  cleanForm,
+  fetchPositionsAll,
+}) {
   const handleCreate = () => {
+    // fetchPositionsAll();
+
     let { nameArm, nameEng, nameRu } = store.getState().formReducer;
 
     let position = {
@@ -22,9 +31,11 @@ function AddPosition({ setAdd, addPosition, cleanForm, fetchPositionsAll }) {
     };
     console.log(position, "uxarkvox position");
     addPosition(position, changePath);
+    setAdded(added + 1);
     setAdd(false);
     cleanForm();
-    fetchPositionsAll();
+
+    // fetchPositionsAll();
   };
 
   return (
@@ -39,12 +50,12 @@ function AddPosition({ setAdd, addPosition, cleanForm, fetchPositionsAll }) {
         <Input id="nameRu" type="text" />
       </td>
       <td>
-        <div onClick={handleCreate}>
+        <div style={{ cursor: "pointer" }} onClick={handleCreate}>
           <i className="fas fa-plus is-large"></i>
         </div>
       </td>
       <td>
-        <div onClick={() => setAdd(false)}>
+        <div style={{ cursor: "pointer" }} onClick={() => setAdd(false)}>
           <i className="fas fa-times is-large"></i>
         </div>
       </td>
