@@ -1,16 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteCategory, fetchCategoriesAll } from "../../../../store";
+import { deleteCategory } from "../../../../store";
 
-function DeleteSphere({
-  added,
-  setAdded,
-  modalOpen,
-  setModalOpen,
-  id,
-  deleteCategory,
-  fetchCategoriesAll,
-}) {
+function DeleteSphere({ modalOpen, setModalOpen, id, deleteCategory }) {
   console.log(modalOpen, "modalOpen");
   console.log(id, "id");
 
@@ -18,8 +10,6 @@ function DeleteSphere({
     if (id) {
       setModalOpen(false);
       deleteCategory(id);
-      // fetchCategoriesAll();
-      setAdded(added + 1);
     }
   };
   return (
@@ -54,16 +44,12 @@ function DeleteSphere({
 
 const mapStateToProps = (state) => {
   console.log(state, "state");
-  return {
-    //   spheres: state.organizationsReducer.categoriesAll,
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //   cleanForm: () => dispatch(cleanForm()),
     deleteCategory: (id) => dispatch(deleteCategory(id)),
-    fetchCategoriesAll: () => dispatch(fetchCategoriesAll()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteSphere);

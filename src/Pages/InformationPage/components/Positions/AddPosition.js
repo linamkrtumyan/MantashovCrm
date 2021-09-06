@@ -1,23 +1,10 @@
 import React from "react";
 import Input from "../../../../Components/Forms/Input/Input";
 import { connect } from "react-redux";
-import store, {
-  addPosition,
-  cleanForm,
-  fetchPositionsAll,
-} from "../../../../store";
+import store, { addPosition, cleanForm } from "../../../../store";
 
-function AddPosition({
-  added,
-  setAdded,
-  setAdd,
-  addPosition,
-  cleanForm,
-  fetchPositionsAll,
-}) {
+function AddPosition({ setAdd, addPosition, cleanForm }) {
   const handleCreate = () => {
-    // fetchPositionsAll();
-
     let { nameArm, nameEng, nameRu } = store.getState().formReducer;
 
     let position = {
@@ -31,11 +18,8 @@ function AddPosition({
     };
     console.log(position, "uxarkvox position");
     addPosition(position, changePath);
-    setAdded(added + 1);
     setAdd(false);
     cleanForm();
-
-    // fetchPositionsAll();
   };
 
   return (
@@ -65,9 +49,7 @@ function AddPosition({
 
 const mapStateToProps = (state) => {
   console.log(state, "state");
-  return {
-    // spheres: state.organizationsReducer.categoriesAll,
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -75,9 +57,6 @@ const mapDispatchToProps = (dispatch) => {
     addPosition: (category, changePath) =>
       dispatch(addPosition(category, changePath)),
     cleanForm: () => dispatch(cleanForm()),
-    fetchPositionsAll: () => dispatch(fetchPositionsAll()),
-
-    // fetchCategoriesAll: () => dispatch(fetchCategoriesAll()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddPosition);

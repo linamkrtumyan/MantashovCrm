@@ -21,7 +21,6 @@ function EditOrganization({
   modalOpen,
   setModalOpen,
   id,
-  fetchOrganizationsTable,
   fetchCountries,
   fetchStates,
   countries,
@@ -37,12 +36,7 @@ function EditOrganization({
   cleanForm,
   cleanOrganization,
   setEditId,
-  added,
-  setAdded,
 }) {
-  console.log(modalOpen, "modalOpen");
-  console.log(id, "id");
-
   useEffect(() => {
     if (id) {
       fetchOrganizationDetails(id);
@@ -82,10 +76,7 @@ function EditOrganization({
     };
     setModalOpen(false);
     editOrganization(organization);
-    setAdded(added + 1);
-
     cleanForm();
-    // fetchOrganizationsTable();
     setEditId(null);
     cleanOrganization();
   };
@@ -175,7 +166,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrganizationsTable: () => dispatch(fetchOrganizationsTable()),
     fetchOrganizationDetails: (id) => dispatch(fetchOrganizationDetails(id)),
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),

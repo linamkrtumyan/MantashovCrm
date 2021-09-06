@@ -16,9 +16,9 @@ function Spheres({
   formOnChange,
   editCategory,
   cleanForm,
+  fetch,
 }) {
   const [add, setAdd] = useState(false);
-  const [added, setAdded] = useState(0); //for upate table
 
   const [editingId, setEditingId] = useState(-1);
   const [modalOpen, setModalOpen] = useState(false);
@@ -28,10 +28,10 @@ function Spheres({
     fetchCategoriesAll();
   }, []);
   useEffect(() => {
-    if (added > 0) {
+    if (fetch) {
       fetchCategoriesAll();
     }
-  }, [added]);
+  }, [fetch]);
 
   function handleClick() {
     setAdd(true);
@@ -64,17 +64,13 @@ function Spheres({
     const changePath = () => {};
     console.log(category, "uxarkvox category");
     editCategory(category, changePath);
-
     cleanForm();
-    fetchCategoriesAll();
     setEditingId(-1);
   };
 
   return (
     <div>
       <DeleteSphere
-        added={added}
-        setAdded={setAdded}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         id={deleteId}
@@ -85,18 +81,19 @@ function Spheres({
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              padding: "10px 30px",
+              padding: "10px 50px",
             }}
-            onClick={handleClick}
           >
-            <Button title="Add Sphere" />
+            <div onClick={handleClick}>
+              <Button title="Add Sphere" />
+            </div>
           </div>
 
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              padding: "0 50px",
+              padding: "0 50px 50px 50px ",
             }}
           >
             <table className="table is-striped  is-fullwidth is-hoverable">
@@ -111,13 +108,7 @@ function Spheres({
               </thead>
 
               <tbody>
-                {add ? (
-                  <AddSphere
-                    added={added}
-                    setAdded={setAdded}
-                    setAdd={setAdd}
-                  />
-                ) : null}
+                {add ? <AddSphere setAdd={setAdd} /> : null}
                 {spheres.map((sphere, index) => {
                   if (editingId === sphere.id) {
                     return (
@@ -214,6 +205,7 @@ const mapStateToProps = (state) => {
   console.log(state, "state");
   return {
     spheres: state.organizationsReducer.categoriesAll,
+    fetch: state.organizationsReducer.fetch,
   };
 };
 

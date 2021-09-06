@@ -30,6 +30,8 @@ const fetchCategoriesAllRequest = () => {
 };
 
 const fetchCategoriesAllSuccess = (data) => {
+  sessionStorage.setItem("delete", false);
+
   const categoriesAll = data ? data : [];
   return {
     type: FETCH_CATEGORIES_ALL_SUCCESS,

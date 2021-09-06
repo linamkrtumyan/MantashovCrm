@@ -7,9 +7,6 @@ function DeleteOrganization({
   setModalOpen,
   id,
   deleteOrganization,
-  fetchOrganizationsTable,
-  added,
-  setAdded,
 }) {
   console.log(modalOpen, "modalOpen");
   console.log(id, "id");
@@ -18,8 +15,6 @@ function DeleteOrganization({
     if (id) {
       setModalOpen(false);
       deleteOrganization(id);
-      // fetchOrganizationsTable();
-      setAdded(added + 1);
     }
   };
   return (
@@ -30,7 +25,11 @@ function DeleteOrganization({
           <p className="modal-card-title has-text-centered">
             Discard this item?
           </p>
-          <button className="delete" aria-label="close"></button>
+          <button
+            onClick={() => setModalOpen(false)}
+            className="delete"
+            aria-label="close"
+          ></button>
         </header>
         <section className="modal-card-body has-text-centered">
           It will be gone forever
@@ -50,16 +49,12 @@ function DeleteOrganization({
 
 const mapStateToProps = (state) => {
   console.log(state, "state");
-  return {
-    //   spheres: state.organizationsReducer.categoriesAll,
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //   cleanForm: () => dispatch(cleanForm()),
     deleteOrganization: (id) => dispatch(deleteOrganization(id)),
-    fetchOrganizationsTable: () => dispatch(fetchOrganizationsTable()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteOrganization);

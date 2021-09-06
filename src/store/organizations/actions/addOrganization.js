@@ -8,23 +8,18 @@ import {
 import { toast } from "react-toastify";
 
 export const addOrganization = (organization) => {
-  // console.log(member, "stacav");
   return (dispatch) => {
     dispatch(addOrganizationRequest());
     request("/admin/organizations/organization", "POST", organization)
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
-          // console.log(data, "news data");
           dispatch(addOrganizationSuccess(data));
           toast.dark("Organization added");
-          //   changePath();
         }
       })
       .catch((e) => {
         dispatch(addOrganizationFailure(e.message));
         toast.error("Something bad happened");
-        // console.log(e);
       });
   };
 };

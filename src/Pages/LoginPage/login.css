@@ -44,7 +44,9 @@
 }
 .login_button {
   padding: 20px 0px;
+  /* margin: 0 10px 10px 10px; */
 }
 .login_btn {
-  width: 300px;
+  width: 280px;
+  margin: 0 10px 10px 10px;
 }

@@ -33,10 +33,6 @@ function AddOrganization({
   categories,
   addOrganization,
   cleanForm,
-  cleanLocation,
-
-  added,
-  setAdded,
 }) {
   console.log(modalOpen, "modalOpen");
 
@@ -46,7 +42,6 @@ function AddOrganization({
     fetchCountries();
     fetchCategories();
     cleanOrganization();
-    // cleanLocation();
   }, []);
 
   useEffect(() => {
@@ -65,22 +60,20 @@ function AddOrganization({
       locationArm,
       locationEng,
       locationRu,
-      cityId,
+      city,
       nameArm,
       nameEng,
       nameRu,
-      categoryId,
+      category,
     } = store.getState().formReducer;
 
     let organization = {
-      address: { locationArm, locationEng, locationRu, cityId },
-      organization: { nameArm, nameEng, nameRu, categoryId },
+      address: { locationArm, locationEng, locationRu, cityId: city },
+      organization: { nameArm, nameEng, nameRu, categoryId: category },
     };
     setModalOpen(false);
     addOrganization(organization);
-    setAdded(added + 1);
 
-    // fetchOrganizationsTable();
     cleanForm();
   };
   return (
@@ -105,7 +98,7 @@ function AddOrganization({
             <Select
               placeholder="Select Category"
               items={categories}
-              id="categoryId"
+              id="category"
             />
           </div>
 
@@ -113,12 +106,12 @@ function AddOrganization({
             <Select
               placeholder="Select Country"
               items={countries}
-              id="countryId"
+              id="country"
             />
 
-            <Select placeholder="Select State" items={states} id="stateId" />
+            <Select placeholder="Select State" items={states} id="state" />
 
-            <Select placeholder="Select City" items={cities} id="cityId" />
+            <Select placeholder="Select City" items={cities} id="city" />
           </div>
 
           <div className="is-flex ">
@@ -144,9 +137,9 @@ const mapStateToProps = (state) => {
   console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
-    countryId: state.formReducer.countryId,
+    countryId: state.formReducer.country,
     states: state.locationsReducer.states,
-    stateId: state.formReducer.stateId,
+    stateId: state.formReducer.state,
     cities: state.locationsReducer.cities,
     categories: state.organizationsReducer.categories,
   };

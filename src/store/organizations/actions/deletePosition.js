@@ -13,8 +13,12 @@ export const deletePosition = (id) => {
     request(`/admin/organizations/position/${id}`, "DELETE")
       .then((data) => {
         // console.log(data, "data");
-        dispatch(deletePositionSuccess(data));
-        toast.dark("Position removed");
+        if (data.success) {
+          dispatch(deletePositionSuccess(data));
+          toast.dark("Position removed");
+        } else {
+          toast.error("Something bad happened");
+        }
       })
       .catch((e) => {
         dispatch(deletePositionFailure(e.message));

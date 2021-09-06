@@ -7,19 +7,20 @@ import {
 import { toast } from "react-toastify";
 
 export const deleteOrganization = (id) => {
-  // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deleteOrganizationRequest());
     request(`/admin/organizations/organization/${id}`, "DELETE")
       .then((data) => {
-        // console.log(data, "data");
-        dispatch(deleteOrganizationSuccess(data));
-        toast.dark("Organization removed");
+        if (data.success) {
+          dispatch(deleteOrganizationSuccess(data));
+          toast.dark("Organization removed");
+        } else {
+          toast.error("Something bad happened");
+        }
       })
       .catch((e) => {
         dispatch(deleteOrganizationFailure(e.message));
         toast.error("Something bad happened");
-        // console.log(e);
       });
   };
 };
@@ -31,12 +32,9 @@ const deleteOrganizationRequest = () => {
 };
 
 const deleteOrganizationSuccess = (data) => {
-  //   const newsDetails = data ? data : [];
   return {
     type: DELETE_ORGANIZATION_SUCCESS,
-    payload: {
-      //   newsDetails,
-    },
+    payload: {},
   };
 };
 

@@ -11,15 +11,23 @@ import {
   FETCH_CATEGORIES_ALL_REQUEST,
   FETCH_CATEGORIES_ALL_SUCCESS,
   FETCH_CATEGORIES_ALL_FAILURE,
+  DELETE_CATEGORY_SUCCESS,
   ADD_CATEGORY_REQUEST,
   ADD_CATEGORY_SUCCESS,
   ADD_CATEGORY_FAILURE,
+  CATEGORY_EDIT_SUCCESS_FAILURE,
   FETCH_POSITIONS_ALL_REQUEST,
   FETCH_POSITIONS_ALL_SUCCESS,
   FETCH_POSITIONS_ALL_FAILURE,
+  DELETE_POSITION_SUCCESS,
+  ADD_POSITION_SUCCESS,
+  POSITION_EDIT_SUCCESS_FAILURE,
   FETCH_ORGANIZATIONS_TABLE_REQUEST,
   FETCH_ORGANIZATIONS_TABLE_SUCCESS,
   FETCH_ORGANIZATIONS_TABLE_FAILURE,
+  ADD_ORGANIZATION_SUCCESS,
+  DELETE_ORGANIZATION_SUCCESS,
+  ORGANIZATION_EDIT_SUCCESS_FAILURE,
   FETCH_ORGANIZATION_DETAILS_REQUEST,
   FETCH_ORGANIZATION_DETAILS_SUCCESS,
   FETCH_ORGANIZATION_DETAILS_FAILURE,
@@ -36,6 +44,7 @@ const initialState = {
   positionsAll: [],
   organizationsTable: [],
   organizationDetails: [],
+  fetch: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -68,6 +77,7 @@ const reducer = (state = initialState, action) => {
     case FETCH_ORGANIZATIONS_TABLE_SUCCESS:
       return {
         ...state,
+        fetch: false,
         organizationsTable: action.payload.organizationsTable,
         loading: false,
         error: null,
@@ -78,6 +88,21 @@ const reducer = (state = initialState, action) => {
         loading: false,
         organizationsTable: [],
         error: action.payload.error,
+      };
+    case ADD_ORGANIZATION_SUCCESS:
+      return {
+        ...state,
+        fetch: true,
+      };
+    case DELETE_ORGANIZATION_SUCCESS:
+      return {
+        ...state,
+        fetch: true,
+      };
+    case ORGANIZATION_EDIT_SUCCESS_FAILURE:
+      return {
+        ...state,
+        fetch: true,
       };
 
     case FETCH_ORGANIZATION_DETAILS_REQUEST:
@@ -131,12 +156,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case DELETE_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        fetch: true,
+      };
+    case CATEGORY_EDIT_SUCCESS_FAILURE:
+      return {
+        ...state,
+        fetch: true,
+      };
     case FETCH_CATEGORIES_ALL_SUCCESS:
       return {
         ...state,
         categoriesAll: action.payload.categoriesAll,
         loading: false,
         error: null,
+        fetch: false,
       };
     case FETCH_CATEGORIES_ALL_FAILURE:
       return {
@@ -177,6 +213,7 @@ const reducer = (state = initialState, action) => {
         positionsAll: action.payload.positionsAll,
         loading: false,
         error: null,
+        fetch: false,
       };
     case FETCH_POSITIONS_ALL_FAILURE:
       return {
@@ -184,6 +221,21 @@ const reducer = (state = initialState, action) => {
         loading: false,
         positionsAll: [],
         error: action.payload.error,
+      };
+    case DELETE_POSITION_SUCCESS:
+      return {
+        ...state,
+        fetch: true,
+      };
+    case ADD_POSITION_SUCCESS:
+      return {
+        ...state,
+        fetch: true,
+      };
+    case POSITION_EDIT_SUCCESS_FAILURE:
+      return {
+        ...state,
+        fetch: true,
       };
 
     case ADD_CATEGORY_REQUEST:
@@ -195,7 +247,9 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        added: true,
+        fetch: true,
+
+        // added: true,
         error: null,
       };
     case ADD_CATEGORY_FAILURE:

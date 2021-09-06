@@ -18,22 +18,21 @@ function Spheres({
   editPosition,
   cleanForm,
   loading,
+  fetch,
 }) {
   const [add, setAdd] = useState(false);
-  const [added, setAdded] = useState(0); //for upate table
   const [editingId, setEditingId] = useState(-1);
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   useEffect(() => {
     fetchPositionsAll();
   }, []);
+
   useEffect(() => {
-    if (added > 0) {
+    if (fetch) {
       fetchPositionsAll();
     }
-  }, [added]);
-
-  console.log(added, "******added******");
+  }, [fetch]);
 
   function handleClick() {
     setAdd(true);
@@ -79,8 +78,6 @@ function Spheres({
   return (
     <div>
       <DeletePositions
-        added={added}
-        setAdded={setAdded}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         id={deleteId}
@@ -91,18 +88,19 @@ function Spheres({
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              padding: "10px 30px",
+              padding: "10px 50px",
             }}
-            onClick={handleClick}
           >
-            <Button title="Add Position" />
+            <div onClick={handleClick}>
+              <Button title="Add Position" />
+            </div>
           </div>
 
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              padding: "0 50px",
+              padding: "0 50px 50px 50px ",
             }}
           >
             <table className="table is-striped  is-fullwidth is-hoverable">
@@ -117,13 +115,7 @@ function Spheres({
               </thead>
 
               <tbody>
-                {add ? (
-                  <AddPosition
-                    added={added}
-                    setAdded={setAdded}
-                    setAdd={setAdd}
-                  />
-                ) : null}
+                {add ? <AddPosition setAdd={setAdd} /> : null}
                 {positions.map((position, index) => {
                   if (editingId === position.id) {
                     return (
@@ -221,6 +213,7 @@ const mapStateToProps = (state) => {
   return {
     positions: state.organizationsReducer.positionsAll,
     loading: state.organizationsReducer.loading,
+    fetch: state.organizationsReducer.fetch,
   };
 };
 

@@ -7,6 +7,9 @@
   font-size: 18px;
   text-transform: uppercase;
 } */
+.button_container {
+  /* margin: 0 10px 10px 10px; */
+}
 .button_container :hover {
   /* background: red; */
   opacity: 0.9;

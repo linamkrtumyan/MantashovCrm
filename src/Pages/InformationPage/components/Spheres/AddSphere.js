@@ -1,24 +1,14 @@
 import React from "react";
 import Input from "../../../../Components/Forms/Input/Input";
 import { connect } from "react-redux";
-import store, {
-  addCategory,
-  cleanForm,
-  fetchCategoriesAll,
-} from "../../../../store";
+import store, { addCategory, cleanForm } from "../../../../store";
 
 function AddSphere({
-  added,
-  setAdded,
   setAdd,
   addCategory,
 
   cleanForm,
-  fetchCategoriesAll,
 }) {
-  //   if (added) {
-  //     setAdd(false);
-  //   }
   const handleCreate = () => {
     let { nameArm, nameEng, nameRu } = store.getState().formReducer;
 
@@ -35,9 +25,6 @@ function AddSphere({
     addCategory(category, changePath);
     setAdd(false);
     cleanForm();
-    setAdded(added + 1);
-
-    // fetchCategoriesAll();
   };
 
   return (
@@ -67,10 +54,7 @@ function AddSphere({
 
 const mapStateToProps = (state) => {
   console.log(state, "state");
-  return {
-    // spheres: state.organizationsReducer.categoriesAll,
-    // added: state.organizationsReducer.added,
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -78,7 +62,6 @@ const mapDispatchToProps = (dispatch) => {
     addCategory: (category, changePath) =>
       dispatch(addCategory(category, changePath)),
     cleanForm: () => dispatch(cleanForm()),
-    fetchCategoriesAll: () => dispatch(fetchCategoriesAll()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddSphere);

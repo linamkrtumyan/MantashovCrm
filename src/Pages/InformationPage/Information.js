@@ -24,7 +24,7 @@ function Information() {
   console.log(data, "data from session");
   return (
     <div>
-      <div className="tabs ">
+      <div className="tabs is-boxed ">
         <ul>
           <li
             onClick={() => {

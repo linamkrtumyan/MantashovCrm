@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Button from "../../../../Components/Forms/Button/Button";
 import { connect } from "react-redux";
-import store, {
+import {
   formOnChange,
   cleanForm,
   fetchOrganizationsTable,
   editPosition,
-  cleanOrganization,
 } from "../../../../store";
 import Loading from "../../../../Components/Loading/Loading";
 import AddOrganization from "./AddOrganization";
 import DeleteOrganization from "./DeleteOrganization";
 import EditOrganization from "./EditOrganization";
-import { useHistory } from "react-router-dom";
 
-function Organizations({
-  fetchOrganizationsTable,
-  organizationsTable,
-  cleanOrganization,
-}) {
-  const [added, setAdded] = useState(0);
+function Organizations({ fetchOrganizationsTable, organizationsTable, fetch }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -31,10 +24,10 @@ function Organizations({
   }, []);
 
   useEffect(() => {
-    if (added > 0) {
+    if (fetch) {
       fetchOrganizationsTable();
     }
-  }, [added]);
+  }, [fetch]);
 
   function handleDelete(id) {
     setModalOpen(true);
@@ -44,11 +37,9 @@ function Organizations({
     console.log(id, "ekac id****");
     setEditId(id);
     setEditModalOpen(true);
-    // history.push(`/information/${id}`);
   }
   function handleAdd() {
     setAddModalOpen(true);
-    // setDeleteId(id);
   }
 
   // if (loading) {
@@ -58,23 +49,17 @@ function Organizations({
   return (
     <div>
       <EditOrganization
-        added={added}
-        setAdded={setAdded}
         modalOpen={editModalOpen}
         setModalOpen={setEditModalOpen}
         id={editId}
         setEditId={setEditId}
       />
       <DeleteOrganization
-        added={added}
-        setAdded={setAdded}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         id={deleteId}
       />
       <AddOrganization
-        added={added}
-        setAdded={setAdded}
         modalOpen={addModalOpen}
         setModalOpen={setAddModalOpen}
       />
@@ -84,21 +69,24 @@ function Organizations({
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              padding: "10px 30px",
+              padding: "10px 50px",
             }}
             // onClick={handleClick}
-            onClick={(e) => {
-              handleAdd();
-            }}
           >
-            <Button title="Add Organization" />
+            <div
+              onClick={(e) => {
+                handleAdd();
+              }}
+            >
+              <Button title="Add Organization" />
+            </div>
           </div>
 
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              padding: "0 50px",
+              padding: "0 50px 50px 50px ",
             }}
           >
             <table className="table is-striped  is-fullwidth is-hoverable">
@@ -157,6 +145,7 @@ const mapStateToProps = (state) => {
   return {
     organizationsTable: state.organizationsReducer.organizationsTable,
     loading: state.organizationsReducer.loading,
+    fetch: state.organizationsReducer.fetch,
   };
 };
 
@@ -167,7 +156,6 @@ const mapDispatchToProps = (dispatch) => {
     editPosition: (position, changePath) =>
       dispatch(editPosition(position, changePath)),
     cleanForm: () => dispatch(cleanForm()),
-    cleanOrganization: () => dispatch(cleanOrganization()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Organizations);

@@ -10,11 +10,16 @@ export const deleteCategory = (id) => {
   // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deleteCategoryRequest());
+
     request(`/admin/organizations/category/${id}`, "DELETE")
       .then((data) => {
         // console.log(data, "data");
-        dispatch(deleteCategorySuccess(data));
-        toast.dark("Category removed");
+        if (data.success) {
+          dispatch(deleteCategorySuccess(data));
+          toast.dark("Category removed");
+        } else {
+          toast.error("Something bad happened");
+        }
       })
       .catch((e) => {
         dispatch(deleteCategoryFailure(e.message));
@@ -31,6 +36,8 @@ const deleteCategoryRequest = () => {
 };
 
 const deleteCategorySuccess = (data) => {
+  sessionStorage.setItem("delete", true);
+
   //   const newsDetails = data ? data : [];
   return {
     type: DELETE_CATEGORY_SUCCESS,
