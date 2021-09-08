@@ -40,6 +40,7 @@ const initialState = {
   member: null,
   memberDetails: {},
   memberForEdit: [],
+  addedOrganizations: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -79,6 +80,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
+        addedOrganizations: [],
       };
     case ADD_MEMBER_FAILURE:
       return {

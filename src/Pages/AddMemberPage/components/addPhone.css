@@ -2,3 +2,12 @@
   width: 30px;
   color: transparent;
 }
+.added_orgs {
+  background: white;
+  width: 280px;
+  height: 40px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

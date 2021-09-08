@@ -60,11 +60,9 @@ function AddEvent({
   }, []);
 
   useEffect(() => {
-    // console.log(country, "send id");
     fetchStates(country);
   }, [country]);
   useEffect(() => {
-    // console.log(state, "send state id");
     fetchCities(state);
   }, [state]);
 

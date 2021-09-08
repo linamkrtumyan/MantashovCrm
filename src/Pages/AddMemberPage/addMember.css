@@ -59,3 +59,15 @@
 .red {
   background: #a3d1ff !important;
 }
+.add_new_org {
+  display: flex;
+  background-color: white;
+  width: 280px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.add_new_org:hover {
+  background-color: rgba(255, 255, 255, 0.788);
+}

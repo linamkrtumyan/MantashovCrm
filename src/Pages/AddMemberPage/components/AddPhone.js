@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import "./addPhone.css";
 
 function AddPhone({ contactType, formOnChange, value, cleanForm }) {
-  console.log(contactType, "contactType");
+  // console.log(contactType, "contactType");
   useEffect(() => {
     formOnChange("contacts", contactType.id, []);
     // return () => {

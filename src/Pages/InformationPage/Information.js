@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import Organizations from "./components/Organizations/Organizations";
 import Positions from "./components/Positions/Positions";
 import Spheres from "./components/Spheres/Spheres";
+import "./information.css";
 
 function Information() {
   const [tab, setTab] = useState(0);

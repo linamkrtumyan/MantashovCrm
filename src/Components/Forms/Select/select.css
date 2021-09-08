@@ -15,8 +15,8 @@
   overflow-y: auto;
 }
 .select_items li {
-  height: 40px;
-  padding: 10px;
+  height: 25px;
+  padding: 2px;
   cursor: pointer;
 }
 .select_items li:hover {

@@ -107,11 +107,22 @@ function AddOrganization({
               placeholder="Select Country"
               items={countries}
               id="country"
+              className="org_select"
             />
 
-            <Select placeholder="Select State" items={states} id="state" />
+            <Select
+              className="org_select"
+              placeholder="Select State"
+              items={states}
+              id="state"
+            />
 
-            <Select placeholder="Select City" items={cities} id="city" />
+            <Select
+              className="org_select"
+              placeholder="Select City"
+              items={cities}
+              id="city"
+            />
           </div>
 
           <div className="is-flex ">

@@ -22,6 +22,7 @@ import { connect } from "react-redux";
 import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 import EditPhone from "./components/EditPhone";
+import EditOrganizations from "./components/EditOrganizations";
 
 function EditMember({
   fetchMemberForEdit,
@@ -242,24 +243,8 @@ function EditMember({
           <div className="location_container">
             <div className="container_title">Occupation</div>
             <div className="container_body">
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Select
-                  placeholder="Select Sphere"
-                  items={categories}
-                  id="category"
-                />
-
-                <Select
-                  placeholder="Select Organization"
-                  items={organizations}
-                  id="organization"
-                />
-
-                <Select
-                  placeholder="Select Position"
-                  items={positions}
-                  id="position"
-                />
+              <div>
+                <EditOrganizations />
               </div>
             </div>
           </div>

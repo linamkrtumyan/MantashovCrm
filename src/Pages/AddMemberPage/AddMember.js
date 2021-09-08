@@ -17,6 +17,7 @@ import {
   fetchPositions,
   fetchStates,
   cleanLocation,
+  formOnChangeArray,
 } from "../../store";
 import {
   addMember,
@@ -25,6 +26,7 @@ import {
 } from "../../store/members/actions";
 import store from "../../store";
 import AddPhone from "./components/AddPhone";
+import AddOrganization from "./components/AddOrganization";
 
 function AddMember({
   fetchCountries,
@@ -50,8 +52,12 @@ function AddMember({
   fetchPositions,
   positions,
   cleanLocation,
+  // organizationsType,
+  formOnChangeArray,
+  addedOrganizations,
 }) {
   const [isActive, setIsActive] = useState(true);
+  const [newOrg, setNewOrg] = useState(0);
   // console.log(isActive, "is active");
   const history = useHistory();
   useEffect(() => {
@@ -62,6 +68,11 @@ function AddMember({
     cleanForm();
     cleanMember();
     cleanLocation();
+    fetchOrganizations();
+
+    // organizationsType.map((org) => {
+    //   formOnChangeArray("organizations", org.name, "");
+    // });
   }, []);
 
   useEffect(() => {
@@ -74,11 +85,23 @@ function AddMember({
       fetchCities(stateId);
     }
   }, [stateId]);
-  useEffect(() => {
-    if (categoryId) {
-      fetchOrganizations(categoryId);
-    }
-  }, [categoryId]);
+  // useEffect(() => {
+  //   if (categoryId) {
+  //     fetchOrganizations(categoryId);
+  //   }
+  // }, [categoryId]);
+
+  const organizationsType = [
+    {
+      id: 1,
+      name: "organizationId",
+    },
+    {
+      id: 2,
+      name: "positionId",
+    },
+    ,
+  ];
 
   const cancelAdd = () => {
     history.push("/members");
@@ -108,23 +131,15 @@ function AddMember({
       contacts,
     } = store.getState().formReducer;
     const image = store.getState().imageReducer.header;
-
     let keys = Object.keys(contacts);
-    console.log(keys, "keys");
-
     const values = keys.map((key) => contacts[key]);
-    console.log(values, "values");
     let ok = false;
     values.map((value) => (value ? (ok = true) : (ok = false)));
-
     const contacts1 = keys.map((key, index) =>
       ok ? values[index].map((o) => ({ id: 1 + +key, value: o })) : []
     );
-
     let result = [];
     contacts1.forEach((contact1) => (result = result.concat(contact1)));
-    // console.log(result, "result");
-    // console.log(contacts1, "88888888");
 
     let member = {
       locationArm,
@@ -144,8 +159,7 @@ function AddMember({
       descriptionRu,
       birthdate,
       email,
-
-      organizationId,
+      organizations: addedOrganizations,
       positionId,
       contacts: result,
     };
@@ -153,9 +167,7 @@ function AddMember({
     const changePath = () => {
       history.push("/members");
     };
-    // console.log(member, "uxarkvox member");
     addMember(member, changePath);
-
     cleanForm();
   };
 
@@ -207,13 +219,6 @@ function AddMember({
               </div>
               <div style={{ display: "flex" }}>
                 <Input placeholder="Birthdate" id="birthdate" type="date" />
-                {/* <button
-                  onClick={() => setIsActive(!isActive)}
-                  style={{ width: "31%", margin: "0 14px" }}
-                  className={isActive ? "button red" : "button"}
-                >
-                  <p>{isActive ? "Active" : "Passive"}</p>
-                </button> */}
               </div>
             </div>
           </div>
@@ -247,24 +252,8 @@ function AddMember({
           <div className="location_container">
             <div className="container_title">Occupation</div>
             <div className="container_body">
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Select
-                  placeholder="Select Sphere"
-                  items={categories}
-                  id="categoryId"
-                />
-
-                <Select
-                  placeholder="Select Organization"
-                  items={organizations}
-                  id="organizationId"
-                />
-
-                <Select
-                  placeholder="Select Position"
-                  items={positions}
-                  id="positionId"
-                />
+              <div>
+                <AddOrganization setNewOrg={setNewOrg} newOrg={newOrg} />
               </div>
             </div>
           </div>
@@ -296,7 +285,11 @@ function AddMember({
           </div>
 
           <div>
-            <Button type="submit" title="Create" className="action_btn" />
+            <Button
+              type="submit"
+              title="Create"
+              className="action_btn is-primary"
+            />
           </div>
         </div>
       </form>
@@ -318,6 +311,7 @@ const mapStateToProps = (state) => {
     categoryId: state.formReducer.categoryId,
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,
+    addedOrganizations: state.membersReducer.addedOrganizations,
   };
 };
 
@@ -326,8 +320,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),
-    fetchOrganizations: (categoryId) =>
-      dispatch(fetchOrganizations(categoryId)),
+    fetchOrganizations: () => dispatch(fetchOrganizations()),
     fetchCategories: () => dispatch(fetchCategories()),
     addMember: (member, changePath) => dispatch(addMember(member, changePath)),
     fetchContactTypes: () => dispatch(fetchContactTypes()),
@@ -335,6 +328,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchPositions: () => dispatch(fetchPositions()),
     cleanMember: () => dispatch(cleanMember()),
     cleanLocation: () => dispatch(cleanLocation()),
+    formOnChangeArray: (firstKey, secondKey, value) =>
+      dispatch(formOnChangeArray(firstKey, secondKey, value)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddMember);

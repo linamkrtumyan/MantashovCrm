@@ -12,6 +12,8 @@ const Select = ({
   value,
   type = "text",
   items = [],
+  className = "",
+  placeholderText = null,
 }) => {
   const ref = useRef();
   const ul = useRef();
@@ -74,13 +76,14 @@ const Select = ({
         value={text}
         type={type}
         required={true}
+        placeholder={placeholderText}
         // placeholder={placeholder}
       />
       <span style={{ marginTop: "25px" }} className="icon is-small is-right">
         <i className="fas fa-angle-down"></i>
       </span>
       {show && (
-        <ul className="select_items">
+        <ul className={`select_items  ${className} `}>
           {items.map((item) => (
             <li
               id={item.id}
