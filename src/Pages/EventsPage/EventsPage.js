@@ -33,6 +33,40 @@ function EventsPage({
     fetchPastEvents(page);
     fetchUpcomingEvents(page);
   }, []);
+
+  const data = [
+    {
+      id: 1,
+      eventName: "Kerakrel Koksin",
+      location: "Ijevan",
+      startDate: "9/9/2021 15:00:00",
+      endDate: "9/9/2021 15:05:00",
+      description: "Koks Linayevich",
+      going: 2,
+      seen: 9,
+    },
+    {
+      id: 2,
+      eventName: "Gnal tun",
+      location: "Gosh",
+      startDate: "9/9/2021 16:40:00",
+      endDate: "9/9/2021 16:50:00",
+      description: "gazelic chushanal",
+      going: 2,
+      seen: 9,
+    },
+    {
+      id: 3,
+      eventName: "uxxaki event",
+      location: "Ijevan",
+      startDate: "9/9/2021 17:00:00",
+      endDate: "9/9/2021 20:00:00",
+      description: "no description",
+      going: 3,
+      seen: 9,
+    },
+  ];
+
   if (loading) {
     return <Loading />;
   }
@@ -48,28 +82,92 @@ function EventsPage({
   return (
     <>
       <div className="events_container">
-        <div className="events_title event_nav" onClick={toPastEventsPage}>
+        {/* <div className="events_title event_nav" onClick={toPastEventsPage}>
           Past Events{" "}
-        </div>
-        <div className="all_eventscard_container">
-          {/* <AddEventCard /> */}
-          {pastEvents?.map((pastEvent) => (
+        </div> */}
+        {/* <div className="all_eventscard_container"> */}
+        {/* <AddEventCard /> */}
+        {/* {pastEvents?.map((pastEvent) => (
             <EventCard key={pastEvent.id} event={pastEvent} />
-          ))}
-        </div>
+          ))} */}
+        {/* </div>
         <div className="events_title event_nav" onClick={toUpcomingEventsPage}>
           Upcoming Events{" "}
-        </div>
+        </div> */}
 
-        <div className="all_eventscard_container">
-          {/* <AddEventCard /> */}
-          {upcomingEvents?.map((upcomingEvent) => (
+        {/* <div className="all_eventscard_container"> */}
+        {/* <AddEventCard /> */}
+        {/* {upcomingEvents?.map((upcomingEvent) => (
             <EventCard key={upcomingEvent.id} event={upcomingEvent} />
-          ))}
-
+          ))} */}
+        {/* 
           {noUpcomingEvents ? (
             <div className="nodata_text">No Upcoming Events</div>
           ) : null}
+        </div> */}
+
+        <AddEventCard />
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "0 50px 50px 50px ",
+          }}
+        >
+          <table className="table is-striped  is-fullwidth is-hoverable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Going/Seen</th>
+                <th>Description</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {data?.map((event) => (
+                <tr>
+                  <td>{event.eventName}</td>
+                  <td>{event.location}</td>
+                  <td>{event.startDate}</td>
+                  <td>{event.endDate}</td>
+                  <td>
+                    {event.going}/{event.seen}
+                  </td>
+                  {event.description.length > 15 ? (
+                    <td>{event.description.substring(0, 15)}...</td>
+                  ) : (
+                    <td>{event.description}</td>
+                  )}
+
+                  <td style={{ width: "10px" }}>
+                    <div
+                      style={{ cursor: "pointer" }}
+                      // onClick={(e) => {
+                      //   handleEdit(event.id);
+                      // }}
+                    >
+                      <i className="fas fa-edit"></i>
+                    </div>
+                  </td>
+                  <td style={{ width: "10px" }}>
+                    <div
+                      style={{ cursor: "pointer", marginLeft: "5px" }}
+                      // onClick={(e) => {
+                      //   handleEdit(event.id);
+                      // }}
+                    >
+                      <i className="fas fa-eye"></i>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>
