@@ -98,7 +98,7 @@ function EditMember({
       locationArm,
       locationEng,
       locationRu,
-      organization,
+      organizations,
       position,
     } = store.getState().formReducer;
 
@@ -127,13 +127,15 @@ function EditMember({
       descriptionRu,
       birthdate,
       email,
-      organizationId: organization,
+      // organizationId: organization,
+      organizations,
       positionId: position,
       contacts: cont,
       isActive,
     };
     // console.log(member, "sended member");
     editMember(member, changePath);
+    cleanForm();
     // cleanImages();
   };
 
