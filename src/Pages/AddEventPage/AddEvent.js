@@ -105,10 +105,11 @@ function AddEvent({
 
   return (
     <div>
-      <button onClick={() => history.goBack()} className="arrow_left">
-        ❮
-      </button>
-      <form onSubmit={handleSubmit} className="add_event_container">
+      <button onClick={() => history.goBack()} className="arrow_left"></button>
+      <form
+        onSubmit={handleSubmit}
+        // className="add_event_container"
+      >
         <div className="add_member_title">Add Event</div>
         <div className="add_member_component">
           <div className="event_address_container">

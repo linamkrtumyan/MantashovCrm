@@ -10,10 +10,10 @@ export const fetchEventDetailsForEdit = (id) => {
   // console.log(id, "editiid");
   return (dispatch) => {
     dispatch(fetchEventDetailsForEditRequest());
-    request(`/admin/events/event/detailsForEdit/${id}`)
+    request(`/admin/events/event/forEdit/${id}`)
       .then((data) => {
         // console.log("mtav");
-        // console.log(data, "data");
+        console.log(data, "data");
         dispatch(initForm(data));
         dispatch(fetchEventDetailsForEditSuccess(data));
       })

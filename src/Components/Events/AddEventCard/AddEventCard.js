@@ -21,7 +21,7 @@ function AddEventCard() {
       </div>
       <div className="add_eventcard_text">Add Event</div> */}
       <div>
-        <Button title="Add member" />
+        <Button title="Add event" />
       </div>
     </div>
   );

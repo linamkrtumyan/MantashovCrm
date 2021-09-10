@@ -15,6 +15,9 @@ import {
   ADD_EVENT_REQUEST,
   ADD_EVENT_SUCCESS,
   ADD_EVENT_FAILURE,
+  FETCH_EVENTS_BY_PAGE_REQUEST,
+  FETCH_EVENTS_BY_PAGE_SUCCESS,
+  FETCH_EVENTS_BY_PAGE_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -29,11 +32,36 @@ const initialState = {
   detailsImages: [],
   addresses: [],
   eventDetails: [],
+  eventsByPage: [],
 };
 
 const reducer = (state = initialState, action) => {
   // console.log(action, " action payload");
   switch (action.type) {
+    case FETCH_EVENTS_BY_PAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_EVENTS_BY_PAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+
+        eventsByPage: action.payload.eventsByPage.events,
+        count: action.payload.eventsByPage.count,
+        // membersByPage: [],
+
+        error: null,
+      };
+    case FETCH_EVENTS_BY_PAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+
+        eventsByPage: [],
+        error: action.payload.error,
+      };
     case FETCH_PAST_EVENTS_REQUEST:
       return {
         ...state,
