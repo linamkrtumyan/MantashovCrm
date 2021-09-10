@@ -104,8 +104,17 @@ function EditOrganizations({
   }, [posId3]);
 
   const handleAdd = () => {
+    // if (allAddedOrganizations === null) {
+    //   console.log("mtav if ****");
+    //   // Array.from(allAddedOrganizations);
+    //   // allAddedOrganizations = Array.from(addedOrganizations);
+    //   // allAddedOrganizations.push(addedOrganizations);
+
+    //   setOrgs(orgs + 1);
+    // } else {
     allAddedOrganizations.push(addedOrganizations);
     setOrgs(orgs + 1);
+    // }
   };
   const handleDelete = (index) => {
     allAddedOrganizations.splice(index, 1);

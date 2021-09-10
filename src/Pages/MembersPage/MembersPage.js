@@ -64,7 +64,7 @@ function MembersPage({
               <tr>
                 <th>Photo</th>
                 <th>Full Name</th>
-                <th>Sphere</th>
+                {/* <th>Sphere</th> */}
                 <th>Organization</th>
                 <th>Phone</th>
                 <th>Location</th>
@@ -93,8 +93,12 @@ function MembersPage({
                       <td>
                         {memberByPage.firstName} {memberByPage.lastName}
                       </td>
-                      <td>{memberByPage.category}</td>
-                      <td>{memberByPage.organizations}</td>
+                      {/* <td>{memberByPage.category}</td> */}
+                      <td>
+                        {memberByPage.organizations.map((org) => (
+                          <p>{org}</p>
+                        ))}
+                      </td>
                       <td>{memberByPage.phone}</td>
                       <td>{memberByPage.location}</td>
                     </tr>
