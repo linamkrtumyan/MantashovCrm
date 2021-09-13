@@ -31,7 +31,7 @@ function EditEvent({
   fetchEventDetailsForEdit,
   eventForEdit,
 }) {
-  const [showAgentas, setShowAgentas] = useState(false);
+  const [showAgendas, setShowAgendas] = useState(false);
 
   useEffect(() => {
     if (id) {
