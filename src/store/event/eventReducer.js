@@ -36,7 +36,7 @@ const initialState = {
   addresses: [],
   eventDetails: [],
   eventsByPage: [],
-  eventForEdit: [],
+  eventForEdit: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -179,7 +179,28 @@ const reducer = (state = initialState, action) => {
     //         ...state.detailsImages.slice(action.payload.deleteId + 1),
     //       ],
     //     };
+    case FETCH_EVENTS_BY_PAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_EVENT_FOR_EDIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
 
+        eventForEdit: action.payload.eventForEdit,
+        error: null,
+      };
+    case FETCH_EVENT_FOR_EDIT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+
+        eventForEdit: {},
+
+        error: action.payload.error,
+      };
     default:
       return state;
   }

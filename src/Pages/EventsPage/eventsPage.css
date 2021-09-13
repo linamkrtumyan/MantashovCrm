@@ -34,3 +34,8 @@
   justify-content: center;
   align-items: center;
 }
+
+.img-for-edit {
+  height: 150px;
+  width: 150px;
+}

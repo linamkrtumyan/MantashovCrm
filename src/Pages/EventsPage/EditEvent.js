@@ -15,6 +15,9 @@ import store, {
 
 import { connect } from "react-redux";
 
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
+
 function EditEvent({
   modalOpen,
   setModalOpen,
@@ -31,7 +34,7 @@ function EditEvent({
   fetchEventDetailsForEdit,
   eventForEdit,
 }) {
-  const [showAgendas, setShowAgendas] = useState(false);
+  const [showAgendas, setShowAgendas] = useState(true);
 
   useEffect(() => {
     if (id) {
@@ -102,11 +105,38 @@ function EditEvent({
             <Input id="endDate" type="date" placeholder="End Date" />
           </div>
           <hr></hr>
-          <div className="see-agendas-btn">See Agenta</div>
+          {/* <div
+            className="see-agendas-btn"
+            // onClick={setShowAgendas(true)}
+          >
+            See Agenta
+          </div> */}
+
           {/* {
-            showAgentas ?
-            
+            showAgendas ?
+            eventForEdit.agenda.map(item => (
+              <div style={{display: 'flex'}}>
+                <Input id="dateAndTime" type="date" value={item.dateAndTime} />
+                <div>{item.descriptionArm}</div>
+              </div>
+            )) : null
           } */}
+          {eventForEdit && eventForEdit.images ? (
+            <Slide>
+              {eventForEdit.images.map((item) => (
+                <div>
+                   <img
+                  className="img-for-edit"
+                  src={`/images/events/${id}/${item}`}
+                  
+                />
+                <button>
+                  <img />
+                </button>
+                </div>
+              ))}
+            </Slide>
+          ) : null}
         </section>
         <footer className="modal-card-foot is-flex is-justify-content-flex-end">
           <button
@@ -133,14 +163,17 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
+  console.log(
+    state.eventReducer.eventForEdit,
+    "state.eventReducer.eventForEdit"
+  );
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
     states: state.locationsReducer.states,
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
-    // eventForEdit: state.eventReducer.eventForEdit,
+    eventForEdit: state.eventReducer.eventForEdit,
   };
 };
 

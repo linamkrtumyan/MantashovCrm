@@ -7,6 +7,7 @@ import {
 } from "../types";
 
 export const fetchEventDetailsForEdit = (id) => {
+  console.log("lllllllllllllllllll");
   return (dispatch) => {
     dispatch(fetchEventDetailsForEditRequest());
     request(`/admin/events/event/forEdit/${id}`)
@@ -27,7 +28,7 @@ const fetchEventDetailsForEditRequest = () => {
 };
 
 const fetchEventDetailsForEditSuccess = (data) => {
-  const eventForEdit = data ? data : [];
+  const eventForEdit = data ? data : {};
 
   return {
     type: FETCH_EVENT_FOR_EDIT_SUCCESS,
