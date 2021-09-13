@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../Components/Forms/Input/Input";
 import Select from "../../Components/Forms/Select/Select";
 
@@ -29,7 +29,10 @@ function EditEvent({
   fetchCities,
   cleanForm,
   fetchEventDetailsForEdit,
+  eventForEdit,
 }) {
+  const [showAgentas, setShowAgentas] = useState(false);
+
   useEffect(() => {
     if (id) {
       fetchEventDetailsForEdit(id);
@@ -50,6 +53,7 @@ function EditEvent({
       fetchCities(stateId);
     }
   }, [stateId]);
+
   return (
     <div className={"modal " + (modalOpen ? "is-active" : "")}>
       <div className="modal-background"></div>
@@ -98,13 +102,11 @@ function EditEvent({
             <Input id="endDate" type="date" placeholder="End Date" />
           </div>
           <hr></hr>
-          {/* <div>
-          <p>Agenta</p>
-          <div className="is-flex ">
-            <Input id="dateAndTime" type="date" placeholder="Date and time" />
-            <Input id="description" type="text" placeholder="Descriprion" />
-          </div>
-          </div> */}
+          <div className="see-agendas-btn">See Agenta</div>
+          {/* {
+            showAgentas ?
+            
+          } */}
         </section>
         <footer className="modal-card-foot is-flex is-justify-content-flex-end">
           <button
@@ -138,6 +140,7 @@ const mapStateToProps = (state) => {
     states: state.locationsReducer.states,
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
+    // eventForEdit: state.eventReducer.eventForEdit,
   };
 };
 

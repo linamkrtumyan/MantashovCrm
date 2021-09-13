@@ -18,6 +18,9 @@ import {
   FETCH_EVENTS_BY_PAGE_REQUEST,
   FETCH_EVENTS_BY_PAGE_SUCCESS,
   FETCH_EVENTS_BY_PAGE_FAILURE,
+  FETCH_EVENT_FOR_EDIT_REQUEST,
+  FETCH_EVENT_FOR_EDIT_SUCCESS,
+  FETCH_EVENT_FOR_EDIT_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -33,15 +36,15 @@ const initialState = {
   addresses: [],
   eventDetails: [],
   eventsByPage: [],
+  eventForEdit: [],
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action, " action payload");
   switch (action.type) {
     case FETCH_EVENTS_BY_PAGE_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: false,
       };
     case FETCH_EVENTS_BY_PAGE_SUCCESS:
       return {

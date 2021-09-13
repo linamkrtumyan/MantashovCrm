@@ -7,19 +7,15 @@ import {
 } from "../types";
 
 export const fetchEventDetailsForEdit = (id) => {
-  // console.log(id, "editiid");
   return (dispatch) => {
     dispatch(fetchEventDetailsForEditRequest());
     request(`/admin/events/event/forEdit/${id}`)
       .then((data) => {
-        // console.log("mtav");
-        console.log(data, "data");
         dispatch(initForm(data));
         dispatch(fetchEventDetailsForEditSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchEventDetailsForEditFailure(e.message));
-        // console.log(e);
       });
   };
 };
@@ -32,6 +28,7 @@ const fetchEventDetailsForEditRequest = () => {
 
 const fetchEventDetailsForEditSuccess = (data) => {
   const eventForEdit = data ? data : [];
+
   return {
     type: FETCH_EVENT_FOR_EDIT_SUCCESS,
     payload: {
