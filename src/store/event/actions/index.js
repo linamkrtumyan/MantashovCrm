@@ -6,3 +6,4 @@ export { fetchEventDetailsForEdit } from "./fetchEventDetailsForEdit";
 export { addEvent } from "./addEvent";
 export { fetchEventDetails } from "./fetchEventDetails";
 export { fetchEventsByPage } from "./fetchEvents";
+export { editEvent } from "./editEvent";

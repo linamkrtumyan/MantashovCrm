@@ -28,6 +28,7 @@ export {
   addEvent,
   fetchEventDetails,
   fetchEventsByPage,
+  editEvent
 } from "./event/actions";
 export {
   fetchCountries,

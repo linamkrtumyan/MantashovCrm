@@ -21,6 +21,7 @@ import {
   FETCH_EVENT_FOR_EDIT_REQUEST,
   FETCH_EVENT_FOR_EDIT_SUCCESS,
   FETCH_EVENT_FOR_EDIT_FAILURE,
+  editEvent
 } from "./types";
 
 const initialState = {
