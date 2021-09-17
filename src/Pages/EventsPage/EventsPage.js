@@ -36,15 +36,15 @@ function EventsPage({
   if (loading) {
     return <Loading />;
   }
-  if (noEvents) {
-    return (
-      <div className="noData">
-        <div>
-          <div className="nodata_text">No events, you can add a event</div>
-        </div>
-      </div>
-    );
-  }
+  // if (noEvents) {
+  //   return (
+  //     <div className="noData">
+  //       <div>
+  //         <div className="nodata_text">No events, you can add a event</div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
   return (
     <>
       <div className="events_container">

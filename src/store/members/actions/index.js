@@ -9,3 +9,4 @@ export { fetchMemberDetails } from "./fetchMemberDetails";
 export { fetchMemberForEdit } from "./fetchMemberForEdit";
 export { editMember } from "./editMember";
 export { cleanMember } from "./cleanMember";
+export { resetPassword } from "./resetPassword";

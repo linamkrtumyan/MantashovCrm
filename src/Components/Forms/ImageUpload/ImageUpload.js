@@ -71,22 +71,10 @@ function ImageUpload({
       <div>
         <label
           htmlFor="multiple-file-upload"
-          className={`custom-file-upload ${className}`}
+          className={`multiple-custom-file-upload ${className}`}
         >
-          <svg className="upload" viewBox="-10 -7 50 50">
-            <g
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="transparent"
-              stroke="#343333"
-              strokeWidth="5"
-            >
-              <line x1="15.37" y1="1.4" x2="15.37" y2="26.4" />
-              <polyline points="24,9.4 15.4,0.7 6.7,9.4 " />
-              <polyline points="30.2,15.8 30.2,35 0.5,35 0.5,15.8 " />
-            </g>
-          </svg>
-          {label}
+          <i className="fas fa-cloud-upload-alt"></i>
+          <p>{label}</p>
         </label>
         <input
           type="file"

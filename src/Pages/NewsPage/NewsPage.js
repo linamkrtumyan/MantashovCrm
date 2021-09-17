@@ -6,6 +6,7 @@ import Pagination from "../../Components/Pagination/Pagination";
 import { connect } from "react-redux";
 import { fetchNewsByPage } from "../../store";
 import Loading from "../../Components/Loading/Loading";
+import { useHistory } from "react-router-dom";
 
 function NewsPage({
   fetchNewsByPage,
@@ -16,9 +17,15 @@ function NewsPage({
   currentPage,
   action,
 }) {
+  let history = useHistory();
+
   useEffect(() => {
     fetchNewsByPage();
   }, [currentPage, action]);
+
+  function handleDetails(id) {
+    history.push(`/edit-news/${id}`);
+  }
 
   if (loading) {
     return <Loading />;
@@ -34,13 +41,63 @@ function NewsPage({
     );
   }
   return (
-    <div className="news_component">
-      <div className="news_title">All News</div>
-      <div className="all_newscard_container">
+    <div>
+      <div className="members_container">
         <AddNewsCard />
-        {newsByPage.map((news) => (
-          <NewsCard key={news.id} news={news} />
-        ))}
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "0 50px",
+            overflowY: "scroll",
+            maxHeight: "65vh",
+          }}
+        >
+          <table className="table is-striped  is-fullwidth is-hoverable">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Title</th>
+                <th>Text</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {newsByPage.length > 0 ? (
+                newsByPage.map((news, index) => {
+                  return (
+                    <tr
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDetails(news.id)}
+                      key={index}
+                    >
+                      <td>
+                        <img
+                          alt=""
+                          className="newscard_img"
+                          onError={(e) => {
+                            e.preventDefault();
+                            e.target.onerror = null;
+                            e.target.src =
+                              require("../../img/unnamed.png").default;
+                          }}
+                          src={`/images/newsHeader/${news.id}/header.png`}
+                        />
+                      </td>
+                      <td>{news.title}</td>
+                      <td>{news.text}</td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="3">No data</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         <Pagination totalPosts={count} />
       </div>

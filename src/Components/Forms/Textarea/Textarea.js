@@ -9,22 +9,29 @@ function Textarea({
   type = "text",
   defaultValue = "",
   className = "",
+  textareaSize = "",
   value = "",
   formOnChange,
 }) {
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
   };
+  const auto_grow = (element) => {
+    element.target.style.height = "40px";
+    element.target.style.height = element.target.scrollHeight + "px";
+  };
   return (
-    <div className="input_container">
+    <div className={`input_container ${className}`}>
+      {/* <div className={`input_container ${className}`}> */}
       <label htmlFor={id}>{placeholder}</label>
 
       <textarea
         id={id}
         onChange={handleOnChange}
         // defaultValue={defaultValue}
-        className={`textarea  ${className}`}
+        className={`textarea ${textareaSize}`}
         // placeholder={placeholder}
+        onInput={(e) => auto_grow(e)}
         type={type}
         value={value}
         required

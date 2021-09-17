@@ -24,9 +24,9 @@
 .newscard_img_container {
 }
 .newscard_img {
-  height: 160px;
+  height: 100px;
   object-fit: cover;
-  width: 200px;
+  width: 100px;
 }
 .newscard_text_container {
   padding: 0px 20px;
