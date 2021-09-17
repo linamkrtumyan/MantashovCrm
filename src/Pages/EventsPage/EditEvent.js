@@ -37,7 +37,7 @@ function EditEvent({
   fetchEventDetailsForEdit,
   eventForEdit,
 }) {
-  const [eventImages , setEventImages] = useState([]);
+  const [eventImages, setEventImages] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -59,7 +59,7 @@ function EditEvent({
       fetchCities(stateId);
     }
   }, [stateId]);
-  
+
   useEffect(() => {
     setEventImages(eventForEdit.images);
   }, [eventForEdit.images]);
@@ -110,61 +110,42 @@ function EditEvent({
   };
 
   return (
-    <div className={"modal " + (modalOpen ? "is-active" : "")}>
-      <div className="modal-background"></div>
-      <div className="modal-card">
-        <header className="modal-card-head">
-          <p className="modal-card-title has-text-centered">Edit Event</p>
-          <button
-            onClick={() => {
-              setModalOpen(false);
-              // cleanForm();
-              // setEditId(null);
-              // cleanOrganization();
-            }}
-            className="delete"
-            aria-label="close"
-          ></button>
-        </header>
-        <section className="modal-card-body has-text-centered">
-          <div className="is-flex ">
-            <Input id="nameArm" type="text" placeholder="Անվանում" />
-            <Input id="nameEng" type="text" placeholder="Name" />
-            <Input id="nameRu" type="text" placeholder="Название" />
-          </div>
-          <div className="is-flex ">
-            <Select placeholder="Country" items={countries} id="countryId" />
-            <Select placeholder="State" items={states} id="stateId" />
-            <Select placeholder="City" items={cities} id="cityId" />
-          </div>
-          <div className="is-flex ">
-            <Input id="locationArm" type="text" placeholder="Հասցե" />
-            <Input id="locationEng" type="text" placeholder="Address" />
-            <Input id="locationRu" type="text" placeholder="Адрес" />
-          </div>
+    <div>
+      {/* <section className="modal-card-body has-text-centered"> */}
+      <div className="is-flex ">
+        <Input id="nameArm" type="text" placeholder="Անվանում" />
+        <Input id="nameEng" type="text" placeholder="Name" />
+        <Input id="nameRu" type="text" placeholder="Название" />
+      </div>
+      <div className="is-flex ">
+        <Select placeholder="Country" items={countries} id="countryId" />
+        <Select placeholder="State" items={states} id="stateId" />
+        <Select placeholder="City" items={cities} id="cityId" />
+      </div>
+      <div className="is-flex ">
+        <Input id="locationArm" type="text" placeholder="Հասցե" />
+        <Input id="locationEng" type="text" placeholder="Address" />
+        <Input id="locationRu" type="text" placeholder="Адрес" />
+      </div>
 
-          <div className="is-flex ">
-            <Input
-              id="descriptionArm"
-              type="text"
-              placeholder="Նկարագրություն"
-            />
-            <Input id="descriptionEng" type="text" placeholder="Descriprion" />
-            <Input id="descriptionRu" type="text" placeholder="Описание" />
-          </div>
-          <div className="is-flex ">
-            <Input id="startDate" type="date" placeholder="Start Date" />
-            <Input id="endDate" type="date" placeholder="End Date" />
-          </div>
-          <hr></hr>
-          {/* <div
+      <div className="is-flex ">
+        <Input id="descriptionArm" type="text" placeholder="Նկարագրություն" />
+        <Input id="descriptionEng" type="text" placeholder="Descriprion" />
+        <Input id="descriptionRu" type="text" placeholder="Описание" />
+      </div>
+      <div className="is-flex ">
+        <Input id="startDate" type="date" placeholder="Start Date" />
+        <Input id="endDate" type="date" placeholder="End Date" />
+      </div>
+      <hr></hr>
+      {/* <div
             className="see-agendas-btn"
             // onClick={setShowAgendas(true)}
           >
             See Agenta
           </div> */}
 
-          {/* {
+      {/* {
             eventForEdit && eventForEdit.agenda ?
             eventForEdit.agenda.map(item => (
               <div style={{display: 'flex'}}>
@@ -174,44 +155,37 @@ function EditEvent({
             )) 
             : null
           } */}
-          
-          {eventForEdit &&
-          eventImages &&
-          eventImages.length !== 0 ? (
-            // <Slide>
-            <div style={{display: "flex"}}>
-              {eventForEdit.images.map((item) => (
-                <div className="img-for-edit">
-                  <button className="delete-image-btn">
-                    {/* <img src={require("./download.png").default}/> */}
-                    X
-                    </button>
-                  <img
-                    src={`/images/events/${id}/${item}`}
-                  />
-                </div>
-              ))}
-              </div>
-            // </Slide>
-          ) : null}
-        </section>
-        <footer className="modal-card-foot is-flex is-justify-content-flex-end">
-          <button
-            // onClick={() => {
-            //   setModalOpen(false);
-            //   cleanForm();
-            //   setEditId(null);
-            //   cleanOrganization();
-            // }}
-            className="button"
-          >
-            Cancel
-          </button>
-          <button onClick={handleDelete} className="button is-primary">
-            Save
-          </button>
-        </footer>
-      </div>
+
+      {eventForEdit && eventImages && eventImages.length !== 0 ? (
+        // <Slide>
+        <div style={{ display: "flex" }}>
+          {eventForEdit.images.map((item) => (
+            <div className="img-for-edit">
+              <button className="delete-image-btn">
+                {/* <img src={require("./download.png").default}/> */}X
+              </button>
+              <img src={`/images/events/${id}/${item}`} />
+            </div>
+          ))}
+        </div>
+      ) : // </Slide>
+      null}
+      {/* </section> */}
+
+      <button
+        // onClick={() => {
+        //   setModalOpen(false);
+        //   cleanForm();
+        //   setEditId(null);
+        //   cleanOrganization();
+        // }}
+        className="button"
+      >
+        Cancel
+      </button>
+      <button onClick={handleDelete} className="button is-primary">
+        Save
+      </button>
     </div>
   );
 }

@@ -32,29 +32,6 @@ function AddEvent({
 }) {
   const history = useHistory();
 
-  // const addressType = [
-  //   {
-  //     id: 1,
-  //     name: "location",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "latitude",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "longitude",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "cityId",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "agendas",
-  //   },
-  // ];
-
   useEffect(() => {
     fetchCountries();
   }, []);
@@ -113,19 +90,82 @@ function AddEvent({
 
   return (
     <div>
-      <button onClick={() => history.goBack()} className="arrow_left"></button>
       <form
         onSubmit={handleSubmit}
         // className="add_event_container"
       >
-        <div className="add_member_title">Add Event</div>
-        <div className="add_member_component">
+        <div>
+          <button onClick={() => history.goBack()} className="arrow_left">
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <div className="add_member_title">
+            <p>Add Event</p>
+          </div>
+        </div>
+
+        <div className="add_event_component">
+          <div className="container_body">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input id="nameEng" type="text" placeholder="Name" />
+              <Input id="nameArm" type="text" placeholder="Անվանում" />
+              <Input id="nameRu" type="text" placeholder="Имя" />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <form autoComplete="off">
+                <Select
+                  placeholder="Select State"
+                  // items={states}
+                  id="state"
+                />
+              </form>
+
+              <form autoComplete="off">
+                <Select
+                  placeholder="Select City"
+                  // items={cities}
+                  id="city"
+                />
+              </form>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input id="startDate" type="date" placeholder="Start Date" />
+              <Input id="endDate" type="date" placeholder="End Date" />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input id="locationEng" type="text" placeholder="Address" />
+              <Input id="locationArm" type="text" placeholder="Հասցե" />
+              <Input id="locationRu" type="text" placeholder="Адрес" />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Textarea
+                id="descriptionEng"
+                type="text"
+                placeholder="Description"
+              />
+              <Textarea
+                id="descriptionArm"
+                type="text"
+                placeholder="Նկարագիր"
+              />
+              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
+            </div>
+
+            <div className="event_address_container">
+              <OneImageUpload label="Upload Header Image" />
+              <ImageUpload label="Upload Images" />
+            </div>
+          </div>
+
+          {/* 
+          <div className="add_event_component">
           <div className="event_address_container">
-          {/* <div className="is-flex "> */}
             <Input id="nameArm" type="text" placeholder="Name ( Armenian)" />
             <Input id="nameEng" type="text" placeholder="Name (English)" />
             <Input id="nameRu" type="text" placeholder="Name (Russian)" />
-          {/* </div> */}
             <form autoComplete="off">
               <Select
                 placeholder="Select Country"
@@ -144,7 +184,6 @@ function AddEvent({
             <Input id="latitude" type="text" placeholder="Latitude" />
             <Input id="longitude" type="text" placeholder="Longitude" />
 
-            {/* <Textarea type="text" placeholder="Text" /> */}
           </div>
 
           <div className="event_address_container">
@@ -154,17 +193,17 @@ function AddEvent({
             <Input id="endDate" type="date" placeholder="End Date" />
           </div>
           <div>
-            {/* <AddAgendasAddress addressType={addressType} /> */}
           </div>
           <div className="event_address_container">
             <OneImageUpload label="Upload Header Image" />
             <ImageUpload label="Upload Images" />
           </div>
-        </div>
+        </div> */}
 
-        <div className="event_action_container">
-          <Button title="Cancel" className="action_btn cancel_btn" />
-          <Button title="Create" className="action_btn" />
+          <div className="event_action_container">
+            <Button title="Cancel" className="action_btn cancel_btn" />
+            <Button title="Create" className="action_btn" />
+          </div>
         </div>
       </form>
     </div>

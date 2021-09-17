@@ -12,6 +12,7 @@ import ViewsInfoPage from "./ViewsInfoPage";
 import Pagination from "../../Components/Pagination/Pagination";
 import  DeleteEvent  from "./DeleteEvent";
 
+
 function EventsPage({
   loading,
   noEvents,
@@ -37,8 +38,8 @@ function EventsPage({
   }, []);
 
   function handleEdit(id) {
-    setEditId(id);
-    setEditModalOpen(true);
+    history.push(`/edit-event/${id}`);
+
   }
 
   function handleDelete(id) {
@@ -67,12 +68,12 @@ function EventsPage({
   }
   return (
     <>
-      <EditEvent
+      {/* <EditEvent
         modalOpen={editModalOpen}
         setModalOpen={setEditModalOpen}
         id={editId}
         setEditId={setEditId}
-      />
+      /> */}
       <DeleteEvent
         modalOpen={deleteModalOpen}
         setModalOpen={setDeleteModalOpen}

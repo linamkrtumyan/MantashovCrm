@@ -21,6 +21,7 @@ import MemberDetails from "./Pages/MemberDetailsPage/MemberDetails";
 import EventDetailsPage from "./Pages/EventDeatilsPage/EventDetailsPage";
 import WithBulma from "./Pages/BulmaExp/WithBulma";
 import Information from "./Pages/InformationPage/Information";
+import EditEvent from "./Pages/EventsPage/EditEvent";
 
 function Routes({ isLogin, userName }) {
   // console.log(isLogin, "islogin");
@@ -37,8 +38,9 @@ function Routes({ isLogin, userName }) {
             <Route path="/news" component={NewsPage} exact />
             <Route path="/events" component={EventsPage} exact />
             <Route path="/add-event" component={AddEvent} exact />
-            <Route path="/past-events" component={PastEvents} exact />
-            <Route path="/upcoming-events" component={UpcomingEvents} exact />
+            <Route path="/edit-event/:id" component={EditEvent} exact />
+            {/* <Route path="/past-events" component={PastEvents} exact />
+            <Route path="/upcoming-events" component={UpcomingEvents} exact /> */}
             <Route
               path="/event-details/:id"
               component={EventDetailsPage}
