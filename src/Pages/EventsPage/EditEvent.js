@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Input from "../../Components/Forms/Input/Input";
+import Textarea from "../../Components/Forms/Textarea/Textarea";
 import Select from "../../Components/Forms/Select/Select";
+import Button from "../../Components/Forms/Button/Button";
+import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 
 import store, {
   // deletePosition,
@@ -19,6 +23,8 @@ import { connect } from "react-redux";
 
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
+import { useHistory } from "react-router-dom";
+
 
 function EditEvent({
   modalOpen,
@@ -37,6 +43,7 @@ function EditEvent({
   fetchEventDetailsForEdit,
   eventForEdit,
 }) {
+  const history = useHistory();
   const [eventImages, setEventImages] = useState([]);
 
   useEffect(() => {
@@ -110,42 +117,117 @@ function EditEvent({
   };
 
   return (
+    // <div>
+    //   {/* <section className="modal-card-body has-text-centered"> */}
+
+
+ 
+
+    //   <hr></hr>
+    //   {/* <div
+    //         className="see-agendas-btn"
+    //         // onClick={setShowAgendas(true)}
+    //       >
+    //         See Agenta
+    //       </div> */}
+
+    //   {/* {
+    //         eventForEdit && eventForEdit.agenda ?
+    //         eventForEdit.agenda.map(item => (
+    //           <div style={{display: 'flex'}}>
+    //             <Input id="dateAndTime" type="date" value={item.dateAndTime} />
+    //             <div>{item.descriptionArm}</div>
+    //           </div>
+    //         )) 
+    //         : null
+    //       } */}
+
+    //   {eventForEdit && eventImages && eventImages.length !== 0 ? (
+    //     // <Slide>
+    //     <div style={{ display: "flex" }}>
+    //       {eventForEdit.images.map((item) => (
+    //         <div className="img-for-edit">
+    //           <button className="delete-image-btn">
+    //             {/* <img src={require("./download.png").default}/> */}X
+    //           </button>
+    //           <img src={`/images/events/${id}/${item}`} />
+    //         </div>
+    //       ))}
+    //     </div>
+    //   ) : // </Slide>
+    //   null}
+    //   {/* </section> */}
+
+    //   <button
+    //     // onClick={() => {
+    //     //   setModalOpen(false);
+    //     //   cleanForm();
+    //     //   setEditId(null);
+    //     //   cleanOrganization();
+    //     // }}
+    //     className="button"
+    //   >
+    //     Cancel
+    //   </button>
+    //   <button onClick={handleDelete} className="button is-primary">
+    //     Save
+    //   </button>
+    // </div>
+
     <div>
-      {/* <section className="modal-card-body has-text-centered"> */}
-      <div className="is-flex ">
-        <Input id="nameArm" type="text" placeholder="Անվանում" />
-        <Input id="nameEng" type="text" placeholder="Name" />
-        <Input id="nameRu" type="text" placeholder="Название" />
-      </div>
-      <div className="is-flex ">
-        <Select placeholder="Country" items={countries} id="countryId" />
-        <Select placeholder="State" items={states} id="stateId" />
-        <Select placeholder="City" items={cities} id="cityId" />
-      </div>
-      <div className="is-flex ">
-        <Input id="locationArm" type="text" placeholder="Հասցե" />
-        <Input id="locationEng" type="text" placeholder="Address" />
-        <Input id="locationRu" type="text" placeholder="Адрес" />
-      </div>
+      <form
+        // onSubmit={handleSubmit}
+        // className="add_event_container"
+      >
+        <div>
+          <button onClick={() => history.goBack()} className="arrow_left">
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <div className="add_member_title">
+            <p>Add Event</p>
+          </div>
+        </div>
 
-      <div className="is-flex ">
-        <Input id="descriptionArm" type="text" placeholder="Նկարագրություն" />
-        <Input id="descriptionEng" type="text" placeholder="Descriprion" />
-        <Input id="descriptionRu" type="text" placeholder="Описание" />
-      </div>
-      <div className="is-flex ">
-        <Input id="startDate" type="date" placeholder="Start Date" />
-        <Input id="endDate" type="date" placeholder="End Date" />
-      </div>
-      <hr></hr>
-      {/* <div
-            className="see-agendas-btn"
-            // onClick={setShowAgendas(true)}
-          >
-            See Agenta
-          </div> */}
+        <div className="add_event_component">
+          <div className="container_body">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input id="nameEng" type="text" placeholder="Name" />
+              <Input id="nameArm" type="text" placeholder="Անվանում" />
+              <Input id="nameRu" type="text" placeholder="Имя" />
+            </div>
+            
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Select placeholder="Country" items={countries} id="countryId" />
+              <Select placeholder="State" items={states} id="stateId" />
+              <Select placeholder="City" items={cities} id="cityId" />
+            </div>
 
-      {/* {
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input id="startDate" type="date" placeholder="Start Date" />
+              <Input id="endDate" type="date" placeholder="End Date" />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input id="locationEng" type="text" placeholder="Address" />
+              <Input id="locationArm" type="text" placeholder="Հասցե" />
+              <Input id="locationRu" type="text" placeholder="Адрес" />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Textarea
+                id="descriptionEng"
+                type="text"
+                placeholder="Description"
+              />
+              <Textarea
+                id="descriptionArm"
+                type="text"
+                placeholder="Նկարագիր"
+              />
+              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
+            </div>
+
+              { 
             eventForEdit && eventForEdit.agenda ?
             eventForEdit.agenda.map(item => (
               <div style={{display: 'flex'}}>
@@ -154,38 +236,20 @@ function EditEvent({
               </div>
             )) 
             : null
-          } */}
+          }
+          
+            {/* <div className="event_address_container">
+              <OneImageUpload label="Upload Header Image" />
+              <ImageUpload label="Upload Images" />
+            </div> */}
+          </div>
 
-      {eventForEdit && eventImages && eventImages.length !== 0 ? (
-        // <Slide>
-        <div style={{ display: "flex" }}>
-          {eventForEdit.images.map((item) => (
-            <div className="img-for-edit">
-              <button className="delete-image-btn">
-                {/* <img src={require("./download.png").default}/> */}X
-              </button>
-              <img src={`/images/events/${id}/${item}`} />
-            </div>
-          ))}
+          <div className="event_action_container">
+            <Button title="Cancel" className="action_btn cancel_btn" />
+            <Button title="Save" className="action_btn" />
+          </div>
         </div>
-      ) : // </Slide>
-      null}
-      {/* </section> */}
-
-      <button
-        // onClick={() => {
-        //   setModalOpen(false);
-        //   cleanForm();
-        //   setEditId(null);
-        //   cleanOrganization();
-        // }}
-        className="button"
-      >
-        Cancel
-      </button>
-      <button onClick={handleDelete} className="button is-primary">
-        Save
-      </button>
+      </form>
     </div>
   );
 }

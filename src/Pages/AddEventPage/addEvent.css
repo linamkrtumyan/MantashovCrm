@@ -20,7 +20,7 @@
   display: flex;
   justify-content: space-evenly;
 }
-/* .added_agendas_container {
+.added_agendas_container {
   display: flex;
   justify-content: center;
 }
@@ -34,38 +34,38 @@
   float: left;
   width: 15px;
   margin: 5px;
-} */
-/* .added_addresses_container { */
-  /* width: 620px; */
-  /* background-color: #f7f7f7; */
-  /* padding: 15px; */
-  /* margin: 10px; */
-  /* margin: 10px 12%; */
-  /* font-size: 18px; */
-  /* font-weight: 600; */
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
-/* } */
-/* .agendas_input {
+}
+.added_addresses_container {
+  width: 620px;
+  background-color: #f7f7f7;
+  padding: 15px;
+  margin: 10px;
+  margin: 10px 12%;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.agendas_input {
   margin: 10px;
 }
 .add_item_icon {
   width: 30px;
   margin: 15px;
   cursor: pointer;
-} */
-/* .add_new_address_btn { */
-  /* max-width: 940px; */
-  /* height: 50px; */
-  /* margin: 10px; */
-  /* margin: 10px 12%; */
-  /* background-color: #f7f7f7; */
-  /* cursor: pointer; */
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-/* } */
-/* .add_new_address_btn:hover { */
-  /* background-color: #8f8f8f5c; */
-/* } */
+}
+.add_new_address_btn {
+  max-width: 940px;
+  height: 50px;
+  margin: 10px;
+  margin: 10px 12%;
+  background-color: #f7f7f7;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add_new_address_btn:hover {
+  background-color: #8f8f8f5c;
+}

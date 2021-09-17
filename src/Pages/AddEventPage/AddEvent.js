@@ -26,9 +26,10 @@ function AddEvent({
   fetchStates,
   countries,
   cities,
-  country,
-  state,
+  countryId,
+  stateId,
   states,
+  agendas,
 }) {
   const history = useHistory();
 
@@ -37,11 +38,22 @@ function AddEvent({
   }, []);
 
   useEffect(() => {
-    fetchStates(country);
-  }, [country]);
+    if (countryId) {
+      fetchStates(countryId);
+    }
+  }, [countryId]);
   useEffect(() => {
-    fetchCities(state);
-  }, [state]);
+    if (stateId) {
+      fetchCities(stateId);
+    }
+  }, [stateId]);
+
+  const addressType = [
+    {
+      id: 1,
+      name: "agendas",
+    },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,8 +62,6 @@ function AddEvent({
       locationArm,
       locationEng,
       locationRu,
-      latitude,
-      longitude,
       cityId,
       nameArm,
       nameEng,
@@ -68,15 +78,19 @@ function AddEvent({
     let { header, image } = store.getState().imageReducer;
 
     let event = {
-      // location,
-      latitude,
-      longitude,
+      locationArm,
+      locationEng,
+      locationRu,
       cityId,
-      // name,
-      // description,
+      nameArm,
+      nameEng,
+      nameRu,
+      descriptionArm,
+      descriptionEng,
+      descriptionRu,
       startDate,
       endDate,
-      addresses,
+      agendas:  [],
       header: header[0],
       images: image,
     };
@@ -111,22 +125,34 @@ function AddEvent({
               <Input id="nameRu" type="text" placeholder="Имя" />
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <form autoComplete="off">
+                <Select
+                  placeholder="Select Country"
+                  items={countries}
+                  id="countryId"
+                />
+              </form>
               <form autoComplete="off">
                 <Select
                   placeholder="Select State"
-                  // items={states}
-                  id="state"
+                  items={states}
+                  id="stateId"
                 />
               </form>
 
               <form autoComplete="off">
                 <Select
                   placeholder="Select City"
-                  // items={cities}
-                  id="city"
+                  items={cities}
+                  id="cityId"
                 />
               </form>
+            </div> */}
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Select placeholder="Country" items={countries} id="countryId" />
+              <Select placeholder="State" items={states} id="stateId" />
+              <Select placeholder="City" items={cities} id="cityId" />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -153,52 +179,14 @@ function AddEvent({
               />
               <Textarea id="descriptionRu" type="text" placeholder="Описание" />
             </div>
-
+            <div>
+              <AddAgendasAddress addressType={addressType} />
+            </div>
             <div className="event_address_container">
               <OneImageUpload label="Upload Header Image" />
               <ImageUpload label="Upload Images" />
             </div>
           </div>
-
-          {/* 
-          <div className="add_event_component">
-          <div className="event_address_container">
-            <Input id="nameArm" type="text" placeholder="Name ( Armenian)" />
-            <Input id="nameEng" type="text" placeholder="Name (English)" />
-            <Input id="nameRu" type="text" placeholder="Name (Russian)" />
-            <form autoComplete="off">
-              <Select
-                placeholder="Select Country"
-                items={countries}
-                id="countryId"
-              />
-            </form>
-            <form autoComplete="off">
-              <Select placeholder="Select State" items={states} id="state" />
-            </form>
-
-            <form autoComplete="off">
-              <Select placeholder="Select City" items={cities} id="city" />
-            </form>
-            <Input id="location" type="text" placeholder="Location" />
-            <Input id="latitude" type="text" placeholder="Latitude" />
-            <Input id="longitude" type="text" placeholder="Longitude" />
-
-          </div>
-
-          <div className="event_address_container">
-          
-            <Input id="description" type="text" placeholder="Description" />
-            <Input id="startDate" type="date" placeholder="Start Date" />
-            <Input id="endDate" type="date" placeholder="End Date" />
-          </div>
-          <div>
-          </div>
-          <div className="event_address_container">
-            <OneImageUpload label="Upload Header Image" />
-            <ImageUpload label="Upload Images" />
-          </div>
-        </div> */}
 
           <div className="event_action_container">
             <Button title="Cancel" className="action_btn cancel_btn" />
@@ -214,10 +202,12 @@ const mapStateToProps = (state) => {
   console.log(state, "state|||");
   return {
     countries: state.locationsReducer.countries,
-    country: state.formReducer.country,
+    countryId: state.formReducer?.countryId,
     states: state.locationsReducer.states,
-    state: state.formReducer.state,
+    stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
+    cities: state.locationsReducer.cities,
+    agendas: state.formReducer?.agendasAddresses?.agendas,
   };
 };
 

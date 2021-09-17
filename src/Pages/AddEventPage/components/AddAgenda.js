@@ -7,7 +7,7 @@ function AddAgenda({
   formOnChangeArray,
   value,
   addressesAgenda,
-  agendas,
+  agenda,
   agendasAddresses,
   addresses,
   change,
@@ -27,7 +27,7 @@ function AddAgenda({
 
   useEffect(() => {
     addressesAgenda.map((agenda) => {
-      formOnChangeArray("agendas", agenda.name, "");
+      formOnChangeArray("agenda", agenda.name, []);
     });
   }, []);
 
@@ -37,10 +37,10 @@ function AddAgenda({
         <div>
           <input
             className="input_component agendas_input"
-            value={agendas?.dateAndTime}
+            value={agenda?.dateAndTime}
             onChange={(e) => {
               // setDateAndTime(e.target.value);
-              formOnChangeArray("agendas", "dateAndTime", e.target.value);
+              formOnChangeArray("agenda", "dateAndTime", e.target.value);
             }}
             id="dateAndTime"
             type="datetime-local"
@@ -51,25 +51,62 @@ function AddAgenda({
         <div>
           <input
             className="input_component  agendas_input"
-            value={agendas?.agendaDescription}
+            value={agenda?.agendaDescriptionEng}
             onChange={(e) => {
               // setAgendaDescription(e.target.value);
-              formOnChangeArray("agendas", "agendaDescription", e.target.value);
+              formOnChangeArray(
+                "agenda",
+                "agendaDescriptionEng",
+                e.target.value
+              );
             }}
-            id="agendaDescription"
+            id="agendaDescriptionEng"
             type="text"
             placeholder="Description"
+          />
+          <input
+            className="input_component  agendas_input"
+            value={agenda?.agendaDescriptionArm}
+            onChange={(e) => {
+              // setAgendaDescription(e.target.value);
+              formOnChangeArray(
+                "agenda",
+                "agendaDescriptionArm",
+                e.target.value
+              );
+            }}
+            id="agendaDescriptionArm"
+            type="text"
+            placeholder="Նկարագիր"
+          />
+          <input
+            className="input_component  agendas_input"
+            value={agenda?.agendaDescriptionRu}
+            onChange={(e) => {
+              // setAgendaDescription(e.target.value);
+              formOnChangeArray(
+                "agenda",
+                "agendaDescriptionRu",
+                e.target.value
+              );
+            }}
+            id="agendaDescriptionRu"
+            type="text"
+            placeholder="Описание"
           />
         </div>
 
         <div
           onClick={() => {
-            addresses[index - 1].agendas.push(agendas);
+            console.log(addresses, "??????????????????????//");
+            addresses[index - 1].agendas.push(agenda);
             setAgendasAdded(true);
             setChange(change + 1);
             setNewAgenda(newAgenda + 1);
             formOnChangeArray("agendas", "dateAndTime", "");
-            formOnChangeArray("agendas", "agendaDescription", "");
+            formOnChangeArray("agendas", "agendaDescriptionArm", "");
+            formOnChangeArray("agendas", "agendaDescriptionEng", "");
+            formOnChangeArray("agendas", "agendaDescriptionRu", "");
           }}
         >
           <svg viewBox="-5 -11 50 50" className="add_item_icon">
@@ -89,9 +126,8 @@ function AddAgenda({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(state, "state");
   return {
-    agendas: state.formReducer.agendas,
+    agenda: state.formReducer.agenda,
     agendasAddresses: state.formReducer.agendasAddresses,
     // addresses: state.eventReducer?.addresses[0]?.agendas,
     addresses: state.eventReducer?.addresses,
