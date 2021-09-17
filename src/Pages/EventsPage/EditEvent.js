@@ -11,6 +11,8 @@ import store, {
   cleanForm,
   cleanLocation,
   fetchEventDetailsForEdit,
+  editEvent,
+  cleanEvent,
 } from "../../store";
 
 import { connect } from "react-redux";
@@ -22,6 +24,7 @@ function EditEvent({
   modalOpen,
   setModalOpen,
   id,
+  setEditId,
   fetchCountries,
   fetchStates,
   countries,
@@ -34,7 +37,7 @@ function EditEvent({
   fetchEventDetailsForEdit,
   eventForEdit,
 }) {
-  const [showAgendas, setShowAgendas] = useState(true);
+  const [eventImages , setEventImages] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -56,6 +59,55 @@ function EditEvent({
       fetchCities(stateId);
     }
   }, [stateId]);
+  
+  useEffect(() => {
+    setEventImages(eventForEdit.images);
+  }, [eventForEdit.images]);
+
+  const handleDelete = () => {
+    let {
+      locationArm,
+      locationEng,
+      locationRu,
+      cityId,
+      nameArm,
+      nameEng,
+      nameRu,
+      // categoryId,
+      descriptionArm,
+      descriptionEng,
+      descriptionRu,
+      endDate,
+      startDate,
+      header,
+    } = store.getState().formReducer;
+
+    let event = {
+      event: {
+        locationArm,
+        locationEng,
+        locationRu,
+        cityId,
+        id,
+        nameArm,
+        nameEng,
+        nameRu,
+        descriptionArm,
+        descriptionEng,
+        descriptionRu,
+        endDate,
+        startDate,
+        header,
+
+        //  categoryId,
+      },
+    };
+    setModalOpen(false);
+    editEvent(event);
+    cleanForm();
+    setEditId(null);
+    cleanEvent();
+  };
 
   return (
     <div className={"modal " + (modalOpen ? "is-active" : "")}>
@@ -113,29 +165,34 @@ function EditEvent({
           </div> */}
 
           {/* {
-            showAgendas ?
+            eventForEdit && eventForEdit.agenda ?
             eventForEdit.agenda.map(item => (
               <div style={{display: 'flex'}}>
                 <Input id="dateAndTime" type="date" value={item.dateAndTime} />
                 <div>{item.descriptionArm}</div>
               </div>
-            )) : null
+            )) 
+            : null
           } */}
-          {eventForEdit && eventForEdit.images ? (
-            <Slide>
+          
+          {eventForEdit &&
+          eventImages &&
+          eventImages.length !== 0 ? (
+            // <Slide>
+            <div style={{display: "flex"}}>
               {eventForEdit.images.map((item) => (
-                <div>
-                   <img
-                  className="img-for-edit"
-                  src={`/images/events/${id}/${item}`}
-                  
-                />
-                <button>
-                  <img />
-                </button>
+                <div className="img-for-edit">
+                  <button className="delete-image-btn">
+                    {/* <img src={require("./download.png").default}/> */}
+                    X
+                    </button>
+                  <img
+                    src={`/images/events/${id}/${item}`}
+                  />
                 </div>
               ))}
-            </Slide>
+              </div>
+            // </Slide>
           ) : null}
         </section>
         <footer className="modal-card-foot is-flex is-justify-content-flex-end">
@@ -150,10 +207,7 @@ function EditEvent({
           >
             Cancel
           </button>
-          <button
-            //  onClick={handleDelete}
-            className="button is-primary"
-          >
+          <button onClick={handleDelete} className="button is-primary">
             Save
           </button>
         </footer>
@@ -163,10 +217,7 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log(
-    state.eventReducer.eventForEdit,
-    "state.eventReducer.eventForEdit"
-  );
+  console.log(state, "state.eventReducer");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -187,6 +238,7 @@ const mapDispatchToProps = (dispatch) => {
     cleanForm: () => dispatch(cleanForm()),
     cleanLocation: () => dispatch(cleanLocation()),
     fetchEventDetailsForEdit: (id) => dispatch(fetchEventDetailsForEdit(id)),
+    editEvent: (event) => dispatch(editEvent(event)),
   };
 };
 

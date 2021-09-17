@@ -32,28 +32,28 @@ function AddEvent({
 }) {
   const history = useHistory();
 
-  const addressType = [
-    {
-      id: 1,
-      name: "location",
-    },
-    {
-      id: 2,
-      name: "latitude",
-    },
-    {
-      id: 3,
-      name: "longitude",
-    },
-    {
-      id: 4,
-      name: "cityId",
-    },
-    {
-      id: 5,
-      name: "agendas",
-    },
-  ];
+  // const addressType = [
+  //   {
+  //     id: 1,
+  //     name: "location",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "latitude",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "longitude",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "cityId",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "agendas",
+  //   },
+  // ];
 
   useEffect(() => {
     fetchCountries();
@@ -70,25 +70,33 @@ function AddEvent({
     e.preventDefault();
 
     let {
-      location,
+      locationArm,
+      locationEng,
+      locationRu,
       latitude,
       longitude,
-      city,
-      name,
-      description,
+      cityId,
+      nameArm,
+      nameEng,
+      nameRu,
+      descriptionArm,
+      descriptionEng,
+      descriptionRu,
       startDate,
       endDate,
     } = store.getState().formReducer;
+
+    // agendas, header, images
     let { addresses } = store.getState().eventReducer;
     let { header, image } = store.getState().imageReducer;
 
     let event = {
-      location,
+      // location,
       latitude,
       longitude,
-      cityId: city,
-      name,
-      description,
+      cityId,
+      // name,
+      // description,
       startDate,
       endDate,
       addresses,
@@ -113,11 +121,16 @@ function AddEvent({
         <div className="add_member_title">Add Event</div>
         <div className="add_member_component">
           <div className="event_address_container">
+          {/* <div className="is-flex "> */}
+            <Input id="nameArm" type="text" placeholder="Name ( Armenian)" />
+            <Input id="nameEng" type="text" placeholder="Name (English)" />
+            <Input id="nameRu" type="text" placeholder="Name (Russian)" />
+          {/* </div> */}
             <form autoComplete="off">
               <Select
                 placeholder="Select Country"
                 items={countries}
-                id="country"
+                id="countryId"
               />
             </form>
             <form autoComplete="off">
@@ -135,13 +148,13 @@ function AddEvent({
           </div>
 
           <div className="event_address_container">
-            <Input id="name" type="text" placeholder="Name" />
+          
             <Input id="description" type="text" placeholder="Description" />
             <Input id="startDate" type="date" placeholder="Start Date" />
             <Input id="endDate" type="date" placeholder="End Date" />
           </div>
           <div>
-            <AddAgendasAddress addressType={addressType} />
+            {/* <AddAgendasAddress addressType={addressType} /> */}
           </div>
           <div className="event_address_container">
             <OneImageUpload label="Upload Header Image" />
@@ -159,7 +172,7 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
+  console.log(state, "state|||");
   return {
     countries: state.locationsReducer.countries,
     country: state.formReducer.country,

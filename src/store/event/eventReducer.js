@@ -21,7 +21,9 @@ import {
   FETCH_EVENT_FOR_EDIT_REQUEST,
   FETCH_EVENT_FOR_EDIT_SUCCESS,
   FETCH_EVENT_FOR_EDIT_FAILURE,
-  editEvent
+  EVENT_EDIT_REQUEST,
+  EVENT_EDIT_SUCCESS_FAILURE,
+  CLEAN_EVENT
 } from "./types";
 
 const initialState = {
@@ -32,6 +34,7 @@ const initialState = {
   count: 0,
   currentPage: 1,
   success: null,
+  // fetch: false,
   event: {},
   detailsImages: [],
   addresses: [],
@@ -201,6 +204,16 @@ const reducer = (state = initialState, action) => {
         eventForEdit: {},
 
         error: action.payload.error,
+      };
+      case EVENT_EDIT_SUCCESS_FAILURE:
+      return {
+        ...state,
+        success: true,
+      };
+      case CLEAN_EVENT:
+      return {
+        ...state,
+        eventForEdit: {},
       };
     default:
       return state;

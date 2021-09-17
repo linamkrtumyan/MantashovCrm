@@ -10,6 +10,7 @@ import EditEvent from "./EditEvent";
 import ViewsInfoPage from "./ViewsInfoPage";
 
 import Pagination from "../../Components/Pagination/Pagination";
+import  DeleteEvent  from "./DeleteEvent";
 
 function EventsPage({
   loading,
@@ -26,8 +27,9 @@ function EventsPage({
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
-  // const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
   const [infoId, setInfoId] = useState(null);
 
   useEffect(() => {
@@ -39,10 +41,17 @@ function EventsPage({
     setEditModalOpen(true);
   }
 
+  function handleDelete(id) {
+    setDeleteId(id);
+    setDeleteModalOpen(true);
+    
+  }
+
   function handleInfo(id) {
     setInfoId(id);
     setInfoModalOpen(true);
   }
+
 
   if (loading) {
     return <Loading />;
@@ -62,13 +71,19 @@ function EventsPage({
         modalOpen={editModalOpen}
         setModalOpen={setEditModalOpen}
         id={editId}
-        // setEditId={setEditId}
+        setEditId={setEditId}
+      />
+      <DeleteEvent
+        modalOpen={deleteModalOpen}
+        setModalOpen={setDeleteModalOpen}
+        id={deleteId}
+        setDeleteId={setDeleteId}
       />
       <ViewsInfoPage
         modalOpen={infoModalOpen}
         setModalOpen={setInfoModalOpen}
         id={infoId}
-        // setInfoId={setInfoId}
+        setInfoId={setInfoId}
       />
       <div>
         <div className="events_container">
@@ -90,6 +105,7 @@ function EventsPage({
                   <th>End Date</th>
                   <th>Going/Seen</th>
                   <th>Description</th>
+                  <th></th>
                   <th></th>
                   <th></th>
                 </tr>
@@ -121,15 +137,26 @@ function EventsPage({
                       </div>
                     </td>
                     <td style={{ width: "10px" }}>
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            handleDelete(event.id)
+                          }}
+                        >
+                          <i className="far fa-trash-alt"></i>
+                        </div>
+                      </td>
+                    <td style={{ width: "10px" }}>
                       <div
-                        style={{ cursor: "pointer", marginLeft: "5px" }}
-                        onClick={(e) => {
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
                           handleInfo(event.id);
                         }}
                       >
                         <i className="fas fa-eye"></i>
                       </div>
                     </td>
+                    
                   </tr>
                 ))}
               </tbody>

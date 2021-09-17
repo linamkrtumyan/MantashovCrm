@@ -38,4 +38,11 @@
 .img-for-edit {
   height: 150px;
   width: 150px;
+  margin-right: 10px;
+  border: 2px solid gray;
+  position: relative;
+}
+.delete-image-btn {
+  right:0px;
+    position: absolute;
 }

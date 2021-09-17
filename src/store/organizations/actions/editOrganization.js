@@ -6,7 +6,6 @@ import {
 import { toast } from "react-toastify";
 
 export const editOrganization = (organization) => {
-  
   return (dispatch) => {
     dispatch({
       type: ORGANIZATION_EDIT_REQUEST,
