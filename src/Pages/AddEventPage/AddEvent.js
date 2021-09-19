@@ -74,7 +74,7 @@ function AddEvent({
     } = store.getState().formReducer;
 
     // agendas, header, images
-    let { addresses } = store.getState().eventReducer;
+    // let { addresses } = store.getState().eventReducer;
     let { header, image } = store.getState().imageReducer;
 
     let event = {
@@ -90,7 +90,7 @@ function AddEvent({
       descriptionRu,
       startDate,
       endDate,
-      agendas:  [],
+      agendas: agendas ? agendas : [],
       header: header[0],
       images: image,
     };

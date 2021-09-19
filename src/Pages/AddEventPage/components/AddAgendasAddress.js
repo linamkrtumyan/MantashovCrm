@@ -67,7 +67,7 @@ function AddAgendasAddress({
           {addresses.map((address) => (
             <div>
               <div>
-                {address.agendas?.map((agenda) => (
+                {address?.agendas?.map((agenda) => (
                   <div className="added_agendas_container">
                     <div className="added_agendas_item">
                       <svg viewBox="0 0 48 48" className="agendas_time_icon">

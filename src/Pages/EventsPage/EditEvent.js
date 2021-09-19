@@ -23,13 +23,12 @@ import { connect } from "react-redux";
 
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import { useHistory } from "react-router-dom";
-
+import { useHistory, useParams } from "react-router-dom";
+import EditAgendas from "./EditAgendas";
 
 function EditEvent({
   modalOpen,
   setModalOpen,
-  id,
   setEditId,
   fetchCountries,
   fetchStates,
@@ -45,6 +44,8 @@ function EditEvent({
 }) {
   const history = useHistory();
   const [eventImages, setEventImages] = useState([]);
+
+  let { id } = useParams();
 
   useEffect(() => {
     if (id) {
@@ -71,6 +72,13 @@ function EditEvent({
     setEventImages(eventForEdit.images);
   }, [eventForEdit.images]);
 
+  const addressType = [
+    {
+      id: 1,
+      name: "agendas",
+    },
+  ];
+
   const handleDelete = () => {
     let {
       locationArm,
@@ -86,8 +94,9 @@ function EditEvent({
       descriptionRu,
       endDate,
       startDate,
-      header,
     } = store.getState().formReducer;
+
+    let { header } = store.getState().imageReducer;
 
     let event = {
       event: {
@@ -105,8 +114,6 @@ function EditEvent({
         endDate,
         startDate,
         header,
-
-        //  categoryId,
       },
     };
     setModalOpen(false);
@@ -119,9 +126,6 @@ function EditEvent({
   return (
     // <div>
     //   {/* <section className="modal-card-body has-text-centered"> */}
-
-
- 
 
     //   <hr></hr>
     //   {/* <div
@@ -138,7 +142,7 @@ function EditEvent({
     //             <Input id="dateAndTime" type="date" value={item.dateAndTime} />
     //             <div>{item.descriptionArm}</div>
     //           </div>
-    //         )) 
+    //         ))
     //         : null
     //       } */}
 
@@ -176,8 +180,8 @@ function EditEvent({
 
     <div>
       <form
-        // onSubmit={handleSubmit}
-        // className="add_event_container"
+      // onSubmit={handleSubmit}
+      // className="add_event_container"
       >
         <div>
           <button onClick={() => history.goBack()} className="arrow_left">
@@ -195,7 +199,7 @@ function EditEvent({
               <Input id="nameArm" type="text" placeholder="Անվանում" />
               <Input id="nameRu" type="text" placeholder="Имя" />
             </div>
-            
+
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Select placeholder="Country" items={countries} id="countryId" />
               <Select placeholder="State" items={states} id="stateId" />
@@ -227,17 +231,23 @@ function EditEvent({
               <Textarea id="descriptionRu" type="text" placeholder="Описание" />
             </div>
 
-              { 
-            eventForEdit && eventForEdit.agenda ?
-            eventForEdit.agenda.map(item => (
-              <div style={{display: 'flex'}}>
-                <Input id="dateAndTime" type="date" value={item.dateAndTime} />
-                <div>{item.descriptionArm}</div>
-              </div>
-            )) 
-            : null
-          }
-          
+            {/* {eventForEdit && eventForEdit.agenda
+              ? eventForEdit.agenda.map((item) => (
+                  <div style={{ display: "flex" }}>
+                    <Input
+                      id="dateAndTime"
+                      type="date"
+                      value={item.dateAndTime}
+                    />
+                    <div>{item.descriptionArm}</div>
+                  </div>
+                ))
+              : null} */}
+
+            <EditAgendas />
+
+            {/* <div style={{ display: "flex", justifyContent: "space-between" }}><p>Header</p></div> */}
+
             {/* <div className="event_address_container">
               <OneImageUpload label="Upload Header Image" />
               <ImageUpload label="Upload Images" />
@@ -255,7 +265,7 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state.eventReducer");
+  console.log(state.eventReducer, "state.eventReducer");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
