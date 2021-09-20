@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Input from "../../Components/Forms/Input/Input";
 import Textarea from "../../Components/Forms/Textarea/Textarea";
 import Button from "../../Components/Forms/Button/Button";
@@ -6,7 +6,6 @@ import "./addEvent.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import store, { addEvent } from "../../store";
-import { addNews } from "../../store/news/actions/addNews";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
@@ -213,7 +212,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addEvent: (news, path) => dispatch(addEvent(news, path)),
+    addEvent: (event, path) => dispatch(addEvent(event, path)),
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),

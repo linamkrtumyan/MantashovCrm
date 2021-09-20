@@ -10,8 +10,7 @@ import EditEvent from "./EditEvent";
 import ViewsInfoPage from "./ViewsInfoPage";
 
 import Pagination from "../../Components/Pagination/Pagination";
-import  DeleteEvent  from "./DeleteEvent";
-
+import DeleteEvent from "./DeleteEvent";
 
 function EventsPage({
   loading,
@@ -39,20 +38,17 @@ function EventsPage({
 
   function handleEdit(id) {
     history.push(`/edit-event/${id}`);
-
   }
 
   function handleDelete(id) {
     setDeleteId(id);
     setDeleteModalOpen(true);
-    
   }
 
   function handleInfo(id) {
     setInfoId(id);
     setInfoModalOpen(true);
   }
-
 
   if (loading) {
     return <Loading />;
@@ -94,8 +90,12 @@ function EventsPage({
             style={{
               display: "flex",
               justifyContent: "center",
-              padding: "0 50px 50px 50px ",
+              padding: "0 20px",
+              overflowY: "scroll",
+              // overflowX: "scroll",
+              maxHeight: "65vh",
             }}
+            // className="all_members_container"
           >
             <table className="table is-striped  is-fullwidth is-hoverable">
               <thead>
@@ -138,15 +138,15 @@ function EventsPage({
                       </div>
                     </td>
                     <td style={{ width: "10px" }}>
-                        <div
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            handleDelete(event.id)
-                          }}
-                        >
-                          <i className="far fa-trash-alt"></i>
-                        </div>
-                      </td>
+                      <div
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          handleDelete(event.id);
+                        }}
+                      >
+                        <i className="far fa-trash-alt"></i>
+                      </div>
+                    </td>
                     <td style={{ width: "10px" }}>
                       <div
                         style={{ cursor: "pointer" }}
@@ -157,7 +157,6 @@ function EventsPage({
                         <i className="fas fa-eye"></i>
                       </div>
                     </td>
-                    
                   </tr>
                 ))}
               </tbody>

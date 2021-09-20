@@ -7,7 +7,6 @@ import {
 } from "../types";
 
 export const fetchEventDetailsForEdit = (id) => {
-  console.log("lllllllllllllllllll");
   return (dispatch) => {
     dispatch(fetchEventDetailsForEditRequest());
     request(`/admin/events/event/forEdit/${id}`)

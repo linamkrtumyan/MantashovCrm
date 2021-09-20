@@ -12,7 +12,16 @@ function Input({
   className = "",
   value = "",
   formOnChange,
+  placeholderText = null,
 }) {
+
+  if (type === "date") {
+    if (value !== null && value !== "") {
+      value = value.split("T")[0];
+    } 
+  }
+
+
   // console.log(value, "value");
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
@@ -25,7 +34,7 @@ function Input({
         // defaultValue={defaultValue}
         onChange={handleOnChange}
         className={`input input_width ${className}`}
-        // placeholder={placeholder}
+        placeholder={placeholderText}
         type={type}
         value={value}
         // onfocus={}

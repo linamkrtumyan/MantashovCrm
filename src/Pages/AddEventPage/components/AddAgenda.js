@@ -99,7 +99,7 @@ function AddAgenda({
         <div
           onClick={() => {
             console.log(addresses, "??????????????????????//");
-            addresses[index - 1].agendas.push(agenda);
+            addresses[index - 1]?.agendas?.push(agenda);
             setAgendasAdded(true);
             setChange(change + 1);
             setNewAgenda(newAgenda + 1);

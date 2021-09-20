@@ -7,32 +7,11 @@ import {
 // import Select from "../../../Components/Forms/Select/Select";
 import { connect } from "react-redux";
 
-import AddAgendasAddress from "../AddEventPage/components/AddAgendasAddress";
+
 import Input from "../../Components/Forms/Input/Input";
 
-
-function EditAgendas({
-  fetchPositions,
-  fetchOrganizations,
-  organizations,
-  positions,
-  organizationsType,
-  positionId,
-  organizationId,
-  formOnChangeArray,
-  oneOrganization,
-  setNewOrg,
-  newOrg,
-  addedOrganizations,
-  existedOrganizations,
-  eventForEdit
-}) {
+function EditAgendas({ fetchPositions, eventForEdit }) {
   //   console.log(existedOrganizations, "existedOrganizations");
-  const [orgs, setOrgs] = useState([]);
-  useEffect(() => {
-    fetchPositions();
-    fetchOrganizations();
-  }, []);
 
   const addressType = [
     {
@@ -41,120 +20,60 @@ function EditAgendas({
     },
   ];
 
-  const handleAdd = () => {
-    // addedOrganizations.push(oneOrganization);
-    // setNewOrg(newOrg++);
-    // setOrgs(oneOrganization?.organizationId);
-    // console.log(newOrg, "newOrg");
-  };
-
   return (
     <>
-      {/* {existedOrganizations?.map((org) => {
-        const orgValue = organizations.find(
-          (organization) => organization.id === org.organizationId
-        );
-        const posValue = positions.find(
-          (position) => position.id === org.positionId
-        );
-
-        // console.log(orgValue, "orgValue");
-        // console.log(posValue, "posValue");
-
-        return (
-          <div style={{ display: "flex" }}>
-            <div
-            // className="added_orgs"
-            >
-              {" "}
-              {orgValue ? (
-                <Select
-                  items={organizations}
-                  id="organizationId"
-                  placeholderText={orgValue.name}
-                  placeholder="Organization"
+      {/* <div style={{ display: "flex"}}> */}
+      <div>
+        {eventForEdit && eventForEdit.agenda
+          ? eventForEdit.agenda.map((item, index) => (
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input
+                  id={`dateAndTime${index}`}
+                  type="datetime-local"
+                  value={item.dateAndTime}
+                  placeholder="Date And Time"
+                  placeholderText={item.dateAndTime}
                 />
-              ) : null}
-            </div>
-            <div
-            // className="added_orgs"
-            >
-              {posValue ? (
-                //    <p>{posValue.name}</p>
-                <Select
-                  placeholderText={posValue.name}
-                  placeholder="Position"
-                  items={positions}
-                  id="positionId"
+                <Input
+                  id={`descriptionEng${index}`}
+                  type="text"
+                  value={item.descriptionEng}
+                  placeholder="Description"
+                  placeholderText={item.descriptionEng}
                 />
-              ) : null}
-            </div>
-            <div onClick={handleAdd} style={{ margin: "24px 10px 10px 10px" }}>
-              <div className="add_new_org">
-                <i style={{ marginRight: "10px" }} className="fas fa-times"></i>
+                <Input
+                  id={`descriptionArm${index}`}
+                  type="text"
+                  value={item.descriptionArm}
+                  placeholder="Նկարագիր"
+                  placeholderText={item.descriptionArm}
+                />
+                <Input
+                  id={`descriptionRu${index}`}
+                  type="text"
+                  value={item.descriptionRu}
+                  placeholder="Описание"
+                  placeholderText={item.descriptionRu}
+                />
               </div>
-            </div>
-          </div>
-        );
-      })} */}
-
-      <div style={{ display: "flex" }}>
-        {/* <Select
-          placeholder="Select Organization"
-          items={organizations}
-          id="organizationId"
-          // value={organizationId}
-        />
-
-        <Select
-          placeholder="Select Position"
-          items={positions}
-          id="positionId"
-        />
-        <div onClick={handleAdd} style={{ margin: "24px 10px 10px 10px" }}>
-          <div className="add_new_org">
-            <i style={{ marginRight: "10px" }} className="fas fa-check"></i>
-          </div>
-        </div> */}
-        <div>
-            {eventForEdit && eventForEdit.agenda
-              ? eventForEdit.agenda.map((item) => (
-                  <div style={{ display: "flex" }}>
-                    <Input
-                      id="dateAndTime"
-                      type="date"
-                      value={item.dateAndTime}
-                    />
-                    <div>{item.descriptionArm}</div>
-                  </div>
-                ))
-              : null}
-          <AddAgendasAddress addressType={addressType} />
-        </div>
+            ))
+          : null}
+        {/* id={`dateAndTime${index}`} */}
       </div>
+      {/* </div> */}
     </>
   );
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
-    organizations: state.organizationsReducer.organizations,
-    positions: state.organizationsReducer.positions,
-    addedOrganizations: state.membersReducer.addedOrganizations,
-    organizationId: state.formReducer.organizationId,
-    positionId: state.formReducer.positionId,
-    oneOrganization: state.formReducer.organizations,
-    existedOrganizations: state.membersReducer.memberForEdit.organizations,
     eventForEdit: state.eventReducer.eventForEdit,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrganizations: () => dispatch(fetchOrganizations()),
-    fetchPositions: () => dispatch(fetchPositions()),
-
     formOnChangeArray: (firstKey, secondKey, value) =>
       dispatch(formOnChangeArray(firstKey, secondKey, value)),
   };

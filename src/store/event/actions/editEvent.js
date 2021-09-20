@@ -2,8 +2,8 @@ import request from "../../request";
 import { EVENT_EDIT_REQUEST, EVENT_EDIT_SUCCESS_FAILURE } from "../types";
 import { toast } from "react-toastify";
 
-export const editEvent = (event) => {
-  console.log(event, "event for edit ........");
+export const editEvent = (event, changePath) => {
+  console.log(event.event, "event for edit ........");
 
   return (dispatch) => {
     dispatch({
@@ -17,6 +17,7 @@ export const editEvent = (event) => {
           });
 
           toast.dark("Event edited");
+          changePath();
         } else {
           dispatch({
             type: EVENT_EDIT_SUCCESS_FAILURE,
