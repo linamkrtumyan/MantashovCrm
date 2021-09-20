@@ -159,69 +159,111 @@ function EditEvent({
             <p>Edit Event</p>
           </div>
         </div>
+        <div>
+          <div className="add_event_component">
+            <div
+              className="container_body"
+              style={{
+                background: "#e7e7e7",
+                border: "1px solid #e7e7e7",
+                boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+                margin: 15,
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="nameEng" type="text" placeholder="Name" />
+                <Input id="nameArm" type="text" placeholder="Անվանում" />
+                <Input id="nameRu" type="text" placeholder="Имя" />
+              </div>
 
-        <div className="add_event_component">
-          <div className="container_body">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="nameEng" type="text" placeholder="Name" />
-              <Input id="nameArm" type="text" placeholder="Անվանում" />
-              <Input id="nameRu" type="text" placeholder="Имя" />
-            </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Select
+                  placeholder="Country"
+                  items={countries}
+                  id="countryId"
+                />
+                <Select placeholder="State" items={states} id="stateId" />
+                <Select placeholder="City" items={cities} id="cityId" />
+              </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Select placeholder="Country" items={countries} id="countryId" />
-              <Select placeholder="State" items={states} id="stateId" />
-              <Select placeholder="City" items={cities} id="cityId" />
-            </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="startDate" type="date" placeholder="Start Date" />
+                <Input id="endDate" type="date" placeholder="End Date" />
+              </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="startDate" type="date" placeholder="Start Date" />
-              <Input id="endDate" type="date" placeholder="End Date" />
-            </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="locationEng" type="text" placeholder="Address" />
+                <Input id="locationArm" type="text" placeholder="Հասցե" />
+                <Input id="locationRu" type="text" placeholder="Адрес" />
+              </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="locationEng" type="text" placeholder="Address" />
-              <Input id="locationArm" type="text" placeholder="Հասցե" />
-              <Input id="locationRu" type="text" placeholder="Адрес" />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Textarea
+                  id="descriptionEng"
+                  type="text"
+                  placeholder="Description"
+                />
+                <Textarea
+                  id="descriptionArm"
+                  type="text"
+                  placeholder="Նկարագիր"
+                />
+                <Textarea
+                  id="descriptionRu"
+                  type="text"
+                  placeholder="Описание"
+                />
+              </div>
             </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Textarea
-                id="descriptionEng"
-                type="text"
-                placeholder="Description"
-              />
-              <Textarea
-                id="descriptionArm"
-                type="text"
-                placeholder="Նկարագիր"
-              />
-              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
-            </div>
-
-            {/* {eventForEdit && eventForEdit.agenda
-              ? eventForEdit.agenda.map((item) => (
-                  <div style={{ display: "flex" }}>
-                    <Input
-                      id="dateAndTime"
-                      type="date"
-                      value={item.dateAndTime}
-                    />
-                    <div>{item.descriptionArm}</div>
-                  </div>
-                ))
-              : null} */}
-            {/* <div>
-              <EditAgendas />
-            </div>
-            <div>
-              <AddAgendasAddress addressType={addressType} />
-            </div> */}
 
             <div
-              style={{ height: 150, width: 150 }}
-              // className=""
+              style={{
+                background: "#e7e7e7",
+                // padding: 15,
+                margin: 15,
+                // display: "flex",
+                border: "1px solid #e7e7e7",
+                boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+                // justifyContent: "space-around",
+              }}
+              className="container_body"
             >
+              <div style={{ margin: 15 }}>
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  Edit agendas
+                </p>
+              </div>
+              <div>
+                <div>
+                  <EditAgendas />
+                </div>
+                <div>
+                  <AddAgendasAddress addressType={addressType} />
+                </div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                height: 150,
+                width: 150,
+                margin: 15,
+                marginBottom: 20,
+                background: "#e7e7e7",
+                // padding: 15,
+                // display: "flex",
+                border: "1px solid #e7e7e7",
+                boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+                justifyContent: "space-around",
+              }}
+              className="container_body"
+            >
+              <p style={{ marginBottom: 5 }}>Header Image</p>
               {changeImage ? (
                 <OneImageUpload label="Upload Image" />
               ) : (
@@ -248,55 +290,69 @@ function EditEvent({
                 </>
               )}
             </div>
-            <hr></hr>
-
-            {
-            eventImages &&
-            eventImages.length !== 0 ? (
-              <div style={{ display: "flex", flexWrap: "wrap" }}>
-                {eventImages.map((item) => (
-                  <div
-                    className="member_image_container"
-                    // style={{ width: 150, height: 150 }}
-                  >
-                    <img
-                      src={`/images/events/${id}/${item}`}
-                      style={{ width: 150, height: 150 }}
-                    />
-                    <div className="member_image_middle">
-                      <div
-                        onClick={() => {
-                          // setChangeImage(true)
-                          for (let i = 0; i < eventImages.length; i++) {
-                            if (item === eventImages[i]) {
-                              deletedImages.push(item);
-                              setDeletedImages(deletedImages);
-                              eventImages.splice(i, 1);
+            <div
+              style={{
+                // height: 150,
+                // width: 150,
+                margin: 15,
+                background: "#e7e7e7",
+                marginTop: 20,
+                // padding: 15,
+                // display: "flex",
+                border: "1px solid #e7e7e7",
+                boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+                // justifyContent: "space-around",
+              }}
+              className="container_body"
+            >
+              {eventImages && eventImages.length !== 0 ? (
+                <div
+                  style={{ display: "flex", flexWrap: "wrap", marginTop: 20 }}
+                >
+                  {eventImages.map((item) => (
+                    <div
+                      className="member_image_container"
+                      // style={{ width: 150, height: 150 }}
+                    >
+                      <img
+                        src={`/images/events/${id}/${item}`}
+                        style={{ width: 150, height: 150 }}
+                      />
+                      <div className="member_image_middle">
+                        <div
+                          onClick={() => {
+                            // setChangeImage(true)
+                            for (let i = 0; i < eventImages.length; i++) {
+                              if (item === eventImages[i]) {
+                                deletedImages.push(item);
+                                setDeletedImages(deletedImages);
+                                eventImages.splice(i, 1);
+                              }
                             }
-                          }
-                          setEventImages(eventImages);
+                            setEventImages(eventImages);
 
-                          console.log(eventImages, ";;;;;;;;;;;;");
-                        }}
-                        className="member_edit_text"
-                      >
-                        <i className="fas fa-times"></i>
+                            console.log(eventImages, ";;;;;;;;;;;;");
+                          }}
+                          className="member_edit_text"
+                        >
+                          <i className="fas fa-times"></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                  <ImageUpload label="Add Images" />
+                </div>
+              ) : (
                 <ImageUpload label="Add Images" />
-              </div>
-            ) : (
-              <ImageUpload label="Add Images" />
-            )}
+              )}
 
-            {/* <div className="event_address_container">
+              {/* <div className="event_address_container">
               <OneImageUpload label="Upload Header Image" />
               <ImageUpload label="Upload Images" />
             </div> */}
+              {/* </div> */}
+            </div>
           </div>
-
           <div className="event_action_container">
             <Button title="Cancel" className="action_btn cancel_btn" />
             <Button title="Save" className="action_btn" />
