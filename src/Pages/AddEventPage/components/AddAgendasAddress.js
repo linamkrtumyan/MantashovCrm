@@ -42,7 +42,6 @@ function AddAgendasAddress({
       id: 4,
       name: "agendaDescriptionRu",
     },
-
   ];
   const [addressAdded, setAddressAdded] = useState(false);
   const [change, setChange] = useState(0);

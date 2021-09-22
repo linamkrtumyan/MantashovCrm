@@ -8,3 +8,5 @@ export { fetchEventDetails } from "./fetchEventDetails";
 export { fetchEventsByPage } from "./fetchEvents";
 export { editEvent } from "./editEvent";
 export { cleanEvent } from "./cleanEvent";
+export { editAgendas } from "./editAgendas";
+

@@ -169,7 +169,7 @@ function EventsPage({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state.eventReducer, "state");
+  console.log(state, "state");
   return {
     loading: state.eventReducer.loading,
     noEvents: state.eventReducer.eventsByPage.length === 0,

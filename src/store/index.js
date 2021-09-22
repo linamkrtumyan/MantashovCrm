@@ -30,6 +30,7 @@ export {
   fetchEventsByPage,
   editEvent,
   cleanEvent,
+  editAgendas,
 } from "./event/actions";
 export {
   fetchCountries,

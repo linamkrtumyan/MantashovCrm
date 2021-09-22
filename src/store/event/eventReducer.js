@@ -23,7 +23,8 @@ import {
   FETCH_EVENT_FOR_EDIT_FAILURE,
   EVENT_EDIT_REQUEST,
   EVENT_EDIT_SUCCESS_FAILURE,
-  CLEAN_EVENT
+  CLEAN_EVENT,
+  EDIT_AGENDAS,
 } from "./types";
 
 const initialState = {
@@ -41,6 +42,7 @@ const initialState = {
   eventDetails: [],
   eventsByPage: [],
   eventForEdit: {},
+  agendas: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -205,15 +207,20 @@ const reducer = (state = initialState, action) => {
 
         error: action.payload.error,
       };
-      case EVENT_EDIT_SUCCESS_FAILURE:
+    case EVENT_EDIT_SUCCESS_FAILURE:
       return {
         ...state,
         success: true,
       };
-      case CLEAN_EVENT:
+    case CLEAN_EVENT:
       return {
         ...state,
         eventForEdit: {},
+      };
+    case EDIT_AGENDAS:
+      return {
+        ...state,
+        agendas: action.payload.agendas,
       };
     default:
       return state;

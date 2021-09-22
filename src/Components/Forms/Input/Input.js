@@ -13,14 +13,13 @@ function Input({
   value = "",
   formOnChange,
   placeholderText = null,
+  dataDateFormat = "",
 }) {
-
   if (type === "date") {
     if (value !== null && value !== "") {
       value = value.split("T")[0];
-    } 
+    }
   }
-
 
   // console.log(value, "value");
   const handleOnChange = (e) => {
@@ -32,6 +31,7 @@ function Input({
       <input
         id={id}
         // defaultValue={defaultValue}
+        data-date-format={dataDateFormat}
         onChange={handleOnChange}
         className={`input input_width ${className}`}
         placeholder={placeholderText}

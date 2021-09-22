@@ -19,6 +19,7 @@ import store, {
   editEvent,
   cleanEvent,
   deletedImages,
+  editAgendas,
 } from "../../store";
 
 import { connect } from "react-redux";
@@ -44,6 +45,7 @@ function EditEvent({
   fetchEventDetailsForEdit,
   eventForEdit,
   agendas,
+  editAgendas,
   // agendasArray
 }) {
   const history = useHistory();
@@ -53,7 +55,7 @@ function EditEvent({
   const [headerDeleted, setHeaderDeleted] = useState(false);
   const [deletedImages, setDeletedImages] = useState([]);
 
-  // const [agendasArr, setAgendasArr] = useState([]);
+  const [agendasArr, setAgendasArr] = useState([]);
 
   let { id } = useParams();
 
@@ -81,6 +83,22 @@ function EditEvent({
   useEffect(() => {
     setEventImages(eventForEdit.images);
   }, [eventForEdit.images]);
+
+  // useEffect(() => {
+  //   let k = 0
+  //   if (agendas) {
+  //     for (let i = 0; i < agendas.length; i++) {
+  //       let obj = {}
+  //       obj[k] = agendas[i]
+  //       k++
+  //       agendasArr.push(obj);
+  //       setAgendasArr(agendasArr);
+  //       editAgendas(agendasArr);
+
+  //     }
+  //     // if(agendas.dateAndTime)
+  //   }
+  // }, [agendas]);
 
   const addressType = [
     {
@@ -243,7 +261,7 @@ function EditEvent({
                   <EditAgendas />
                 </div>
                 <div>
-                  <AddAgendasAddress addressType={addressType} />
+                  {/* <AddAgendasAddress addressType={addressType} /> */}
                 </div>
               </div>
             </div>
@@ -372,8 +390,8 @@ const mapStateToProps = (state) => {
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
     eventForEdit: state.eventReducer.eventForEdit,
-    agendas: state.formReducer?.agendasAddresses?.agendas,
-    agendasArray: state.formReducer,
+    agendas: state.formReducer?.agenda,
+    // agendasArray: state.formReducer,
   };
 };
 
@@ -388,6 +406,7 @@ const mapDispatchToProps = (dispatch) => {
     cleanLocation: () => dispatch(cleanLocation()),
     fetchEventDetailsForEdit: (id) => dispatch(fetchEventDetailsForEdit(id)),
     editEvent: (event, changePath) => dispatch(editEvent(event, changePath)),
+    editAgendas: (agendas) => dispatch(editAgendas(agendas)),
   };
 };
 

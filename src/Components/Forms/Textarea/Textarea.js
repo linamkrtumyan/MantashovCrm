@@ -11,6 +11,7 @@ function Textarea({
   className = "",
   value = "",
   formOnChange,
+  placeholderText = null,
 }) {
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
@@ -24,7 +25,7 @@ function Textarea({
         onChange={handleOnChange}
         // defaultValue={defaultValue}
         className={`textarea  ${className}`}
-        // placeholder={placeholder}
+        placeholder={placeholderText}
         type={type}
         value={value}
         required
@@ -45,4 +46,5 @@ const mapDispatchToProps = (dispatch) => {
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Textarea);
