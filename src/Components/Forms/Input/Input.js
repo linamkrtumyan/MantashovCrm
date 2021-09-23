@@ -22,13 +22,16 @@ function Input({
   }
 
   // if (type === "datetime-local") {
+  //   console.log("value:,    ", value);
   //   if (value !== null && value !== "") {
-  //     // value = value.split("T")[0];
-  //     console.log("/////////////////////////: ", value);
+  //     value = new Date(new Date(value).toUTCString())
+  //     formOnChange(id, value);
+  //     console.log("value:,:::::::::", value);
   //   }
   // }
 
   // console.log(value, "value");
+  
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
   };

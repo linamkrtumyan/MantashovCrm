@@ -70,9 +70,12 @@ function EditEvent({
     }
   }, [id]);
 
-  // useEffect(() => {
-  //   formOnChange("eventImages", eventForEdit.images);
-  // }, [eventForEdit.images]);
+  useEffect(() => {
+    // eventImages
+    //   ? formOnChange("eventImages", eventImages) :
+    formOnChange("eventImages", eventForEdit.images);
+    // setEventImgs(eventImages);
+  }, [eventForEdit.images]);
 
   useEffect(() => {
     fetchCountries();
@@ -90,15 +93,15 @@ function EditEvent({
   }, [stateId]);
 
   useEffect(() => {
-    setEventImgs(eventForEdit.images);
-  }, [eventForEdit.images]);
+    setEventImgs(eventImages);
+  }, [eventImages]);
 
-  const addressType = [
-    {
-      id: 1,
-      name: "agendas",
-    },
-  ];
+  // const addressType = [
+  //   {
+  //     id: 1,
+  //     name: "agendas",
+  //   },
+  // ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -154,19 +157,20 @@ function EditEvent({
     // cleanEvent();
   };
 
-  const deleteImage = (item) => {
-    deletedImages.push(item);
-    setDeletedImages(deletedImages);
+  // const deleteImage = (item) => {
+  //   deletedImages.push(item);
+  //   setDeletedImages(deletedImages);
 
-    for (let i = 0; i < eventImgs.length; i++) {
-      for (let j = 0; j < deletedImages.length; j++) {
-        if (eventImgs[i] === deletedImages[j]) {
-          eventImgs.splice(i, 1);
-          setEventImgs(eventImgs);
-        }
-      }
-    }
-  };
+  //   // for (let i = 0; i < eventImages.length; i++) {
+  //   //   for (let j = 0; j < deletedImages.length; j++) {
+  //   //     if (eventImages[i] === deletedImages[j]) {
+  //   //       eventImages.splice(i, 1);
+  //   //       setEventImgs(eventImages);
+  //   //       formOnChange("eventImages", eventImgs)
+  //   //     }
+  //   //   }
+  //   // }
+  // };
 
   return (
     <div>
@@ -334,20 +338,22 @@ function EditEvent({
                       <div className="member_image_middle">
                         <div
                           onClick={
-                              () => {
+                            () => {
                               // setChangeImage(true)
-                              // for (let i = 0; i < eventImgs.length; i++) {
-                              //   if (item === eventImgs[i]) {
-                              deletedImages.push(item);
-                              setDeletedImages(deletedImages);
-                              // eventImgs.splice(i, 1);
-                              setEventImgs(eventImgs);
-                              //   }
-                              // }
+                              for (let i = 0; i < eventImgs.length; i++) {
+                                if (item === eventImgs[i]) {
+                                  deletedImages.push(item);
+                                  setDeletedImages(deletedImages);
+                                  editImages(eventImgs);
+                                  formOnChange("eventImages", eventImgs);
+                                  eventImgs.splice(i, 1);
+                                  setEventImgs(eventImgs);
+                                }
+                              }
                               // setEventImages(eventImages);
-                              formOnChange("eventImages", eventImgs);
-                              editImages(eventImgs);
-                              console.log(eventImgs, ";;;;;;;;;;;;");
+                              // formOnChange("eventImages", eventImgs);
+                              // editImages(eventImgs);
+                              // console.log(eventImgs, ";;;;;;;;;;;;");
                             }
                             // deleteImage(item)
                           }
