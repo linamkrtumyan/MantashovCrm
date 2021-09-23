@@ -34,7 +34,7 @@ function EventsPage({
 
   useEffect(() => {
     fetchEventsByPage(page);
-  }, []);
+  }, [eventsByPage]);
 
   function handleEdit(id) {
     history.push(`/edit-event/${id}`);
@@ -67,8 +67,6 @@ function EventsPage({
     } else {
       fullDate = `${d1} ${t1} / ${d2} ${t2}`;
     }
-
-    console.log({ t1, t2 });
 
     return fullDate;
   };
@@ -192,7 +190,6 @@ function EventsPage({
   );
 }
 const mapStateToProps = (state) => {
-  console.log(state, "state");
   return {
     loading: state.eventReducer.loading,
     noEvents: state.eventReducer.eventsByPage.length === 0,

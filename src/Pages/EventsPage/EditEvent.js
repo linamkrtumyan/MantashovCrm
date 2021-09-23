@@ -50,11 +50,12 @@ function EditEvent({
   editAgendas,
   eventImages,
   formOnChange,
+  editEvent,
   // agendasArray
 }) {
   const history = useHistory();
 
-  const [eventImgs, setEventImgs] = useState([eventImages]);
+  const [eventImgs, setEventImgs] = useState([]);
   const [changeImage, setChangeImage] = useState(false);
   const [headerDeleted, setHeaderDeleted] = useState(false);
   const [deletedImages, setDeletedImages] = useState([]);
@@ -69,9 +70,9 @@ function EditEvent({
     }
   }, [id]);
 
-  useEffect(() => {
-    formOnChange("eventImages", eventForEdit.images);
-  }, [eventForEdit.images]);
+  // useEffect(() => {
+  //   formOnChange("eventImages", eventForEdit.images);
+  // }, [eventForEdit.images]);
 
   useEffect(() => {
     fetchCountries();
@@ -91,28 +92,6 @@ function EditEvent({
   useEffect(() => {
     setEventImgs(eventForEdit.images);
   }, [eventForEdit.images]);
-
-  useEffect(() => {
-    setEventImgs(eventImages);
-  }, [eventImages]);
-
-  // eventImages
-
-  // useEffect(() => {
-  //   let k = 0
-  //   if (agendas) {
-  //     for (let i = 0; i < agendas.length; i++) {
-  //       let obj = {}
-  //       obj[k] = agendas[i]
-  //       k++
-  //       agendasArr.push(obj);
-  //       setAgendasArr(agendasArr);
-  //       editAgendas(agendasArr);
-
-  //     }
-  //     // if(agendas.dateAndTime)
-  //   }
-  // }, [agendas]);
 
   const addressType = [
     {
@@ -142,29 +121,27 @@ function EditEvent({
     let { header, image } = store.getState().imageReducer;
 
     let event = {
-      event: {
-        locationArm,
-        locationEng,
-        locationRu,
-        cityId,
-        id: parseInt(id),
-        nameArm,
-        nameEng,
-        nameRu,
-        descriptionArm,
-        descriptionEng,
-        descriptionRu,
-        endDate,
-        startDate,
-        header: header[0] ? header[0] : null,
-        headerDeleted,
-        agendas: agendas ? agendas : [],
-        addedImages: image,
-        deletedImages,
-      },
+      locationArm,
+      locationEng,
+      locationRu,
+      cityId,
+      id: parseInt(id),
+      nameArm,
+      nameEng,
+      nameRu,
+      descriptionArm,
+      descriptionEng,
+      descriptionRu,
+      endDate,
+      startDate,
+      header: header[0] ? header[0] : null,
+      headerDeleted,
+      agendas: agendas ? agendas : [],
+      addedImages: image,
+      deletedImages,
     };
 
-    console.log(event, "uxarkvoxy");
+    // console.log(event, "uxarkvoxy");
 
     const changePath = () => {
       history.push("/events");
@@ -175,6 +152,20 @@ function EditEvent({
     // cleanForm();
     // setEditId(null);
     // cleanEvent();
+  };
+
+  const deleteImage = (item) => {
+    deletedImages.push(item);
+    setDeletedImages(deletedImages);
+
+    for (let i = 0; i < eventImgs.length; i++) {
+      for (let j = 0; j < deletedImages.length; j++) {
+        if (eventImgs[i] === deletedImages[j]) {
+          eventImgs.splice(i, 1);
+          setEventImgs(eventImgs);
+        }
+      }
+    }
   };
 
   return (
@@ -191,6 +182,7 @@ function EditEvent({
             <p>Edit Event</p>
           </div>
         </div>
+
         {/* <div> */}
         <div className="add_event_component">
           <div
@@ -329,40 +321,44 @@ function EditEvent({
           >
             {eventImgs && eventImgs.length !== 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", marginTop: 20 }}>
-                {eventImgs.map((item) => (
-                  <div
-                    className="member_image_container"
-                    // style={{ width: 150, height: 150 }}
-                  >
-                    <img
-                      src={`/images/events/${id}/${item}`}
-                      style={{ width: 150, height: 150 }}
-                    />
-                    <div className="member_image_middle">
-                      <div
-                        onClick={() => {
-                          // setChangeImage(true)
-                          for (let i = 0; i < eventImgs.length; i++) {
-                            if (item === eventImgs[i]) {
+                {eventImgs.map((item) => {
+                  return (
+                    <div
+                      className="member_image_container"
+                      // style={{ width: 150, height: 150 }}
+                    >
+                      <img
+                        src={`/images/events/${id}/${item}`}
+                        style={{ width: 150, height: 150 }}
+                      />
+                      <div className="member_image_middle">
+                        <div
+                          onClick={
+                              () => {
+                              // setChangeImage(true)
+                              // for (let i = 0; i < eventImgs.length; i++) {
+                              //   if (item === eventImgs[i]) {
                               deletedImages.push(item);
                               setDeletedImages(deletedImages);
-                              eventImgs.splice(i, 1);
-                              formOnChange("eventImages", eventImages);
+                              // eventImgs.splice(i, 1);
+                              setEventImgs(eventImgs);
+                              //   }
+                              // }
+                              // setEventImages(eventImages);
+                              formOnChange("eventImages", eventImgs);
                               editImages(eventImgs);
-                              // setEventImags(eventImages);
+                              console.log(eventImgs, ";;;;;;;;;;;;");
                             }
+                            // deleteImage(item)
                           }
-                          // setEventImages(eventImages);
-
-                          console.log(eventImages, ";;;;;;;;;;;;");
-                        }}
-                        className="member_edit_text"
-                      >
-                        <i className="fas fa-times"></i>
+                          className="member_edit_text"
+                        >
+                          <i className="fas fa-times"></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
                 <ImageUpload label="Add Images" />
               </div>
             ) : (
@@ -375,11 +371,12 @@ function EditEvent({
             </div> */}
             {/* </div> */}
           </div>
+          <div className="event_action_container">
+            <Button title="Cancel" className="action_btn cancel_btn" />
+            <Button title="Save" className="action_btn" />
+          </div>
         </div>
-        <div className="event_action_container">
-          <Button title="Cancel" className="action_btn cancel_btn" />
-          <Button title="Save" className="action_btn" />
-        </div>
+
         {/* </div> */}
       </form>
     </div>
@@ -414,6 +411,7 @@ const mapDispatchToProps = (dispatch) => {
     editEvent: (event, changePath) => dispatch(editEvent(event, changePath)),
     editImages: (eventImages) => dispatch(editImages(eventImages)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+    // cleanEvent: () => dispatch(cleanEvent()),
   };
 };
 

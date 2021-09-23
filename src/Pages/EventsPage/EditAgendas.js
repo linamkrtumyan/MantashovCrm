@@ -56,35 +56,36 @@ function EditAgendas({
   const [orgs, setOrgs] = useState(0);
 
   useEffect(() => {
-    if (date_and_time) {
-      formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
-      // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
-      // formOnChangeArray("newAgenda", "descriptionEng", description_eng);
-      // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
-    }
-    if (description_eng) {
-      // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
-      // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
-      formOnChangeArray("newAgenda", "descriptionEng", description_eng);
-      // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
-    }
-    if (description_arm) {
-      // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
-      // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
-      formOnChangeArray("newAgenda", "descriptionEng", description_eng);
-      // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
-    }
-    if (description_ru) {
-      // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
-      // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
-      // formOnChangeArray("newAgenda", "descriptionEng", description_eng);
-      formOnChangeArray("newAgenda", "descriptionRu", description_ru);
-    }
-  }, [date_and_time, description_arm, description_ru, description_eng]);
+    // if (date_and_time) {
+    formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
+    // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+    // formOnChangeArray("newAgenda", "descriptionEng", description_eng);
+    // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
+    // }
+    // if (description_eng) {
+    // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
+    // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+    formOnChangeArray("newAgenda", "descriptionEng", description_eng);
+    // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
+    // }
+    // if (description_arm) {
+    // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
+    // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+    formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+    // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
+    // }
+    // if (description_ru) {
+    // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
+    // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+    // formOnChangeArray("newAgenda", "descriptionEng", description_eng);
+    formOnChangeArray("newAgenda", "descriptionRu", description_ru);
+    // }
+  }, []);
+  // [date_and_time, description_arm, description_ru, description_eng];
 
   useEffect(() => {
     if (dateAndTime0) {
-      newAgenda[0].date_and_time = dateAndTime0;
+      agendas[0].dateAndTime = dateAndTime0;
     }
     setOrgs(orgs + 1);
     console.log(newAgenda, "::::::::");
@@ -92,35 +93,35 @@ function EditAgendas({
 
   useEffect(() => {
     if (dateAndTime1) {
-      newAgenda[1].date_and_time = dateAndTime1;
+      agendas[1].dateAndTime = dateAndTime1;
     }
     setOrgs(orgs + 1);
   }, [dateAndTime1]);
 
   useEffect(() => {
     if (dateAndTime2) {
-      newAgenda[2].date_and_time = dateAndTime2;
+      agendas[2].dateAndTime = dateAndTime2;
     }
     setOrgs(orgs + 1);
   }, [dateAndTime2]);
 
   useEffect(() => {
     if (dateAndTime3) {
-      newAgenda[3].date_and_time = dateAndTime3;
+      agendas[3].dateAndTime = dateAndTime3;
     }
     setOrgs(orgs + 1);
   }, [dateAndTime3]);
 
   useEffect(() => {
     if (dateAndTime4) {
-      newAgenda[4].date_and_time = dateAndTime4;
+      agendas[4].dateAndTime = dateAndTime4;
     }
     setOrgs(orgs + 1);
   }, [dateAndTime4]);
 
   useEffect(() => {
     if (dateAndTime5) {
-      newAgenda[5].date_and_time = dateAndTime5;
+      agendas[5].dateAndTime = dateAndTime5;
     }
     setOrgs(orgs + 1);
   }, [dateAndTime5]);
@@ -129,42 +130,42 @@ function EditAgendas({
 
   useEffect(() => {
     if (descriptionEng0) {
-      newAgenda[0].description_eng = descriptionEng0;
+      agendas[0].descriptionEng = descriptionEng0;
     }
     setOrgs(orgs + 1);
   }, [descriptionEng0]);
 
   useEffect(() => {
     if (descriptionEng1) {
-      newAgenda[1].description_eng = descriptionEng1;
+      agendas[1].descriptionEng = descriptionEng1;
     }
     setOrgs(orgs + 1);
   }, [descriptionEng1]);
 
   useEffect(() => {
     if (descriptionEng2) {
-      newAgenda[2].description_eng = descriptionEng2;
+      agendas[2].descriptionEng = descriptionEng2;
     }
     setOrgs(orgs + 1);
   }, [descriptionEng2]);
 
   useEffect(() => {
     if (descriptionEng3) {
-      newAgenda[3].description_eng = descriptionEng3;
+      agendas[3].descriptionEng = descriptionEng3;
     }
     setOrgs(orgs + 1);
   }, [descriptionEng3]);
 
   useEffect(() => {
     if (descriptionEng4) {
-      newAgenda[4].description_eng = descriptionEng4;
+      agendas[4].descriptionEng = descriptionEng4;
     }
     setOrgs(orgs + 1);
   }, [descriptionEng4]);
 
   useEffect(() => {
     if (descriptionEng5) {
-      newAgenda[5].description_eng = descriptionEng5;
+      agendas[5].descriptionEng = descriptionEng5;
     }
     setOrgs(orgs + 1);
   }, [descriptionEng5]);
@@ -173,42 +174,42 @@ function EditAgendas({
 
   useEffect(() => {
     if (descriptionArm0) {
-      newAgenda[0].description_ru = descriptionArm0;
+      agendas[0].descriptionArm = descriptionArm0;
     }
     setOrgs(orgs + 1);
   }, [descriptionArm0]);
 
   useEffect(() => {
     if (descriptionArm1) {
-      newAgenda[1].description_ru = descriptionArm1;
+      agendas[1].descriptionArm = descriptionArm1;
     }
     setOrgs(orgs + 1);
   }, [descriptionArm1]);
 
   useEffect(() => {
     if (descriptionArm2) {
-      newAgenda[2].description_ru = descriptionArm2;
+      agendas[2].descriptionArm = descriptionArm2;
     }
     setOrgs(orgs + 1);
   }, [descriptionArm2]);
 
   useEffect(() => {
     if (descriptionArm3) {
-      newAgenda[3].description_ru = descriptionArm3;
+      agendas[3].descriptionArm = descriptionArm3;
     }
     setOrgs(orgs + 1);
   }, [descriptionArm3]);
 
   useEffect(() => {
     if (descriptionArm4) {
-      newAgenda[4].description_ru = descriptionArm4;
+      agendas[4].descriptionArm = descriptionArm4;
     }
     setOrgs(orgs + 1);
   }, [descriptionArm4]);
 
   useEffect(() => {
     if (descriptionArm5) {
-      newAgenda[5].description_ru = descriptionArm5;
+      agendas[5].descriptionArm = descriptionArm5;
     }
     setOrgs(orgs + 1);
   }, [descriptionArm5]);
@@ -217,42 +218,42 @@ function EditAgendas({
 
   useEffect(() => {
     if (descriptionRu0) {
-      newAgenda[0].description_ru = descriptionRu0;
+      agendas[0].descriptionRu = descriptionRu0;
     }
     setOrgs(orgs + 1);
   }, [descriptionRu0]);
 
   useEffect(() => {
     if (descriptionRu1) {
-      newAgenda[1].description_ru = descriptionRu1;
+      agendas[1].descriptionRu = descriptionRu1;
     }
     setOrgs(orgs + 1);
   }, [descriptionRu1]);
 
   useEffect(() => {
     if (descriptionRu2) {
-      newAgenda[2].description_ru = descriptionRu2;
+      agendas[2].descriptionRu = descriptionRu2;
     }
     setOrgs(orgs + 1);
   }, [descriptionRu2]);
 
   useEffect(() => {
     if (descriptionRu3) {
-      newAgenda[3].description_ru = descriptionRu3;
+      agendas[3].descriptionRu = descriptionRu3;
     }
     setOrgs(orgs + 1);
   }, [descriptionRu3]);
 
   useEffect(() => {
     if (descriptionRu4) {
-      newAgenda[4].description_ru = descriptionRu4;
+      agendas[4].descriptionRu = descriptionRu4;
     }
     setOrgs(orgs + 1);
   }, [descriptionRu4]);
 
   useEffect(() => {
     if (descriptionRu5) {
-      newAgenda[5].description_ru = descriptionRu5;
+      agendas[5].descriptionRu = descriptionRu5;
     }
     setOrgs(orgs + 1);
   }, [descriptionRu5]);
@@ -277,9 +278,9 @@ function EditAgendas({
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Input
                   id={`date_and_time${index}`}
-                  type="date"
+                  type="datetime-local"
                   // dataDateFormat="YYYY/MM/DDThh:mm:ss"
-                  value={item.dateAndTime}
+                  // value={item.dateAndTime}
                   placeholder="Date And Time"
                   placeholderText={item.dateAndTime}
                 />
@@ -373,7 +374,7 @@ function EditAgendas({
 
         <div style={{ display: "flex" }}>
           <Input
-            id="date_and_time"
+            id="dateAndTime"
             type="datetime-local"
             // dataDateFormat="YYYY/MM/DDThh:mm:ss"
             // value={item.dateAndTime}
@@ -383,20 +384,17 @@ function EditAgendas({
           />
           <Textarea
             placeholder="Description"
-            id="description_eng"
+            id="descriptionEng"
             require={false}
+            
           />
 
           <Textarea
             placeholder="Նկարագիր"
-            id="description_arm"
+            id="descriptionArm"
             require={false}
           />
-          <Textarea
-            placeholder="Описание"
-            id="description_ru"
-            require={false}
-          />
+          <Textarea placeholder="Описание" id="descriptionRu" require={false} />
 
           <div onClick={handleAdd} style={{ margin: "24px 10px 10px 10px" }}>
             <div className="add_new_org">
@@ -420,35 +418,35 @@ const mapStateToProps = (state) => {
     description_arm: state.formReducer.description_arm,
     description_ru: state.formReducer.description_ru,
     newAgenda: state.formReducer?.newAgenda,
-    dateAndTime0: state.formReducer.dateAndTime0,
-    descriptionEng0: state.formReducer.descriptionEng0,
-    descriptionArm0: state.formReducer.descriptionArm0,
-    descriptionRu0: state.formReducer.descriptionRu0,
+    dateAndTime0: state.formReducer.date_and_time0,
+    descriptionEng0: state.formReducer.description_eng0,
+    descriptionArm0: state.formReducer.description_arm0,
+    descriptionRu0: state.formReducer.description_ru0,
 
-    dateAndTime1: state.formReducer.dateAndTime1,
-    descriptionEng1: state.formReducer.descriptionEng1,
-    descriptionArm1: state.formReducer.descriptionArm1,
-    descriptionRu1: state.formReducer.descriptionRu1,
+    dateAndTime1: state.formReducer.date_and_time1,
+    descriptionEng1: state.formReducer.description_eng1,
+    descriptionArm1: state.formReducer.description_arm1,
+    descriptionRu1: state.formReducer.description_ru1,
 
-    dateAndTime2: state.formReducer.dateAndTime2,
-    descriptionEng2: state.formReducer.descriptionEng2,
-    descriptionArm2: state.formReducer.descriptionArm2,
-    descriptionRu2: state.formReducer.descriptionRu2,
+    dateAndTime2: state.formReducer.date_and_time2,
+    descriptionEng2: state.formReducer.description_eng2,
+    descriptionArm2: state.formReducer.description_arm2,
+    descriptionRu2: state.formReducer.description_ru2,
 
-    dateAndTime3: state.formReducer.dateAndTime3,
-    descriptionEng3: state.formReducer.descriptionEng3,
-    descriptionArm3: state.formReducer.descriptionArm3,
-    descriptionRu3: state.formReducer.descriptionRu3,
+    dateAndTime3: state.formReducer.date_and_time3,
+    descriptionEng3: state.formReducer.description_eng3,
+    descriptionArm3: state.formReducer.description_arm3,
+    descriptionRu3: state.formReducer.description_ru3,
 
-    dateAndTime4: state.formReducer.dateAndTime4,
-    descriptionEng4: state.formReducer.descriptionEng4,
-    descriptionArm4: state.formReducer.descriptionArm4,
-    descriptionRu4: state.formReducer.descriptionRu4,
+    dateAndTime4: state.formReducer.date_and_time4,
+    descriptionEng4: state.formReducer.description_eng4,
+    descriptionArm4: state.formReducer.description_arm4,
+    descriptionRu4: state.formReducer.description_ru4,
 
-    dateAndTime5: state.formReducer.dateAndTime5,
-    descriptionEng5: state.formReducer.descriptionEng5,
-    descriptionArm5: state.formReducer.descriptionArm5,
-    descriptionRu5: state.formReducer.descriptionRu5,
+    dateAndTime5: state.formReducer.date_and_time5,
+    descriptionEng5: state.formReducer.description_eng5,
+    descriptionArm5: state.formReducer.description_arm5,
+    descriptionRu5: state.formReducer.description_ru5,
   };
 };
 

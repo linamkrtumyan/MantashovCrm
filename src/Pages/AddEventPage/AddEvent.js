@@ -15,6 +15,7 @@ import {
   fetchCities,
   fetchCountries,
   fetchStates,
+  // cleanEvent,
 } from "../../store";
 import AddAgendasAddress from "./components/AddAgendasAddress";
 
@@ -29,6 +30,7 @@ function AddEvent({
   stateId,
   states,
   agendas,
+  // cleanEvent,
 }) {
   const history = useHistory();
 
@@ -99,6 +101,7 @@ function AddEvent({
     };
     // console.log(event, "uxarkvoxy");
     addEvent(event, changePath);
+    // cleanEvent();
   };
 
   return (
@@ -216,6 +219,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),
+    // cleanEvent: () => dispatch(cleanEvent()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddEvent);

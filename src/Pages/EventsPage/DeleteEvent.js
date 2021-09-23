@@ -1,20 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteEvent } from "../../store";
+import { deleteEvent, cleanEvent } from "../../store";
+import { useHistory } from "react-router-dom";
 
-function DeleteEvent({
-  modalOpen,
-  setModalOpen,
-  id,
-  deleteEvent,
-}) {
-  console.log(modalOpen, "modalOpen");
-  console.log(id, "id");
+function DeleteEvent({ modalOpen, setModalOpen, id, deleteEvent, cleanEvent }) {
+  // console.log(modalOpen, "modalOpen");
+  // console.log(id, "id");
+
+  const history = useHistory();
 
   const handleDelete = () => {
     if (id) {
       setModalOpen(false);
-      deleteEvent(id);
+      const changePath = () => {
+        history.push("/events");
+      };
+      deleteEvent(id, changePath);
+      cleanEvent();
     }
   };
   return (
@@ -48,13 +50,14 @@ function DeleteEvent({
 }
 
 const mapStateToProps = (state) => {
-//   console.log(state, "state");
+  //   console.log(state, "state");
   return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteEvent: (id) => dispatch(deleteEvent(id)),
+    deleteEvent: (id, changePath) => dispatch(deleteEvent(id, changePath)),
+    cleanEvent: () => dispatch(deleteEvent()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteEvent);

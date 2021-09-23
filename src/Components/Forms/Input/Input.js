@@ -21,6 +21,13 @@ function Input({
     }
   }
 
+  // if (type === "datetime-local") {
+  //   if (value !== null && value !== "") {
+  //     // value = value.split("T")[0];
+  //     console.log("/////////////////////////: ", value);
+  //   }
+  // }
+
   // console.log(value, "value");
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
