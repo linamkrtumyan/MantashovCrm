@@ -70,12 +70,12 @@ function EditEvent({
     }
   }, [id]);
 
-  useEffect(() => {
-    // eventImages
-    //   ? formOnChange("eventImages", eventImages) :
-    formOnChange("eventImages", eventForEdit.images);
-    // setEventImgs(eventImages);
-  }, [eventForEdit.images]);
+  // useEffect(() => {
+  //   // eventImages
+  //   //   ? formOnChange("eventImages", eventImages) :
+  //   formOnChange("eventImages", eventForEdit.images);
+  //   // setEventImgs(eventImages);
+  // }, [eventForEdit.images]);
 
   useEffect(() => {
     fetchCountries();
@@ -93,8 +93,13 @@ function EditEvent({
   }, [stateId]);
 
   useEffect(() => {
-    setEventImgs(eventImages);
-  }, [eventImages]);
+    if(eventImages) {
+      setEventImgs(eventImages);
+    } else {
+      setEventImgs(eventForEdit.images);
+    }
+    
+  }, [eventImages, eventForEdit.images]);
 
   // const addressType = [
   //   {
@@ -345,9 +350,9 @@ function EditEvent({
                                   deletedImages.push(item);
                                   setDeletedImages(deletedImages);
                                   editImages(eventImgs);
-                                  formOnChange("eventImages", eventImgs);
                                   eventImgs.splice(i, 1);
                                   setEventImgs(eventImgs);
+                                  formOnChange("eventImages", eventImgs);                   
                                 }
                               }
                               // setEventImages(eventImages);
