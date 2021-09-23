@@ -22,9 +22,11 @@ import {
   FETCH_EVENT_FOR_EDIT_SUCCESS,
   FETCH_EVENT_FOR_EDIT_FAILURE,
   EVENT_EDIT_REQUEST,
-  EVENT_EDIT_SUCCESS_FAILURE,
+  EVENT_EDIT_SUCCESS,
+  EVENT_EDIT_FAILURE,
   CLEAN_EVENT,
   EDIT_AGENDAS,
+  EDIT_IMAGES,
 } from "./types";
 
 const initialState = {
@@ -43,6 +45,7 @@ const initialState = {
   eventsByPage: [],
   eventForEdit: {},
   agendas: [],
+  eventImages: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -152,6 +155,24 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
       };
 
+    case EVENT_EDIT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case EVENT_EDIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case EVENT_EDIT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+
     case DELETE_EVENT_REQUEST:
       return {
         ...state,
@@ -207,11 +228,11 @@ const reducer = (state = initialState, action) => {
 
         error: action.payload.error,
       };
-    case EVENT_EDIT_SUCCESS_FAILURE:
-      return {
-        ...state,
-        success: true,
-      };
+    // case EVENT_EDIT_SUCCESS_FAILURE:
+    //   return {
+    //     ...state,
+    //     success: true,
+    //   };
     case CLEAN_EVENT:
       return {
         ...state,
@@ -221,6 +242,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         agendas: action.payload.agendas,
+      };
+    case EDIT_IMAGES:
+      return {
+        ...state,
+        eventImages: action.payload.eventImages,
       };
     default:
       return state;

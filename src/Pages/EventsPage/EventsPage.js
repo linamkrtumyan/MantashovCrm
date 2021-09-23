@@ -50,6 +50,29 @@ function EventsPage({
     setInfoModalOpen(true);
   }
 
+  const getDates = (startDate, endDate) => {
+    let fullDate;
+
+    const sd = new Date(startDate);
+    const ed = new Date(endDate);
+
+    const d1 = `${sd.getFullYear()}-${sd.getMonth() + 1}-${sd.getDate()}`;
+    const d2 = `${ed.getFullYear()}-${ed.getMonth() + 1}-${ed.getDate()}`;
+
+    const t1 = `${sd.getHours()}:${sd.getMinutes()}`;
+    const t2 = `${ed.getHours()}:${ed.getMinutes()}`;
+
+    if (d1 === d2) {
+      fullDate = `${d1}  ${t1}-${t2}`;
+    } else {
+      fullDate = `${d1} ${t1} / ${d2} ${t2}`;
+    }
+
+    console.log({ t1, t2 });
+
+    return fullDate;
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -58,6 +81,7 @@ function EventsPage({
       <div className="noData">
         <div>
           <div className="nodata_text">No events, you can add a event</div>
+          <AddEventCard />
         </div>
       </div>
     );
@@ -102,8 +126,7 @@ function EventsPage({
                 <tr>
                   <th>Name</th>
                   <th>Location</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
+                  <th>Date</th>
                   <th>Going/Seen</th>
                   <th>Description</th>
                   <th></th>
@@ -116,8 +139,8 @@ function EventsPage({
                   <tr>
                     <td>{event.name}</td>
                     <td>{event.location}</td>
-                    <td>{event.startDate}</td>
-                    <td>{event.endDate}</td>
+                    <td>{getDates(event.startDate, event.endDate)}</td>
+                    {/* <td>{event.endDate}</td> */}
                     <td>
                       {event.going}/{event.viewed}
                     </td>

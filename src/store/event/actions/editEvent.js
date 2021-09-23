@@ -1,35 +1,50 @@
 import request from "../../request";
-import { EVENT_EDIT_REQUEST, EVENT_EDIT_SUCCESS_FAILURE } from "../types";
+import {
+  EVENT_EDIT_REQUEST,
+  EVENT_EDIT_SUCCESS,
+  EVENT_EDIT_FAILURE,
+} from "../types";
 import { toast } from "react-toastify";
 
 export const editEvent = (event, changePath) => {
   console.log(event.event, "event for edit ........");
 
   return (dispatch) => {
-    dispatch({
-      type: EVENT_EDIT_REQUEST,
-    });
-    request("/admin/events/event", "PUT", event)
+    console.log("+++++++++++++++++++++++++++");
+    dispatch(editEventRequest());
+    request("/admin/events/event", "PUT", event.event)
       .then((data) => {
         if (data.success) {
-          dispatch({
-            type: EVENT_EDIT_SUCCESS_FAILURE,
-          });
-
+          dispatch(editEventSuccess(data));
           toast.dark("Event edited");
           changePath();
-        } else {
-          dispatch({
-            type: EVENT_EDIT_SUCCESS_FAILURE,
-          });
-          toast.error("Something bad happened");
         }
       })
       .catch((e) => {
-        dispatch({
-          type: EVENT_EDIT_SUCCESS_FAILURE,
-        });
+        dispatch(editEventFailure(e.message));
         toast.error("Something bad happened");
       });
+  };
+};
+
+const editEventRequest = () => {
+  return {
+    type: EVENT_EDIT_REQUEST,
+  };
+};
+
+const editEventSuccess = (data) => {
+  // console.log(data, "news success data");
+  //   const login = data ? data : [];
+  return {
+    type: EVENT_EDIT_SUCCESS,
+    payload: {},
+  };
+};
+
+const editEventFailure = (error) => {
+  return {
+    type: EVENT_EDIT_FAILURE,
+    payload: { error },
   };
 };

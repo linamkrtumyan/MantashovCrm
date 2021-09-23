@@ -23,10 +23,6 @@ function EditAgendas({
   newAgenda,
   formOnChange,
 
-  // newAgenda,
-  addedAgendas,
-  existedAgendas,
-
   dateAndTime0,
   descriptionEng0,
   descriptionArm0,
@@ -59,32 +55,29 @@ function EditAgendas({
 }) {
   const [orgs, setOrgs] = useState(0);
 
-  // useEffect(() => {
-  //   existedAgendas?.map((ag) => {
-  //     formOnChangeArray("agendas", Object.keys(ag), Object.values(ag));
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (date_and_time) {
-  //     formOnChangeArray("addedAgendas", "date_and_time", date_and_time);
-  //   }
-  //   if (description_eng) {
-  //     formOnChangeArray("addedAgendas", "description_eng", description_eng);
-  //   }
-  //   if (description_arm) {
-  //     formOnChangeArray("addedAgendas", "description_arm", description_arm);
-  //   }
-  //   if (description_ru) {
-  //     formOnChangeArray("addedAgendas", "description_ru", description_ru);
-  //   }
-  // }, [date_and_time, description_eng, description_arm, description_ru]);
-
   useEffect(() => {
-    if (description_eng) {
+    if (date_and_time) {
       formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
-      formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+      // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+      // formOnChangeArray("newAgenda", "descriptionEng", description_eng);
+      // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
+    }
+    if (description_eng) {
+      // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
+      // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
       formOnChangeArray("newAgenda", "descriptionEng", description_eng);
+      // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
+    }
+    if (description_arm) {
+      // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
+      // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+      formOnChangeArray("newAgenda", "descriptionEng", description_eng);
+      // formOnChangeArray("newAgenda", "descriptionRu", description_ru);
+    }
+    if (description_ru) {
+      // formOnChangeArray("newAgenda", "dateAndTime", date_and_time);
+      // formOnChangeArray("newAgenda", "descriptionArm", description_arm);
+      // formOnChangeArray("newAgenda", "descriptionEng", description_eng);
       formOnChangeArray("newAgenda", "descriptionRu", description_ru);
     }
   }, [date_and_time, description_arm, description_ru, description_eng]);
@@ -93,36 +86,43 @@ function EditAgendas({
     if (dateAndTime0) {
       newAgenda[0].date_and_time = dateAndTime0;
     }
+    setOrgs(orgs + 1);
+    console.log(newAgenda, "::::::::");
   }, [dateAndTime0]);
 
   useEffect(() => {
     if (dateAndTime1) {
       newAgenda[1].date_and_time = dateAndTime1;
     }
+    setOrgs(orgs + 1);
   }, [dateAndTime1]);
 
   useEffect(() => {
     if (dateAndTime2) {
       newAgenda[2].date_and_time = dateAndTime2;
     }
+    setOrgs(orgs + 1);
   }, [dateAndTime2]);
 
   useEffect(() => {
     if (dateAndTime3) {
       newAgenda[3].date_and_time = dateAndTime3;
     }
+    setOrgs(orgs + 1);
   }, [dateAndTime3]);
 
   useEffect(() => {
     if (dateAndTime4) {
       newAgenda[4].date_and_time = dateAndTime4;
     }
+    setOrgs(orgs + 1);
   }, [dateAndTime4]);
 
   useEffect(() => {
     if (dateAndTime5) {
       newAgenda[5].date_and_time = dateAndTime5;
     }
+    setOrgs(orgs + 1);
   }, [dateAndTime5]);
 
   // ________________________
@@ -131,37 +131,87 @@ function EditAgendas({
     if (descriptionEng0) {
       newAgenda[0].description_eng = descriptionEng0;
     }
+    setOrgs(orgs + 1);
   }, [descriptionEng0]);
 
   useEffect(() => {
     if (descriptionEng1) {
       newAgenda[1].description_eng = descriptionEng1;
     }
+    setOrgs(orgs + 1);
   }, [descriptionEng1]);
 
   useEffect(() => {
     if (descriptionEng2) {
       newAgenda[2].description_eng = descriptionEng2;
     }
+    setOrgs(orgs + 1);
   }, [descriptionEng2]);
 
   useEffect(() => {
     if (descriptionEng3) {
       newAgenda[3].description_eng = descriptionEng3;
     }
+    setOrgs(orgs + 1);
   }, [descriptionEng3]);
 
   useEffect(() => {
     if (descriptionEng4) {
       newAgenda[4].description_eng = descriptionEng4;
     }
+    setOrgs(orgs + 1);
   }, [descriptionEng4]);
 
   useEffect(() => {
     if (descriptionEng5) {
       newAgenda[5].description_eng = descriptionEng5;
     }
+    setOrgs(orgs + 1);
   }, [descriptionEng5]);
+
+  // _______________________________________
+
+  useEffect(() => {
+    if (descriptionArm0) {
+      newAgenda[0].description_ru = descriptionArm0;
+    }
+    setOrgs(orgs + 1);
+  }, [descriptionArm0]);
+
+  useEffect(() => {
+    if (descriptionArm1) {
+      newAgenda[1].description_ru = descriptionArm1;
+    }
+    setOrgs(orgs + 1);
+  }, [descriptionArm1]);
+
+  useEffect(() => {
+    if (descriptionArm2) {
+      newAgenda[2].description_ru = descriptionArm2;
+    }
+    setOrgs(orgs + 1);
+  }, [descriptionArm2]);
+
+  useEffect(() => {
+    if (descriptionArm3) {
+      newAgenda[3].description_ru = descriptionArm3;
+    }
+    setOrgs(orgs + 1);
+  }, [descriptionArm3]);
+
+  useEffect(() => {
+    if (descriptionArm4) {
+      newAgenda[4].description_ru = descriptionArm4;
+    }
+    setOrgs(orgs + 1);
+  }, [descriptionArm4]);
+
+  useEffect(() => {
+    if (descriptionArm5) {
+      newAgenda[5].description_ru = descriptionArm5;
+    }
+    setOrgs(orgs + 1);
+  }, [descriptionArm5]);
 
   // _______________________________________
 
@@ -169,36 +219,42 @@ function EditAgendas({
     if (descriptionRu0) {
       newAgenda[0].description_ru = descriptionRu0;
     }
+    setOrgs(orgs + 1);
   }, [descriptionRu0]);
 
   useEffect(() => {
     if (descriptionRu1) {
       newAgenda[1].description_ru = descriptionRu1;
     }
+    setOrgs(orgs + 1);
   }, [descriptionRu1]);
 
   useEffect(() => {
     if (descriptionRu2) {
       newAgenda[2].description_ru = descriptionRu2;
     }
+    setOrgs(orgs + 1);
   }, [descriptionRu2]);
 
   useEffect(() => {
     if (descriptionRu3) {
       newAgenda[3].description_ru = descriptionRu3;
     }
+    setOrgs(orgs + 1);
   }, [descriptionRu3]);
 
   useEffect(() => {
     if (descriptionRu4) {
       newAgenda[4].description_ru = descriptionRu4;
     }
+    setOrgs(orgs + 1);
   }, [descriptionRu4]);
 
   useEffect(() => {
     if (descriptionRu5) {
       newAgenda[5].description_ru = descriptionRu5;
     }
+    setOrgs(orgs + 1);
   }, [descriptionRu5]);
 
   const handleAdd = () => {
@@ -220,7 +276,7 @@ function EditAgendas({
           ? eventForEdit.agenda.map((item, index) => (
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Input
-                  id={`dateAndTime${index}`}
+                  id={`date_and_time${index}`}
                   type="date"
                   // dataDateFormat="YYYY/MM/DDThh:mm:ss"
                   value={item.dateAndTime}
@@ -228,90 +284,74 @@ function EditAgendas({
                   placeholderText={item.dateAndTime}
                 />
                 <div className="input_container">
-                  <label htmlFor={`descriptionEng${index}`}>Description</label>
+                  <label htmlFor={`description_eng${index}`}>Description</label>
 
                   <textarea
-                    id={`descriptionEng${index}`}
+                    id={`description_eng${index}`}
                     onChange={(e) =>
-                      formOnChange(`descriptionEng${index}`, e.target.value)
+                      formOnChange(`description_eng${index}`, e.target.value)
                     }
                     // defaultValue={defaultValue}
                     className="textarea"
-                    // placeholder={placeholderText}
+                    placeholder={item.descriptionEng}
                     // type={type}
-                    value={
-                      descriptionEng0 || descriptionEng0 === ""
-                        ? descriptionEng0
-                        : item.descriptionEng
-                    }
+
+                    // value={
+                    //   descriptionEng0 || descriptionEng0 === ""
+                    //     ? descriptionEng0
+                    //     : item.descriptionEng
+                    // }
+
                     // required
                   />
                 </div>
 
                 <div className="input_container">
-                  <label htmlFor={`descriptionArm${index}`}>Նկարագիր</label>
+                  <label htmlFor={`description_arm${index}`}>Նկարագիր</label>
 
                   <textarea
-                    id={`descriptionArm${index}`}
+                    id={`description_arm${index}`}
                     onChange={(e) =>
-                      formOnChange(`descriptionArm${index}`, e.target.value)
+                      formOnChange(`description_arm${index}`, e.target.value)
                     }
                     // defaultValue={defaultValue}
                     className="textarea"
-                    // placeholder={placeholderText}
+                    placeholder={item.descriptionArm}
                     // type={type}
-                    value={
-                      descriptionArm0 || descriptionArm0 === ""
-                        ? descriptionArm0
-                        : item.descriptionArm
-                    }
+
+                    // value={
+                    //   descriptionArm0 || descriptionArm0 === ""
+                    //     ? descriptionArm0
+                    //     : item.descriptionArm
+                    // }
+
                     // required
                   />
                 </div>
 
                 <div className="input_container">
-                  <label htmlFor={`descriptionRu${index}`}>Описание</label>
+                  <label htmlFor={`description_ru${index}`}>Описание</label>
 
                   <textarea
-                    id={`descriptionRu${index}`}
+                    id={`description_ru${index}`}
                     onChange={(e) =>
-                      formOnChange(`descriptionRu${index}`, e.target.value)
+                      formOnChange(`description_ru${index}`, e.target.value)
                     }
                     // defaultValue={defaultValue}
                     className="textarea"
-                    // placeholder={placeholderText}
+                    placeholder={item.descriptionRu}
                     // type={type}
-                    value={
-                      descriptionRu0 || descriptionRu0 === ""
-                        ? descriptionRu0
-                        : item.descriptionRu
-                    }
+
+                    // value={
+                    //   descriptionRu0 || descriptionRu0 === ""
+                    //     ? descriptionRu0
+                    //     : item.descriptionRu
+                    // }
+
                     // required
                   />
                 </div>
 
-                {/* <Textarea
-                  // id={`descriptionEng${index}`}
-                  id={`agenda${[index]}.descriptionEng`}
-                  type="text"
-                  // value={item.descriptionEng}
-                  placeholder={`agenda${[index]}.descriptionEng`}
-                  // placeholderText={item.descriptionEng}
-                /> */}
-                {/* <Textarea
-                  id={`descriptionArm${index}`}
-                  type="text"
-                  value={item.descriptionArm}
-                  placeholder="Նկարագիր"
-                  // placeholderText={item.descriptionArm}
-                /> */}
-                {/* <Textarea
-                  id={`descriptionRu${index}`}
-                  type="text"
-                  value={item.descriptionRu}
-                  placeholder="Описание"
-                  // placeholderText={item.descriptionRu}
-                /> */}
                 <div
                   // onClick={() => handleDelete(index)}
                   style={{ margin: "24px 10px 10px 10px" }}
@@ -338,12 +378,25 @@ function EditAgendas({
             // dataDateFormat="YYYY/MM/DDThh:mm:ss"
             // value={item.dateAndTime}
             placeholder="Date And Time"
+            require={false}
             // placeholderText={item.dateAndTime}
           />
-          <Textarea placeholder="Description" id="description_eng" />
+          <Textarea
+            placeholder="Description"
+            id="description_eng"
+            require={false}
+          />
 
-          <Textarea placeholder="Նկարագիր" id="description_arm" />
-          <Textarea placeholder="Описание" id="description_ru" />
+          <Textarea
+            placeholder="Նկարագիր"
+            id="description_arm"
+            require={false}
+          />
+          <Textarea
+            placeholder="Описание"
+            id="description_ru"
+            require={false}
+          />
 
           <div onClick={handleAdd} style={{ margin: "24px 10px 10px 10px" }}>
             <div className="add_new_org">
@@ -366,12 +419,7 @@ const mapStateToProps = (state) => {
     description_eng: state.formReducer.description_eng,
     description_arm: state.formReducer.description_arm,
     description_ru: state.formReducer.description_ru,
-    newAgenda: state.formReducer.newAgenda,
-
-    // newAgenda: state.formReducer.agendas,
-    addedAgendas: state.formReducer.addedAgendas,
-    existedAgendas: state.eventReducer.eventForEdit.agendas,
-
+    newAgenda: state.formReducer?.newAgenda,
     dateAndTime0: state.formReducer.dateAndTime0,
     descriptionEng0: state.formReducer.descriptionEng0,
     descriptionArm0: state.formReducer.descriptionArm0,

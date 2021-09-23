@@ -31,6 +31,7 @@ export {
   editEvent,
   cleanEvent,
   editAgendas,
+  editImages,
 } from "./event/actions";
 export {
   fetchCountries,
