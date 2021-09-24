@@ -14,6 +14,7 @@ function Input({
   formOnChange,
   placeholderText = null,
   dataDateFormat = "",
+  required=true
 }) {
   if (type === "date") {
     if (value !== null && value !== "") {
@@ -48,7 +49,7 @@ function Input({
         type={type}
         value={value}
         // onfocus={}
-        required={true}
+        required={required}
       />
     </div>
   );

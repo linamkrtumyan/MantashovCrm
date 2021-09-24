@@ -12,6 +12,7 @@ function Textarea({
   value = "",
   formOnChange,
   placeholderText = null,
+  required=true
 }) {
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
@@ -28,7 +29,7 @@ function Textarea({
         placeholder={placeholderText}
         type={type}
         value={value}
-        required
+        required={required}
       />
     </div>
   );

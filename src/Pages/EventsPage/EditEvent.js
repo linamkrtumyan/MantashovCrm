@@ -70,13 +70,6 @@ function EditEvent({
     }
   }, [id]);
 
-  // useEffect(() => {
-  //   // eventImages
-  //   //   ? formOnChange("eventImages", eventImages) :
-  //   formOnChange("eventImages", eventForEdit.images);
-  //   // setEventImgs(eventImages);
-  // }, [eventForEdit.images]);
-
   useEffect(() => {
     fetchCountries();
   }, []);
@@ -93,20 +86,13 @@ function EditEvent({
   }, [stateId]);
 
   useEffect(() => {
-    if(eventImages) {
+    if (eventImages) {
       setEventImgs(eventImages);
+      formOnChange("eventImages", eventImgs);
     } else {
       setEventImgs(eventForEdit.images);
     }
-    
-  }, [eventImages, eventForEdit.images]);
-
-  // const addressType = [
-  //   {
-  //     id: 1,
-  //     name: "agendas",
-  //   },
-  // ];
+  }, [eventImages, eventForEdit.images, eventImgs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -161,21 +147,6 @@ function EditEvent({
     // setEditId(null);
     // cleanEvent();
   };
-
-  // const deleteImage = (item) => {
-  //   deletedImages.push(item);
-  //   setDeletedImages(deletedImages);
-
-  //   // for (let i = 0; i < eventImages.length; i++) {
-  //   //   for (let j = 0; j < deletedImages.length; j++) {
-  //   //     if (eventImages[i] === deletedImages[j]) {
-  //   //       eventImages.splice(i, 1);
-  //   //       setEventImgs(eventImages);
-  //   //       formOnChange("eventImages", eventImgs)
-  //   //     }
-  //   //   }
-  //   // }
-  // };
 
   return (
     <div>
@@ -342,26 +313,19 @@ function EditEvent({
                       />
                       <div className="member_image_middle">
                         <div
-                          onClick={
-                            () => {
-                              // setChangeImage(true)
-                              for (let i = 0; i < eventImgs.length; i++) {
-                                if (item === eventImgs[i]) {
-                                  deletedImages.push(item);
-                                  setDeletedImages(deletedImages);
-                                  editImages(eventImgs);
-                                  eventImgs.splice(i, 1);
-                                  setEventImgs(eventImgs);
-                                  formOnChange("eventImages", eventImgs);                   
-                                }
+                          onClick={() => {
+                            // setChangeImage(true)
+                            for (let i = 0; i < eventImgs.length; i++) {
+                              if (item === eventImgs[i]) {
+                                deletedImages.push(item);
+                                setDeletedImages(deletedImages);
+                                editImages(eventImgs);
+                                eventImgs.splice(i, 1);
+                                setEventImgs(eventImgs);
+                                formOnChange("eventImages", eventImgs);
                               }
-                              // setEventImages(eventImages);
-                              // formOnChange("eventImages", eventImgs);
-                              // editImages(eventImgs);
-                              // console.log(eventImgs, ";;;;;;;;;;;;");
                             }
-                            // deleteImage(item)
-                          }
+                          }}
                           className="member_edit_text"
                         >
                           <i className="fas fa-times"></i>

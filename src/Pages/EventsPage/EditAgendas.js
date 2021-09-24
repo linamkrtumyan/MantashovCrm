@@ -379,22 +379,21 @@ function EditAgendas({
             // dataDateFormat="YYYY/MM/DDThh:mm:ss"
             // value={item.dateAndTime}
             placeholder="Date And Time"
-            require={false}
+            required={false}
             // placeholderText={item.dateAndTime}
           />
           <Textarea
             placeholder="Description"
             id="descriptionEng"
-            require={false}
-            
+            required={false}
           />
 
           <Textarea
             placeholder="Նկարագիր"
             id="descriptionArm"
-            require={false}
+            required={false}
           />
-          <Textarea placeholder="Описание" id="descriptionRu" require={false} />
+          <Textarea placeholder="Описание" id="descriptionRu" required={false} />
 
           <div onClick={handleAdd} style={{ margin: "24px 10px 10px 10px" }}>
             <div className="add_new_org">
