@@ -81,14 +81,13 @@ function EditAgendas({
     formOnChangeArray("newAgenda", "descriptionRu", description_ru);
     // }
   }, []);
-  // [date_and_time, description_arm, description_ru, description_eng];
 
   useEffect(() => {
     if (dateAndTime0) {
       agendas[0].dateAndTime = dateAndTime0;
     }
     setOrgs(orgs + 1);
-    console.log(newAgenda, "::::::::");
+    // console.log(newAgenda, "::::::::");
   }, [dateAndTime0]);
 
   useEffect(() => {
@@ -281,6 +280,7 @@ function EditAgendas({
                   type="datetime-local"
                   // dataDateFormat="YYYY/MM/DDThh:mm:ss"
                   // value={item.dateAndTime}
+                  defaultValue={item.dateAndTime}
                   placeholder="Date And Time"
                   placeholderText={item.dateAndTime}
                 />
@@ -343,7 +343,7 @@ function EditAgendas({
         {/* id={`dateAndTime${index}`} */}
 
         <div style={{ display: "flex" }}>
-          <Input
+          {/* <Input
             id="dateAndTime"
             type="datetime-local"
             // dataDateFormat="YYYY/MM/DDThh:mm:ss"
@@ -351,7 +351,7 @@ function EditAgendas({
             placeholder="Date And Time"
             required={false}
             // placeholderText={item.dateAndTime}
-          />
+          /> */}
           {/* <Textarea
             placeholder="Description"
             id="descriptionEng"
@@ -369,6 +369,28 @@ function EditAgendas({
             id="descriptionRu"
             required={false}
           /> */}
+
+          {/* <Input
+            id="dateAndTime"
+            type="datetime-local"
+            // dataDateFormat="YYYY/MM/DDThh:mm:ss"
+            // value={item.dateAndTime}
+            placeholder="Date And Time"
+            required={false}
+            // placeholderText={item.dateAndTime}
+          /> */}
+          <div className="input_container">
+          <label htmlFor="dateAndTime">Date And Time</label>
+          <input 
+          id="dateAndTime"
+          type="datetime-local"
+          className={`input input_width`}
+          required={false}
+          onChange={(e) =>
+            formOnChangeArray("newAgenda", "dateAndTime", e.target.value)
+          }
+          />
+          </div>
           <div className="input_container">
             <label htmlFor="descriptionEng">Description</label>
 

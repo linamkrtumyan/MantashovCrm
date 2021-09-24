@@ -59,6 +59,7 @@ function EditEvent({
   const [changeImage, setChangeImage] = useState(false);
   const [headerDeleted, setHeaderDeleted] = useState(false);
   const [deletedImages, setDeletedImages] = useState([]);
+  const [agenda, setAgenda] = useState([]);
 
   // const [imgs, setImgs] = useState([]);
 
@@ -93,6 +94,9 @@ function EditEvent({
       setEventImgs(eventForEdit.images);
     }
   }, [eventImages, eventForEdit.images, eventImgs]);
+  useEffect(() => {
+    setAgenda(agendas);
+  }, [agendas]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -130,7 +134,7 @@ function EditEvent({
       startDate,
       header: header[0] ? header[0] : null,
       headerDeleted,
-      agendas: agendas ? agendas : [],
+      agendas: agenda,
       addedImages: image,
       deletedImages,
     };
@@ -138,7 +142,8 @@ function EditEvent({
     // console.log(event, "uxarkvoxy");
 
     const changePath = () => {
-      history.push("/events");
+      // history.push("/events");
+      console.log(event.agendas, "******************");
     };
 
     // setModalOpen(false);

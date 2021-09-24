@@ -14,7 +14,7 @@ function Input({
   formOnChange,
   placeholderText = null,
   dataDateFormat = "",
-  required=true
+  required = true,
 }) {
   if (type === "date") {
     if (value !== null && value !== "") {
@@ -22,17 +22,12 @@ function Input({
     }
   }
 
-  // if (type === "datetime-local") {
-  //   console.log("value:,    ", value);
-  //   if (value !== null && value !== "") {
-  //     value = new Date(new Date(value).toUTCString())
-  //     formOnChange(id, value);
-  //     console.log("value:,:::::::::", value);
-  //   }
-  // }
+  if (type === "datetime-local") {
+    if (value === null || value === "") {
+      formOnChange(id, defaultValue);
+    }
+  }
 
-  // console.log(value, "value");
-  
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
   };
