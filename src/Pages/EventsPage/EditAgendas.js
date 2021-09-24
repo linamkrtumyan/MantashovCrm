@@ -380,16 +380,16 @@ function EditAgendas({
             // placeholderText={item.dateAndTime}
           /> */}
           <div className="input_container">
-          <label htmlFor="dateAndTime">Date And Time</label>
-          <input 
-          id="dateAndTime"
-          type="datetime-local"
-          className={`input input_width`}
-          required={false}
-          onChange={(e) =>
-            formOnChangeArray("newAgenda", "dateAndTime", e.target.value)
-          }
-          />
+            <label htmlFor="dateAndTime">Date And Time</label>
+            <input
+              id="dateAndTime"
+              type="datetime-local"
+              className={`input input_width`}
+              required={false}
+              onChange={(e) =>
+                formOnChangeArray("newAgenda", "dateAndTime", e.target.value)
+              }
+            />
           </div>
           <div className="input_container">
             <label htmlFor="descriptionEng">Description</label>

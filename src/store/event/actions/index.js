@@ -10,3 +10,5 @@ export { editEvent } from "./editEvent";
 export { cleanEvent } from "./cleanEvent";
 export { editAgendas } from "./editAgendas";
 export { editImages } from "./editImages";
+export { deleteEventImageFromStore } from "./deleteEventImageFromStore";
+

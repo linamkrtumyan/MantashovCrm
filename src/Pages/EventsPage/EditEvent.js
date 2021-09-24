@@ -5,7 +5,6 @@ import Select from "../../Components/Forms/Select/Select";
 import Button from "../../Components/Forms/Button/Button";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
-import AddAgendasAddress from "../AddEventPage/components/AddAgendasAddress";
 
 import store, {
   // deletePosition,
@@ -17,24 +16,20 @@ import store, {
   cleanLocation,
   fetchEventDetailsForEdit,
   editEvent,
-  cleanEvent,
-  deletedImages,
-  editAgendas,
   editImages,
-  formOnChange,
+  cleanImages,
+  deleteEventImageFromStore,
 } from "../../store";
+import { deletedImages } from "../../store/images/actions";
 
 import { connect } from "react-redux";
 
 // import { Slide } from "react-slideshow-image";
-import "react-slideshow-image/dist/styles.css";
+// import "react-slideshow-image/dist/styles.css";
 import { useHistory, useParams } from "react-router-dom";
 import EditAgendas from "./EditAgendas";
 
 function EditEvent({
-  // modalOpen,
-  // setModalOpen,
-  // setEditId,
   fetchCountries,
   fetchStates,
   countries,
@@ -45,23 +40,20 @@ function EditEvent({
   fetchCities,
   // cleanForm,
   fetchEventDetailsForEdit,
-  eventForEdit,
   agendas,
-  editAgendas,
-  eventImages,
-  formOnChange,
   editEvent,
-  // agendasArray
+
+  cleanImages,
+  deletedImages,
+  deleteEventImageFromStore,
+  detailsImages,
+  y,
 }) {
   const history = useHistory();
 
-  const [eventImgs, setEventImgs] = useState([]);
   const [changeImage, setChangeImage] = useState(false);
   const [headerDeleted, setHeaderDeleted] = useState(false);
-  const [deletedImages, setDeletedImages] = useState([]);
   const [agenda, setAgenda] = useState([]);
-
-  // const [imgs, setImgs] = useState([]);
 
   let { id } = useParams();
 
@@ -87,15 +79,6 @@ function EditEvent({
   }, [stateId]);
 
   useEffect(() => {
-    if (eventImages) {
-      setEventImgs(eventImages);
-      formOnChange("eventImages", eventImgs);
-    } else {
-      setEventImgs(eventForEdit.images);
-    }
-  }, [eventImages, eventForEdit.images, eventImgs]);
-
-  useEffect(() => {
     setAgenda(agendas);
   }, [agendas]);
 
@@ -109,7 +92,6 @@ function EditEvent({
       nameArm,
       nameEng,
       nameRu,
-      // categoryId,
       descriptionArm,
       descriptionEng,
       descriptionRu,
@@ -117,7 +99,9 @@ function EditEvent({
       startDate,
     } = store.getState().formReducer;
 
-    let { header, image } = store.getState().imageReducer;
+    const header = store.getState().imageReducer.header[0];
+    const addedImages = store.getState().imageReducer.image;
+    const deleted = store.getState().imageReducer.deletedImages;
 
     let event = {
       locationArm,
@@ -133,24 +117,18 @@ function EditEvent({
       descriptionRu,
       endDate,
       startDate,
-      header: header[0] ? header[0] : null,
+      header,
       headerDeleted,
       agendas: agenda,
-      addedImages: image,
-      deletedImages,
+      addedImages,
+      deletedImages: deleted,
     };
-
-    // console.log(event, "uxarkvoxy");
 
     const changePath = () => {
       history.push("/events");
     };
-
-    // setModalOpen(false);
     editEvent(event, changePath);
-    // cleanForm();
-    // setEditId(null);
-    // cleanEvent();
+    cleanImages();
   };
 
   return (
@@ -290,66 +268,60 @@ function EditEvent({
             )}
           </div>
           <div
-            style={{
-              // height: 150,
-              // width: 150,
-              margin: 15,
-              background: "#e7e7e7",
-              marginTop: 20,
-              // padding: 15,
-              // display: "flex",
-              border: "1px solid #e7e7e7",
-              boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
-              // justifyContent: "space-around",
-            }}
-            className="container_body"
+          // style={{
+          //     margin: 15,
+          //     background: "#e7e7e7",
+          //     marginTop: 20,
+          //     border: "1px solid #e7e7e7",
+          //     boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+          //   }}
           >
-            {eventImgs && eventImgs.length !== 0 ? (
-              <div style={{ display: "flex", flexWrap: "wrap", marginTop: 20 }}>
-                {eventImgs.map((item) => {
-                  return (
-                    <div
-                      className="member_image_container"
-                      // style={{ width: 150, height: 150 }}
-                    >
-                      <img
-                        src={`/images/events/${id}/${item}`}
-                        style={{ width: 150, height: 150 }}
-                      />
-                      <div className="member_image_middle">
-                        <div
-                          onClick={() => {
-                            // setChangeImage(true)
-                            for (let i = 0; i < eventImgs.length; i++) {
-                              if (item === eventImgs[i]) {
-                                deletedImages.push(item);
-                                setDeletedImages(deletedImages);
-                                editImages(eventImgs);
-                                eventImgs.splice(i, 1);
-                                setEventImgs(eventImgs);
-                                formOnChange("eventImages", eventImgs);
-                              }
-                            }
-                          }}
-                          className="member_edit_text"
-                        >
-                          <i className="fas fa-times"></i>
-                        </div>
+            <div
+              style={{
+                display: "flex",
+                // maxWidth: 150,
+                flexWrap: "wrap",
+                margin: 15,
+                background: "#e7e7e7",
+                marginTop: 20,
+                border: "1px solid #e7e7e7",
+                boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+              }}
+              className="container_body"
+            >
+              {detailsImages.map((image, index) => {
+                const imagePath = `/images/events/${id}/${image}`;
+                return (
+                  <div className="edit_news_image_item" key={index}>
+                    <img
+                      alt=""
+                      className="edit_news_images"
+                      src={imagePath}
+                    />
+                    <div className="middle">
+                      <div
+                        onClick={() => {
+                          deletedImages(image);
+                          deleteEventImageFromStore(index);
+                        }}
+                      >
+                        <svg viewBox="0 0 24 24" className="close">
+                          <path
+                            d="M 2 2 L 22 22 M 2 22 L22 2"
+                            stroke="red"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="5"
+                          />
+                        </svg>
                       </div>
                     </div>
-                  );
-                })}
-                <ImageUpload label="Add Images" />
-              </div>
-            ) : (
-              <ImageUpload label="Add Images" />
-            )}
+                  </div>
+                );
+              })}
+            </div>
 
-            {/* <div className="event_address_container">
-              <OneImageUpload label="Upload Header Image" />
-              <ImageUpload label="Upload Images" />
-            </div> */}
-            {/* </div> */}
+            <ImageUpload label="Images" />
           </div>
           <div className="event_action_container">
             <Button title="Cancel" className="action_btn cancel_btn" />
@@ -364,17 +336,14 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
     states: state.locationsReducer.states,
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
-    eventForEdit: state.eventReducer.eventForEdit,
     agendas: state.formReducer?.agenda,
-    eventImages: state.formReducer?.eventImages,
-    // agendasArray: state.formReducer,
+    detailsImages: state.eventReducer.detailsImages,
   };
 };
 
@@ -388,7 +357,10 @@ const mapDispatchToProps = (dispatch) => {
     fetchEventDetailsForEdit: (id) => dispatch(fetchEventDetailsForEdit(id)),
     editEvent: (event, changePath) => dispatch(editEvent(event, changePath)),
     editImages: (eventImages) => dispatch(editImages(eventImages)),
-    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+
+    cleanImages: () => dispatch(cleanImages()),
+    deletedImages: (img) => dispatch(deletedImages(img)),
+    deleteEventImageFromStore: (id) => dispatch(deleteEventImageFromStore(id)),
   };
 };
 
