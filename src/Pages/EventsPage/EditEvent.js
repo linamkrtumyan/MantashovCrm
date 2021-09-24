@@ -13,7 +13,7 @@ import store, {
   fetchCountries,
   fetchStates,
   fetchCities,
-  cleanForm,
+  // cleanForm,
   cleanLocation,
   fetchEventDetailsForEdit,
   editEvent,
@@ -26,7 +26,7 @@ import store, {
 
 import { connect } from "react-redux";
 
-import { Slide } from "react-slideshow-image";
+// import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import { useHistory, useParams } from "react-router-dom";
 import EditAgendas from "./EditAgendas";
@@ -43,7 +43,7 @@ function EditEvent({
   stateId,
   cities,
   fetchCities,
-  cleanForm,
+  // cleanForm,
   fetchEventDetailsForEdit,
   eventForEdit,
   agendas,
@@ -94,6 +94,7 @@ function EditEvent({
       setEventImgs(eventForEdit.images);
     }
   }, [eventImages, eventForEdit.images, eventImgs]);
+
   useEffect(() => {
     setAgenda(agendas);
   }, [agendas]);
@@ -142,8 +143,7 @@ function EditEvent({
     // console.log(event, "uxarkvoxy");
 
     const changePath = () => {
-      // history.push("/events");
-      console.log(event.agendas, "******************");
+      history.push("/events");
     };
 
     // setModalOpen(false);
@@ -383,15 +383,12 @@ const mapDispatchToProps = (dispatch) => {
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),
-    // deletePosition: (id) => dispatch(deletePosition(id)),
-    // fetchPositionsAll: () => dispatch(fetchPositionsAll()),
-    cleanForm: () => dispatch(cleanForm()),
+    // cleanForm: () => dispatch(cleanForm()),
     cleanLocation: () => dispatch(cleanLocation()),
     fetchEventDetailsForEdit: (id) => dispatch(fetchEventDetailsForEdit(id)),
     editEvent: (event, changePath) => dispatch(editEvent(event, changePath)),
     editImages: (eventImages) => dispatch(editImages(eventImages)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
-    // cleanEvent: () => dispatch(cleanEvent()),
   };
 };
 
