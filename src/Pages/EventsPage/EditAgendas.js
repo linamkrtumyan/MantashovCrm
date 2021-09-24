@@ -292,18 +292,8 @@ function EditAgendas({
                     onChange={(e) =>
                       formOnChange(`description_eng${index}`, e.target.value)
                     }
-                    // defaultValue={defaultValue}
                     className="textarea"
                     placeholder={item.descriptionEng}
-                    // type={type}
-
-                    // value={
-                    //   descriptionEng0 || descriptionEng0 === ""
-                    //     ? descriptionEng0
-                    //     : item.descriptionEng
-                    // }
-
-                    // required
                   />
                 </div>
 
@@ -315,18 +305,8 @@ function EditAgendas({
                     onChange={(e) =>
                       formOnChange(`description_arm${index}`, e.target.value)
                     }
-                    // defaultValue={defaultValue}
                     className="textarea"
                     placeholder={item.descriptionArm}
-                    // type={type}
-
-                    // value={
-                    //   descriptionArm0 || descriptionArm0 === ""
-                    //     ? descriptionArm0
-                    //     : item.descriptionArm
-                    // }
-
-                    // required
                   />
                 </div>
 
@@ -338,18 +318,8 @@ function EditAgendas({
                     onChange={(e) =>
                       formOnChange(`description_ru${index}`, e.target.value)
                     }
-                    // defaultValue={defaultValue}
                     className="textarea"
                     placeholder={item.descriptionRu}
-                    // type={type}
-
-                    // value={
-                    //   descriptionRu0 || descriptionRu0 === ""
-                    //     ? descriptionRu0
-                    //     : item.descriptionRu
-                    // }
-
-                    // required
                   />
                 </div>
 
@@ -382,18 +352,64 @@ function EditAgendas({
             required={false}
             // placeholderText={item.dateAndTime}
           />
-          <Textarea
+          {/* <Textarea
             placeholder="Description"
             id="descriptionEng"
             required={false}
-          />
+          /> */}
 
-          <Textarea
+          {/* <Textarea
             placeholder="Նկարագիր"
             id="descriptionArm"
             required={false}
-          />
-          <Textarea placeholder="Описание" id="descriptionRu" required={false} />
+          /> */}
+
+          {/* <Textarea
+            placeholder="Описание"
+            id="descriptionRu"
+            required={false}
+          /> */}
+          <div className="input_container">
+            <label htmlFor="descriptionEng">Description</label>
+
+            <textarea
+              id="descriptionEng"
+              onChange={(e) =>
+                formOnChangeArray("newAgenda", "descriptionEng", e.target.value)
+              }
+              className="textarea"
+              // placeholder={item.descriptionEng}
+              required={false}
+            />
+          </div>
+
+          <div className="input_container">
+            <label htmlFor="descriptionArm">Նկարագիր</label>
+
+            <textarea
+              id="descriptionArm"
+              onChange={(e) =>
+                formOnChangeArray("newAgenda", "descriptionArm", e.target.value)
+              }
+              className="textarea"
+              // placeholder={item.descriptionEng}
+              required={false}
+            />
+          </div>
+
+          <div className="input_container">
+            <label htmlFor="descriptionRu">Описание</label>
+
+            <textarea
+              id="descriptionRu"
+              onChange={(e) =>
+                formOnChangeArray("newAgenda", "descriptionRu", e.target.value)
+              }
+              className="textarea"
+              // placeholder={item.descriptionEng}
+              required={false}
+            />
+          </div>
 
           <div onClick={handleAdd} style={{ margin: "24px 10px 10px 10px" }}>
             <div className="add_new_org">
