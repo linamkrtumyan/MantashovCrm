@@ -4,6 +4,13 @@
   /* left: 300px; */
   left: 120px;
 }
+.add_event_component {
+  margin: 0 auto;
+}
+
+.container_body {
+  width: 83%;
+}
 .event_address_container {
   display: flex;
   flex-wrap: wrap;
@@ -29,10 +36,10 @@
   margin: 5px;
 }
 .added_addresses_container {
-  /* width: 620px; */
+  width: 620px;
   background-color: #f7f7f7;
   padding: 15px;
-  /* margin: 10px; */
+  margin: 10px;
   margin: 10px 12%;
   font-size: 18px;
   font-weight: 600;
@@ -44,14 +51,14 @@
   margin: 10px;
 }
 .add_item_icon {
-  width: 35px;
+  width: 30px;
   margin: 15px;
   cursor: pointer;
 }
 .add_new_address_btn {
-  /* max-width: 940px; */
+  max-width: 940px;
   height: 50px;
-  /* margin: 10px; */
+  margin: 10px;
   margin: 10px 12%;
   background-color: #f7f7f7;
   cursor: pointer;

@@ -195,7 +195,7 @@ function EditOrganizations({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  console.log(state.formReducer.organizations, ";;;;;;;;");
   return {
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,

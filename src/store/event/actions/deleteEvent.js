@@ -5,7 +5,7 @@ import {
   DELETE_EVENT_FAILURE,
 } from "../types";
 
-export const deleteEvent = (id) => {
+export const deleteEvent = (id, changePath) => {
   // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deleteEventRequest());
@@ -14,6 +14,7 @@ export const deleteEvent = (id) => {
         // console.log(data, "data");
         if (data.success) {
           dispatch(deleteEventSuccess(data));
+          changePath();
         }
       })
       .catch((e) => {

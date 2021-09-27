@@ -15,6 +15,19 @@ import {
   ADD_EVENT_REQUEST,
   ADD_EVENT_SUCCESS,
   ADD_EVENT_FAILURE,
+  FETCH_EVENTS_BY_PAGE_REQUEST,
+  FETCH_EVENTS_BY_PAGE_SUCCESS,
+  FETCH_EVENTS_BY_PAGE_FAILURE,
+  FETCH_EVENT_FOR_EDIT_REQUEST,
+  FETCH_EVENT_FOR_EDIT_SUCCESS,
+  FETCH_EVENT_FOR_EDIT_FAILURE,
+  EVENT_EDIT_REQUEST,
+  EVENT_EDIT_SUCCESS,
+  EVENT_EDIT_FAILURE,
+  CLEAN_EVENT,
+  EDIT_AGENDAS,
+  EDIT_IMAGES,
+  DELETE_EVENT_IMAGE_FROM_STORE
 } from "./types";
 
 const initialState = {
@@ -25,15 +38,43 @@ const initialState = {
   count: 0,
   currentPage: 1,
   success: null,
+  // fetch: false,
   event: {},
   detailsImages: [],
   addresses: [],
   eventDetails: [],
+  eventsByPage: [],
+  eventForEdit: {},
+  agendas: [],
+  eventImages: [],
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action, " action payload");
   switch (action.type) {
+    case FETCH_EVENTS_BY_PAGE_REQUEST:
+      return {
+        ...state,
+        loading: false,
+      };
+    case FETCH_EVENTS_BY_PAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+
+        eventsByPage: action.payload.eventsByPage.events,
+        count: action.payload.eventsByPage.count,
+        // membersByPage: [],
+
+        error: null,
+      };
+    case FETCH_EVENTS_BY_PAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+
+        eventsByPage: [],
+        error: action.payload.error,
+      };
     case FETCH_PAST_EVENTS_REQUEST:
       return {
         ...state,
@@ -86,7 +127,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         eventDetails: action.payload.eventDetails,
-
+        detailsImages: action.payload.eventDetails.images,
         error: null,
       };
     case FETCH_EVENT_DETAILS_FAILURE:
@@ -95,6 +136,15 @@ const reducer = (state = initialState, action) => {
         loading: false,
         eventDetails: [],
         error: action.payload.error,
+      };
+
+      case DELETE_EVENT_IMAGE_FROM_STORE:
+      return {
+        ...state,
+        detailsImages: [
+          ...state.detailsImages.slice(0, action.payload.deleteId),
+          ...state.detailsImages.slice(action.payload.deleteId + 1),
+        ],
       };
 
     case ADD_EVENT_REQUEST:
@@ -109,6 +159,24 @@ const reducer = (state = initialState, action) => {
         error: null,
       };
     case ADD_EVENT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+
+    case EVENT_EDIT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case EVENT_EDIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case EVENT_EDIT_FAILURE:
       return {
         ...state,
         loading: false,
@@ -148,7 +216,49 @@ const reducer = (state = initialState, action) => {
     //         ...state.detailsImages.slice(action.payload.deleteId + 1),
     //       ],
     //     };
+    case FETCH_EVENTS_BY_PAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_EVENT_FOR_EDIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
 
+        eventForEdit: action.payload.eventForEdit,
+        detailsImages: action.payload.eventForEdit.images,
+        error: null,
+      };
+    case FETCH_EVENT_FOR_EDIT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+
+        eventForEdit: {},
+
+        error: action.payload.error,
+      };
+    // case EVENT_EDIT_SUCCESS_FAILURE:
+    //   return {
+    //     ...state,
+    //     success: true,
+    //   };
+    case CLEAN_EVENT:
+      return {
+        ...state,
+        eventForEdit: {},
+      };
+    case EDIT_AGENDAS:
+      return {
+        ...state,
+        agendas: action.payload.agendas,
+      };
+    case EDIT_IMAGES:
+      return {
+        ...state,
+        eventImages: action.payload.eventImages,
+      };
     default:
       return state;
   }

@@ -15,15 +15,10 @@ function AddAgendasAddress({
   fetchCities,
   fetchCountries,
   fetchStates,
-  countries,
-  cities,
-  country,
   state,
-  states,
   formOnChangeArray,
   value,
   addressType,
-  cityId,
   agendasAddresses,
   addresses,
   formOnChange,
@@ -35,7 +30,17 @@ function AddAgendasAddress({
     },
     {
       id: 2,
-      name: "agendaDescription",
+      name: "agendaDescriptionArm",
+    },
+    ,
+    {
+      id: 3,
+      name: "agendaDescriptionEng",
+    },
+
+    {
+      id: 4,
+      name: "agendaDescriptionRu",
     },
   ];
   const [addressAdded, setAddressAdded] = useState(false);
@@ -47,22 +52,12 @@ function AddAgendasAddress({
 
   //   const agendasCityId = store.getState().formReducer?.agendasCity;
   //   console.log(value, "value");
+
   useEffect(() => {
     addressType.map((addr) => {
       formOnChangeArray("agendasAddresses", addr.name, []);
     });
   }, []);
-
-  useEffect(() => {
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    fetchStates(country);
-  }, [country]);
-  useEffect(() => {
-    fetchCities(state);
-  }, [state]);
 
   return (
     <div>
@@ -70,20 +65,8 @@ function AddAgendasAddress({
         <div>
           {addresses.map((address) => (
             <div>
-              <div className="added_addresses_container">
-                <div style={{ marginRight: "5px" }}>
-                  <p>{address.location}</p>
-                </div>
-                <div style={{ marginRight: "5px" }}>
-                  <p>{address.latitude}</p>
-                </div>
-                <div>
-                  <p> {address.longitude}</p>
-                </div>
-              </div>
-
               <div>
-                {address.agendas?.map((agenda) => (
+                {address?.agendas?.map((agenda) => (
                   <div className="added_agendas_container">
                     <div className="added_agendas_item">
                       <svg viewBox="0 0 48 48" className="agendas_time_icon">
@@ -102,7 +85,13 @@ function AddAgendasAddress({
                       <p>{agenda.dateAndTime}</p>
                     </div>
                     <div className="added_agendas_item">
-                      {agenda.agendaDescription}
+                      {agenda.agendaDescriptionEng}
+                    </div>
+                    <div className="added_agendas_item">
+                      {agenda.agendaDescriptionArm}
+                    </div>
+                    <div className="added_agendas_item">
+                      {agenda.agendaDescriptionRu}
                     </div>
                   </div>
                 ))}
@@ -131,82 +120,6 @@ function AddAgendasAddress({
       ) : null}
       {newAddress ? (
         <div>
-          <div className="event_address_container">
-            <form autoComplete="off">
-              <Select
-                placeholder="Select Country"
-                items={countries}
-                id="agendasCountry"
-              />
-            </form>
-            <form autoComplete="off">
-              <Select
-                placeholder="Select State"
-                items={states}
-                id="agendasState"
-              />
-            </form>
-            <form autoComplete="off">
-              <Select
-                // val={agendasAddresses?.agendasCityId}
-                placeholder="Select City"
-                items={cities}
-                id="agendasCity"
-              />
-            </form>
-            <input
-              style={{ margin: "10px" }}
-              className="input_component"
-              value={agendasAddresses?.agendasLocation}
-              onChange={(e) => {
-                // setAgendasLocation(e.target.value);
-                formOnChangeArray(
-                  "agendasAddresses",
-                  "location",
-                  e.target.value
-                );
-                formOnChangeArray("agendasAddresses", "cityId", cityId);
-                // cleanForm();
-              }}
-              id="agendasLocation"
-              type="text"
-              placeholder="Location"
-            />
-            <input
-              style={{ margin: "10px" }}
-              className="input_component"
-              value={agendasAddresses?.agendasLatitude}
-              onChange={(e) => {
-                // setAgendasLatitude(e.target.value);
-                formOnChangeArray(
-                  "agendasAddresses",
-                  "latitude",
-                  e.target.value
-                );
-                // cleanForm();
-              }}
-              id="agendasLatitude"
-              type="text"
-              placeholder="Latitude"
-            />
-            <input
-              style={{ margin: "10px" }}
-              className="input_component"
-              value={agendasAddresses?.agendasLongitude}
-              onChange={(e) => {
-                // setAgendasLongitude(e.target.value);
-                formOnChangeArray(
-                  "agendasAddresses",
-                  "longitude",
-                  e.target.value
-                );
-                // cleanForm();
-              }}
-              id="agendasLongitude"
-              type="text"
-              placeholder="Longitude"
-            />
-          </div>
           <div
             className="add_new_address_btn"
             onClick={() => {
@@ -214,11 +127,11 @@ function AddAgendasAddress({
               setNewAddress(false);
               setShowAgendasForm(true);
               //   setChange(change + 1);
-              formOnChangeArray("agendasAddresses", "location", []);
-              formOnChangeArray("agendasAddresses", "latitude", []);
-              formOnChangeArray("agendasAddresses", "longitude", []);
-              formOnChangeArray("agendasAddresses", "cityId", []);
-              formOnChangeArray("agendasAddresses", "agendas", []);
+              // formOnChangeArray("agendasAddresses", "location", []);
+              // formOnChangeArray("agendasAddresses", "latitude", []);
+              // formOnChangeArray("agendasAddresses", "longitude", []);
+              // formOnChangeArray("agendasAddresses", "cityId", []);
+              // formOnChangeArray("agendasAddresses", "agendas", []);
               addresses.push(agendasAddresses);
             }}
           >
@@ -232,7 +145,6 @@ function AddAgendasAddress({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(ownProps, "ownProps");
   return {
     countries: state.locationsReducer.countries,
     country: state.formReducer.agendasCountry,
