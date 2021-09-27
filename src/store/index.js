@@ -10,6 +10,7 @@ export {
   fetchMemberForEdit,
   editMember,
   cleanMember,
+  resetPassword,
 } from "./members/actions";
 export {
   fetchNewsByPage,

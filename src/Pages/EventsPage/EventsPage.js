@@ -74,6 +74,7 @@ function EventsPage({
   if (loading) {
     return <Loading />;
   }
+  
   if (noEvents) {
     return (
       <div className="noData">

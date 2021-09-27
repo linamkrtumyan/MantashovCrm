@@ -31,20 +31,33 @@ function Input({
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
   };
+  const onFocus = (event) => {
+    // if (event.target.autocomplete) {
+    event.target.autocomplete = "whatever";
+    // }
+  };
+
   return (
-    <div className="input_container">
+    <div className={`input_container ${className}`}>
       <label htmlFor={id}>{placeholder}</label>
       <input
+        // autoComplete="new-password"
+        // autoComplete={"" + Math.random()}
+        autoComplete="off"
         id={id}
         // defaultValue={defaultValue}
         data-date-format={dataDateFormat}
         onChange={handleOnChange}
+        
         className={`input input_width ${className}`}
+        // className={`input `}
         placeholder={placeholderText}
+        // placeholder={placeholder}
         type={type}
         value={value}
-        // onfocus={}
+         onFocus={(e) => onFocus(e)}
         required={required}
+
       />
     </div>
   );

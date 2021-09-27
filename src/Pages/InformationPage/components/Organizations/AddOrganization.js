@@ -96,7 +96,7 @@ function AddOrganization({
           </div>
           <div className="is-flex is-justify-content-center">
             <Select
-              placeholder="Select Category"
+              placeholder="Select Sphere"
               items={categories}
               id="category"
             />

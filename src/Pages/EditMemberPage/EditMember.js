@@ -79,6 +79,10 @@ function EditMember({
     }
   }, [category]);
 
+  const handleCancel = () => {
+    history.push("/members");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let {
@@ -98,7 +102,7 @@ function EditMember({
       locationArm,
       locationEng,
       locationRu,
-      organization,
+      organizations,
       position,
     } = store.getState().formReducer;
 
@@ -127,13 +131,15 @@ function EditMember({
       descriptionRu,
       birthdate,
       email,
-      organizationId: organization,
+      // organizationId: organization,
+      organizations,
       positionId: position,
       contacts: cont,
       isActive,
     };
     // console.log(member, "sended member");
     editMember(member, changePath);
+    cleanForm();
     // cleanImages();
   };
 
@@ -204,6 +210,7 @@ function EditMember({
                   placeholder="Описание"
                 />
               </div>
+
               <div style={{ display: "flex" }}>
                 <Input id="birthdate" type="date" placeholder="" />
                 <button
@@ -267,7 +274,10 @@ function EditMember({
         </div>
 
         <div className="action_container">
-          <Button title="Cancel" className="action_btn cancel_btn" />
+          <div onClick={() => handleCancel()}>
+            <Button title="Cancel" className="action_btn cancel_btn" />
+          </div>
+
           <div onClick={handleSubmit}>
             <Button title="Save" className="action_btn" />
           </div>

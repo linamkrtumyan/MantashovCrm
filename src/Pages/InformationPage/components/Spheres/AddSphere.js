@@ -29,25 +29,27 @@ function AddSphere({
 
   return (
     <>
-      <td>
-        <Input id="nameEng" type="text" />
-      </td>
-      <td>
-        <Input id="nameArm" type="text" />
-      </td>
-      <td>
-        <Input id="nameRu" type="text" />
-      </td>
-      <td>
-        <div style={{ cursor: "pointer" }} onClick={handleCreate}>
-          <i className="fas fa-plus is-large"></i>
-        </div>
-      </td>
-      <td>
-        <div style={{ cursor: "pointer" }} onClick={() => setAdd(false)}>
-          <i className="fas fa-times is-large"></i>
-        </div>
-      </td>
+      <tr>
+        <td>
+          <Input id="nameEng" type="text" />
+        </td>
+        <td>
+          <Input id="nameArm" type="text" />
+        </td>
+        <td>
+          <Input id="nameRu" type="text" />
+        </td>
+        <td>
+          <div style={{ cursor: "pointer" }} onClick={handleCreate}>
+            <i className="fas fa-plus is-large"></i>
+          </div>
+        </td>
+        <td>
+          <div style={{ cursor: "pointer" }} onClick={() => setAdd(false)}>
+            <i className="fas fa-times is-large"></i>
+          </div>
+        </td>
+      </tr>
     </>
   );
 }
