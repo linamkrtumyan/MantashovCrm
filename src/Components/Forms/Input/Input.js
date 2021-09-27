@@ -55,7 +55,7 @@ function Input({
         // placeholder={placeholder}
         type={type}
         value={value}
-         onFocus={(e) => onFocus(e)}
+        onFocus={(e) => onFocus(e)}
         required={required}
 
       />
