@@ -19,6 +19,7 @@ function EventsPage({
   count,
   fetchEventsByPage,
   eventsByPage,
+  currentPage,
 }) {
   const page = 0;
   // const [page, setPage] = useState(0);
@@ -33,8 +34,8 @@ function EventsPage({
   const [infoId, setInfoId] = useState(null);
 
   useEffect(() => {
-    fetchEventsByPage(page);
-  }, [eventsByPage]);
+    fetchEventsByPage();
+  }, [currentPage,]);
 
   function handleEdit(id) {
     history.push(`/edit-event/${id}`);

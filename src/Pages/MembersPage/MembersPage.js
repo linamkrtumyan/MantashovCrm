@@ -26,6 +26,7 @@ function MembersPage({
   useEffect(() => {
     fetchMembersByPage();
   }, [currentPage, action]);
+  
 
   function handleDetails(id) {
     history.push(`/edit-member/${id}`);
