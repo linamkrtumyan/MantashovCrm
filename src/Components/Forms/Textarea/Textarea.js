@@ -12,6 +12,8 @@ function Textarea({
   textareaSize = "",
   value = "",
   formOnChange,
+  placeholderText = null,
+  required=true
 }) {
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
@@ -29,12 +31,15 @@ function Textarea({
         id={id}
         onChange={handleOnChange}
         // defaultValue={defaultValue}
-        className={`textarea ${textareaSize}`}
+
+        className={`textarea  ${className}`}
+        // className={`textarea ${textareaSize}`}
+        placeholder={placeholderText}
         // placeholder={placeholder}
         onInput={(e) => auto_grow(e)}
         type={type}
         value={value}
-        required
+        required={required}
       />
     </div>
   );
@@ -52,4 +57,5 @@ const mapDispatchToProps = (dispatch) => {
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Textarea);

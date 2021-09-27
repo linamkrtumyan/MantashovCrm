@@ -12,8 +12,22 @@ function Input({
   className = "",
   value = "",
   formOnChange,
+  placeholderText = null,
+  dataDateFormat = "",
+  required = true,
 }) {
-  // console.log(value, "value");
+  if (type === "date") {
+    if (value !== null && value !== "") {
+      value = value.split("T")[0];
+    }
+  }
+
+  if (type === "datetime-local") {
+    if (value === null || value === "") {
+      formOnChange(id, defaultValue);
+    }
+  }
+
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
   };
@@ -32,14 +46,18 @@ function Input({
         autoComplete="off"
         id={id}
         // defaultValue={defaultValue}
+        data-date-format={dataDateFormat}
         onChange={handleOnChange}
-        className={`input `}
+        
+        className={`input input_width ${className}`}
+        // className={`input `}
+        placeholder={placeholderText}
         // placeholder={placeholder}
         type={type}
         value={value}
-        // onfocus={}
-        onFocus={(e) => onFocus(e)}
-        required={true}
+         onFocus={(e) => onFocus(e)}
+        required={required}
+
       />
     </div>
   );

@@ -28,6 +28,12 @@ export {
   fetchEventDetailsForEdit,
   addEvent,
   fetchEventDetails,
+  fetchEventsByPage,
+  editEvent,
+  cleanEvent,
+  editAgendas,
+  editImages,
+  deleteEventImageFromStore,
 } from "./event/actions";
 export {
   fetchCountries,

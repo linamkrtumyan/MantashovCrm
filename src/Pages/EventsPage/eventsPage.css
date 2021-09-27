@@ -23,3 +23,26 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.see-agendas-btn {
+  height: 50px;
+  /* margin: 10px; */
+  margin: 10px 12%;
+  background-color: #f7f7f7;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-for-edit {
+  height: 150px;
+  width: 150px;
+  margin-right: 10px;
+  border: 2px solid gray;
+  position: relative;
+}
+.delete-image-btn {
+  right:0px;
+    position: absolute;
+}
