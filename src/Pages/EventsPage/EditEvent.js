@@ -135,7 +135,6 @@ function EditEvent({
   };
 
   const openImageModal = (imagePath) => {
-    console.log("//////////");
     setImgPath(imagePath);
     setOpenImgModal(true);
   };
@@ -146,6 +145,7 @@ function EditEvent({
         openImgModal={openImgModal}
         setOpenImgModal={setOpenImgModal}
         imgPath={imgPath}
+        id={id}
       />
 
       <div>
@@ -325,7 +325,7 @@ function EditEvent({
                         src={imagePath}
                         onClick={() => {
                           openImageModal(imagePath);
-                          console.log(imagePath, "???????????????????");
+                          // console.log(imagePath, "???????????????????");
                         }}
                       />
                       <div className="middle">

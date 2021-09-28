@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Slider.css";
 import BtnSlider from "./BtnSlider";
 // import dataSlider from "./dataSlider";
 
 export default function Slider({ imgPath, dataSlider }) {
   const [slideIndex, setSlideIndex] = useState(1);
+  const [currentImage, setCurrentImage] = useState("");
 
-  console.log({ dataSlider });
+  useEffect(() => {
+    setCurrentImage(imgPath);
+  }, [imgPath]);
 
   const nextSlide = () => {
     if (slideIndex !== dataSlider.length) {
@@ -31,13 +34,19 @@ export default function Slider({ imgPath, dataSlider }) {
   return (
     <div className="container-slider">
       {dataSlider.map((obj, index) => {
+        console.log({
+          dataSlider,
+          currentImage,
+          // index: dataSlider.indexOf(currentImage),
+          obj,
+        });
         return (
           <div
             key={index}
             className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
           >
             {/* <img src={process.env.PUBLIC_URL + `/Imgs/img${index + 1}.jpg`} /> */}
-            <img src={imgPath} />
+            <img src={currentImage} />
           </div>
         );
       })}
