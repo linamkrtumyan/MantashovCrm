@@ -28,6 +28,7 @@ import { connect } from "react-redux";
 // import "react-slideshow-image/dist/styles.css";
 import { useHistory, useParams } from "react-router-dom";
 import EditAgendas from "./EditAgendas";
+import OpenImage from "./components/images/OpenImage";
 
 function EditEvent({
   fetchCountries,
@@ -54,6 +55,8 @@ function EditEvent({
   const [changeImage, setChangeImage] = useState(false);
   const [headerDeleted, setHeaderDeleted] = useState(false);
   const [agenda, setAgenda] = useState([]);
+  const [openImgModal, setOpenImgModal] = useState(false);
+  const [imgPath, setImgPath] = useState("");
 
   let { id } = useParams();
 
@@ -131,207 +134,235 @@ function EditEvent({
     cleanImages();
   };
 
+  const openImageModal = (imagePath) => {
+    console.log("//////////");
+    setImgPath(imagePath);
+    setOpenImgModal(true);
+  };
+
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit}
-        // className="add_event_container"
-      >
-        <div>
-          <button onClick={() => history.goBack()} className="arrow_left">
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <div className="add_member_title">
-            <p>Edit Event</p>
-          </div>
-        </div>
+    <>
+      <OpenImage
+        openImgModal={openImgModal}
+        setOpenImgModal={setOpenImgModal}
+        imgPath={imgPath}
+      />
 
-        {/* <div> */}
-        <div className="add_event_component">
-          <div
-            className="container_body"
-            style={{
-              background: "#e7e7e7",
-              border: "1px solid #e7e7e7",
-              boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
-              margin: 15,
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="nameEng" type="text" placeholder="Name" />
-              <Input id="nameArm" type="text" placeholder="Անվանում" />
-              <Input id="nameRu" type="text" placeholder="Имя" />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Select placeholder="Country" items={countries} id="countryId" />
-              <Select placeholder="State" items={states} id="stateId" />
-              <Select placeholder="City" items={cities} id="cityId" />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="startDate" type="date" placeholder="Start Date" />
-              <Input id="endDate" type="date" placeholder="End Date" />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="locationEng" type="text" placeholder="Address" />
-              <Input id="locationArm" type="text" placeholder="Հասցե" />
-              <Input id="locationRu" type="text" placeholder="Адрес" />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Textarea
-                id="descriptionEng"
-                type="text"
-                placeholder="Description"
-              />
-              <Textarea
-                id="descriptionArm"
-                type="text"
-                placeholder="Նկարագիր"
-              />
-              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
+      <div>
+        <form
+          onSubmit={handleSubmit}
+          // className="add_event_container"
+        >
+          <div>
+            <button onClick={() => history.goBack()} className="arrow_left">
+              <i className="fas fa-chevron-left"></i>
+            </button>
+            <div className="add_member_title">
+              <p>Edit Event</p>
             </div>
           </div>
 
-          <div
-            style={{
-              background: "#e7e7e7",
-              // padding: 15,
-              margin: 15,
-              // display: "flex",
-              border: "1px solid #e7e7e7",
-              boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
-              // justifyContent: "space-around",
-            }}
-            className="container_body"
-          >
-            <div style={{ margin: 15 }}>
-              <p
-                style={{
-                  textAlign: "center",
-                  fontSize: 20,
-                }}
-              >
-                Edit agendas
-              </p>
-            </div>
-            <div>
-              <div>
-                <EditAgendas />
-              </div>
-              <div>{/* <AddAgendasAddress addressType={addressType} /> */}</div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              height: 150,
-              width: 150,
-              margin: 15,
-              marginBottom: 20,
-              background: "#e7e7e7",
-              // padding: 15,
-              // display: "flex",
-              border: "1px solid #e7e7e7",
-              boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
-              justifyContent: "space-around",
-            }}
-            className="container_body"
-          >
-            <p style={{ marginBottom: 5 }}>Header Image</p>
-            {changeImage ? (
-              <OneImageUpload label="Upload Image" />
-            ) : (
-              <>
-                <div className="member_image_container">
-                  <img
-                    src={`/images/eventsHeader/${id}/header.png`}
-                    alt=""
-                    className="member_edit_image"
-                    style={{ width: "100%" }}
-                  />
-                  <div className="member_image_middle">
-                    <div
-                      onClick={() => {
-                        setChangeImage(true);
-                        setHeaderDeleted(true);
-                      }}
-                      className="member_edit_text"
-                    >
-                      <i className="fas fa-times"></i>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-          <div
-          // style={{
-          //     margin: 15,
-          //     background: "#e7e7e7",
-          //     marginTop: 20,
-          //     border: "1px solid #e7e7e7",
-          //     boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
-          //   }}
-          >
+          {/* <div> */}
+          <div className="add_event_component">
             <div
+              className="container_body"
               style={{
-                display: "flex",
-                // maxWidth: 150,
-                flexWrap: "wrap",
-                margin: 15,
                 background: "#e7e7e7",
-                marginTop: 20,
                 border: "1px solid #e7e7e7",
                 boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+                margin: 15,
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="nameEng" type="text" placeholder="Name" />
+                <Input id="nameArm" type="text" placeholder="Անվանում" />
+                <Input id="nameRu" type="text" placeholder="Имя" />
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Select
+                  placeholder="Country"
+                  items={countries}
+                  id="countryId"
+                />
+                <Select placeholder="State" items={states} id="stateId" />
+                <Select placeholder="City" items={cities} id="cityId" />
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="startDate" type="date" placeholder="Start Date" />
+                <Input id="endDate" type="date" placeholder="End Date" />
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Input id="locationEng" type="text" placeholder="Address" />
+                <Input id="locationArm" type="text" placeholder="Հասցե" />
+                <Input id="locationRu" type="text" placeholder="Адрес" />
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Textarea
+                  id="descriptionEng"
+                  type="text"
+                  placeholder="Description"
+                />
+                <Textarea
+                  id="descriptionArm"
+                  type="text"
+                  placeholder="Նկարագիր"
+                />
+                <Textarea
+                  id="descriptionRu"
+                  type="text"
+                  placeholder="Описание"
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                background: "#e7e7e7",
+                // padding: 15,
+                margin: 15,
+                // display: "flex",
+                border: "1px solid #e7e7e7",
+                boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+                // justifyContent: "space-around",
               }}
               className="container_body"
             >
-              {detailsImages.map((image, index) => {
-                const imagePath = `/images/events/${id}/${image}`;
-                return (
-                  <div className="edit_news_image_item" key={index}>
+              <div style={{ margin: 15 }}>
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  Edit agendas
+                </p>
+              </div>
+              <div>
+                <div>
+                  <EditAgendas />
+                </div>
+                <div>
+                  {/* <AddAgendasAddress addressType={addressType} /> */}
+                </div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                height: 150,
+                width: 150,
+                margin: 15,
+                marginBottom: 20,
+                background: "#e7e7e7",
+                // padding: 15,
+                // display: "flex",
+                border: "1px solid #e7e7e7",
+                boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+                justifyContent: "space-around",
+              }}
+              className="container_body"
+            >
+              <p style={{ marginBottom: 5 }}>Header Image</p>
+              {changeImage ? (
+                <OneImageUpload label="Upload Image" />
+              ) : (
+                <>
+                  <div className="member_image_container">
                     <img
+                      src={`/images/eventsHeader/${id}/header.png`}
                       alt=""
-                      className="edit_news_images"
-                      src={imagePath}
+                      className="member_edit_image"
+                      style={{ width: "100%" }}
                     />
-                    <div className="middle">
+                    <div className="member_image_middle">
                       <div
                         onClick={() => {
-                          deletedImages(image);
-                          deleteEventImageFromStore(index);
+                          setChangeImage(true);
+                          setHeaderDeleted(true);
                         }}
+                        className="member_edit_text"
                       >
-                        <svg viewBox="0 0 24 24" className="close">
-                          <path
-                            d="M 2 2 L 22 22 M 2 22 L22 2"
-                            stroke="red"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="5"
-                          />
-                        </svg>
+                        <i className="fas fa-times"></i>
                       </div>
                     </div>
                   </div>
-                );
-              })}
+                </>
+              )}
             </div>
+            <div
+            // style={{
+            //     margin: 15,
+            //     background: "#e7e7e7",
+            //     marginTop: 20,
+            //     border: "1px solid #e7e7e7",
+            //     boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+            //   }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  // maxWidth: 150,
+                  flexWrap: "wrap",
+                  margin: 15,
+                  background: "#e7e7e7",
+                  marginTop: 20,
+                  border: "1px solid #e7e7e7",
+                  boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
+                }}
+                className="container_body"
+              >
+                {detailsImages.map((image, index) => {
+                  const imagePath = `/images/events/${id}/${image}`;
+                  return (
+                    <div className="edit_news_image_item" key={index}>
+                      <img
+                        alt=""
+                        className="edit_news_images"
+                        src={imagePath}
+                        onClick={() => {
+                          openImageModal(imagePath);
+                          console.log(imagePath, "???????????????????");
+                        }}
+                      />
+                      <div className="middle">
+                        <div
+                          onClick={() => {
+                            deletedImages(image);
+                            deleteEventImageFromStore(index);
+                          }}
+                        >
+                          <svg viewBox="0 0 24 24" className="close">
+                            <path
+                              d="M 2 2 L 22 22 M 2 22 L22 2"
+                              stroke="red"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="5"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
-            <ImageUpload label="Images" />
+              <ImageUpload label="  Add Images" />
+            </div>
+            <div className="event_action_container">
+              <Button title="Cancel" className="action_btn cancel_btn" />
+              <Button title="Save" className="action_btn" />
+            </div>
           </div>
-          <div className="event_action_container">
-            <Button title="Cancel" className="action_btn cancel_btn" />
-            <Button title="Save" className="action_btn" />
-          </div>
-        </div>
 
-        {/* </div> */}
-      </form>
-    </div>
+          {/* </div> */}
+        </form>
+      </div>
+    </>
   );
 }
 

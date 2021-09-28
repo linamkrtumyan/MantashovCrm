@@ -35,7 +35,7 @@ function EventsPage({
 
   useEffect(() => {
     fetchEventsByPage();
-  }, [currentPage,]);
+  }, [currentPage]);
 
   function handleEdit(id) {
     history.push(`/edit-event/${id}`);
@@ -75,7 +75,7 @@ function EventsPage({
   if (loading) {
     return <Loading />;
   }
-  
+
   if (noEvents) {
     return (
       <div className="noData">
