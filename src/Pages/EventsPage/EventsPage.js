@@ -80,7 +80,7 @@ function EventsPage({
     return (
       <div className="noData">
         <div>
-          <div className="nodata_text">No events, you can add a event</div>
+          <div className="nodata_text">No events, you can add an event</div>
           <AddEventCard />
         </div>
       </div>

@@ -34,14 +34,13 @@ function AddOrganization({
   addOrganization,
   cleanForm,
 }) {
-  console.log(modalOpen, "modalOpen");
+  console.log(store.getState().organizationsReducer, "lllllll");
 
   useEffect(() => {
-    cleanForm();
-
     fetchCountries();
     fetchCategories();
     cleanOrganization();
+    // cleanForm();
   }, []);
 
   useEffect(() => {
@@ -75,6 +74,7 @@ function AddOrganization({
     addOrganization(organization);
 
     cleanForm();
+    // cleanOrganization();
   };
   return (
     <div className={"modal " + (modalOpen ? "is-active" : "")}>
@@ -98,7 +98,7 @@ function AddOrganization({
             <Select
               placeholder="Select Sphere"
               items={categories}
-              id="category"
+              id="categoryId"
             />
           </div>
 

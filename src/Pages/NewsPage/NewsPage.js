@@ -86,7 +86,9 @@ function NewsPage({
                         />
                       </td>
                       <td>{news.title}</td>
-                      <td>{news.text}</td>
+                      <td 
+                      // style={{ width: "30%" }}
+                      >{news.text}</td>
                     </tr>
                   );
                 })

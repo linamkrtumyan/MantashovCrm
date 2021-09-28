@@ -273,72 +273,95 @@ function EditAgendas({
       {/* <div style={{ display: "flex"}}> */}
       <div>
         {eventForEdit && eventForEdit.agenda
-          ? eventForEdit.agenda.map((item, index) => (
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input
-                  id={`date_and_time${index}`}
-                  type="datetime-local"
-                  // dataDateFormat="YYYY/MM/DDThh:mm:ss"
-                  // value={item.dateAndTime}
-                  defaultValue={item.dateAndTime}
-                  placeholder="Date And Time"
-                  placeholderText={item.dateAndTime}
-                />
-                <div className="input_container">
-                  <label htmlFor={`description_eng${index}`}>Description</label>
-
-                  <textarea
-                    id={`description_eng${index}`}
-                    onChange={(e) =>
-                      formOnChange(`description_eng${index}`, e.target.value)
-                    }
-                    className="textarea"
-                    placeholder={item.descriptionEng}
-                  />
-                </div>
-
-                <div className="input_container">
-                  <label htmlFor={`description_arm${index}`}>Նկարագիր</label>
-
-                  <textarea
-                    id={`description_arm${index}`}
-                    onChange={(e) =>
-                      formOnChange(`description_arm${index}`, e.target.value)
-                    }
-                    className="textarea"
-                    placeholder={item.descriptionArm}
-                  />
-                </div>
-
-                <div className="input_container">
-                  <label htmlFor={`description_ru${index}`}>Описание</label>
-
-                  <textarea
-                    id={`description_ru${index}`}
-                    onChange={(e) =>
-                      formOnChange(`description_ru${index}`, e.target.value)
-                    }
-                    className="textarea"
-                    placeholder={item.descriptionRu}
-                  />
-                </div>
-
-                <div
-                  // onClick={() => handleDelete(index)}
-                  style={{ margin: "24px 10px 10px 10px" }}
-                >
+          ? eventForEdit.agenda.map((item, index) => {
+              if (
+                item.dateAndTime &&
+                item.descriptionEng &&
+                item.descriptionArm &&
+                item.descriptionRu
+              ) {
+                return (
                   <div
-                    className="add_new_org"
-                    onClick={() => handleDelete(index)}
+                    style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <i
-                      style={{ marginRight: "10px" }}
-                      className="fas fa-times"
-                    ></i>
+                    <Input
+                      id={`date_and_time${index}`}
+                      type="datetime-local"
+                      // dataDateFormat="YYYY/MM/DDThh:mm:ss"
+                      // value={item.dateAndTime}
+                      defaultValue={item.dateAndTime}
+                      placeholder="Date And Time"
+                      placeholderText={item.dateAndTime}
+                    />
+                    <div className="input_container">
+                      <label htmlFor={`description_eng${index}`}>
+                        Description
+                      </label>
+
+                      <textarea
+                        id={`description_eng${index}`}
+                        onChange={(e) =>
+                          formOnChange(
+                            `description_eng${index}`,
+                            e.target.value
+                          )
+                        }
+                        className="textarea"
+                        placeholder={item.descriptionEng}
+                      />
+                    </div>
+
+                    <div className="input_container">
+                      <label htmlFor={`description_arm${index}`}>
+                        Նկարագիր
+                      </label>
+
+                      <textarea
+                        id={`description_arm${index}`}
+                        onChange={(e) =>
+                          formOnChange(
+                            `description_arm${index}`,
+                            e.target.value
+                          )
+                        }
+                        className="textarea"
+                        placeholder={item.descriptionArm}
+                      />
+                    </div>
+
+                    <div className="input_container">
+                      <label htmlFor={`description_ru${index}`}>Описание</label>
+
+                      <textarea
+                        id={`description_ru${index}`}
+                        onChange={(e) =>
+                          formOnChange(`description_ru${index}`, e.target.value)
+                        }
+                        className="textarea"
+                        placeholder={item.descriptionRu}
+                      />
+                    </div>
+
+                    <div
+                      // onClick={() => handleDelete(index)}
+                      style={{ margin: "24px 10px 10px 10px" }}
+                    >
+                      <div
+                        className="add_new_org"
+                        onClick={() => handleDelete(index)}
+                      >
+                        <i
+                          style={{ marginRight: "10px" }}
+                          className="fas fa-times"
+                        ></i>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))
+                );
+              } else {
+                return null;
+              }
+            })
           : null}
         {/* id={`dateAndTime${index}`} */}
 

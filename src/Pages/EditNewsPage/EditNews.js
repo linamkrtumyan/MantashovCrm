@@ -228,7 +228,7 @@ function EditNews({
           <div className="action_container">
             <Button title="Cancel" className="action_btn cancel_btn" />
             <div onClick={(e) => handleCrate(e)}>
-              <Button title="Create" className="action_btn" />
+              <Button title="Save" className="action_btn" />
             </div>
           </div>
         </div>
