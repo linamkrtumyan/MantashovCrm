@@ -43,6 +43,17 @@
   position: relative;
 }
 .delete-image-btn {
-  right:0px;
-    position: absolute;
+  right: 0px;
+  position: absolute;
+}
+
+.delete-agenda-btn {
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  border-radius: 50%;
 }

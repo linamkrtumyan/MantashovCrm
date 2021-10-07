@@ -282,7 +282,13 @@ function EditAgendas({
               ) {
                 return (
                   <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      border: "1px solid #80808094",
+                      marginBottom: 3,
+                      borderRadius: 5,
+                    }}
                   >
                     <Input
                       id={`date_and_time${index}`}
@@ -344,15 +350,21 @@ function EditAgendas({
 
                     <div
                       // onClick={() => handleDelete(index)}
-                      style={{ margin: "24px 10px 10px 10px" }}
+                      style={{
+                        // margin: "24px 10px 10px 10px"
+                        marginRight: 10,
+                        marginBottom: "auto",
+                        marginTop: "auto",
+                      }}
                     >
                       <div
-                        className="add_new_org"
+                        className="delete-agenda-btn"
                         onClick={() => handleDelete(index)}
                       >
                         <i
                           style={{ marginRight: "10px" }}
-                          className="fas fa-times"
+                          className="fas fa-times "
+                          style={{ width: 17, height: 17 }}
                         ></i>
                       </div>
                     </div>
@@ -363,45 +375,8 @@ function EditAgendas({
               }
             })
           : null}
-        {/* id={`dateAndTime${index}`} */}
 
         <div style={{ display: "flex" }}>
-          {/* <Input
-            id="dateAndTime"
-            type="datetime-local"
-            // dataDateFormat="YYYY/MM/DDThh:mm:ss"
-            // value={item.dateAndTime}
-            placeholder="Date And Time"
-            required={false}
-            // placeholderText={item.dateAndTime}
-          /> */}
-          {/* <Textarea
-            placeholder="Description"
-            id="descriptionEng"
-            required={false}
-          /> */}
-
-          {/* <Textarea
-            placeholder="Նկարագիր"
-            id="descriptionArm"
-            required={false}
-          /> */}
-
-          {/* <Textarea
-            placeholder="Описание"
-            id="descriptionRu"
-            required={false}
-          /> */}
-
-          {/* <Input
-            id="dateAndTime"
-            type="datetime-local"
-            // dataDateFormat="YYYY/MM/DDThh:mm:ss"
-            // value={item.dateAndTime}
-            placeholder="Date And Time"
-            required={false}
-            // placeholderText={item.dateAndTime}
-          /> */}
           <div className="input_container">
             <label htmlFor="dateAndTime">Date And Time</label>
             <input
@@ -456,9 +431,17 @@ function EditAgendas({
             />
           </div>
 
-          <div onClick={handleAdd} style={{ margin: "24px 10px 10px 10px" }}>
-            <div className="add_new_org">
-              <i style={{ marginRight: "10px" }} className="fas fa-check"></i>
+          <div
+            onClick={handleAdd}
+            style={{
+              // margin: "24px 10px 10px 10px"
+              marginRight: 10,
+              marginBottom: "auto",
+              marginTop: "auto",
+            }}
+          >
+            <div className="delete-agenda-btn">
+              <i style={{ width: 17, height: 17 }} className="fas fa-check"></i>
             </div>
           </div>
         </div>
