@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 
 export const resetPassword = (member, closeModal) => {
-  // console.log(member, "stacav");
+  console.log(member, "stacav");
   return (dispatch) => {
     dispatch(resetPasswordRequest());
     request("/admin/members/member/recover-password", "POST", member)

@@ -85,6 +85,10 @@ function EditEvent({
     setAgenda(agendas);
   }, [agendas]);
 
+  const handleCancel = () => {
+    history.push("/events");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let {
@@ -354,8 +358,13 @@ function EditEvent({
               <ImageUpload label="  Add Images" />
             </div>
             <div className="event_action_container">
-              <Button title="Cancel" className="action_btn cancel_btn" />
-              <Button title="Save" className="action_btn" />
+              <div onClick={() => handleCancel()}>
+                <Button title="Cancel" className="action_btn cancel_btn" />
+              </div>
+
+              <div onClick={handleSubmit}>
+                <Button title="Save" className="action_btn" />
+              </div>
             </div>
           </div>
 

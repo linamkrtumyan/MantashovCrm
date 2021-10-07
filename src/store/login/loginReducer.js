@@ -5,6 +5,9 @@ import {
   AUTHORIZE_REQUEST,
   AUTHORIZE_SUCCESS,
   AUTHORIZE_FAILURE,
+  ON_LOGOUT_REQUEST,
+  ON_LOGOUT_SUCCESS,
+  ON_LOGOUT_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -37,6 +40,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         login: false,
+        error: action.payload.error,
+      };
+
+    case ON_LOGOUT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ON_LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        login: false,
+        error: null,
+        token: null
+      };
+    case ON_LOGOUT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        login: true,
         error: action.payload.error,
       };
 

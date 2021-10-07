@@ -1,13 +1,21 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { logout } from "../../store/login/actions/logout";
 import "./header.css";
 
-function Header({ userName }) {
+function Header({ userName, logout }) {
   const [dropdown, setDropdown] = useState(true);
   // console.log(dropdown);
 
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
+
+  const handleLogout = () => {
+    console.log("//////////////////////////");
+    logout();
+  };
+
   return (
     <div className="header_component">
       <div className="header_user_container">{userName}</div>
@@ -41,7 +49,7 @@ function Header({ userName }) {
           </div>
           <div className="dropdown-menu" id="dropdown-menu2" role="menu">
             <div className="dropdown-content">
-              <div className="dropdown-item">
+              <div className="dropdown-item" onClick={handleLogout}>
                 <p>Log Out</p>
               </div>
             </div>
@@ -52,4 +60,16 @@ function Header({ userName }) {
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      logout();
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

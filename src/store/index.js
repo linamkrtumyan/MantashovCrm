@@ -43,7 +43,7 @@ export {
 } from "./locations/actions";
 export { changeCurrentPage } from "./pagination/actions";
 export { formOnChange, formOnChangeArray, cleanForm } from "./form/actions";
-export { onLoginFunction, authorize } from "./login/actions";
+export { onLoginFunction, authorize, logout } from "./login/actions";
 export {
   uploadImage,
   cleanImages,
