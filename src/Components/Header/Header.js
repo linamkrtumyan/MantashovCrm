@@ -12,7 +12,7 @@ function Header({ userName, logout }) {
   };
 
   const handleLogout = () => {
-    console.log("//////////////////////////");
+    
     logout();
   };
 
@@ -66,10 +66,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => {
-      logout();
-    },
+    logout: () => dispatch(logout()),
+    }
   };
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

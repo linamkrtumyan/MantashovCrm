@@ -43,27 +43,6 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
       };
 
-    case ON_LOGOUT_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case ON_LOGOUT_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        login: false,
-        error: null,
-        token: null
-      };
-    case ON_LOGOUT_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        login: true,
-        error: action.payload.error,
-      };
-
     case AUTHORIZE_REQUEST:
       return {
         ...state,
@@ -85,6 +64,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         login: false,
+      };
+
+    case ON_LOGOUT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ON_LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        login: false,
+        error: null,
+        token: null,
+      };
+    case ON_LOGOUT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        login: true,
+        error: action.payload.error,
       };
     default:
       return state;
