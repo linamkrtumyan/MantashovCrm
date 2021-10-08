@@ -8,8 +8,8 @@ function DeleteOrganization({
   id,
   deleteOrganization,
 }) {
-  console.log(modalOpen, "modalOpen");
-  console.log(id, "id");
+  // console.log(modalOpen, "modalOpen");
+  // console.log(id, "id");
 
   const handleDelete = () => {
     if (id) {
@@ -48,7 +48,7 @@ function DeleteOrganization({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {};
 };
 

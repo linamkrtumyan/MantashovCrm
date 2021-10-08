@@ -35,7 +35,6 @@ function AddOrganization({
   addOrganization,
   cleanForm,
 }) {
-  console.log(store.getState().organizationsReducer, "lllllll");
 
   useEffect(() => {
     fetchCountries();
@@ -138,7 +137,7 @@ function AddOrganization({
             <Input id="locationEng" type="text" placeholder="Address" />
             <Input id="locationRu" type="text" placeholder="Адрес" />
           </div>
-          <div>
+          <div className="is-flex is-justify-content-center">
             <Textarea id="hashtags" type="text" placeholder="Hashtags" />
           </div>
         </section>
@@ -156,7 +155,7 @@ function AddOrganization({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer.country,

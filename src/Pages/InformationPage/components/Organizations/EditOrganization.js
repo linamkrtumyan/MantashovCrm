@@ -133,7 +133,7 @@ function EditOrganization({
             <Input id="locationRu" type="text" placeholder="Адрес" />
           </div>
           <div>
-            <div>
+            <div className="is-flex is-justify-content-center">
               <Textarea id="hashtags" type="text" placeholder="Hashtags" />
             </div>
           </div>
@@ -160,7 +160,7 @@ function EditOrganization({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

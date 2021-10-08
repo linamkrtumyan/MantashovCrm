@@ -141,7 +141,7 @@ function Organizations({ fetchOrganizationsTable, organizationsTable, fetch }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     organizationsTable: state.organizationsReducer.organizationsTable,
     loading: state.organizationsReducer.loading,
