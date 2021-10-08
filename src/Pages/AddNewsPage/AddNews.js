@@ -5,14 +5,18 @@ import Button from "../../Components/Forms/Button/Button";
 import "./addNewsPage.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import store, {cleanForm} from "../../store";
+import store, { cleanForm, cleanImages, } from "../../store";
 import { addNews } from "../../store/news/actions/addNews";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 
-function AddNews({ addNews, cleanForm }) {
+function AddNews({ addNews, cleanForm, cleanImages, }) {
   const history = useHistory();
   const path = useHistory();
+
+  useEffect(() => {
+    cleanForm();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +39,9 @@ function AddNews({ addNews, cleanForm }) {
       images: image,
     };
     addNews(news, changePath);
-    cleanForm();
+    // cleanForm();
+    cleanImages();
+
   };
 
   return (
@@ -121,7 +127,7 @@ function AddNews({ addNews, cleanForm }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
+  console.log(state);
   return {};
 };
 
@@ -129,6 +135,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addNews: (news, changePath) => dispatch(addNews(news, changePath)),
     cleanForm: () => dispatch(cleanForm()),
+    cleanImages: () => dispatch(cleanImages()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddNews);

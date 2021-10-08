@@ -86,9 +86,11 @@ function NewsPage({
                         />
                       </td>
                       <td>{news.title}</td>
-                      <td 
+                      <td
                       // style={{ width: "30%" }}
-                      >{news.text}</td>
+                      >
+                        {news.text}
+                      </td>
                     </tr>
                   );
                 })
@@ -107,7 +109,7 @@ function NewsPage({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
+  console.log(state, "state news page");
   return {
     newsByPage: state.newsReducer.newsByPage,
     count: state.newsReducer.count,

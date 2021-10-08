@@ -5,18 +5,19 @@ import { useHistory } from "react-router-dom";
 
 function DeleteEvent({ modalOpen, setModalOpen, id, deleteEvent, cleanEvent }) {
   // console.log(modalOpen, "modalOpen");
-  // console.log(id, "id");
+  console.log(id, "id");
 
   const history = useHistory();
 
   const handleDelete = () => {
+    console.log({ id });
     if (id) {
-      setModalOpen(false);
-      const changePath = () => {
-        history.push("/events");
-      };
-      deleteEvent(id, changePath);
-      cleanEvent();
+    setModalOpen(false);
+    const changePath = () => {
+      history.push("/events");
+    };
+    deleteEvent(id, changePath);
+    cleanEvent();
     }
   };
   return (

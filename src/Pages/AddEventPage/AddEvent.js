@@ -101,7 +101,7 @@ function AddEvent({
     };
     // console.log(event, "uxarkvoxy");
     addEvent(event, changePath);
-    cleanForm()
+    cleanForm();
   };
 
   return (
@@ -158,8 +158,16 @@ function AddEvent({
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="startDate" type="date" placeholder="Start Date" />
-              <Input id="endDate" type="date" placeholder="End Date" />
+              <Input
+                id="startDate"
+                type="datetime-local"
+                placeholder="Start Date"
+              />
+              <Input
+                id="endDate"
+                type="datetime-local"
+                placeholder="End Date"
+              />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -210,7 +218,6 @@ const mapStateToProps = (state) => {
     cities: state.locationsReducer.cities,
     cities: state.locationsReducer.cities,
     agendas: state.formReducer?.agendasAddresses?.agendas,
-    
   };
 };
 

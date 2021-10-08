@@ -26,10 +26,8 @@ function EventsPage({
   // console.log(page, "eventspage page");
   let history = useHistory();
 
-  const [editModalOpen, setEditModalOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [infoId, setInfoId] = useState(null);
 
@@ -66,7 +64,7 @@ function EventsPage({
     if (d1 === d2) {
       fullDate = `${d1}  ${t1}-${t2}`;
     } else {
-      fullDate = `${d1} ${t1} / ${d2} ${t2}`;
+      fullDate = `${d1}  ${t1} / ${d2} ${t2}`;
     }
 
     return fullDate;

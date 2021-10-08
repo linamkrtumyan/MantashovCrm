@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { resetPassword } from "../../../store";
 
 function ResetPassword({ modalOpen, setModalOpen, id, resetPassword }) {
-  console.log(id, "id reseti ///");
+  // console.log(id, "id reseti ///");
 
   const handleDelete = () => {
     let member = {
@@ -53,7 +53,7 @@ function ResetPassword({ modalOpen, setModalOpen, id, resetPassword }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {};
 };
 

@@ -104,16 +104,19 @@ function Multiselect({
         <ul style={{ zIndex: "100000" }} ref={ul} className="select_items">
           {items?.map((item) => (
             <li id={item.id} key={item.id}>
-              <div className="mb-3 form-check">
+              <div
+                onClick={() => {
+                  handleClick(item);
+                }}
+                className="mb-3 form-check"
+              >
                 <input
-                  onClick={() => {
-                    handleClick(item);
-                  }}
                   type="checkbox"
                   className="form-check-input"
                   id={item.id}
+                  onChange={() => {}}
                   //error er  checked={checkeds?.some((s) => s.id === item.id)}
-                  defaultChecked={checkeds?.some((s) => s === item.id)}
+                  checked={checkeds?.some((s) => s === item.id)}
                 />
                 <label className="form-check-label" htmlFor={item.id}>
                   {item.name}
