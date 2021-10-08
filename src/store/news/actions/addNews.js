@@ -1,7 +1,8 @@
-import store from "../..";
+import store, { cleanForm } from "../..";
 import request from "../../request";
 import { ADD_NEWS_REQUEST, ADD_NEWS_SUCCESS, ADD_NEWS_FAILURE } from "../types";
 import { toast } from "react-toastify";
+
 
 export const addNews = (news, changePath) => {
   const data = new FormData();
@@ -14,7 +15,9 @@ export const addNews = (news, changePath) => {
           dispatch(addNewsSuccess(data));
           toast.dark("News added");
           changePath();
+          cleanForm()
         } else {
+          cleanForm()
         }
       })
       .catch((e) => {

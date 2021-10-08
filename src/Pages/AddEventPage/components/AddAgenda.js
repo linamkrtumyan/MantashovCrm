@@ -80,7 +80,7 @@ function AddAgenda({
             placeholder="Նկարագիր"
           />
           <input
-            className="input_component  agendas_input"
+            className="input_component agendas_input"
             value={agenda?.agendaDescriptionRu}
             onChange={(e) => {
               // setAgendaDescription(e.target.value);

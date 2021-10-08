@@ -5,7 +5,7 @@ import Button from "../../Components/Forms/Button/Button";
 import "./addNewsPage.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import store, {cleanForm} from "../../store";
+import store, { cleanForm } from "../../store";
 import { addNews } from "../../store/news/actions/addNews";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
@@ -13,6 +13,10 @@ import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpl
 function AddNews({ addNews, cleanForm }) {
   const history = useHistory();
   const path = useHistory();
+
+  useEffect(() => {
+    cleanForm();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +39,7 @@ function AddNews({ addNews, cleanForm }) {
       images: image,
     };
     addNews(news, changePath);
-    cleanForm();
+    // cleanForm();
   };
 
   return (
