@@ -106,19 +106,18 @@ function AddEvent({
 
   return (
     <div>
+      <div>
+        <button onClick={() => history.goBack()} className="arrow_left">
+          <i className="fas fa-chevron-left"></i>
+        </button>
+        <div className="add_member_title">
+          <p>Add Event</p>
+        </div>
+      </div>
       <form
         onSubmit={handleSubmit}
-        // className="add_event_container"
+        className="add_event_container"
       >
-        <div>
-          <button onClick={() => history.goBack()} className="arrow_left">
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <div className="add_member_title">
-            <p>Add Event</p>
-          </div>
-        </div>
-
         <div className="add_event_component">
           <div className="container_body">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -126,31 +125,6 @@ function AddEvent({
               <Input id="nameArm" type="text" placeholder="Անվանում" />
               <Input id="nameRu" type="text" placeholder="Имя" />
             </div>
-
-            {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <form autoComplete="off">
-                <Select
-                  placeholder="Select Country"
-                  items={countries}
-                  id="countryId"
-                />
-              </form>
-              <form autoComplete="off">
-                <Select
-                  placeholder="Select State"
-                  items={states}
-                  id="stateId"
-                />
-              </form>
-
-              <form autoComplete="off">
-                <Select
-                  placeholder="Select City"
-                  items={cities}
-                  id="cityId"
-                />
-              </form>
-            </div> */}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Select placeholder="Country" items={countries} id="countryId" />
               <Select placeholder="State" items={states} id="stateId" />
