@@ -96,7 +96,8 @@ function Sidebar() {
                 <img alt="" className="sidebar_icon" src={members} />
               )}
             </NavLink>
-            <NavLink
+            
+            {/* <NavLink
               className="menu_title"
               to="/settings"
               activeClassName="active-link"
@@ -105,7 +106,6 @@ function Sidebar() {
               {navbarOpen ? (
                 <div className="sidebar_title">
                   <div className="open_sidebar_icon">
-                    {/* <img alt="" className="sidebar_icon" src={setting} /> */}
                     <i className="fas fa-cog is-medium"></i>
                   </div>
                   <div>Settings</div>
@@ -113,7 +113,8 @@ function Sidebar() {
               ) : (
                 <img alt="" className="sidebar_icon" src={setting} />
               )}
-            </NavLink>
+            </NavLink> */}
+
             <NavLink
               className="menu_title"
               to="/information"
