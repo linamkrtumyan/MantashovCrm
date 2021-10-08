@@ -9,11 +9,12 @@ import "bulma/css/bulma.css";
 import "./myStyles.scss";
 
 function App({ isLogin, authorize, loading, cleanForm, userName }) {
+  // console.log({ isLogin, authorize, loading, userName });
   useEffect(() => {
     authorize();
 
     // cleanForm();
-  }, []);
+  }, [isLogin]);
 
   if (loading) {
     return <Loading />;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../../../Components/Forms/Input/Input";
 import Select from "../../../../Components/Forms/Select/Select";
+import Textarea from "../../../../Components/Forms/Textarea/Textarea";
 import store, {
   deletePosition,
   fetchPositionsAll,
@@ -68,11 +69,12 @@ function EditOrganization({
       nameEng,
       nameRu,
       categoryId,
+      hashtags,
     } = store.getState().formReducer;
 
     let organization = {
       address: { locationArm, locationEng, locationRu, cityId },
-      organization: { id, nameArm, nameEng, nameRu, categoryId },
+      organization: { id, nameArm, nameEng, nameRu, categoryId, hashtags },
     };
     setModalOpen(false);
     editOrganization(organization);
@@ -129,6 +131,11 @@ function EditOrganization({
             <Input id="locationArm" type="text" placeholder="Հասցե" />
             <Input id="locationEng" type="text" placeholder="Address" />
             <Input id="locationRu" type="text" placeholder="Адрес" />
+          </div>
+          <div>
+            <div>
+              <Textarea id="hashtags" type="text" placeholder="Hashtags" />
+            </div>
           </div>
         </section>
         <footer className="modal-card-foot is-flex is-justify-content-flex-end">

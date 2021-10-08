@@ -1,3 +1,5 @@
+import { logout } from "./login/actions/logout";
+
 export default async function request(
   url,
   method = "GET",
@@ -14,7 +16,7 @@ export default async function request(
   const data = await response.json();
   if (response.status === 401) {
     if (window.location.pathname !== "/login") {
-      //logout();
+      logout()
     }
     throw new Error("Auth error");
   }

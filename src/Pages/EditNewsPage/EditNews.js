@@ -37,6 +37,10 @@ function EditNews({
     fetchNewsDetails(id);
   }, []);
 
+  const handleCancel = () => {
+    history.push("/news");
+  };
+
   const handleCrate = (e) => {
     e.preventDefault();
     let { titleArm, titleEng, titleRu, textArm, textEng, textRu } =
@@ -226,9 +230,11 @@ function EditNews({
           </div>
 
           <div className="action_container">
-            <Button title="Cancel" className="action_btn cancel_btn" />
+            <div onClick={() => handleCancel()}>
+              <Button title="Cancel" className="action_btn cancel_btn" />
+            </div>
             <div onClick={(e) => handleCrate(e)}>
-              <Button title="Create" className="action_btn" />
+              <Button title="Save" className="action_btn" />
             </div>
           </div>
         </div>

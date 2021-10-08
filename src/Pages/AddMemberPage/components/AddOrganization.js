@@ -22,6 +22,8 @@ function AddOrganization({
   addedOrganizations,
 }) {
   const [orgs, setOrgs] = useState([]);
+  const [st, setSt] = useState(0);
+
   useEffect(() => {
     fetchPositions();
     fetchOrganizations();
@@ -42,11 +44,19 @@ function AddOrganization({
     setNewOrg(newOrg++);
     setOrgs(oneOrganization?.organizationId);
     console.log(newOrg, "newOrg");
+    console.log(addedOrganizations, "add");
+  };
+
+  const handleDelete = (index) => {
+    console.log(addedOrganizations);
+    addedOrganizations.splice(index, 1);
+    console.log(addedOrganizations, "delete");
+    setSt(st + 1)
   };
 
   return (
     <>
-      {addedOrganizations.map((org) => {
+      {addedOrganizations.map((org, index) => {
         const orgValue = organizations.find(
           (organization) => organization.id === org.organizationId
         );
@@ -61,6 +71,11 @@ function AddOrganization({
             </div>
             <div className="added_orgs">
               <p>{posValue.name}</p>
+            </div>
+            <div onClick={() => handleDelete(index)}>
+              <div className="added_orgs">
+                <i style={{ marginRight: "10px" }} className="fas fa-times"></i>
+              </div>
             </div>
           </div>
         );

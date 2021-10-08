@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../../../Components/Forms/Input/Input";
 import Select from "../../../../Components/Forms/Select/Select";
+import Textarea from "../../../../Components/Forms/Textarea/Textarea";
 import store, {
   fetchOrganizationsTable,
   fetchPositionsAll,
@@ -34,14 +35,13 @@ function AddOrganization({
   addOrganization,
   cleanForm,
 }) {
-  console.log(modalOpen, "modalOpen");
+  console.log(store.getState().organizationsReducer, "lllllll");
 
   useEffect(() => {
-    cleanForm();
-
     fetchCountries();
     fetchCategories();
     cleanOrganization();
+    // cleanForm();
   }, []);
 
   useEffect(() => {
@@ -65,16 +65,24 @@ function AddOrganization({
       nameEng,
       nameRu,
       category,
+      hashtags,
     } = store.getState().formReducer;
 
     let organization = {
       address: { locationArm, locationEng, locationRu, cityId: city },
-      organization: { nameArm, nameEng, nameRu, categoryId: category },
+      organization: {
+        nameArm,
+        nameEng,
+        nameRu,
+        categoryId: category,
+        hashtags,
+      },
     };
     setModalOpen(false);
     addOrganization(organization);
 
     cleanForm();
+    // cleanOrganization();
   };
   return (
     <div className={"modal " + (modalOpen ? "is-active" : "")}>
@@ -98,7 +106,7 @@ function AddOrganization({
             <Select
               placeholder="Select Sphere"
               items={categories}
-              id="category"
+              id="categoryId"
             />
           </div>
 
@@ -129,6 +137,9 @@ function AddOrganization({
             <Input id="locationArm" type="text" placeholder="Հասցե" />
             <Input id="locationEng" type="text" placeholder="Address" />
             <Input id="locationRu" type="text" placeholder="Адрес" />
+          </div>
+          <div>
+            <Textarea id="hashtags" type="text" placeholder="Hashtags" />
           </div>
         </section>
         <footer className="modal-card-foot is-flex is-justify-content-flex-end">

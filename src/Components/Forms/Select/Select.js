@@ -59,7 +59,6 @@ const Select = ({
 
   useOutsideClick(ref, handleSelect);
 
-  //   console.log(formOnChange);
   return (
     <div ref={ref} className="input_container control  has-icons-right">
       <label htmlFor={id}>{placeholder}</label>
@@ -103,7 +102,7 @@ const Select = ({
 
 const mapStateToProps = (state, ownProps) => {
   // console.log(state, "state");
-  // console.log(ownProps, "ownProps");
+  // console.log(state.formReducer[ownProps.id], "state.formReducer[ownProps.id]");
   return {
     value: state.formReducer[ownProps.id],
   };
