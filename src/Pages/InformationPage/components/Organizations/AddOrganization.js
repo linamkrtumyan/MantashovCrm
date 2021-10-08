@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../../../Components/Forms/Input/Input";
+import Multiselect from "../../../../Components/Forms/MultiSelect/Multiselect";
 import Select from "../../../../Components/Forms/Select/Select";
 import Textarea from "../../../../Components/Forms/Textarea/Textarea";
 import store, {
@@ -15,6 +16,7 @@ import store, {
   cleanLocation,
   cleanOrganization,
 } from "../../../../store";
+
 
 function AddOrganization({
   modalOpen,
@@ -63,7 +65,7 @@ function AddOrganization({
       nameArm,
       nameEng,
       nameRu,
-      category,
+      categoryIds,
       hashtags,
     } = store.getState().formReducer;
 
@@ -73,7 +75,7 @@ function AddOrganization({
         nameArm,
         nameEng,
         nameRu,
-        categoryId: category,
+        categoryIds,
         hashtags,
       },
     };
@@ -102,10 +104,11 @@ function AddOrganization({
             <Input id="nameRu" type="text" placeholder="Название" />
           </div>
           <div className="is-flex is-justify-content-center">
-            <Select
+            
+            <Multiselect
               placeholder="Select Sphere"
               items={categories}
-              id="categoryId"
+              id="categoryIds"
             />
           </div>
 

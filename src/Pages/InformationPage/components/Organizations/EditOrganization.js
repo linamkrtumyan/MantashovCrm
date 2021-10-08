@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../../../Components/Forms/Input/Input";
+import Multiselect from "../../../../Components/Forms/MultiSelect/Multiselect";
 import Select from "../../../../Components/Forms/Select/Select";
 import Textarea from "../../../../Components/Forms/Textarea/Textarea";
 import store, {
@@ -68,13 +69,13 @@ function EditOrganization({
       nameArm,
       nameEng,
       nameRu,
-      categoryId,
+      categoryIds,
       hashtags,
     } = store.getState().formReducer;
 
     let organization = {
       address: { locationArm, locationEng, locationRu, cityId },
-      organization: { id, nameArm, nameEng, nameRu, categoryId, hashtags },
+      organization: { id, nameArm, nameEng, nameRu, categoryIds, hashtags },
     };
     setModalOpen(false);
     editOrganization(organization);
@@ -108,10 +109,10 @@ function EditOrganization({
             <Input id="nameRu" type="text" placeholder="Название" />
           </div>
           <div className="is-flex is-justify-content-center">
-            <Select
+          <Multiselect
               placeholder="Select Sphere"
               items={categories}
-              id="categoryId"
+              id="categoryIds"
             />
           </div>
 

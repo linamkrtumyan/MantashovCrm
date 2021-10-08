@@ -33,7 +33,7 @@ function EventsPage({
 
   useEffect(() => {
     fetchEventsByPage();
-  }, [currentPage]);
+  }, [currentPage, eventsByPage]);
 
   function handleEdit(id) {
     history.push(`/edit-event/${id}`);
