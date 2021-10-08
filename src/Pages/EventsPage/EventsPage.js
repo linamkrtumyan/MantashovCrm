@@ -35,7 +35,7 @@ function EventsPage({
 
   useEffect(() => {
     fetchEventsByPage();
-  }, [currentPage, eventsByPage]);
+  }, [currentPage]);
 
   function handleEdit(id) {
     history.push(`/edit-event/${id}`);
@@ -62,6 +62,8 @@ function EventsPage({
 
     const t1 = `${sd.getHours()}:${sd.getMinutes()}`;
     const t2 = `${ed.getHours()}:${ed.getMinutes()}`;
+
+    console.log({ t1, t2});
 
     if (d1 === d2) {
       fullDate = `${d1}  ${t1}-${t2}`;
