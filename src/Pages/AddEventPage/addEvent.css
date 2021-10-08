@@ -1,11 +1,11 @@
 .add_event_container {
-  position: absolute;
+  /* position: absolute; */
   top: 150px;
   /* left: 300px; */
   left: 120px;
 }
 .add_event_component {
-  margin: 0 auto;
+  margin: 0 auto ;
 }
 
 .container_body {
@@ -49,6 +49,7 @@
 }
 .agendas_input {
   margin: 10px;
+  height: 70px;
 }
 .add_item_icon {
   width: 30px;

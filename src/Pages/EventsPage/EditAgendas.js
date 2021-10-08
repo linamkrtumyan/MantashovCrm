@@ -382,7 +382,7 @@ function EditAgendas({
             <input
               id="dateAndTime"
               type="datetime-local"
-              className={`input input_width`}
+              className='input input_width'
               required={false}
               onChange={(e) =>
                 formOnChangeArray("newAgenda", "dateAndTime", e.target.value)

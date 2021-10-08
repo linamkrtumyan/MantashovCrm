@@ -36,7 +36,8 @@ function AddAgenda({
       <div className="event_address_container">
         <div>
           <input
-            className="input_component agendas_input"
+            // className="input_component agendas_input"
+            className='input input_width'
             value={agenda?.dateAndTime}
             onChange={(e) => {
               // setDateAndTime(e.target.value);
@@ -48,9 +49,11 @@ function AddAgenda({
           />
         </div>
 
-        <div>
-          <input
-            className="input_component  agendas_input"
+        <div style={{display: 'flex', backgroundColor: '#80808094' }}>
+          <div >
+          <textarea
+            // className="input_component  agendas_input"
+            className="textarea"
             value={agenda?.agendaDescriptionEng}
             onChange={(e) => {
               // setAgendaDescription(e.target.value);
@@ -64,8 +67,11 @@ function AddAgenda({
             type="text"
             placeholder="Description"
           />
-          <input
-            className="input_component  agendas_input"
+          </div>
+          <div>
+          <textarea
+            // className="input_component  agendas_input"
+            className="textarea"
             value={agenda?.agendaDescriptionArm}
             onChange={(e) => {
               // setAgendaDescription(e.target.value);
@@ -79,8 +85,11 @@ function AddAgenda({
             type="text"
             placeholder="Նկարագիր"
           />
-          <input
-            className="input_component agendas_input"
+          </div>
+          <div>
+          <textarea
+            // className="input_component agendas_input"
+            className="textarea"
             value={agenda?.agendaDescriptionRu}
             onChange={(e) => {
               // setAgendaDescription(e.target.value);
@@ -94,11 +103,12 @@ function AddAgenda({
             type="text"
             placeholder="Описание"
           />
+          </div>
         </div>
 
         <div
+        style={{marginBottom: 'auto', marginTop: 'auto', marginLeft: 20}}
           onClick={() => {
-            console.log(addresses, "??????????????????????//");
             addresses[index - 1]?.agendas?.push(agenda);
             setAgendasAdded(true);
             setChange(change + 1);
@@ -109,12 +119,12 @@ function AddAgenda({
             formOnChangeArray("agendas", "agendaDescriptionRu", "");
           }}
         >
-          <svg viewBox="-5 -11 50 50" className="add_item_icon">
+          <svg viewBox="-5 -11 50 50" className="delete-agenda-btn">
             <polyline
               points="0.4,15.3 12.4,27.3 39.3,0.4 "
               stroke="#343333"
               fill="transparent"
-              strokeWidth="1"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
