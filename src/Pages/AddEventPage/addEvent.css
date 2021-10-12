@@ -5,7 +5,7 @@
   left: 120px;
 }
 .add_event_component {
-  margin: 0 auto ;
+  margin: 0 auto;
 }
 
 .container_body {
@@ -61,11 +61,13 @@
   height: 50px;
   margin: 10px;
   margin: 10px 12%;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 4px;
+  border: 1px solid rgb(223, 217, 217);
 }
 .add_new_address_btn:hover {
   background-color: #8f8f8f5c;

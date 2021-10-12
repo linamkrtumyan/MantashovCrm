@@ -114,10 +114,7 @@ function AddEvent({
           <p>Add Event</p>
         </div>
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className="add_event_container"
-      >
+      <form onSubmit={handleSubmit} className="add_event_container">
         <div className="add_event_component">
           <div className="container_body">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
