@@ -134,7 +134,7 @@ function EventsPage({
               </thead>
               <tbody>
                 {eventsByPage?.map((event) => (
-                  <tr>
+                  <tr key={event.id}>
                     <td>{event.name}</td>
                     <td>{event.location}</td>
                     <td>{getDates(event.startDate, event.endDate)}</td>

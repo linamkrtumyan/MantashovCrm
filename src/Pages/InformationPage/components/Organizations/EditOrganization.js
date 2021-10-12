@@ -70,12 +70,12 @@ function EditOrganization({
       nameEng,
       nameRu,
       categoryIds,
-      hashtags,
+      hashTags,
     } = store.getState().formReducer;
 
     let organization = {
       address: { locationArm, locationEng, locationRu, cityId },
-      organization: { id, nameArm, nameEng, nameRu, categoryIds, hashtags },
+      organization: { id, nameArm, nameEng, nameRu, categoryIds, hashTags },
     };
     setModalOpen(false);
     editOrganization(organization);
@@ -135,7 +135,7 @@ function EditOrganization({
           </div>
           <div>
             <div className="is-flex is-justify-content-center">
-              <Textarea id="hashtags" type="text" placeholder="Hashtags" />
+              <Textarea id="hashTags" type="text" placeholder="Hashtags" />
             </div>
           </div>
         </section>

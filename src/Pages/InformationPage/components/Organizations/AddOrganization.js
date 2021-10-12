@@ -66,7 +66,7 @@ function AddOrganization({
       nameEng,
       nameRu,
       categoryIds,
-      hashtags,
+      hashTags,
     } = store.getState().formReducer;
 
     let organization = {
@@ -76,7 +76,7 @@ function AddOrganization({
         nameEng,
         nameRu,
         categoryIds,
-        hashtags,
+        hashTags,
       },
     };
     setModalOpen(false);
@@ -141,7 +141,7 @@ function AddOrganization({
             <Input id="locationRu" type="text" placeholder="Адрес" />
           </div>
           <div className="is-flex is-justify-content-center">
-            <Textarea id="hashtags" type="text" placeholder="Hashtags" />
+            <Textarea id="hashTags" type="text" placeholder="Hashtags" />
           </div>
         </section>
         <footer className="modal-card-foot is-flex is-justify-content-flex-end">

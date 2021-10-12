@@ -93,7 +93,7 @@ function Organizations({ fetchOrganizationsTable, organizationsTable, fetch }) {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Category</th>
+                  <th>Categories</th>
                   <th>Address</th>
                   <th></th>
                   <th></th>
@@ -102,10 +102,15 @@ function Organizations({ fetchOrganizationsTable, organizationsTable, fetch }) {
 
               <tbody>
                 {organizationsTable.map((organization, index) => {
+                  let categories = "";
+                  categories = organization.categories.reduce((prev,categories) => categories += ", " + prev);
+                  if(categories.length > 30){
+                    categories = categories.slice(0,30) + "...";
+                  }
                   return (
                     <tr style={{ cursor: "default" }} key={organization.id}>
                       <td>{organization.nameEng}</td>
-                      <td>{organization.categoryNameEng}</td>
+                      <td>{categories}</td>
                       <td>{organization.address}</td>
                       <td style={{ width: "10px" }}>
                         <div
