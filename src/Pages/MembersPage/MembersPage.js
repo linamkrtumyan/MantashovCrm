@@ -33,7 +33,7 @@ function MembersPage({
   }
 
   const handleReset = (id) => {
-    console.log(id, "id***");
+    // console.log(id, "id***");
     setMemberId(id);
     setModalOpen(true);
   };

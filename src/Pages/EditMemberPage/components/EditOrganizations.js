@@ -33,7 +33,7 @@ function EditOrganizations({
 }) {
   //   console.log(existedOrganizations, "existedOrganizations");
   const [orgs, setOrgs] = useState(0);
-  console.log(orgs, "orgs");
+  // console.log(orgs, "orgs");
   useEffect(() => {
     fetchPositions();
     fetchOrganizations();
@@ -195,7 +195,7 @@ function EditOrganizations({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.formReducer.organizations, ";;;;;;;;");
+  // console.log(state.formReducer.organizations, ";;;;;;;;");
   return {
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,

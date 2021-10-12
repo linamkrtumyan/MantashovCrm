@@ -16,7 +16,7 @@ function AddPosition({ setAdd, addPosition, cleanForm }) {
     const changePath = () => {
       //   history.push("/information");
     };
-    console.log(position, "uxarkvox position");
+    // console.log(position, "uxarkvox position");
     addPosition(position, changePath);
     setAdd(false);
     cleanForm();
@@ -50,7 +50,7 @@ function AddPosition({ setAdd, addPosition, cleanForm }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {};
 };
 

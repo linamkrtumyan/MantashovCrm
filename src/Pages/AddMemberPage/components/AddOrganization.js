@@ -40,18 +40,21 @@ function AddOrganization({
 
   const handleAdd = () => {
     // oneOrganization
-    addedOrganizations.push(oneOrganization);
-    setNewOrg(newOrg++);
-    setOrgs(oneOrganization?.organizationId);
-    console.log(newOrg, "newOrg");
-    console.log(addedOrganizations, "add");
+    if (!addedOrganizations.includes(oneOrganization)) {
+      addedOrganizations.push(oneOrganization);
+      setNewOrg(newOrg++);
+      setOrgs(oneOrganization?.organizationId);
+    }
+
+    // console.log(newOrg, "newOrg");
+    // console.log(addedOrganizations, "add");
   };
 
   const handleDelete = (index) => {
-    console.log(addedOrganizations);
+    // console.log(addedOrganizations);
     addedOrganizations.splice(index, 1);
-    console.log(addedOrganizations, "delete");
-    setSt(st + 1)
+    // console.log(addedOrganizations, "delete");
+    setSt(st + 1);
   };
 
   return (
@@ -63,6 +66,8 @@ function AddOrganization({
         const posValue = positions.find(
           (position) => position.id === org.positionId
         );
+
+        // console.log({ orgValue, posValue });
 
         return (
           <div style={{ display: "flex" }}>
@@ -106,7 +111,7 @@ function AddOrganization({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,

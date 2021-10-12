@@ -109,7 +109,7 @@ function NewsPage({
   );
 }
 const mapStateToProps = (state) => {
-  console.log(state, "state news page");
+  // console.log({ action: state.modalReducer.action });
   return {
     newsByPage: state.newsReducer.newsByPage,
     count: state.newsReducer.count,

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 export const editEvent = (event, changePath) => {
   
-  console.log(event, "event for edit ........");
+  // console.log(event, "event for edit ........");
 
   return (dispatch) => {
     dispatch(editEventRequest());
@@ -28,7 +28,7 @@ export const editEvent = (event, changePath) => {
 };
 
 const editEventRequest = () => {
-  console.log("editEventRequest");
+  // console.log("editEventRequest");
   return {
     type: EVENT_EDIT_REQUEST,
   };
@@ -37,7 +37,7 @@ const editEventRequest = () => {
 const editEventSuccess = (data) => {
   // console.log(data, "news success data");
   //   const login = data ? data : [];
-  console.log("editEventSuccess, ", data);
+  // console.log("editEventSuccess, ", data);
   return {
     type: EVENT_EDIT_SUCCESS,
     payload: {},
@@ -45,7 +45,7 @@ const editEventSuccess = (data) => {
 };
 
 const editEventFailure = (error) => {
-  console.log("editEventFailure, ", error);
+  // console.log("editEventFailure, ", error);
   return {
     type: EVENT_EDIT_FAILURE,
     payload: { error },

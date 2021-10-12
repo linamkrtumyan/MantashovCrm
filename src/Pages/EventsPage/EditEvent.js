@@ -19,6 +19,7 @@ import store, {
   editImages,
   cleanImages,
   deleteEventImageFromStore,
+  cleanForm,
 } from "../../store";
 import { deletedImages } from "../../store/images/actions";
 
@@ -48,7 +49,7 @@ function EditEvent({
   deletedImages,
   deleteEventImageFromStore,
   detailsImages,
-  y,
+  cleanForm,
 }) {
   const history = useHistory();
 
@@ -136,6 +137,7 @@ function EditEvent({
     };
     editEvent(event, changePath);
     cleanImages();
+    cleanForm();
   };
 
   const openImageModal = (imagePath) => {
@@ -392,7 +394,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),
-    // cleanForm: () => dispatch(cleanForm()),
+    cleanForm: () => dispatch(cleanForm()),
     cleanLocation: () => dispatch(cleanLocation()),
     fetchEventDetailsForEdit: (id) => dispatch(fetchEventDetailsForEdit(id)),
     editEvent: (event, changePath) => dispatch(editEvent(event, changePath)),

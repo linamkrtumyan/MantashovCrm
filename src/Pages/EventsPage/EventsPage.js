@@ -20,6 +20,7 @@ function EventsPage({
   fetchEventsByPage,
   eventsByPage,
   currentPage,
+  fetch
 }) {
   const page = 0;
   // const [page, setPage] = useState(0);
@@ -33,7 +34,7 @@ function EventsPage({
 
   useEffect(() => {
     fetchEventsByPage();
-  }, [currentPage, eventsByPage]);
+  }, [currentPage,fetch]);
 
   function handleEdit(id) {
     history.push(`/edit-event/${id}`);
@@ -190,6 +191,7 @@ function EventsPage({
   );
 }
 const mapStateToProps = (state) => {
+  // console.log({ action: state.modalReducer.action });
   return {
     loading: state.eventReducer.loading,
     noEvents: state.eventReducer.eventsByPage.length === 0,
@@ -197,6 +199,7 @@ const mapStateToProps = (state) => {
     action: state.modalReducer.action,
     count: state.eventReducer.count,
     eventsByPage: state.eventReducer.eventsByPage,
+    fetch: state.eventReducer.fetch,
   };
 };
 

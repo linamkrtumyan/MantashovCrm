@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { deleteCategory } from "../../../../store";
 
 function DeleteSphere({ modalOpen, setModalOpen, id, deleteCategory }) {
-  console.log(modalOpen, "modalOpen");
-  console.log(id, "id");
+  // console.log(modalOpen, "modalOpen");
+  // console.log(id, "id");
 
   const handleDelete = () => {
     if (id) {
@@ -43,7 +43,7 @@ function DeleteSphere({ modalOpen, setModalOpen, id, deleteCategory }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {};
 };
 

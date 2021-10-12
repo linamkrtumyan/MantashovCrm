@@ -7,7 +7,6 @@ import {
 } from "../types";
 
 export const fetchContactTypes = () => {
-  console.log("**/*/*/*/////////////////////////////////*/*/");
   // console.log(page, "uxarkvox page");
 
   return (dispatch) => {

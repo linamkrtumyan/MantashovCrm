@@ -37,7 +37,7 @@ function AddAgenda({
         <div>
           <input
             // className="input_component agendas_input"
-            className='input input_width'
+            className="input input_width"
             value={agenda?.dateAndTime}
             onChange={(e) => {
               // setDateAndTime(e.target.value);
@@ -49,65 +49,65 @@ function AddAgenda({
           />
         </div>
 
-        <div style={{display: 'flex', backgroundColor: '#80808094' }}>
-          <div >
-          <textarea
-            // className="input_component  agendas_input"
-            className="textarea"
-            value={agenda?.agendaDescriptionEng}
-            onChange={(e) => {
-              // setAgendaDescription(e.target.value);
-              formOnChangeArray(
-                "agenda",
-                "agendaDescriptionEng",
-                e.target.value
-              );
-            }}
-            id="agendaDescriptionEng"
-            type="text"
-            placeholder="Description"
-          />
+        <div style={{ display: "flex", backgroundColor: "#80808094" }}>
+          <div>
+            <textarea
+              // className="input_component  agendas_input"
+              className="textarea"
+              value={agenda?.agendaDescriptionEng}
+              onChange={(e) => {
+                // setAgendaDescription(e.target.value);
+                formOnChangeArray(
+                  "agenda",
+                  "agendaDescriptionEng",
+                  e.target.value
+                );
+              }}
+              id="agendaDescriptionEng"
+              type="text"
+              placeholder="Description"
+            />
           </div>
           <div>
-          <textarea
-            // className="input_component  agendas_input"
-            className="textarea"
-            value={agenda?.agendaDescriptionArm}
-            onChange={(e) => {
-              // setAgendaDescription(e.target.value);
-              formOnChangeArray(
-                "agenda",
-                "agendaDescriptionArm",
-                e.target.value
-              );
-            }}
-            id="agendaDescriptionArm"
-            type="text"
-            placeholder="Նկարագիր"
-          />
+            <textarea
+              // className="input_component  agendas_input"
+              className="textarea"
+              value={agenda?.agendaDescriptionArm}
+              onChange={(e) => {
+                // setAgendaDescription(e.target.value);
+                formOnChangeArray(
+                  "agenda",
+                  "agendaDescriptionArm",
+                  e.target.value
+                );
+              }}
+              id="agendaDescriptionArm"
+              type="text"
+              placeholder="Նկարագիր"
+            />
           </div>
           <div>
-          <textarea
-            // className="input_component agendas_input"
-            className="textarea"
-            value={agenda?.agendaDescriptionRu}
-            onChange={(e) => {
-              // setAgendaDescription(e.target.value);
-              formOnChangeArray(
-                "agenda",
-                "agendaDescriptionRu",
-                e.target.value
-              );
-            }}
-            id="agendaDescriptionRu"
-            type="text"
-            placeholder="Описание"
-          />
+            <textarea
+              // className="input_component agendas_input"
+              className="textarea"
+              value={agenda?.agendaDescriptionRu}
+              onChange={(e) => {
+                // setAgendaDescription(e.target.value);
+                formOnChangeArray(
+                  "agenda",
+                  "agendaDescriptionRu",
+                  e.target.value
+                );
+              }}
+              id="agendaDescriptionRu"
+              type="text"
+              placeholder="Описание"
+            />
           </div>
         </div>
 
         <div
-        style={{marginBottom: 'auto', marginTop: 'auto', marginLeft: 20}}
+          style={{ marginBottom: "auto", marginTop: "auto", marginLeft: 20 }}
           onClick={() => {
             addresses[index - 1]?.agendas?.push(agenda);
             setAgendasAdded(true);
