@@ -24,6 +24,7 @@ function AddAgenda({
   //   console.log(addressId, "addressId");
   //   const [change, setChange] = useState(1);
   const [agendasAdded, setAgendasAdded] = useState(false);
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     addressesAgenda.map((agenda) => {
@@ -109,14 +110,17 @@ function AddAgenda({
         <div
           style={{ marginBottom: "auto", marginTop: "auto", marginLeft: 20 }}
           onClick={() => {
+            agenda.id = id;
             addresses[index - 1]?.agendas?.push(agenda);
             setAgendasAdded(true);
+            setId(id + 1);
             setChange(change + 1);
             setNewAgenda(newAgenda + 1);
             formOnChangeArray("agendas", "dateAndTime", "");
             formOnChangeArray("agendas", "agendaDescriptionArm", "");
             formOnChangeArray("agendas", "agendaDescriptionEng", "");
             formOnChangeArray("agendas", "agendaDescriptionRu", "");
+            formOnChangeArray("agendas", "id", id);
           }}
         >
           <svg viewBox="-5 -11 50 50" className="delete-agenda-btn">

@@ -362,9 +362,8 @@ function EditAgendas({
                         onClick={() => handleDelete(index)}
                       >
                         <i
-                          style={{ marginRight: "10px" }}
                           className="fas fa-times "
-                          style={{ width: 17, height: 17 }}
+                          style={{ width: 17, height: 17, marginRight: "10px" }}
                         ></i>
                       </div>
                     </div>

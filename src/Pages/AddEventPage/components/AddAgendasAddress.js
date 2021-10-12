@@ -47,6 +47,7 @@ function AddAgendasAddress({
   const [change, setChange] = useState(0);
   const [newAddress, setNewAddress] = useState(true);
   const [showAgendasForm, setShowAgendasForm] = useState(false);
+  const [indexOfAgenda, setIndexOfAgenda] = useState(0);
   //   console.log(agendasAddresses, "agendasAddresses");
   //   console.log(addresses, "addresses");
 
@@ -63,13 +64,13 @@ function AddAgendasAddress({
     <div>
       {addressAdded ? (
         <div>
-          {addresses.map((address) => (
+          {addresses.map((address, index) => (
             <div>
               <div>
                 {address?.agendas?.map((agenda) => (
                   <div className="added_agendas_container">
                     <div className="added_agendas_item">
-                      <svg viewBox="0 0 48 48" className="agendas_time_icon">
+                      {/* <svg viewBox="0 0 48 48" className="agendas_time_icon">
                         <g
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -81,17 +82,61 @@ function AddAgendasAddress({
                           <circle cx="23" cy="23" r="23" />
                           <path d="m22 12v11l12 11" />
                         </g>
-                      </svg>
-                      <p>{agenda.dateAndTime}</p>
+                      </svg> */}
+                      <input
+                        defaultValue={agenda.dateAndTime}
+                        type="datetime-local"
+                        onChange={(e) => {
+                          const agendaIndex = address.agendas.indexOf(agenda);
+                          setIndexOfAgenda(agendaIndex);
+                          address.agendas[indexOfAgenda].dateAndTime =
+                            e.target.value;
+                          // console.log({ agendaIndex });
+                        }}
+                      />
+                      {/* <p>{{agenda.dateAndTime}}</p> */}
                     </div>
                     <div className="added_agendas_item">
-                      {agenda.agendaDescriptionEng}
+                      <textarea
+                        defaultValue={agenda.agendaDescriptionEng}
+                        type="text"
+                        onChange={(e) => {
+                          const agendaIndex = address.agendas.indexOf(agenda);
+                          setIndexOfAgenda(agendaIndex);
+                          address.agendas[indexOfAgenda].agendaDescriptionEng =
+                            e.target.value;
+                          // console.log({ agendaIndex });
+                        }}
+                      />
+                      {/* {agenda.agendaDescriptionEng} */}
                     </div>
                     <div className="added_agendas_item">
-                      {agenda.agendaDescriptionArm}
+                      <textarea
+                        defaultValue={agenda.agendaDescriptionArm}
+                        type="text"
+                        onChange={(e) => {
+                          const agendaIndex = address.agendas.indexOf(agenda);
+                          setIndexOfAgenda(agendaIndex);
+                          address.agendas[indexOfAgenda].agendaDescriptionArm =
+                            e.target.value;
+                          // console.log({ agendaIndex });
+                        }}
+                      />
+                      {/* {agenda.agendaDescriptionArm} */}
                     </div>
                     <div className="added_agendas_item">
-                      {agenda.agendaDescriptionRu}
+                      <textarea
+                        defaultValue={agenda.agendaDescriptionRu}
+                        type="text"
+                        onChange={(e) => {
+                          const agendaIndex = address.agendas.indexOf(agenda);
+                          setIndexOfAgenda(agendaIndex);
+                          address.agendas[indexOfAgenda].agendaDescriptionRu =
+                            e.target.value;
+                          // console.log({ agendaIndex });
+                        }}
+                      />
+                      {/* {agenda.agendaDescriptionRu} */}
                     </div>
                   </div>
                 ))}
@@ -144,7 +189,11 @@ function AddAgendasAddress({
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
+  console.log({
+    agendasAddresses: state.formReducer.agendasAddresses,
+    addresses: state.eventReducer.addresses,
+  });
   return {
     countries: state.locationsReducer.countries,
     country: state.formReducer.agendasCountry,
