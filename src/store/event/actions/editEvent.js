@@ -7,7 +7,8 @@ import {
 import { toast } from "react-toastify";
 
 export const editEvent = (event, changePath) => {
-  
+  console.log({ event });
+
   // console.log(event, "event for edit ........");
 
   return (dispatch) => {
