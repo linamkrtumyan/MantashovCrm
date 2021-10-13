@@ -9,8 +9,8 @@ import {
 } from "../types";
 
 export const fetchOrganizationDetails = (id) => {
-  console.log("mtav feetch");
-  console.log(id, "/////////********");
+  // console.log("mtav feetch");
+  // console.log(id, "/////////********");
 
   return (dispatch) => {
     dispatch(fetchOrganizationDetailsRequest());
@@ -35,7 +35,7 @@ const fetchOrganizationDetailsRequest = () => {
 };
 
 const fetchOrganizationDetailsSuccess = (data) => {
-  console.log(data, "?????????????????????????????????");
+  // console.log(data, "?????????????????????????????????");
   const organizationDetails = data ? data : [];
   return {
     type: FETCH_ORGANIZATION_DETAILS_SUCCESS,

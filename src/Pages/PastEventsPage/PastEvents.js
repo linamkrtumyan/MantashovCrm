@@ -38,7 +38,7 @@ function PastEvents({
   );
 }
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     pastEvents: state.eventReducer.pastEvents,
     nopastEvents: state.eventReducer.pastEvents.lenght === 0,

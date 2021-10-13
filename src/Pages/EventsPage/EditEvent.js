@@ -7,28 +7,23 @@ import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 
 import store, {
-  // deletePosition,
-  // fetchPositionsAll,
   fetchCountries,
   fetchStates,
   fetchCities,
-  // cleanForm,
   cleanLocation,
   fetchEventDetailsForEdit,
   editEvent,
   editImages,
   cleanImages,
   deleteEventImageFromStore,
+  cleanForm,
 } from "../../store";
 import { deletedImages } from "../../store/images/actions";
 
 import { connect } from "react-redux";
-
-// import { Slide } from "react-slideshow-image";
-// import "react-slideshow-image/dist/styles.css";
 import { useHistory, useParams } from "react-router-dom";
-import EditAgendas from "./EditAgendas";
 import OpenImage from "./components/images/OpenImage";
+import AgendaEdit from "./AgendaEdit";
 
 function EditEvent({
   fetchCountries,
@@ -48,7 +43,8 @@ function EditEvent({
   deletedImages,
   deleteEventImageFromStore,
   detailsImages,
-  y,
+  cleanForm,
+  editedAndAddedAgendas
 }) {
   const history = useHistory();
 
@@ -136,6 +132,7 @@ function EditEvent({
     };
     editEvent(event, changePath);
     cleanImages();
+    cleanForm();
   };
 
   const openImageModal = (imagePath) => {
@@ -247,7 +244,7 @@ function EditEvent({
               </div>
               <div>
                 <div>
-                  <EditAgendas />
+                  <AgendaEdit />
                 </div>
                 <div>
                   {/* <AddAgendasAddress addressType={addressType} /> */}
@@ -329,7 +326,6 @@ function EditEvent({
                         src={imagePath}
                         onClick={() => {
                           openImageModal(imagePath);
-                          // console.log(imagePath, "???????????????????");
                         }}
                       />
                       <div className="middle">
@@ -382,8 +378,10 @@ const mapStateToProps = (state) => {
     states: state.locationsReducer.states,
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
-    agendas: state.formReducer?.agenda,
+    // agendas: state.formReducer?.agenda,
+    agendas: state.eventReducer.agendas,
     detailsImages: state.eventReducer.detailsImages,
+    editedAndAddedAgendas: state.formReducer?.editedAndAddedAgendas
   };
 };
 
@@ -392,7 +390,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCountries: () => dispatch(fetchCountries()),
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),
-    // cleanForm: () => dispatch(cleanForm()),
+    cleanForm: () => dispatch(cleanForm()),
     cleanLocation: () => dispatch(cleanLocation()),
     fetchEventDetailsForEdit: (id) => dispatch(fetchEventDetailsForEdit(id)),
     editEvent: (event, changePath) => dispatch(editEvent(event, changePath)),

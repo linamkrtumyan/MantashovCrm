@@ -27,7 +27,7 @@ import {
   CLEAN_EVENT,
   EDIT_AGENDAS,
   EDIT_IMAGES,
-  DELETE_EVENT_IMAGE_FROM_STORE
+  DELETE_EVENT_IMAGE_FROM_STORE,
 } from "./types";
 
 const initialState = {
@@ -44,9 +44,10 @@ const initialState = {
   addresses: [],
   eventDetails: [],
   eventsByPage: [],
-  eventForEdit: {},
+  eventForEdit: [],
   agendas: [],
   eventImages: [],
+  fetch: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -138,7 +139,7 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
       };
 
-      case DELETE_EVENT_IMAGE_FROM_STORE:
+    case DELETE_EVENT_IMAGE_FROM_STORE:
       return {
         ...state,
         detailsImages: [
@@ -187,6 +188,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        fetch: false,
       };
     case DELETE_EVENT_SUCCESS:
       return {
@@ -194,12 +196,14 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: null,
         success: true,
+        fetch: true,
       };
     case DELETE_EVENT_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
+        fetch: false,
       };
 
     case TRANSFER_EVENT_DELETE:

@@ -3,6 +3,7 @@ import { MEMBER_EDIT_REQUEST, MEMBER_EDIT_SUCCESS_FAILURE } from "../types";
 import { toast } from "react-toastify";
 
 export const editMember = (member, changePath) => {
+  // console.log({member});
   // console.log(news, "edit news send");
   return (dispatch) => {
     dispatch({

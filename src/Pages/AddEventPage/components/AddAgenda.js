@@ -24,6 +24,7 @@ function AddAgenda({
   //   console.log(addressId, "addressId");
   //   const [change, setChange] = useState(1);
   const [agendasAdded, setAgendasAdded] = useState(false);
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     addressesAgenda.map((agenda) => {
@@ -37,7 +38,7 @@ function AddAgenda({
         <div>
           <input
             // className="input_component agendas_input"
-            className='input input_width'
+            className="input input_width"
             value={agenda?.dateAndTime}
             onChange={(e) => {
               // setDateAndTime(e.target.value);
@@ -49,74 +50,78 @@ function AddAgenda({
           />
         </div>
 
-        <div style={{display: 'flex', backgroundColor: '#80808094' }}>
-          <div >
-          <textarea
-            // className="input_component  agendas_input"
-            className="textarea"
-            value={agenda?.agendaDescriptionEng}
-            onChange={(e) => {
-              // setAgendaDescription(e.target.value);
-              formOnChangeArray(
-                "agenda",
-                "agendaDescriptionEng",
-                e.target.value
-              );
-            }}
-            id="agendaDescriptionEng"
-            type="text"
-            placeholder="Description"
-          />
+        <div style={{ display: "flex"}}>
+          <div style={{marginRight: 10, marginLeft:10}}>
+            <textarea
+              // className="input_component  agendas_input"
+              className="textarea"
+              
+              value={agenda?.agendaDescriptionEng}
+              onChange={(e) => {
+                // setAgendaDescription(e.target.value);
+                formOnChangeArray(
+                  "agenda",
+                  "agendaDescriptionEng",
+                  e.target.value
+                );
+              }}
+              id="agendaDescriptionEng"
+              type="text"
+              placeholder="Description"
+            />
+          </div>
+          <div style={{marginRight: 10}}>
+            <textarea
+              // className="input_component  agendas_input"
+              className="textarea"
+              value={agenda?.agendaDescriptionArm}
+              onChange={(e) => {
+                // setAgendaDescription(e.target.value);
+                formOnChangeArray(
+                  "agenda",
+                  "agendaDescriptionArm",
+                  e.target.value
+                );
+              }}
+              id="agendaDescriptionArm"
+              type="text"
+              placeholder="Նկարագիր"
+            />
           </div>
           <div>
-          <textarea
-            // className="input_component  agendas_input"
-            className="textarea"
-            value={agenda?.agendaDescriptionArm}
-            onChange={(e) => {
-              // setAgendaDescription(e.target.value);
-              formOnChangeArray(
-                "agenda",
-                "agendaDescriptionArm",
-                e.target.value
-              );
-            }}
-            id="agendaDescriptionArm"
-            type="text"
-            placeholder="Նկարագիր"
-          />
-          </div>
-          <div>
-          <textarea
-            // className="input_component agendas_input"
-            className="textarea"
-            value={agenda?.agendaDescriptionRu}
-            onChange={(e) => {
-              // setAgendaDescription(e.target.value);
-              formOnChangeArray(
-                "agenda",
-                "agendaDescriptionRu",
-                e.target.value
-              );
-            }}
-            id="agendaDescriptionRu"
-            type="text"
-            placeholder="Описание"
-          />
+            <textarea
+              // className="input_component agendas_input"
+              className="textarea"
+              value={agenda?.agendaDescriptionRu}
+              onChange={(e) => {
+                // setAgendaDescription(e.target.value);
+                formOnChangeArray(
+                  "agenda",
+                  "agendaDescriptionRu",
+                  e.target.value
+                );
+              }}
+              id="agendaDescriptionRu"
+              type="text"
+              placeholder="Описание"
+            />
           </div>
         </div>
 
         <div
-        style={{marginBottom: 'auto', marginTop: 'auto', marginLeft: 20}}
+          style={{ marginBottom: "auto", marginTop: "auto", marginLeft: 20 }}
           onClick={() => {
+            agenda.id = id;
             addresses[index - 1]?.agendas?.push(agenda);
             setAgendasAdded(true);
+            setId(id + 1);
             setChange(change + 1);
             setNewAgenda(newAgenda + 1);
             formOnChangeArray("agendas", "dateAndTime", "");
             formOnChangeArray("agendas", "agendaDescriptionArm", "");
             formOnChangeArray("agendas", "agendaDescriptionEng", "");
             formOnChangeArray("agendas", "agendaDescriptionRu", "");
+            formOnChangeArray("agendas", "id", id);
           }}
         >
           <svg viewBox="-5 -11 50 50" className="delete-agenda-btn">

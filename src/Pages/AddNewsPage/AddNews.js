@@ -127,7 +127,7 @@ function AddNews({ addNews, cleanForm, cleanImages, }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {};
 };
 

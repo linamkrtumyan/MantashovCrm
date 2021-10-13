@@ -50,6 +50,7 @@ function EditMember({
   const path = useHistory();
   const [isActive, setIsActive] = useState(true);
   const [changeImage, setChangeImage] = useState(false);
+  const [imageDeleted, setImageDeleted] = useState(false);
 
   let { id } = useParams();
 
@@ -126,7 +127,6 @@ function EditMember({
       firstNameRu,
       lastNameRu,
       image,
-      imageDeleted: changeImage,
       descriptionArm,
       descriptionEng,
       descriptionRu,
@@ -137,6 +137,7 @@ function EditMember({
       positionId: position,
       contacts: cont,
       isActive,
+      imageDeleted,
     };
     // console.log(member, "sended member");
     editMember(member, changePath);
@@ -172,7 +173,10 @@ function EditMember({
                     />
                     <div className="member_image_middle">
                       <div
-                        onClick={() => setChangeImage(true)}
+                        onClick={() => {
+                          setChangeImage(true);
+                          setImageDeleted(true);
+                        }}
                         className="member_edit_text"
                       >
                         <i className="fas fa-times"></i>
@@ -289,7 +293,7 @@ function EditMember({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     states: state.locationsReducer?.states,

@@ -6,7 +6,7 @@ import {
 } from "../types";
 
 export const deleteEvent = (id, changePath) => {
-  console.log(id, "uxarkvoxy");
+  // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deleteEventRequest());
     request(`/admin/events/event/${id}`, "DELETE")

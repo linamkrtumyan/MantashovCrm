@@ -5,20 +5,20 @@ import { useHistory } from "react-router-dom";
 
 function DeleteEvent({ modalOpen, setModalOpen, id, deleteEvent, cleanEvent }) {
   // console.log(modalOpen, "modalOpen");
-  console.log(id, "id");
+  // console.log(id, "id");
 
   const history = useHistory();
 
   const handleDelete = () => {
-    console.log({ id });
-    if (id) {
-    setModalOpen(false);
-    const changePath = () => {
-      history.push("/events");
-    };
-    deleteEvent(id, changePath);
-    cleanEvent();
-    }
+    // console.log({ id });
+    // if (id) {
+      const changePath = () => {
+        history.push("/events");
+      };
+      deleteEvent(id, changePath);
+      setModalOpen(false);
+      // cleanEvent();
+    // }
   };
   return (
     <div className={"modal " + (modalOpen ? "is-active" : "")}>
@@ -58,7 +58,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteEvent: (id, changePath) => dispatch(deleteEvent(id, changePath)),
-    cleanEvent: () => dispatch(deleteEvent()),
+    cleanEvent: () => dispatch(cleanEvent()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteEvent);

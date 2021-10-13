@@ -63,7 +63,7 @@ function Spheres({
     };
 
     const changePath = () => {};
-    console.log(position, "uxarkvox position");
+    // console.log(position, "uxarkvox position");
     editPosition(position, changePath);
 
     cleanForm();
@@ -209,7 +209,7 @@ function Spheres({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     positions: state.organizationsReducer.positionsAll,
     loading: state.organizationsReducer.loading,

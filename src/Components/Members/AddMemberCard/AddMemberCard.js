@@ -11,7 +11,7 @@ function AddMemberCard() {
   return (
     <div className="add_membercard_container">
       <div onClick={handleClick}>
-        <Button title="Add member" />
+        <Button title="Add Member" />
       </div>
     </div>
   );
