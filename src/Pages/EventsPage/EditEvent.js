@@ -7,12 +7,9 @@ import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 
 import store, {
-  // deletePosition,
-  // fetchPositionsAll,
   fetchCountries,
   fetchStates,
   fetchCities,
-  // cleanForm,
   cleanLocation,
   fetchEventDetailsForEdit,
   editEvent,
@@ -24,12 +21,10 @@ import store, {
 import { deletedImages } from "../../store/images/actions";
 
 import { connect } from "react-redux";
-
-// import { Slide } from "react-slideshow-image";
-// import "react-slideshow-image/dist/styles.css";
 import { useHistory, useParams } from "react-router-dom";
 import EditAgendas from "./EditAgendas";
 import OpenImage from "./components/images/OpenImage";
+import AgendaEdit from "./AgendaEdit";
 
 function EditEvent({
   fetchCountries,
@@ -50,6 +45,7 @@ function EditEvent({
   deleteEventImageFromStore,
   detailsImages,
   cleanForm,
+  editedAndAddedAgendas
 }) {
   const history = useHistory();
 
@@ -127,7 +123,7 @@ function EditEvent({
       startDate,
       header,
       headerDeleted,
-      agendas: agenda,
+      agendas: editedAndAddedAgendas,
       addedImages,
       deletedImages: deleted,
     };
@@ -249,7 +245,7 @@ function EditEvent({
               </div>
               <div>
                 <div>
-                  <EditAgendas />
+                  <AgendaEdit />
                 </div>
                 <div>
                   {/* <AddAgendasAddress addressType={addressType} /> */}
@@ -386,6 +382,7 @@ const mapStateToProps = (state) => {
     cities: state.locationsReducer.cities,
     agendas: state.formReducer?.agenda,
     detailsImages: state.eventReducer.detailsImages,
+    editedAndAddedAgendas: state.formReducer?.editedAndAddedAgendas
   };
 };
 

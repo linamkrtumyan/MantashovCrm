@@ -4,18 +4,13 @@ import { formOnChange } from "../../store";
 
 import { connect } from "react-redux";
 
-import Input from "../../Components/Forms/Input/Input";
-import Textarea from "../../Components/Forms/Textarea/Textarea";
-
-function AgendaEdit({ eventForEdit }) {
+function AgendaEdit({ eventForEdit, formOnChange }) {
   const [agendas, setAgendas] = useState([]);
   const [ag, setAg] = useState(0);
   const [newAgenda, setNewAgenda] = useState({});
 
   useEffect(() => {
-    // console.log({ eventForEdit });
     setAgendas(eventForEdit.agenda);
-
     // console.log({ agendas });
   }, [eventForEdit]);
 
@@ -37,11 +32,11 @@ function AgendaEdit({ eventForEdit }) {
 
   useEffect(() => {
     formOnChange("editedAndAddedAgendas", agendas);
+    console.log({ editedAndAddedAgendas: agendas });
   }, [agendas]);
 
   return (
     <>
-      {/* <div style={{ display: "flex"}}> */}
       <div>
         {agendas
           ? agendas.map((item, index) => {
@@ -126,9 +121,7 @@ function AgendaEdit({ eventForEdit }) {
                     </div>
 
                     <div
-                      // onClick={() => handleDelete(index)}
                       style={{
-                        // margin: "24px 10px 10px 10px"
                         marginRight: 10,
                         marginBottom: "auto",
                         marginTop: "auto",
@@ -174,7 +167,6 @@ function AgendaEdit({ eventForEdit }) {
                 setNewAgenda({ ...newAgenda, descriptionEng: e.target.value })
               }
               className="textarea"
-              // placeholder={item.descriptionEng}
               required={false}
             />
           </div>
@@ -188,7 +180,6 @@ function AgendaEdit({ eventForEdit }) {
                 setNewAgenda({ ...newAgenda, descriptionArm: e.target.value })
               }
               className="textarea"
-              // placeholder={item.descriptionEng}
               required={false}
             />
           </div>
@@ -202,7 +193,6 @@ function AgendaEdit({ eventForEdit }) {
                 setNewAgenda({ ...newAgenda, descriptionRu: e.target.value })
               }
               className="textarea"
-              // placeholder={item.descriptionEng}
               required={false}
             />
           </div>
@@ -210,7 +200,6 @@ function AgendaEdit({ eventForEdit }) {
           <div
             onClick={handleAdd}
             style={{
-              // margin: "24px 10px 10px 10px"
               marginRight: 10,
               marginBottom: "auto",
               marginTop: "auto",
@@ -222,7 +211,6 @@ function AgendaEdit({ eventForEdit }) {
           </div>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 }
