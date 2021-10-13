@@ -49,11 +49,6 @@ function AddAgendasAddress({
   const [newAddress, setNewAddress] = useState(true);
   const [showAgendasForm, setShowAgendasForm] = useState(false);
   const [indexOfAgenda, setIndexOfAgenda] = useState(0);
-  //   console.log(agendasAddresses, "agendasAddresses");
-  //   console.log(addresses, "addresses");
-
-  //   const agendasCityId = store.getState().formReducer?.agendasCity;
-  //   console.log(value, "value");
 
   useEffect(() => {
     addressType.map((addr) => {
@@ -65,7 +60,9 @@ function AddAgendasAddress({
     <div>
       {addressAdded ? (
         <div>
-          {addresses.map((address, index) => (
+          {
+          // console.log({gggggggggg: addresses}),
+          addresses.map((address, index) => (
             <div>
               <div>
                 {address?.agendas?.map((agenda) => (
@@ -191,10 +188,6 @@ function AddAgendasAddress({
 }
 
 const mapStateToProps = (state) => {
-  console.log({
-    agendasAddresses: state.formReducer.agendasAddresses,
-    addresses: state.eventReducer.addresses,
-  });
   return {
     countries: state.locationsReducer.countries,
     country: state.formReducer.agendasCountry,

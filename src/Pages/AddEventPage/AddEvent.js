@@ -16,8 +16,11 @@ import {
   fetchCountries,
   fetchStates,
   cleanForm,
+  formOnChangeArray,
+  editAgendas,
 } from "../../store";
 import AddAgendasAddress from "./components/AddAgendasAddress";
+import AgendaAdd from "./components/AgendaAdd";
 
 function AddEvent({
   addEvent,
@@ -31,11 +34,16 @@ function AddEvent({
   states,
   agendas,
   cleanForm,
+  formOnChangeArray,
+  editAgendas,
 }) {
   const history = useHistory();
 
   useEffect(() => {
+    cleanForm();
+    editAgendas([]);
     fetchCountries();
+    formOnChangeArray("agendasAddresses", "agendas", []);
   }, []);
 
   useEffect(() => {
@@ -91,7 +99,7 @@ function AddEvent({
       descriptionRu,
       startDate,
       endDate,
-      agendas: agendas ? agendas : [],
+      agendas,
       header: header[0],
       images: image,
     };
@@ -99,9 +107,9 @@ function AddEvent({
     const changePath = () => {
       history.push("/events");
     };
-    // console.log(event, "uxarkvoxy");
     addEvent(event, changePath);
     cleanForm();
+    editAgendas([]);
   };
 
   return (
@@ -161,7 +169,8 @@ function AddEvent({
               <Textarea id="descriptionRu" type="text" placeholder="Описание" />
             </div>
             <div>
-              <AddAgendasAddress addressType={addressType} />
+              {/* <AddAgendasAddress addressType={addressType} /> */}
+              <AgendaAdd />
             </div>
             <div className="event_address_container">
               <OneImageUpload label="Upload Header Image" />
@@ -188,7 +197,7 @@ const mapStateToProps = (state) => {
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
     cities: state.locationsReducer.cities,
-    agendas: state.formReducer?.agendasAddresses?.agendas,
+    agendas: state.eventReducer?.agendas,
   };
 };
 
@@ -199,6 +208,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchStates: (country) => dispatch(fetchStates(country)),
     fetchCities: (state) => dispatch(fetchCities(state)),
     cleanForm: () => dispatch(cleanForm()),
+    formOnChangeArray: (firstKey, secondKey, value) =>
+      dispatch(formOnChangeArray(firstKey, secondKey, value)),
+    editAgendas: (agendas) => dispatch(editAgendas(agendas)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddEvent);

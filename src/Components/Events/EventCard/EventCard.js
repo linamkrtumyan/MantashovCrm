@@ -14,7 +14,6 @@ function EventCard({
   deleteEvent,
   transferEventDelete,
 }) {
-  // console.log(event, "event");
   let history = useHistory();
 
   function handleClick() {
@@ -22,9 +21,6 @@ function EventCard({
   }
 
   if (show) {
-    // console.log("shown true a");
-    // return <ModalComponent show={show} />;
-    // return <DeleteEvent show={show} />;
     return <DeleteEvent show={show} />;
   }
   return (
@@ -78,7 +74,6 @@ function EventCard({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "news card state");
   return {
     // currentPage: state.paginationReducer.currentPage,
     show: state.modalReducer.show,

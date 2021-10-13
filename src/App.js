@@ -30,7 +30,6 @@ function App({ isLogin, authorize, loading, cleanForm, userName }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, " app state");
   return {
     isLogin: state.loginReducer.login,
     loading: state.loginReducer.loading,
