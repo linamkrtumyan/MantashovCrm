@@ -79,7 +79,6 @@ function EditEvent({
 
   useEffect(() => {
     setAgenda(agendas);
-    console.log({agenda});
   }, [agendas]);
 
   const handleCancel = () => {
@@ -327,7 +326,6 @@ function EditEvent({
                         src={imagePath}
                         onClick={() => {
                           openImageModal(imagePath);
-                          // console.log(imagePath, "???????????????????");
                         }}
                       />
                       <div className="middle">

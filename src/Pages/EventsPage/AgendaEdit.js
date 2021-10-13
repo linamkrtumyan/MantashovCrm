@@ -11,7 +11,6 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
 
   useEffect(() => {
     setAgendas(eventForEdit.agenda);
-    // console.log({ agendas });
   }, [eventForEdit]);
 
   const handleAdd = () => {
@@ -19,7 +18,6 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
     agendas.push(newAgenda);
     formOnChange("editedAndAddedAgendas", agendas);
     setAg(ag + 1);
-    console.log({ agendas });
     editAgendas(agendas);
   };
 
@@ -28,13 +26,11 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
     agendas.splice(index, 1);
     setAgendas(agendas);
     setAg(ag + 1);
-    console.log({ aaaa: agendas });
     editAgendas(agendas);
   };
 
   useEffect(() => {
     formOnChange("editedAndAddedAgendas", agendas);
-    console.log({ editedAndAddedAgendas: agendas });
     editAgendas(agendas);
   }, [agendas]);
 
@@ -73,7 +69,6 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].dateAndTime = e.target.value;
-                          console.log({ changedAgenda: agendas });
                           formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
@@ -88,7 +83,6 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionEng = e.target.value;
-                          console.log({ changedAgenda: agendas });
                           formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
@@ -104,7 +98,6 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionArm = e.target.value;
-                          console.log({ changedAgenda: agendas });
                           formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
@@ -120,7 +113,6 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionRu = e.target.value;
-                          console.log({ changedAgenda: agendas });
                           formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}

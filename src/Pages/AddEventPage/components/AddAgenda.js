@@ -50,11 +50,12 @@ function AddAgenda({
           />
         </div>
 
-        <div style={{ display: "flex", backgroundColor: "#80808094" }}>
-          <div>
+        <div style={{ display: "flex"}}>
+          <div style={{marginRight: 10, marginLeft:10}}>
             <textarea
               // className="input_component  agendas_input"
               className="textarea"
+              
               value={agenda?.agendaDescriptionEng}
               onChange={(e) => {
                 // setAgendaDescription(e.target.value);
@@ -69,7 +70,7 @@ function AddAgenda({
               placeholder="Description"
             />
           </div>
-          <div>
+          <div style={{marginRight: 10}}>
             <textarea
               // className="input_component  agendas_input"
               className="textarea"
