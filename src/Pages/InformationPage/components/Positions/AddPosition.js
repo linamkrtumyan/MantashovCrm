@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../../../../Components/Forms/Input/Input";
 import { connect } from "react-redux";
 import store, { addPosition, cleanForm } from "../../../../store";
 
 function AddPosition({ setAdd, addPosition, cleanForm }) {
+  useEffect(()=>{
+    cleanForm();
+  },[]);
   const handleCreate = () => {
     let { nameArm, nameEng, nameRu } = store.getState().formReducer;
 
@@ -16,7 +19,7 @@ function AddPosition({ setAdd, addPosition, cleanForm }) {
     const changePath = () => {
       //   history.push("/information");
     };
-    // console.log(position, "uxarkvox position");
+    console.log(position, "uxarkvox position");
     addPosition(position, changePath);
     setAdd(false);
     cleanForm();
@@ -50,7 +53,7 @@ function AddPosition({ setAdd, addPosition, cleanForm }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
+  console.log(state, "state");
   return {};
 };
 

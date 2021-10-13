@@ -1,10 +1,9 @@
-import { CLEAN_FROM } from "../types";
+import { CLEAN_FORM } from "../types";
 
 export const cleanForm = () => {
-  // console.log("ekav clean ani");
   return (dispatch) => {
     dispatch({
-      type: CLEAN_FROM,
+      type: CLEAN_FORM,
     });
   };
 };

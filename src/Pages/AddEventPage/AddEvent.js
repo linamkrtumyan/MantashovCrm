@@ -17,7 +17,7 @@ import {
   fetchStates,
   cleanForm,
   formOnChangeArray,
-  editAgendas
+  editAgendas,
 } from "../../store";
 import AddAgendasAddress from "./components/AddAgendasAddress";
 import AgendaAdd from "./components/AgendaAdd";
@@ -35,11 +35,13 @@ function AddEvent({
   agendas,
   cleanForm,
   formOnChangeArray,
-  editAgendas
+  editAgendas,
 }) {
   const history = useHistory();
 
   useEffect(() => {
+    cleanForm();
+    editAgendas([]);
     fetchCountries();
     formOnChangeArray("agendasAddresses", "agendas", []);
   }, []);
@@ -107,7 +109,7 @@ function AddEvent({
     };
     addEvent(event, changePath);
     cleanForm();
-    editAgendas([])
+    editAgendas([]);
   };
 
   return (
@@ -208,7 +210,7 @@ const mapDispatchToProps = (dispatch) => {
     cleanForm: () => dispatch(cleanForm()),
     formOnChangeArray: (firstKey, secondKey, value) =>
       dispatch(formOnChangeArray(firstKey, secondKey, value)),
-      editAgendas: (agendas) => dispatch(editAgendas(agendas)),
+    editAgendas: (agendas) => dispatch(editAgendas(agendas)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddEvent);
