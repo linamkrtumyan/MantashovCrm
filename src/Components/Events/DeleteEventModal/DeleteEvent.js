@@ -4,16 +4,6 @@ import { deleteEvent } from "../../../store";
 import ModalComponent from "../../Modal/Modal";
 
 export const DeleteEvent = ({ action, show, event, deleteEvent }) => {
-  // console.log("ekav");
-  // console.log(show, "show");
-  //   console.log(news, "news id");
-  //   if (action) {
-  //     console.log("mtav deletei if");
-  //     deleteNews(news);
-  //   }
-  //   useEffect(() => {
-  //     transferNewsDelete(news);
-  //   }, []);
 
   return (
     <div>
@@ -22,7 +12,6 @@ export const DeleteEvent = ({ action, show, event, deleteEvent }) => {
   );
 };
 const mapStateToProps = (state) => {
-  // console.log(state, "news delete state");
   return {
     action: state.modalReducer.action,
     event: state.eventReducer.event,

@@ -246,9 +246,6 @@ function EditEvent({
                 <div>
                   <AgendaEdit />
                 </div>
-                <div>
-                  {/* <AddAgendasAddress addressType={addressType} /> */}
-                </div>
               </div>
             </div>
 

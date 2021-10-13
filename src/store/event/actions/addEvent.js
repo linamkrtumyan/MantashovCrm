@@ -8,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 
 export const addEvent = (event, changePath) => {
+  // console.log({event});
   const data = new FormData();
 
   return (dispatch) => {

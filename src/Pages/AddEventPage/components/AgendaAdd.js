@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from "react";
-
-import { editAgendas, formOnChange } from "../../store";
-
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { editAgendas } from "../../../store";
 
-function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
-  const [agendas, setAgendas] = useState([]);
-  const [ag, setAg] = useState(0);
+function AgendaAdd({ agendas, editAgendas }) {
+  const [showAddedAgendas, setShowAddedAgendas] = useState(false);
+
+  const [allAgendas, setAllAgendas] = useState([]);
   const [newAgenda, setNewAgenda] = useState({});
+  const [ag, setAg] = useState(0);
 
   useEffect(() => {
-    setAgendas(eventForEdit.agenda);
-  }, [eventForEdit]);
+    setAllAgendas(agendas);
+    for (let i = 0; i < allAgendas.length; i++) {
+      allAgendas[i].id = i;
+    }
+  }, [agendas]);
 
   const handleAdd = () => {
-    setNewAgenda({ ...newAgenda, id: agendas.length + 1 });
+    setNewAgenda({ ...newAgenda, id: agendas.length });
     agendas.push(newAgenda);
-    formOnChange("editedAndAddedAgendas", agendas);
+    setAllAgendas(agendas);
     setAg(ag + 1);
     editAgendas(agendas);
   };
@@ -24,35 +27,22 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
   const handleDelete = (item) => {
     const index = agendas.indexOf(item);
     agendas.splice(index, 1);
-    setAgendas(agendas);
+    setAllAgendas(agendas);
     setAg(ag + 1);
     editAgendas(agendas);
   };
 
-  useEffect(() => {
-    formOnChange("editedAndAddedAgendas", agendas);
-    editAgendas(agendas);
-  }, [agendas]);
-
   return (
-    <>
-      <div>
-        {agendas
-          ? agendas.map((item, index) => {
-              for (let i = 0; i < agendas.length; i++) {
-                agendas[i].id = i;
-              }
-              if (
-                item.dateAndTime &&
-                item.descriptionEng &&
-                item.descriptionArm &&
-                item.descriptionRu
-              ) {
+    <div>
+      {showAddedAgendas ? (
+        <div>
+          {agendas
+            ? agendas.map((item, index) => {
                 return (
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "space-between",
+                      // justifyContent: "space-between",
                       border: "1px solid #80808094",
                       marginBottom: 10,
                       borderRadius: 5,
@@ -67,7 +57,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].dateAndTime = e.target.value;
-                          formOnChange("editedAndAddedAgendas", agendas);
+                          // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
                       />
@@ -77,11 +67,11 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
 
                       <textarea
                         className="textarea"
-                        defaultValue={item.descriptionEng}
+                        defaultValue={item.agendaDescriptionEng}
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionEng = e.target.value;
-                          formOnChange("editedAndAddedAgendas", agendas);
+                          // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
                       />
@@ -92,11 +82,11 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
 
                       <textarea
                         className="textarea"
-                        defaultValue={item.descriptionArm}
+                        defaultValue={item.agendaDescriptionArm}
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionArm = e.target.value;
-                          formOnChange("editedAndAddedAgendas", agendas);
+                          // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
                       />
@@ -107,11 +97,11 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
 
                       <textarea
                         className="textarea"
-                        defaultValue={item.descriptionRu}
+                        defaultValue={item.agendaDescriptionRu}
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionRu = e.target.value;
-                          formOnChange("editedAndAddedAgendas", agendas);
+                          // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
                       />
@@ -136,93 +126,104 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                     </div>
                   </div>
                 );
-              } else {
-                return null;
-              }
-            })
-          : null}
+              })
+            : null}
 
-        <div style={{ display: "flex" }}>
-          <div className="input_container">
-            <label htmlFor="dateAndTime">Date And Time</label>
-            <input
-              id="dateAndTime"
-              type="datetime-local"
-              className="input input_width"
-              required={false}
-              onChange={(e) => {
-                setNewAgenda({ ...newAgenda, dateAndTime: e.target.value });
+          <div style={{ display: "flex" }}>
+            <div className="input_container">
+              <label htmlFor="dateAndTime">Date And Time</label>
+              <input
+                id="dateAndTime"
+                type="datetime-local"
+                className="input input_width"
+                required={false}
+                onChange={(e) => {
+                  setNewAgenda({ ...newAgenda, dateAndTime: e.target.value });
+                }}
+              />
+            </div>
+            <div className="input_container">
+              <label htmlFor="descriptionEng">Description</label>
+
+              <textarea
+                id="descriptionEng"
+                onChange={(e) =>
+                  setNewAgenda({ ...newAgenda, agendaDescriptionEng: e.target.value })
+                }
+                className="textarea"
+                required={false}
+              />
+            </div>
+
+            <div className="input_container">
+              <label htmlFor="descriptionArm">Նկարագիր</label>
+
+              <textarea
+                id="descriptionArm"
+                onChange={(e) =>
+                  setNewAgenda({ ...newAgenda, agendaDescriptionArm: e.target.value })
+                }
+                className="textarea"
+                required={false}
+              />
+            </div>
+
+            <div className="input_container">
+              <label htmlFor="descriptionRu">Описание</label>
+
+              <textarea
+                id="descriptionRu"
+                onChange={(e) =>
+                  setNewAgenda({ ...newAgenda, agendaDescriptionRu: e.target.value })
+                }
+                className="textarea"
+                required={false}
+              />
+            </div>
+
+            <div
+              onClick={handleAdd}
+              style={{
+                marginRight: 10,
+                marginBottom: "auto",
+                marginTop: "auto",
               }}
-            />
-          </div>
-          <div className="input_container">
-            <label htmlFor="descriptionEng">Description</label>
-
-            <textarea
-              id="descriptionEng"
-              onChange={(e) =>
-                setNewAgenda({ ...newAgenda, descriptionEng: e.target.value })
-              }
-              className="textarea"
-              required={false}
-            />
-          </div>
-
-          <div className="input_container">
-            <label htmlFor="descriptionArm">Նկարագիր</label>
-
-            <textarea
-              id="descriptionArm"
-              onChange={(e) =>
-                setNewAgenda({ ...newAgenda, descriptionArm: e.target.value })
-              }
-              className="textarea"
-              required={false}
-            />
-          </div>
-
-          <div className="input_container">
-            <label htmlFor="descriptionRu">Описание</label>
-
-            <textarea
-              id="descriptionRu"
-              onChange={(e) =>
-                setNewAgenda({ ...newAgenda, descriptionRu: e.target.value })
-              }
-              className="textarea"
-              required={false}
-            />
-          </div>
-
-          <div
-            onClick={handleAdd}
-            style={{
-              marginRight: 10,
-              marginBottom: "auto",
-              marginTop: "auto",
-            }}
-          >
-            <div className="delete-agenda-btn">
-              <i style={{ width: 17, height: 17 }} className="fas fa-check"></i>
+            >
+              <div className="delete-agenda-btn">
+                <i
+                  style={{ width: 17, height: 17 }}
+                  className="fas fa-check"
+                ></i>
+              </div>
             </div>
           </div>
         </div>
+      ) : null}
+      <div>
+        <div
+          className="add_new_address_btn"
+          onClick={() => {
+            setShowAddedAgendas(true);
+          }}
+        >
+          {" "}
+          Add agendas
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    eventForEdit: state.eventReducer.eventForEdit,
+    agendas: state.eventReducer?.agendas,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     editAgendas: (agendas) => dispatch(editAgendas(agendas)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgendaEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(AgendaAdd);

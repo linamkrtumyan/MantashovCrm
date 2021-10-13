@@ -24,7 +24,6 @@ import Information from "./Pages/InformationPage/Information";
 import EditEvent from "./Pages/EventsPage/EditEvent";
 
 function Routes({ isLogin, userName }) {
-  // console.log(isLogin, "islogin");
   if (isLogin) {
     return (
       <>
