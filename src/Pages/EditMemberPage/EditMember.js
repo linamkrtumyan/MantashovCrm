@@ -89,7 +89,7 @@ function EditMember({
     let {
       birthdate,
       city,
-      contacts,
+      contacts = {},
       descriptionArm,
       descriptionEng,
       descriptionRu,
@@ -103,7 +103,7 @@ function EditMember({
       locationArm,
       locationEng,
       locationRu,
-      organizations,
+      organizations = [],
       position,
     } = store.getState().formReducer;
 

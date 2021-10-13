@@ -2,7 +2,7 @@ import {
   FORM_ON_CHANGE,
   INIT_FORM,
   FORM_ON_CHANGE_ARRAY,
-  CLEAN_FROM,
+  CLEAN_FORM,
 } from "./types";
 
 const initialState = {};
@@ -35,7 +35,7 @@ const reducer = (state = initialState, action) => {
           [action.payload.secondKey]: action.payload.value,
         },
       };
-    case CLEAN_FROM:
+    case CLEAN_FORM:
       return {};
     default:
       return state;

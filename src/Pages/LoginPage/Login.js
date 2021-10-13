@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./login.css";
 import Input from "../../Components/Forms/Input/Input";
 import Button from "../../Components/Forms/Button/Button";
 import { connect } from "react-redux";
-import store from "../../store";
+import store, { cleanForm } from "../../store";
 import { onLoginFunction } from "../../store";
 
-function Login({ onLoginFunction }) {
+function Login({ onLoginFunction, cleanForm }) {
+  useEffect(()=>{
+    cleanForm();
+  },[])
   const handleSubmit = (e) => {
     e.preventDefault();
     let { email, password } = store.getState().formReducer;
@@ -52,6 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    cleanForm: () => dispatch(cleanForm()),
     onLoginFunction: (login) => dispatch(onLoginFunction(login)),
   };
 };
