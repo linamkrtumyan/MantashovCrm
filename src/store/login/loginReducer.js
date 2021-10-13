@@ -16,6 +16,7 @@ const initialState = {
   loading: true,
   login: false,
   error: null,
+  authenticating: false,
   token: "",
 };
 
@@ -25,20 +26,20 @@ const reducer = (state = initialState, action) => {
     case ON_LOGIN_REQUEST:
       return {
         ...state,
-        loading: true,
+        authenticating: true,
       };
     case ON_LOGIN_SUCCESS:
       return {
         ...state,
         token: action.payload.login.token,
-        loading: false,
+        authenticating: false,
         login: true,
         error: null,
       };
     case ON_LOGIN_FAILURE:
       return {
         ...state,
-        loading: false,
+        authenticating: false,
         login: false,
         error: action.payload.error,
       };

@@ -54,7 +54,7 @@ function AddMember({
   cleanLocation,
   // organizationsType,
   formOnChangeArray,
-  addedOrganizations,
+  addedOrganizations = [],
 }) {
   const [isActive, setIsActive] = useState(true);
   const [newOrg, setNewOrg] = useState(0);
@@ -128,7 +128,7 @@ function AddMember({
       email,
       organizationId,
       positionId,
-      contacts,
+      contacts = {},
     } = store.getState().formReducer;
     const image = store.getState().imageReducer.header;
     let keys = Object.keys(contacts);

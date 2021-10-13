@@ -55,12 +55,12 @@ function EditMember({
   let { id } = useParams();
 
   useEffect(() => {
+    cleanForm();
     fetchMemberForEdit(id);
     fetchCountries();
     fetchContactTypes();
     fetchCategories();
     fetchPositions();
-    cleanForm();
   }, []);
 
   useEffect(() => {

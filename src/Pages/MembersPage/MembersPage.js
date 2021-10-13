@@ -26,7 +26,6 @@ function MembersPage({
   useEffect(() => {
     fetchMembersByPage();
   }, [currentPage, action]);
-  
 
   function handleDetails(id) {
     history.push(`/edit-member/${id}`);
@@ -89,12 +88,11 @@ function MembersPage({
                   membersByPage.map((memberByPage, index) => {
                     return (
                       <tr
+                        key={memberByPage.id}
                         style={{ cursor: "pointer", position: "relative" }}
                         // onClick={() => handleDetails(memberByPage.id)}
-                        key={index}
                       >
                         <td onClick={() => handleDetails(memberByPage.id)}>
-                          {" "}
                           <img
                             alt=""
                             className="membercard_img"
@@ -106,7 +104,7 @@ function MembersPage({
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
                           {memberByPage.organizations.map((org) => (
-                            <p>{org}</p>
+                            <p key={org}>{org}</p>
                           ))}
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
