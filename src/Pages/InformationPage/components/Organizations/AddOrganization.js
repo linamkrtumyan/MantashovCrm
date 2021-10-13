@@ -39,10 +39,10 @@ function AddOrganization({
 }) {
 
   useEffect(() => {
+    cleanOrganization();
+    cleanForm();
     fetchCountries();
     fetchCategories();
-    cleanOrganization();
-    // cleanForm();
   }, []);
 
   useEffect(() => {

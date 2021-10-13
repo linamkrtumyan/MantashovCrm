@@ -45,6 +45,7 @@ function EditOrganization({
     }
   }, [id]);
   useEffect(() => {
+    cleanForm();
     fetchCountries();
     fetchCategories();
   }, []);

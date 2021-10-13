@@ -35,6 +35,7 @@ function AddEvent({
   const history = useHistory();
 
   useEffect(() => {
+    cleanForm();
     fetchCountries();
   }, []);
 

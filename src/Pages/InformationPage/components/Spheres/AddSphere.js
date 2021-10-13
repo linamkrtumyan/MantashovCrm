@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../../../../Components/Forms/Input/Input";
 import { connect } from "react-redux";
 import store, { addCategory, cleanForm } from "../../../../store";
@@ -9,6 +9,9 @@ function AddSphere({
 
   cleanForm,
 }) {
+  useEffect(()=>{
+    cleanForm();
+  },[]);
   const handleCreate = () => {
     let { nameArm, nameEng, nameRu } = store.getState().formReducer;
 

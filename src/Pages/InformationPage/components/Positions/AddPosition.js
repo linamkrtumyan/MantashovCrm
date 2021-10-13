@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../../../../Components/Forms/Input/Input";
 import { connect } from "react-redux";
 import store, { addPosition, cleanForm } from "../../../../store";
 
 function AddPosition({ setAdd, addPosition, cleanForm }) {
+  useEffect(()=>{
+    cleanForm();
+  },[]);
   const handleCreate = () => {
     let { nameArm, nameEng, nameRu } = store.getState().formReducer;
 
