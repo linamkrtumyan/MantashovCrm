@@ -22,11 +22,10 @@ import { connect } from "react-redux";
 import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
 import EditPhone from "./components/EditPhone";
-import EditOrganizations from "./components/EditOrganizations";
+import AddOrganization from "../AddMemberPage/components/AddOrganization";
 
 function EditMember({
   fetchMemberForEdit,
-  organizations,
   countries,
   fetchCountries,
   states,
@@ -39,11 +38,9 @@ function EditMember({
   fetchContactTypes,
   contactTypes,
   fetchCategories,
-  categories,
   category,
   fetchOrganizations,
   fetchPositions,
-  positions,
   cleanForm,
 }) {
   const history = useHistory();
@@ -51,6 +48,7 @@ function EditMember({
   const [isActive, setIsActive] = useState(true);
   const [changeImage, setChangeImage] = useState(false);
   const [imageDeleted, setImageDeleted] = useState(false);
+  const [dateNow] = useState(new Date(Date.now()).toISOString().split("T")[0]);
 
   let { id } = useParams();
 
@@ -103,7 +101,7 @@ function EditMember({
       locationArm,
       locationEng,
       locationRu,
-      organizations = [],
+      addedOrganizations = [],
       position,
     } = store.getState().formReducer;
 
@@ -133,7 +131,7 @@ function EditMember({
       birthdate,
       email,
       // organizationId: organization,
-      organizations,
+      organizations: addedOrganizations,
       positionId: position,
       contacts: cont,
       isActive,
@@ -217,7 +215,12 @@ function EditMember({
               </div>
 
               <div style={{ display: "flex" }}>
-                <Input id="birthdate" type="date" placeholder="" />
+                <Input
+                  id="birthdate"
+                  type="date"
+                  max={dateNow}
+                  placeholder=""
+                />
                 <button
                   onClick={() => setIsActive(!isActive)}
                   style={{ width: "31%", margin: "0 14px" }}
@@ -256,7 +259,7 @@ function EditMember({
             <div className="container_title">Occupation</div>
             <div className="container_body">
               <div>
-                <EditOrganizations />
+                <AddOrganization />
               </div>
             </div>
           </div>
@@ -272,7 +275,12 @@ function EditMember({
                 </div>
               </div>
               <div className="">
-                <Input id="email" type="email" placeholder="Email" />
+                <Input
+                  id="email"
+                  type="email"
+                  required={true}
+                  placeholder="Email"
+                />
               </div>
             </div>
           </div>

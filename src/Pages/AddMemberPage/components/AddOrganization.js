@@ -1,60 +1,63 @@
-import React, { useEffect, useState } from "react";
-import {
+import React, { useEffect } from "react";
+import store, {
   fetchPositions,
   fetchOrganizations,
-  formOnChangeArray,
+  formOnChange,
 } from "../../../store";
 import Select from "../../../Components/Forms/Select/Select";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
 function AddOrganization({
   fetchPositions,
   fetchOrganizations,
   organizations,
   positions,
-  organizationsType,
-  positionId,
-  organizationId,
-  formOnChangeArray,
-  oneOrganization,
-  setNewOrg,
-  newOrg,
-  addedOrganizations,
+  formOnChange,
+  addedOrganizations = [],
 }) {
-  const [orgs, setOrgs] = useState([]);
-  const [st, setSt] = useState(0);
-
   useEffect(() => {
     fetchPositions();
     fetchOrganizations();
+    formOnChange("addedOrganizations", []);
   }, []);
-
-  useEffect(() => {
-    formOnChangeArray("organizations", "organizationId", organizationId);
-  }, [organizationId]);
-
-  useEffect(() => {
-    formOnChangeArray("organizations", "positionId", positionId);
-    // organizationsArray.map((org) => <p>{org.organizationId}</p>);
-  }, [positionId]);
 
   const handleAdd = () => {
     // oneOrganization
-    if (!addedOrganizations.includes(oneOrganization)) {
-      addedOrganizations.push(oneOrganization);
-      setNewOrg(newOrg++);
-      setOrgs(oneOrganization?.organizationId);
+    const organizationId = store.getState().formReducer.organizationId;
+    const positionId = store.getState().formReducer.positionId;
+    if (!organizationId) {
+      return toast.error("Please select some organization");
     }
-
-    // console.log(newOrg, "newOrg");
-    // console.log(addedOrganizations, "add");
+    if (!positionId) {
+      return toast.error("Please select some position");
+    }
+    const newOrganization = {
+      organizationId,
+      positionId,
+    };
+    if (
+      !addedOrganizations.some(
+        (org) =>
+          organizationId === org.organizationId && positionId === org.positionId
+      )
+    ) {
+      addedOrganizations.push(newOrganization);
+      formOnChange("addedOrganizations", [...addedOrganizations]);
+      formOnChange("positionId", null);
+      formOnChange("organizationId", null);
+    }
   };
 
-  const handleDelete = (index) => {
-    // console.log(addedOrganizations);
-    addedOrganizations.splice(index, 1);
-    // console.log(addedOrganizations, "delete");
-    setSt(st + 1);
+  const handleDelete = (org) => {
+    formOnChange(
+      "addedOrganizations",
+      addedOrganizations.filter(
+        (o) =>
+          o.organizationId !== org.organizationId ||
+          o.positionId !== org.positionId
+      )
+    );
   };
 
   return (
@@ -67,19 +70,23 @@ function AddOrganization({
           (position) => position.id === org.positionId
         );
 
-        // console.log({ orgValue, posValue });
-
         return (
-          <div style={{ display: "flex" }}>
+          <div
+            key={`${org.positionId}${org.organizationId}`}
+            style={{ display: "flex" }}
+          >
             <div className="added_orgs">
               <p>{orgValue.name}</p>
             </div>
             <div className="added_orgs">
               <p>{posValue.name}</p>
             </div>
-            <div onClick={() => handleDelete(index)}>
+            <div onClick={() => handleDelete(org)}>
               <div className="added_orgs">
-                <i style={{ marginRight: "10px" }} className="fas fa-times"></i>
+                <i
+                  style={{ marginRight: "10px", cursor: "pointer" }}
+                  className="fas fa-times"
+                ></i>
               </div>
             </div>
           </div>
@@ -115,10 +122,7 @@ const mapStateToProps = (state) => {
   return {
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,
-    addedOrganizations: state.membersReducer.addedOrganizations,
-    organizationId: state.formReducer.organizationId,
-    positionId: state.formReducer.positionId,
-    oneOrganization: state.formReducer.organizations,
+    addedOrganizations: state.formReducer.addedOrganizations,
   };
 };
 
@@ -126,9 +130,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchOrganizations: () => dispatch(fetchOrganizations()),
     fetchPositions: () => dispatch(fetchPositions()),
-
-    formOnChangeArray: (firstKey, secondKey, value) =>
-      dispatch(formOnChangeArray(firstKey, secondKey, value)),
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddOrganization);

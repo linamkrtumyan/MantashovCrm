@@ -20,6 +20,10 @@ export const addMember = (member, changePath) => {
           toast.dark("Member added");
 
           changePath();
+        } else {
+          dispatch(addMemberFailure(data.errorMessage));
+
+          toast.error(data.errorMessage);
         }
       })
       .catch((e) => {

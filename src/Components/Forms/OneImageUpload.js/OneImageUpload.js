@@ -52,6 +52,7 @@ function OneImageUpload({ uploadOneImage, label = "" }) {
         type="file"
         // id="myfile"
         id="one-file-upload"
+        accept="image/*"
         name="myfile"
         // style={{ height: "60px" }}
         onChange={(e) => onImageChange(e)}

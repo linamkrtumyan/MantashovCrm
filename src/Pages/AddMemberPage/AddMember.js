@@ -37,38 +37,26 @@ function AddMember({
   stateId,
   cities,
   fetchCities,
-
-  fetchOrganizations,
-  organizations,
   cleanMember,
-  statuses,
   addMember,
   fetchContactTypes,
   contactTypes,
   cleanForm,
   fetchCategories,
-  categories,
-  categoryId,
-  fetchPositions,
-  positions,
   cleanLocation,
   // organizationsType,
-  formOnChangeArray,
   addedOrganizations = [],
 }) {
-  const [isActive, setIsActive] = useState(true);
-  const [newOrg, setNewOrg] = useState(0);
+  const [dateNow] = useState(new Date(Date.now()).toISOString().split("T")[0]);
   // console.log(isActive, "is active");
   const history = useHistory();
   useEffect(() => {
     fetchCountries();
     fetchContactTypes();
     fetchCategories();
-    fetchPositions();
     cleanForm();
     cleanMember();
     cleanLocation();
-    fetchOrganizations();
 
     // organizationsType.map((org) => {
     //   formOnChangeArray("organizations", org.name, "");
@@ -90,18 +78,6 @@ function AddMember({
   //     fetchOrganizations(categoryId);
   //   }
   // }, [categoryId]);
-
-  const organizationsType = [
-    {
-      id: 1,
-      name: "organizationId",
-    },
-    {
-      id: 2,
-      name: "positionId",
-    },
-    ,
-  ];
 
   const cancelAdd = () => {
     history.push("/members");
@@ -170,7 +146,6 @@ function AddMember({
     addMember(member, changePath);
     cleanForm();
   };
-
   return (
     <div>
       <form onSubmit={(e) => handleCreate(e)} className="add_member_container">
@@ -218,7 +193,12 @@ function AddMember({
                 />
               </div>
               <div style={{ display: "flex" }}>
-                <Input placeholder="Birthdate" id="birthdate" type="date" />
+                <Input
+                  placeholder="Birthdate"
+                  id="birthdate"
+                  type="date"
+                  max={dateNow}
+                />
               </div>
             </div>
           </div>
@@ -253,7 +233,7 @@ function AddMember({
             <div className="container_title">Occupation</div>
             <div className="container_body">
               <div>
-                <AddOrganization setNewOrg={setNewOrg} newOrg={newOrg} />
+                <AddOrganization />
               </div>
             </div>
           </div>
@@ -265,11 +245,16 @@ function AddMember({
                 <div className="" style={{ display: "flex", maxWidth: "100%" }}>
                   {contactTypes.map((contactType) => (
                     <AddPhone key={contactType.id} contactType={contactType} />
-                  ))}{" "}
+                  ))}
                 </div>
               </div>
               <div className="">
-                <Input id="email" type="text" placeholder="Email" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  required={true}
+                />
               </div>
             </div>
           </div>
@@ -309,9 +294,6 @@ const mapStateToProps = (state) => {
     contactTypes: state.membersReducer.contactTypes,
     categories: state.organizationsReducer.categories,
     categoryId: state.formReducer.categoryId,
-    organizations: state.organizationsReducer.organizations,
-    positions: state.organizationsReducer.positions,
-    addedOrganizations: state.membersReducer.addedOrganizations,
   };
 };
 
