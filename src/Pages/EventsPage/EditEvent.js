@@ -22,7 +22,6 @@ import { deletedImages } from "../../store/images/actions";
 
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import EditAgendas from "./EditAgendas";
 import OpenImage from "./components/images/OpenImage";
 import AgendaEdit from "./AgendaEdit";
 
@@ -80,6 +79,7 @@ function EditEvent({
 
   useEffect(() => {
     setAgenda(agendas);
+    console.log({agenda});
   }, [agendas]);
 
   const handleCancel = () => {
@@ -123,7 +123,7 @@ function EditEvent({
       startDate,
       header,
       headerDeleted,
-      agendas: editedAndAddedAgendas,
+      agendas: agenda,
       addedImages,
       deletedImages: deleted,
     };
@@ -380,7 +380,8 @@ const mapStateToProps = (state) => {
     states: state.locationsReducer.states,
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
-    agendas: state.formReducer?.agenda,
+    // agendas: state.formReducer?.agenda,
+    agendas: state.eventReducer.agendas,
     detailsImages: state.eventReducer.detailsImages,
     editedAndAddedAgendas: state.formReducer?.editedAndAddedAgendas
   };

@@ -50,7 +50,7 @@ function EditMember({
   const path = useHistory();
   const [isActive, setIsActive] = useState(true);
   const [changeImage, setChangeImage] = useState(false);
-  const [imageDeleted, setImageDeleted] = useState(false)
+  const [imageDeleted, setImageDeleted] = useState(false);
 
   let { id } = useParams();
 
@@ -137,7 +137,7 @@ function EditMember({
       positionId: position,
       contacts: cont,
       isActive,
-      imageDeleted
+      imageDeleted,
     };
     // console.log(member, "sended member");
     editMember(member, changePath);
@@ -174,8 +174,8 @@ function EditMember({
                     <div className="member_image_middle">
                       <div
                         onClick={() => {
-                          setChangeImage(true)
-                          setImageDeleted(true)
+                          setChangeImage(true);
+                          setImageDeleted(true);
                         }}
                         className="member_edit_text"
                       >

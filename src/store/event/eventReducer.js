@@ -47,7 +47,7 @@ const initialState = {
   eventForEdit: [],
   agendas: [],
   eventImages: [],
-  fetch: false
+  fetch: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -188,7 +188,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        fetch: false
+        fetch: false,
       };
     case DELETE_EVENT_SUCCESS:
       return {
@@ -196,14 +196,14 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: null,
         success: true,
-        fetch: true
+        fetch: true,
       };
     case DELETE_EVENT_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
-        fetch: false
+        fetch: false,
       };
 
     case TRANSFER_EVENT_DELETE:

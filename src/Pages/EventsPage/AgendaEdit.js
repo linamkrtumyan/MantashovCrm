@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { formOnChange } from "../../store";
+import { editAgendas, formOnChange } from "../../store";
 
 import { connect } from "react-redux";
 
-function AgendaEdit({ eventForEdit, formOnChange }) {
+function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
   const [agendas, setAgendas] = useState([]);
   const [ag, setAg] = useState(0);
   const [newAgenda, setNewAgenda] = useState({});
@@ -20,6 +20,7 @@ function AgendaEdit({ eventForEdit, formOnChange }) {
     formOnChange("editedAndAddedAgendas", agendas);
     setAg(ag + 1);
     console.log({ agendas });
+    editAgendas(agendas);
   };
 
   const handleDelete = (item) => {
@@ -28,11 +29,13 @@ function AgendaEdit({ eventForEdit, formOnChange }) {
     setAgendas(agendas);
     setAg(ag + 1);
     console.log({ aaaa: agendas });
+    editAgendas(agendas);
   };
 
   useEffect(() => {
     formOnChange("editedAndAddedAgendas", agendas);
     console.log({ editedAndAddedAgendas: agendas });
+    editAgendas(agendas);
   }, [agendas]);
 
   return (
@@ -72,6 +75,7 @@ function AgendaEdit({ eventForEdit, formOnChange }) {
                           agendas[index].dateAndTime = e.target.value;
                           console.log({ changedAgenda: agendas });
                           formOnChange("editedAndAddedAgendas", agendas);
+                          editAgendas(agendas);
                         }}
                       />
                     </div>
@@ -86,6 +90,7 @@ function AgendaEdit({ eventForEdit, formOnChange }) {
                           agendas[index].descriptionEng = e.target.value;
                           console.log({ changedAgenda: agendas });
                           formOnChange("editedAndAddedAgendas", agendas);
+                          editAgendas(agendas);
                         }}
                       />
                     </div>
@@ -101,6 +106,7 @@ function AgendaEdit({ eventForEdit, formOnChange }) {
                           agendas[index].descriptionArm = e.target.value;
                           console.log({ changedAgenda: agendas });
                           formOnChange("editedAndAddedAgendas", agendas);
+                          editAgendas(agendas);
                         }}
                       />
                     </div>
@@ -116,6 +122,7 @@ function AgendaEdit({ eventForEdit, formOnChange }) {
                           agendas[index].descriptionRu = e.target.value;
                           console.log({ changedAgenda: agendas });
                           formOnChange("editedAndAddedAgendas", agendas);
+                          editAgendas(agendas);
                         }}
                       />
                     </div>
@@ -224,6 +231,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+    editAgendas: (agendas) => dispatch(editAgendas(agendas)),
   };
 };
 
