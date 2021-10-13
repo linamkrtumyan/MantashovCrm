@@ -120,7 +120,7 @@ function EditOrganizations({
     allAddedOrganizations.splice(index, 1);
     setOrgs(orgs + 1);
   };
-
+  console.log("dfdsf", allAddedOrganizations);
   return (
     <>
       {allAddedOrganizations?.map((org, index) => {
@@ -135,7 +135,6 @@ function EditOrganizations({
             <div
             // className="added_orgs"
             >
-              {" "}
               {orgValue ? (
                 <Select
                   items={organizations}
