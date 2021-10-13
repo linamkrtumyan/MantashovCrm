@@ -103,7 +103,7 @@ function AddEvent({
       header: header[0],
       images: image,
     };
-
+    //
     const changePath = () => {
       history.push("/events");
     };
