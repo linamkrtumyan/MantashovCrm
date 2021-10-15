@@ -24,7 +24,7 @@ function AddSphere({
     const changePath = () => {
       //   history.push("/information");
     };
-    console.log(category, "uxarkvox category");
+    // console.log(category, "uxarkvox category");
     addCategory(category, changePath);
     setAdd(false);
     cleanForm();
@@ -58,7 +58,7 @@ function AddSphere({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {};
 };
 

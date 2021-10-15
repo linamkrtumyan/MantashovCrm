@@ -11,21 +11,26 @@ function OneImageUpload({ uploadOneImage, label = "", loading }) {
       //   const file = [...e.target.files];
       uploadOneImage(e.target.files);
     }
+    
   };
-
-  useEffect(() => {
-    console.log({ loading });
-  }, [loading]);
-
-  return (
+    return (
     <div>
+      {loading? 
+         (
+          <div class="loader-wrapper">
+            <div class="loader is-loading"></div>
+          </div>
+        ): null
+      }
       {image.length > 0 ? (
         <div className="upload_cont">
           <img className="uploaded_image" src={image} alt="" />
           <div className="middle">
             <div
               // onClick={() => deleteImage(source.indexOf(photo))}
-              onClick={() => setImage([])}
+              onClick={() => {
+                setImage([]);
+              }}
             >
               <svg viewBox="0 0 24 24" className="close">
                 <path
@@ -58,7 +63,9 @@ function OneImageUpload({ uploadOneImage, label = "", loading }) {
         id="one-file-upload"
         name="myfile"
         // style={{ height: "60px" }}
-        onChange={(e) => onImageChange(e)}
+        onChange={(e) => {
+          onImageChange(e);
+        }}
       />
     </div>
   );

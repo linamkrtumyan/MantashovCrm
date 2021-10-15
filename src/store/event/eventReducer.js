@@ -55,7 +55,7 @@ const reducer = (state = initialState, action) => {
     case FETCH_EVENTS_BY_PAGE_REQUEST:
       return {
         ...state,
-        loading: false,
+        loading: true,
       };
     case FETCH_EVENTS_BY_PAGE_SUCCESS:
       return {

@@ -250,8 +250,8 @@ function EditEvent({
 
             <div
               style={{
-                height: 150,
-                width: 150,
+                height: 200,
+                width: 200,
                 margin: 15,
                 marginBottom: 20,
                 background: "#e7e7e7",
