@@ -14,6 +14,7 @@ function Input({
   formOnChange,
   placeholderText = null,
   dataDateFormat = "",
+  readOnly = false,
   required = true,
 }) {
   if (type === "date") {
@@ -43,12 +44,12 @@ function Input({
       <input
         // autoComplete="new-password"
         // autoComplete={"" + Math.random()}
+        readOnly={readOnly}
         autoComplete="off"
         id={id}
         // defaultValue={defaultValue}
         data-date-format={dataDateFormat}
         onChange={handleOnChange}
-        
         className={`input input_width ${className}`}
         // className={`input `}
         placeholder={placeholderText}
@@ -57,7 +58,6 @@ function Input({
         value={value}
         onFocus={(e) => onFocus(e)}
         required={required}
-
       />
     </div>
   );
