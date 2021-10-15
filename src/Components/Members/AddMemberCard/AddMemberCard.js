@@ -9,7 +9,7 @@ function AddMemberCard() {
     history.push("/add-member");
   }
   return (
-    <div className="add_membercard_container">
+    <div className="add_newscard_container">
       <div onClick={handleClick}>
         <Button title="Add Member" />
       </div>

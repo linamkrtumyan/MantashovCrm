@@ -1,6 +1,12 @@
 .pagination_container{
+    /* display: flex; */
+    /* justify-content: flex-end; */
+    /* float: right; */
     display: flex;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
+    float: right;
+    margin-right: 32px;
+    margin-top: 5px;
 }
 .pgn_item {
     padding: .5rem .75rem;

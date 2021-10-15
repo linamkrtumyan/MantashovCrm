@@ -44,7 +44,7 @@ function EditEvent({
   deleteEventImageFromStore,
   detailsImages,
   cleanForm,
-  editedAndAddedAgendas
+  editedAndAddedAgendas,
 }) {
   const history = useHistory();
 
@@ -150,19 +150,18 @@ function EditEvent({
       />
 
       <div>
+        <div>
+          <button onClick={() => history.goBack()} className="arrow_left">
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <div className="add_member_title">
+            <p>Edit Event</p>
+          </div>
+        </div>
         <form
           onSubmit={handleSubmit}
           // className="add_event_container"
         >
-          <div>
-            <button onClick={() => history.goBack()} className="arrow_left">
-              <i className="fas fa-chevron-left"></i>
-            </button>
-            <div className="add_member_title">
-              <p>Edit Event</p>
-            </div>
-          </div>
-
           {/* <div> */}
           <div className="add_event_component">
             <div
@@ -378,7 +377,7 @@ const mapStateToProps = (state) => {
     // agendas: state.formReducer?.agenda,
     agendas: state.eventReducer.agendas,
     detailsImages: state.eventReducer.detailsImages,
-    editedAndAddedAgendas: state.formReducer?.editedAndAddedAgendas
+    editedAndAddedAgendas: state.formReducer?.editedAndAddedAgendas,
   };
 };
 
