@@ -2,7 +2,7 @@
   /* position: absolute; */
   top: 150px;
   /* left: 300px; */
-  left: 120px;
+  margin-left: 50px;
 }
 .add_event_component {
   margin: 0 auto;
