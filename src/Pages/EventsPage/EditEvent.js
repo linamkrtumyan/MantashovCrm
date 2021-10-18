@@ -190,8 +190,8 @@ function EditEvent({
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="startDate" type="date" placeholder="Start Date" />
-                <Input id="endDate" type="date" placeholder="End Date" />
+                <Input id="startDate" type="datetime-local" placeholder="Start Date" />
+                <Input id="endDate" type="datetime-local" placeholder="End Date" />
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
