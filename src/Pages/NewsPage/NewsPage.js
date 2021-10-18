@@ -42,19 +42,21 @@ function NewsPage({
   }
   return (
     <div>
-      <div className="members_container">
+      <div 
+      className="members_container"
+      >
         <AddNewsCard />
 
         <div
           style={{
             display: "flex",
             justifyContent: "center",
-            padding: "0 50px",
+            padding: "0 20px",
             overflowY: "scroll",
             maxHeight: "65vh",
           }}
         >
-          <table className="table is-striped  is-fullwidth is-hoverable">
+          <table className="table is-striped is-fullwidth is-hoverable">
             <thead>
               <tr>
                 <th>Photo</th>
@@ -102,7 +104,6 @@ function NewsPage({
             </tbody>
           </table>
         </div>
-
         <Pagination totalPosts={count} />
       </div>
     </div>

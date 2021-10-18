@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { deleteImageFromStore, uploadImage } from "../../../store";
 import "./imageUpload.css";
@@ -8,6 +8,7 @@ function ImageUpload({
   label = "",
   className = "",
   containerClassName = "",
+  loading,
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
@@ -84,6 +85,11 @@ function ImageUpload({
           multiple
         />
       </div>
+      {loading ? (
+        <div class="loader-wrapper">
+          <div class="loader is-loading"></div>
+        </div>
+      ) : null}
       <div className={`uploaded_files_container ${containerClassName} `}>
         {renderPhotos(selectedFiles)}
       </div>
@@ -94,6 +100,7 @@ function ImageUpload({
 const mapStateToProps = (state) => {
   return {
     image: state.imageReducer.image,
+    loading: state.imageReducer.loading,
   };
 };
 

@@ -7,7 +7,6 @@ import {
 import { toast } from "react-toastify";
 
 export const editEvent = (event, changePath) => {
-
   return (dispatch) => {
     dispatch(editEventRequest());
     request("/admin/events/event", "PUT", event)

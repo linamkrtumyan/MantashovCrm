@@ -1,7 +1,15 @@
 .add_newscard_container {
+  /* display: flex;
+  justify-content: flex-end;
+  padding: 0 70px 20px 0; */
+  /* padding-bottom: 20px; */
+  /* float: right; */
+  /* padding-right: 37px; */
+
   display: flex;
   justify-content: flex-end;
-  padding: 0 70px 20px 0;
+  margin-right: 37px;
+  padding: 0 0 15px 0;
 }
 
 .add_newscard_container:hover {

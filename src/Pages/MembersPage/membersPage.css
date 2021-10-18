@@ -1,8 +1,9 @@
 .members_container {
-  /* display: block;
-  justify-content: center;
-  align-items: center; */
+  /* display: block; */
+  /* justify-content: center; */
+  /* align-items: center; */
   width: 100%;
+  /* padding-right: 50px; */
 }
 .members_title {
   font-size: 35px;

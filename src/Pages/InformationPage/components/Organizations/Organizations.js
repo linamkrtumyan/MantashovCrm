@@ -34,7 +34,7 @@ function Organizations({ fetchOrganizationsTable, organizationsTable, fetch }) {
     setDeleteId(id);
   }
   function handleEdit(id) {
-    console.log(id, "ekac id****");
+    // console.log(id, "ekac id****");
     setEditId(id);
     setEditModalOpen(true);
   }
