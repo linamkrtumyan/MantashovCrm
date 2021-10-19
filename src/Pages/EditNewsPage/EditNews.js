@@ -14,7 +14,8 @@ import store, {
 } from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import { deletedImages } from "../../store/images/actions";
-import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
+import OpenImage from "../EventsPage/components/images/OpenImage";
 
 function EditNews({
   fetchNewsDetails,
@@ -29,6 +30,8 @@ function EditNews({
   // console.log(news, "news");
   const [mainImg, setMainImg] = useState(true);
   const [isActive, setIsActive] = useState(true);
+  const [openImgModal, setOpenImgModal] = useState(false);
+  const [imgPath, setImgPath] = useState("");
 
   const history = useHistory();
   const path = useHistory();
@@ -74,177 +77,192 @@ function EditNews({
     cleanImages();
   };
 
-  function getImages(name) {
-    // console.log(name, "img name");
-  }
+  const openImageModal = (imagePath) => {
+    setImgPath(imagePath);
+    setOpenImgModal(true);
+  };
 
   return (
-    <div>
-      <button onClick={() => history.goBack()} className="arrow_left">
-        ❮
-      </button>
-      <div className="edit_news_container">
-        <div className="edit_member_title">Edit News</div>
-        <div>
-          {/* <form onSubmit={handleSubmit} className=""> */}
-          <div className="add_member_component">
-            <div className="add_news_container">
-              <div className="add_news_img">
-                <div style={{ marginBottom: "20px" }}>
-                  {/* <OneImageUpload label="Header Image" /> */}
-                  {mainImg ? (
-                    <div className="upload_cont">
-                      <img
-                        className="uploaded_image"
-                        src={`/images/newsHeader/${id}/header.png`}
-                        alt=""
-                      />
-                      <div className="middle">
-                        <div onClick={() => setMainImg(false)}>
-                          <svg viewBox="0 0 24 24" className="close">
-                            <path
-                              d="M 2 2 L 22 22 M 2 22 L22 2"
-                              stroke="red"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="5"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <OneImageUpload label="Header Image" />
-                  )}
-                </div>
-                <div>
-                  {/* <div style={{ margin: "10px" }}> */}
-                  <div>All images</div>
-                  <div className="edit_news_images_container">
-                    {detailsImages.map((image, index) => {
-                      const imagePath = `/images/news/${id}/${image}`;
-                      return (
-                        <div
-                          className="edit_news_image_item"
-                          key={index}
-                          // onClick={() => {
-                          //   deletedImages(image);
-                          // }}
-                        >
-                          <img
-                            alt=""
-                            className="edit_news_images"
-                            src={imagePath}
-                          />
-                          <div className="middle">
-                            <div
-                              onClick={() => {
-                                deletedImages(image);
-                                deleteNewsImageFromStore(index);
-                              }}
-                            >
-                              <svg viewBox="0 0 24 24" className="close">
-                                <path
-                                  d="M 2 2 L 22 22 M 2 22 L22 2"
-                                  stroke="red"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="5"
-                                />
-                              </svg>
-                            </div>
+    <>
+      <OpenImage
+        openImgModal={openImgModal}
+        setOpenImgModal={setOpenImgModal}
+        imgPath={imgPath}
+        id={id}
+        folderPath="/images/news"
+        detailsImages={detailsImages}
+      />
+
+      <div>
+        <button onClick={() => history.goBack()} className="arrow_left">
+          ❮
+        </button>
+        <div className="edit_news_container">
+          <div className="edit_member_title">Edit News</div>
+          <div>
+            {/* <form onSubmit={handleSubmit} className=""> */}
+            <div className="add_member_component">
+              <div className="add_news_container">
+                <div className="add_news_img">
+                  <div style={{ marginBottom: "20px" }}>
+                    {/* <OneImageUpload label="Header Image" /> */}
+                    {mainImg ? (
+                      <div className="upload_cont">
+                        <img
+                          className="uploaded_image"
+                          src={`/images/newsHeader/${id}/header.png`}
+                          alt=""
+                        />
+                        <div className="middle">
+                          <div onClick={() => setMainImg(false)}>
+                            <svg viewBox="0 0 24 24" className="close">
+                              <path
+                                d="M 2 2 L 22 22 M 2 22 L22 2"
+                                stroke="red"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="5"
+                              />
+                            </svg>
                           </div>
                         </div>
-                      );
-                    })}
+                      </div>
+                    ) : (
+                      <OneImageUpload label="Header Image" />
+                    )}
+                  </div>
+                  <div>
+                    {/* <div style={{ margin: "10px" }}> */}
+                    <div>All images</div>
+                    <div className="edit_news_images_container">
+                      {detailsImages.map((image, index) => {
+                        const imagePath = `/images/news/${id}/${image}`;
+                        return (
+                          <div
+                            className="edit_news_image_item"
+                            key={index}
+                            // onClick={() => {
+                            //   deletedImages(image);
+                            // }}
+                          >
+                            <img
+                              alt=""
+                              className="edit_news_images"
+                              src={imagePath}
+                              onClick={() => {
+                                openImageModal(imagePath);
+                              }}
+                            />
+                            <div className="middle">
+                              <div
+                                onClick={() => {
+                                  deletedImages(image);
+                                  deleteNewsImageFromStore(index);
+                                }}
+                              >
+                                <svg viewBox="0 0 24 24" className="close">
+                                  <path
+                                    d="M 2 2 L 22 22 M 2 22 L22 2"
+                                    stroke="red"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="5"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <ImageUpload label="Images" />
+                  </div>
+                </div>
+                <div>
+                  <div className="news_inputs_container">
+                    <Textarea
+                      id="titleEng"
+                      type="text"
+                      placeholder="Title"
+                      className="add_news_input"
+                      textareaSize="textareaSize"
+                    />
+
+                    <Textarea
+                      id="textEng"
+                      type="text"
+                      placeholder="Text"
+                      className="add_news_textarea"
+                    />
+                  </div>
+                  <div className="news_inputs_container">
+                    <Textarea
+                      id="titleArm"
+                      type="text"
+                      placeholder="Վերնագիր"
+                      className="add_news_input"
+                      textareaSize="textareaSize"
+                    />
+
+                    <Textarea
+                      id="textArm"
+                      type="text"
+                      placeholder="Տեքստ"
+                      className="add_news_textarea"
+                    />
                   </div>
 
-                  <ImageUpload label="Images" />
+                  <div className="news_inputs_container">
+                    <Textarea
+                      id="titleRu"
+                      type="text"
+                      placeholder="Заглавие"
+                      className="add_news_input"
+                      textareaSize="textareaSize"
+                    />
+
+                    <Textarea
+                      id="textRu"
+                      type="text"
+                      placeholder="Текст"
+                      className="add_news_textarea"
+                    />
+                    <button
+                      onClick={() => setIsActive(!isActive)}
+                      style={{
+                        width: "800px",
+                        marginLeft: "10px",
+                      }}
+                      className={isActive ? "button red" : "button"}
+                    >
+                      {/* <input type="checkbox" /> */}
+                      <p>{isActive ? "Active" : "Passive"}</p>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div>
-                <div className="news_inputs_container">
-                  <Textarea
-                    id="titleEng"
-                    type="text"
-                    placeholder="Title"
-                    className="add_news_input"
-                    textareaSize="textareaSize"
-                  />
 
-                  <Textarea
-                    id="textEng"
-                    type="text"
-                    placeholder="Text"
-                    className="add_news_textarea"
-                  />
-                </div>
-                <div className="news_inputs_container">
-                  <Textarea
-                    id="titleArm"
-                    type="text"
-                    placeholder="Վերնագիր"
-                    className="add_news_input"
-                    textareaSize="textareaSize"
-                  />
+              {/* <Textarea type="text" placeholder="Text" /> */}
+            </div>
 
-                  <Textarea
-                    id="textArm"
-                    type="text"
-                    placeholder="Տեքստ"
-                    className="add_news_textarea"
-                  />
-                </div>
-
-                <div className="news_inputs_container">
-                  <Textarea
-                    id="titleRu"
-                    type="text"
-                    placeholder="Заглавие"
-                    className="add_news_input"
-                    textareaSize="textareaSize"
-                  />
-
-                  <Textarea
-                    id="textRu"
-                    type="text"
-                    placeholder="Текст"
-                    className="add_news_textarea"
-                  />
-                  <button
-                    onClick={() => setIsActive(!isActive)}
-                    style={{
-                      width: "800px",
-                      marginLeft: "10px",
-                    }}
-                    className={isActive ? "button red" : "button"}
-                  >
-                    {/* <input type="checkbox" /> */}
-                    <p>{isActive ? "Active" : "Passive"}</p>
-                  </button>
-                </div>
+            <div className="action_container">
+              <div onClick={() => handleCancel()}>
+                <Button title="Cancel" className="action_btn cancel_btn" />
               </div>
-            </div>
-
-            {/* <Textarea type="text" placeholder="Text" /> */}
-          </div>
-
-          <div className="action_container">
-            <div onClick={() => handleCancel()}>
-              <Button title="Cancel" className="action_btn cancel_btn" />
-            </div>
-            <div onClick={(e) => handleCrate(e)}>
-              <Button title="Save" className="action_btn" />
+              <div onClick={(e) => handleCrate(e)}>
+                <Button title="Save" className="action_btn" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state news edit");
+  console.log(state, "state news edit");
   return {
     header: state.imageReducer.header,
     news: state.newsReducer.newsDetails,

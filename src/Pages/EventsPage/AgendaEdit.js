@@ -8,6 +8,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
   const [agendas, setAgendas] = useState([]);
   const [ag, setAg] = useState(0);
   const [newAgenda, setNewAgenda] = useState({});
+  // const [cleanFields, setCleanFields] = useState("")
 
   useEffect(() => {
     setAgendas(eventForEdit.agenda);
@@ -19,6 +20,8 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
     formOnChange("editedAndAddedAgendas", agendas);
     setAg(ag + 1);
     editAgendas(agendas);
+
+    setNewAgenda({});
   };
 
   const handleDelete = (item) => {
@@ -67,7 +70,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].dateAndTime = e.target.value;
-                          formOnChange("editedAndAddedAgendas", agendas);
+                          // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
                       />
@@ -81,7 +84,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionEng = e.target.value;
-                          formOnChange("editedAndAddedAgendas", agendas);
+                          // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
                       />
@@ -96,7 +99,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionArm = e.target.value;
-                          formOnChange("editedAndAddedAgendas", agendas);
+                          // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
                       />
@@ -111,7 +114,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                         onChange={(e) => {
                           const index = agendas.indexOf(item);
                           agendas[index].descriptionRu = e.target.value;
-                          formOnChange("editedAndAddedAgendas", agendas);
+                          // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
                       />
@@ -150,6 +153,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
               type="datetime-local"
               className="input input_width"
               required={false}
+              value={newAgenda.dateAndTime ? newAgenda.dateAndTime : ""}
               onChange={(e) => {
                 setNewAgenda({ ...newAgenda, dateAndTime: e.target.value });
               }}
@@ -160,6 +164,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
 
             <textarea
               id="descriptionEng"
+              value={newAgenda.descriptionEng ? newAgenda.descriptionEng : ""}
               onChange={(e) =>
                 setNewAgenda({ ...newAgenda, descriptionEng: e.target.value })
               }
@@ -173,6 +178,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
 
             <textarea
               id="descriptionArm"
+              value={newAgenda.descriptionArm ? newAgenda.descriptionArm : ""}
               onChange={(e) =>
                 setNewAgenda({ ...newAgenda, descriptionArm: e.target.value })
               }
@@ -186,6 +192,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
 
             <textarea
               id="descriptionRu"
+              value={newAgenda.descriptionRu ? newAgenda.descriptionRu : ""}
               onChange={(e) =>
                 setNewAgenda({ ...newAgenda, descriptionRu: e.target.value })
               }

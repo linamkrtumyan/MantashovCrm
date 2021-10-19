@@ -5,7 +5,7 @@ import Button from "../../Components/Forms/Button/Button";
 import "./addMember.css";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
 import {
   cleanForm,

@@ -32,6 +32,13 @@ function EventsPage({
   const [deleteId, setDeleteId] = useState(null);
   const [infoId, setInfoId] = useState(null);
 
+  // const a = "[1,2,4]";
+  // const b = a.substr(1, a.length - 2);
+  // const methods = a.substr(1, a.length - 2).split(",").map(function (item) {
+  //   return parseInt(item);
+  // });
+  // console.log({ methods });
+
   useEffect(() => {
     fetchEventsByPage();
   }, [currentPage, fetch]);

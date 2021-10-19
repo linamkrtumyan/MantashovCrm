@@ -20,7 +20,7 @@ import store, {
 import Select from "../../Components/Forms/Select/Select";
 import { connect } from "react-redux";
 import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
-import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import EditPhone from "./components/EditPhone";
 import AddOrganization from "../AddMemberPage/components/AddOrganization";
 
@@ -105,7 +105,7 @@ function EditMember({
       position,
     } = store.getState().formReducer;
 
-    const image = store.getState().imageReducer.header;
+    const header = store.getState().imageReducer.header[0];
 
     const cont = Object.values(contacts);
 
@@ -124,7 +124,7 @@ function EditMember({
       lastNameEng,
       firstNameRu,
       lastNameRu,
-      image,
+      header,
       descriptionArm,
       descriptionEng,
       descriptionRu,

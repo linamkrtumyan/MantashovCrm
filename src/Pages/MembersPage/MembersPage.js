@@ -144,6 +144,7 @@ function MembersPage({
 }
 
 const mapStateToProps = (state) => {
+  console.log({state});
   return {
     membersByPage: state.membersReducer.membersByPage,
     loading: state.membersReducer.loading,
