@@ -14,7 +14,7 @@ import store, {
 } from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import { deletedImages } from "../../store/images/actions";
-import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import OpenImage from "../EventsPage/components/images/OpenImage";
 
 function EditNews({
