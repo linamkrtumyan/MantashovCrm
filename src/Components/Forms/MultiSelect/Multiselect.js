@@ -99,7 +99,7 @@ function Multiselect({
         // defaultValue={text}
         value={
           selectedItems.length === 0
-          ? "Select Sphere"
+          ? "-"
           : selectedItems.length <= 2
           ? `${selectedItems[0]}, ${selectedItems[1]? selectedItems[1]:""}`
           : `${selectedItems[0]}, ${selectedItems[1]}...`
