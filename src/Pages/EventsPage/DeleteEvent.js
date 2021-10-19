@@ -12,17 +12,27 @@ function DeleteEvent({ modalOpen, setModalOpen, id, deleteEvent, cleanEvent }) {
   const handleDelete = () => {
     // console.log({ id });
     // if (id) {
-      const changePath = () => {
-        history.push("/events");
-      };
-      deleteEvent(id, changePath);
-      setModalOpen(false);
-      // cleanEvent();
+    const changePath = () => {
+      history.push("/events");
+    };
+    deleteEvent(id, changePath);
+    setModalOpen(false);
+    // cleanEvent();
     // }
   };
+
+  const handleClose = (e) => {
+    if (e.target.id === "modal") {
+      setModalOpen(false);
+    }
+  };
+
   return (
-    <div className={"modal " + (modalOpen ? "is-active" : "")}>
-      <div className="modal-background"></div>
+    <div
+      onClick={handleClose}
+      className={"modal " + (modalOpen ? "is-active" : "")}
+    >
+      <div id="modal" className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
           <p className="modal-card-title has-text-centered">
