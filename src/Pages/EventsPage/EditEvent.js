@@ -147,6 +147,8 @@ function EditEvent({
         setOpenImgModal={setOpenImgModal}
         imgPath={imgPath}
         id={id}
+        folderPath="/images/events"
+        detailsImages={detailsImages}
       />
 
       <div>
@@ -190,8 +192,8 @@ function EditEvent({
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="startDate" type="datetime-local" placeholder="Start Date" />
-                <Input id="endDate" type="datetime-local" placeholder="End Date" />
+                <Input id="startDate" type="date" placeholder="Start Date" />
+                <Input id="endDate" type="date" placeholder="End Date" />
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -368,6 +370,7 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
+  console.log({state});
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

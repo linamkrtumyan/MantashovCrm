@@ -107,7 +107,7 @@ function EditMember({
       position,
     } = store.getState().formReducer;
 
-    const image = store.getState().imageReducer.header;
+    const header = store.getState().imageReducer.header[0];
 
     const cont = Object.values(contacts);
 
@@ -126,7 +126,7 @@ function EditMember({
       lastNameEng,
       firstNameRu,
       lastNameRu,
-      image,
+      header,
       descriptionArm,
       descriptionEng,
       descriptionRu,
