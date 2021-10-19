@@ -85,12 +85,13 @@ function ImageUpload({
           multiple
         />
       </div>
+      
+      <div className={`uploaded_files_container ${containerClassName} `}>
       {loading ? (
         <div class="loader-wrapper">
           <div class="loader is-loading"></div>
         </div>
       ) : null}
-      <div className={`uploaded_files_container ${containerClassName} `}>
         {renderPhotos(selectedFiles)}
       </div>
     </div>

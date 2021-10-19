@@ -11,17 +11,14 @@ function OneImageUpload({ uploadOneImage, label = "", loading }) {
       //   const file = [...e.target.files];
       uploadOneImage(e.target.files);
     }
-    
   };
-    return (
+  return (
     <div>
-      {loading? 
-         (
-          <div class="loader-wrapper">
-            <div class="loader is-loading"></div>
-          </div>
-        ): null
-      }
+      {loading ? (
+        <div class="loader-wrapper">
+          <div class="loader is-loading"></div>
+        </div>
+      ) : null}
       {image.length > 0 ? (
         <div className="upload_cont">
           <img className="uploaded_image" src={image} alt="" />
