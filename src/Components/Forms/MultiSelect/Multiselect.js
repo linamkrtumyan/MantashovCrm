@@ -22,6 +22,7 @@ function Multiselect({
   // const [selected, setSelected] = useState([]);
   const [selectedName, setSelectedName] = useState([]);
   const [result, setResult] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const ref = useRef();
   const ul = useRef();
@@ -31,7 +32,7 @@ function Multiselect({
   useEffect(() => {
     if (items?.length > 0) {
       let item = Array.from(items.find((i) => i.id) === checkeds.map((c) => c));
-      // console.log(item);
+      console.log(item, "///////");
 
       setText(item?.map((i) => i.name));
     }
@@ -67,6 +68,8 @@ function Multiselect({
 
       formOnChange(id, [...checkeds, thing.id]);
       setSelectedName([...selectedName, { name: thing.name }]);
+      selectedItems.push(thing.name)
+      setSelectedItems(selectedItems)
     } else {
       formOnChange(
         id,
@@ -94,7 +97,13 @@ function Multiselect({
         required={required}
         // error er value ={text}
         // defaultValue={text}
-        value={text}
+        value={
+          selectedItems.length === 0
+          ? "Select Sphere"
+          : selectedItems.length <= 2
+          ? `${selectedItems[0]}, ${selectedItems[1]? selectedItems[1]:""}`
+          : `${selectedItems[0]}, ${selectedItems[1]}...`
+        }
         // placeholder={result}
         type={type}
         // placeholder={placeholder}
