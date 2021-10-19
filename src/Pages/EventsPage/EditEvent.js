@@ -44,7 +44,7 @@ function EditEvent({
   deleteEventImageFromStore,
   detailsImages,
   cleanForm,
-  editedAndAddedAgendas
+  editedAndAddedAgendas,
 }) {
   const history = useHistory();
 
@@ -147,22 +147,23 @@ function EditEvent({
         setOpenImgModal={setOpenImgModal}
         imgPath={imgPath}
         id={id}
+        folderPath="/images/events"
+        detailsImages={detailsImages}
       />
 
       <div>
+        <div>
+          <button onClick={() => history.goBack()} className="arrow_left">
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <div className="add_member_title">
+            <p>Edit Event</p>
+          </div>
+        </div>
         <form
           onSubmit={handleSubmit}
           // className="add_event_container"
         >
-          <div>
-            <button onClick={() => history.goBack()} className="arrow_left">
-              <i className="fas fa-chevron-left"></i>
-            </button>
-            <div className="add_member_title">
-              <p>Edit Event</p>
-            </div>
-          </div>
-
           {/* <div> */}
           <div className="add_event_component">
             <div
@@ -251,8 +252,8 @@ function EditEvent({
 
             <div
               style={{
-                height: 150,
-                width: 150,
+                height: 200,
+                width: 200,
                 margin: 15,
                 marginBottom: 20,
                 background: "#e7e7e7",
@@ -369,6 +370,7 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
+  console.log({state});
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -378,7 +380,7 @@ const mapStateToProps = (state) => {
     // agendas: state.formReducer?.agenda,
     agendas: state.eventReducer.agendas,
     detailsImages: state.eventReducer.detailsImages,
-    editedAndAddedAgendas: state.formReducer?.editedAndAddedAgendas
+    editedAndAddedAgendas: state.formReducer?.editedAndAddedAgendas,
   };
 };
 

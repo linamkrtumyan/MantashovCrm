@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { uploadOneImage } from "../../../store";
 import "./oneImageUpload.css";
 
-function OneImageUpload({ uploadOneImage, label = "" }) {
+function OneImageUpload({ uploadOneImage, label = "", loading }) {
   const [image, setImage] = useState([]);
   const onImageChange = (e) => {
     if (e.target.files) {
@@ -12,16 +12,22 @@ function OneImageUpload({ uploadOneImage, label = "" }) {
       uploadOneImage(e.target.files);
     }
   };
-
   return (
     <div>
+      {loading ? (
+        <div class="loader-wrapper">
+          <div class="loader is-loading"></div>
+        </div>
+      ) : null}
       {image.length > 0 ? (
         <div className="upload_cont">
           <img className="uploaded_image" src={image} alt="" />
           <div className="middle">
             <div
               // onClick={() => deleteImage(source.indexOf(photo))}
-              onClick={() => setImage([])}
+              onClick={() => {
+                setImage([]);
+              }}
             >
               <svg viewBox="0 0 24 24" className="close">
                 <path
@@ -52,10 +58,11 @@ function OneImageUpload({ uploadOneImage, label = "" }) {
         type="file"
         // id="myfile"
         id="one-file-upload"
-        accept="image/*"
         name="myfile"
         // style={{ height: "60px" }}
-        onChange={(e) => onImageChange(e)}
+        onChange={(e) => {
+          onImageChange(e);
+        }}
       />
     </div>
   );
@@ -63,7 +70,9 @@ function OneImageUpload({ uploadOneImage, label = "" }) {
 
 const mapStateToProps = (state) => {
   // console.log(state, "state");
-  return {};
+  return {
+    loading: state.imageReducer?.loading,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

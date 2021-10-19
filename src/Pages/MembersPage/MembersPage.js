@@ -66,12 +66,12 @@ function MembersPage({
             style={{
               display: "flex",
               justifyContent: "center",
-              padding: "0 50px",
+              padding: "0 20px",
               overflowY: "scroll",
               maxHeight: "65vh",
             }}
           >
-            <table className="table is-striped  is-fullwidth is-hoverable">
+            <table className="table is-striped is-fullwidth is-hoverable">
               <thead>
                 <tr>
                   <th>Photo</th>
@@ -144,6 +144,7 @@ function MembersPage({
 }
 
 const mapStateToProps = (state) => {
+  console.log({state});
   return {
     membersByPage: state.membersReducer.membersByPage,
     loading: state.membersReducer.loading,

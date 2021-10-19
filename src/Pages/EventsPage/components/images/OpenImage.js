@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import Slider from "./Slider";
-import "./Slider.css";
+import { useOutsideClick } from "../../../../Hooks/useOutsideClick";
 import BtnSlider from "./BtnSlider";
 
 function OpenImage({
@@ -10,20 +9,23 @@ function OpenImage({
   imgPath,
   detailsImages,
   id,
+  folderPath,
 }) {
   const [slideIndex, setSlideIndex] = useState(1);
   const [currentImage, setCurrentImage] = useState("");
   const [dataSlider, setDataSlider] = useState([]);
 
+  const ref = useRef();
+
   useEffect(() => {
     setCurrentImage(imgPath);
   }, [imgPath]);
-
   useEffect(() => {
     // "/images/events/2/upload_b4f7ccce9c2c3207f69287f214c62a34.png"
 
     for (let i = 0; i < detailsImages.length; i++) {
-      const item = `/images/events/${id}/${detailsImages[i]}`;
+      const item = `${folderPath}/${id}/${detailsImages[i]}`;
+      // `/images/events/${id}/${detailsImages[i]}`;
       dataSlider.push(item);
     }
     setDataSlider(dataSlider);
@@ -53,13 +55,16 @@ function OpenImage({
     }
   };
 
-  const moveDot = (index) => {
-    setSlideIndex(index);
-  };
+  // const handleClose = () => {
+  //   setOpenImgModal(false)
+  // };
+
+  // useOutsideClick(ref, handleClose);
+ 
 
   return (
     <>
-      <div className={"modal " + (openImgModal ? "is-active" : "")}>
+      <div ref={ref}  className={"modal " + (openImgModal ? "is-active" : "")}>
         <div className="modal-background"></div>
         <div className="modal-card">
           <header className="modal-card-head">
@@ -106,7 +111,7 @@ function OpenImage({
 
 const mapStateToProps = (state) => {
   return {
-    detailsImages: state.eventReducer.detailsImages,
+    // detailsImages: state.eventReducer.detailsImages,
   };
 };
 
