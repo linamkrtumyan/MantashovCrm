@@ -5,12 +5,12 @@ import Button from "../../Components/Forms/Button/Button";
 import "./addNewsPage.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import store, { cleanForm, cleanImages, } from "../../store";
+import store, { cleanForm, cleanImages } from "../../store";
 import { addNews } from "../../store/news/actions/addNews";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 
-function AddNews({ addNews, cleanForm, cleanImages, }) {
+function AddNews({ addNews, cleanForm, cleanImages }) {
   const history = useHistory();
   const path = useHistory();
 
@@ -41,7 +41,6 @@ function AddNews({ addNews, cleanForm, cleanImages, }) {
     addNews(news, changePath);
     // cleanForm();
     cleanImages();
-
   };
 
   return (

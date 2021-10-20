@@ -6,6 +6,7 @@ import "./input.css";
 
 function Input({
   id,
+  max,
   placeholder = "",
   type = "text",
   defaultValue = "",
@@ -49,6 +50,7 @@ function Input({
         id={id}
         // defaultValue={defaultValue}
         data-date-format={dataDateFormat}
+        max={max}
         onChange={handleOnChange}
         className={`input input_width ${className}`}
         // className={`input `}
