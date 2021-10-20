@@ -71,6 +71,7 @@ const Select = ({
         onFocus={() => {
           setShow(true);
         }}
+        onChange={() => {}}
         value={text}
         type={type}
         required={true}

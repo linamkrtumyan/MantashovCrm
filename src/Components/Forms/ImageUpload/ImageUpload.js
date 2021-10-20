@@ -8,7 +8,7 @@ function ImageUpload({
   label = "",
   className = "",
   containerClassName = "",
-  loading,
+  imageUpload,
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
@@ -85,13 +85,13 @@ function ImageUpload({
           multiple
         />
       </div>
-      
+
       <div className={`uploaded_files_container ${containerClassName} `}>
-      {loading ? (
-        <div class="loader-wrapper">
-          <div class="loader is-loading"></div>
-        </div>
-      ) : null}
+        {imageUpload ? (
+          <div class="loader-wrapper">
+            <div class="loader is-loading"></div>
+          </div>
+        ) : null}
         {renderPhotos(selectedFiles)}
       </div>
     </div>
@@ -101,7 +101,7 @@ function ImageUpload({
 const mapStateToProps = (state) => {
   return {
     image: state.imageReducer.image,
-    loading: state.imageReducer.loading,
+    imageUpload: state.imageReducer?.imageUpload,
   };
 };
 

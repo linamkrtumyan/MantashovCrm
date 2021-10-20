@@ -16,6 +16,7 @@ const initialState = {
   error: null,
   deletedImages: [],
   header: "",
+  oneImageLoading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +26,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        imageUpload: true
       };
     case UPLOAD_IMAGE_SUCCESS:
       return {
@@ -36,6 +38,7 @@ const reducer = (state = initialState, action) => {
 
         // image: state.image.push(action.payload.image),
         error: null,
+        imageUpload: action.payload.imageUpload
       };
     case UPLOAD_IMAGE_FAILURE:
       return {
@@ -43,6 +46,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         image: "",
         error: action.payload.error,
+        imageUpload: false
       };
     case CLEAN_IMAGES:
       return {
@@ -60,6 +64,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        oneImageLoading: true
       };
     case UPLOAD_ONE_IMAGE_SUCCESS:
       return {
@@ -67,6 +72,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         header: action.payload.header,
         error: null,
+        oneImageLoading: action.payload.loading
       };
     case UPLOAD_ONE_IMAGE_FAILURE:
       return {
@@ -74,6 +80,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         header: "",
         error: action.payload.error,
+        oneImageLoading: false
       };
     case DELETE_IMAGE_FROM_STORE:
       return {

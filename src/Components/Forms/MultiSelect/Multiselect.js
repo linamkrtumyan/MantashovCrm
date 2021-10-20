@@ -14,48 +14,40 @@ function Multiselect({
   required = true,
   pattern = "[A-Za-z0-9]{2,30}",
   formOnChange,
+  selectedNames = [],
   checkeds = [],
 }) {
   // console.log(checkeds, "checkeds");
   const [text, setText] = useState("");
   const [show, setShow] = useState(false);
   // const [selected, setSelected] = useState([]);
-  const [selectedName, setSelectedName] = useState([]);
-  const [result, setResult] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
 
   const ref = useRef();
   const ul = useRef();
 
+  const setSelectedNames = (arr) => {
+    formOnChange(id + "Names", arr);
+  };
   // console.log(items, "items");
 
   useEffect(() => {
     if (items?.length > 0) {
       let item = Array.from(items.find((i) => i.id) === checkeds.map((c) => c));
-      console.log(item, "///////");
 
       setText(item?.map((i) => i.name));
     }
+    return () => {
+      clear();
+    };
   }, []);
 
+  const clear = () => {
+    formOnChange(id + "Names", []);
+    formOnChange(id, []);
+  };
   const handleSelect = () => {
     setShow(false);
-    formOnChange(id, checkeds);
   };
-  useEffect(() => {
-    setResult(selectedName.map((a) => a.name));
-  }, [selectedName]);
-
-  useEffect(() => {
-    const filtered = items?.filter(
-      (item) => !!checkeds?.some((s) => s === item.id)
-    );
-    setResult(
-      filtered?.map((item) => {
-        return item.name;
-      })
-    );
-  }, []);
 
   const handleClick = (thing) => {
     if (!checkeds.some((s) => s === thing.id)) {
@@ -65,21 +57,19 @@ function Multiselect({
       //     id: thing.id,
       //   },
       // ]);
-
-      formOnChange(id, [...checkeds, thing.id]);
-      setSelectedName([...selectedName, { name: thing.name }]);
-      selectedItems.push(thing.name)
-      setSelectedItems(selectedItems)
+      checkeds.push(thing.id);
+      formOnChange(id, [...checkeds]);
+      setSelectedNames([...selectedNames, { name: thing.name }]);
     } else {
       formOnChange(
         id,
         checkeds.filter((s) => thing.id !== s)
       );
-      setSelectedName(selectedName.filter((s) => thing.name !== s.name));
+      setSelectedNames(selectedNames.filter((s) => thing.name !== s.name));
     }
   };
-
   useOutsideClick(ref, handleSelect);
+
   return (
     <div ref={ref} className="input_container">
       <label className="input-text-label" htmlFor={id}>
@@ -89,24 +79,28 @@ function Multiselect({
         // onKeyDown={handleKeyDown}
         autoComplete="off"
         id={id}
+        onChange={() => {}}
         // className="input_component"
         className="input "
         onFocus={() => {
           setShow(true);
         }}
         required={required}
+        placeholder={placeholder}
         // error er value ={text}
         // defaultValue={text}
         value={
-          selectedItems.length === 0
-          ? "-"
-          : selectedItems.length <= 2
-          ? `${selectedItems[0]}, ${selectedItems[1]? selectedItems[1]:""}`
-          : `${selectedItems[0]}, ${selectedItems[1]}...`
+          selectedNames.length === 0
+            ? ""
+            : selectedNames.length <= 2
+            ? `${selectedNames[0].name}, ${
+                selectedNames[1] ? selectedNames[1].name : ""
+              }`
+            : `${selectedNames[0].name}, ${selectedNames[1].name} + ${
+                selectedNames.length - 2
+              }`
         }
-        // placeholder={result}
         type={type}
-        // placeholder={placeholder}
         // value={result}
       />
       {show && (
@@ -142,6 +136,7 @@ function Multiselect({
 const mapStateToProps = (state, ownProps) => {
   return {
     checkeds: state.formReducer[ownProps.id],
+    selectedNames: state.formReducer[ownProps.id + "Names"],
   };
 };
 

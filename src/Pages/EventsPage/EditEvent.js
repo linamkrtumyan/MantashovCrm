@@ -267,7 +267,9 @@ function EditEvent({
             >
               <p style={{ marginBottom: 5 }}>Header Image</p>
               {changeImage ? (
-                <OneImageUpload label="Upload Image" />
+                <div style={{ margin: "0 24px" }}>
+                  <OneImageUpload label="Upload Image" />
+                </div>
               ) : (
                 <>
                   <div className="member_image_container">
@@ -349,7 +351,9 @@ function EditEvent({
                 })}
               </div>
 
-              <ImageUpload label="  Add Images" />
+              <div style={{ marginLeft: 15 }}>
+                <ImageUpload label="  Add Images" />
+              </div>
             </div>
             <div className="event_action_container">
               <div onClick={() => handleCancel()}>

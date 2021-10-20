@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { uploadOneImage } from "../../../store";
 import "./oneImageUpload.css";
 
-function OneImageUpload({ uploadOneImage, label = "", loading }) {
+function OneImageUpload({ uploadOneImage, label = "", oneImageLoading }) {
   const [image, setImage] = useState([]);
   const onImageChange = (e) => {
     if (e.target.files) {
@@ -14,7 +14,7 @@ function OneImageUpload({ uploadOneImage, label = "", loading }) {
   };
   return (
     <div>
-      {loading ? (
+      {oneImageLoading ? (
         <div class="loader-wrapper">
           <div class="loader is-loading"></div>
         </div>
@@ -71,7 +71,7 @@ function OneImageUpload({ uploadOneImage, label = "", loading }) {
 const mapStateToProps = (state) => {
   // console.log(state, "state");
   return {
-    loading: state.imageReducer?.loading,
+    oneImageLoading: state.imageReducer?.oneImageLoading,
   };
 };
 
