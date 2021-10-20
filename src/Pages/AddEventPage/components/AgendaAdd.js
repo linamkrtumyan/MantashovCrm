@@ -22,6 +22,8 @@ function AgendaAdd({ agendas, editAgendas }) {
     setAllAgendas(agendas);
     setAg(ag + 1);
     editAgendas(agendas);
+
+    setNewAgenda({});
   };
 
   const handleDelete = (item) => {
@@ -148,9 +150,16 @@ function AgendaAdd({ agendas, editAgendas }) {
 
               <textarea
                 id="descriptionEng"
-                value={newAgenda.agendaDescriptionEng ? newAgenda.agendaDescriptionEng : ""}
+                value={
+                  newAgenda.agendaDescriptionEng
+                    ? newAgenda.agendaDescriptionEng
+                    : ""
+                }
                 onChange={(e) =>
-                  setNewAgenda({ ...newAgenda, agendaDescriptionEng: e.target.value })
+                  setNewAgenda({
+                    ...newAgenda,
+                    agendaDescriptionEng: e.target.value,
+                  })
                 }
                 className="textarea"
                 required={false}
@@ -162,9 +171,16 @@ function AgendaAdd({ agendas, editAgendas }) {
 
               <textarea
                 id="descriptionArm"
-                value={newAgenda.agendaDescriptionEng ? newAgenda.agendaDescriptionEng : ""}
+                value={
+                  newAgenda.agendaDescriptionArm
+                    ? newAgenda.agendaDescriptionArm
+                    : ""
+                }
                 onChange={(e) =>
-                  setNewAgenda({ ...newAgenda, agendaDescriptionEng: e.target.value })
+                  setNewAgenda({
+                    ...newAgenda,
+                    agendaDescriptionArm: e.target.value,
+                  })
                 }
                 className="textarea"
                 required={false}
@@ -176,9 +192,16 @@ function AgendaAdd({ agendas, editAgendas }) {
 
               <textarea
                 id="descriptionRu"
-                value={newAgenda.agendaDescriptionRu ? newAgenda.agendaDescriptionRu : ""}
+                value={
+                  newAgenda.agendaDescriptionRu
+                    ? newAgenda.agendaDescriptionRu
+                    : ""
+                }
                 onChange={(e) =>
-                  setNewAgenda({ ...newAgenda, agendaDescriptionRu: e.target.value })
+                  setNewAgenda({
+                    ...newAgenda,
+                    agendaDescriptionRu: e.target.value,
+                  })
                 }
                 className="textarea"
                 required={false}
