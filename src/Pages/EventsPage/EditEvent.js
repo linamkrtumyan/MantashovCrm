@@ -370,7 +370,7 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log({state});
+  console.log({ state });
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

@@ -14,6 +14,8 @@ export const fetchMemberForEdit = (id) => {
       .then((data) => {
         // console.log("mtav");
         // console.log(data, "data");
+        data.addedOrganizations = data.organizations ? data.organizations : [];
+        delete data.organizations;
         dispatch(initForm(data));
         dispatch(fetchMemberForEditSuccess(data));
       })
