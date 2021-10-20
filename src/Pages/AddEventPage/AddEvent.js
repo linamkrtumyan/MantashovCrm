@@ -172,8 +172,10 @@ function AddEvent({
               {/* <AddAgendasAddress addressType={addressType} /> */}
               <AgendaAdd />
             </div>
-            <div className="event_address_container">
-              <OneImageUpload label="Upload Header Image" />
+            <div className="event_address_container " style={{ marginTop: 20 }}>
+              <div style={{ marginRight: 20 }}>
+                <OneImageUpload label="Upload Header Image" />
+              </div>
               <ImageUpload label="Upload Images" />
             </div>
           </div>
