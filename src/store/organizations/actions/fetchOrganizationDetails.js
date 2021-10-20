@@ -16,7 +16,14 @@ export const fetchOrganizationDetails = (id) => {
     dispatch(fetchOrganizationDetailsRequest());
     request(`/admin/organizations/organization/${id}`)
       .then((data) => {
-        // console.log(data, "data");
+        let categoryIds = data.categoryIds;
+        data.categoryIdsNames = store
+          .getState()
+          .organizationsReducer.categories.filter((c) =>
+            categoryIds.some((cat) => cat === c.id)
+          );
+        console.log("data", data);
+
         dispatch(initForm(data));
 
         dispatch(fetchOrganizationDetailsSuccess(data));

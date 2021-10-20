@@ -30,7 +30,7 @@ const Select = ({
 
       // setCurrent(item === undefined ? { id: 0, name: "" } : item);
       // formOnChange(id, value);
-      setText(item?.name);
+      setText(item ? item.name : "");
     }
   }, [items, value]);
 
@@ -72,6 +72,7 @@ const Select = ({
         onFocus={() => {
           setShow(true);
         }}
+        onChange={() => {}}
         value={text}
         type={type}
         required={true}

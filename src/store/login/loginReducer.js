@@ -32,6 +32,10 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.login.token,
+        userName:
+          action.payload.login.firstNameArm +
+          " " +
+          action.payload.login.lastNameArm,
         authenticating: false,
         login: true,
         error: null,
