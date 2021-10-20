@@ -4,7 +4,7 @@ import Textarea from "../../Components/Forms/Textarea/Textarea";
 import Select from "../../Components/Forms/Select/Select";
 import Button from "../../Components/Forms/Button/Button";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
-import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 
 import store, {
   fetchCountries,

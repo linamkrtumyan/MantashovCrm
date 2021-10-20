@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import store, { cleanForm, cleanImages, } from "../../store";
 import { addNews } from "../../store/news/actions/addNews";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
-import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 
 function AddNews({ addNews, cleanForm, cleanImages, }) {
   const history = useHistory();

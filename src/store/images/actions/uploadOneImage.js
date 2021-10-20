@@ -24,7 +24,7 @@ export const uploadOneImage = (img) => {
         return res.json();
       })
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         dispatch(uploadOneImageSuccess(data));
       })
       .catch((e) => {
@@ -44,10 +44,12 @@ const uploadOneImageSuccess = (data) => {
   // console.log(data, "data");
   const header = data ? data : [];
   //   console.log(typeof image);
+  const loading = data ? false : true;
   return {
     type: UPLOAD_ONE_IMAGE_SUCCESS,
     payload: {
       header,
+      oneImageLoading: loading,
     },
   };
 };

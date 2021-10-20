@@ -20,7 +20,7 @@ import store, {
 import Select from "../../Components/Forms/Select/Select";
 import { connect } from "react-redux";
 import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
-import OneImageUpload from "../../Components/Forms/OneImageUpload.js/OneImageUpload";
+import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import EditPhone from "./components/EditPhone";
 import EditOrganizations from "./components/EditOrganizations";
 
