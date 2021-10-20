@@ -173,7 +173,7 @@ function AddEvent({
               <AgendaAdd />
             </div>
             <div className="event_address_container">
-              {/* <OneImageUpload label="Upload Header Image" /> */}
+              <OneImageUpload label="Upload Header Image" />
               <ImageUpload label="Upload Images" />
             </div>
           </div>
