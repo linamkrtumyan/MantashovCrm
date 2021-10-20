@@ -42,10 +42,12 @@ const uploadImageRequest = () => {
 const uploadImageSuccess = (data) => {
   const image = data ? data : [];
   // console.log(typeof image);
+  const loading = data ? false : true;
   return {
     type: UPLOAD_IMAGE_SUCCESS,
     payload: {
       image,
+      imageUpload: loading
     },
   };
 };
