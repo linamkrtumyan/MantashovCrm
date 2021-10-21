@@ -24,7 +24,6 @@ export const uploadOneImage = (img) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         dispatch(uploadOneImageSuccess(data));
       })
       .catch((e) => {

@@ -12,11 +12,12 @@ function OneImageUpload({ uploadOneImage, label = "", oneImageLoading }) {
       uploadOneImage(e.target.files);
     }
   };
+
   return (
     <div>
       {oneImageLoading ? (
-        <div class="loader-wrapper">
-          <div class="loader is-loading"></div>
+        <div className="loader-wrapper">
+          <div className="loader is-loading"></div>
         </div>
       ) : null}
       {image.length > 0 ? (

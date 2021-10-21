@@ -11,3 +11,4 @@ export const deleteImageFromStore = (id) => {
     },
   };
 };
+
