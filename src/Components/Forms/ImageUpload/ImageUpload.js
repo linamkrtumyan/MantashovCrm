@@ -13,7 +13,7 @@ function ImageUpload({
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
-  console.log(selectedFiles, "selectedFiles");
+  // console.log(selectedFiles, "selectedFiles");
 
   const onImageChange = (e) => {
     if (e.target.files) {
@@ -22,7 +22,7 @@ function ImageUpload({
       );
       const files = [...e.target.files];
 
-      console.log(files, "files");
+      // console.log(files, "files");
       uploadImage(files);
 
       setSelectedFiles((prevImages) => prevImages.concat(filesArray));
@@ -36,7 +36,7 @@ function ImageUpload({
   };
 
   const deleteImage = (a) => {
-    console.log(a, "delete image finction");
+    // console.log(a, "delete image finction");
     deleteImageFromStore(a);
     setDelindex(a);
   };
@@ -102,7 +102,7 @@ function ImageUpload({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     image: state.imageReducer.image,
     imageUpload: state.imageReducer?.imageUpload,
