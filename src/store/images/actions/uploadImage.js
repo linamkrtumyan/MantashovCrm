@@ -23,12 +23,11 @@ export const uploadImage = (img) => {
         return res.json();
       })
       .then((data) => {
-        // console.log(data);
         dispatch(uploadImageSuccess(data));
       })
       .catch((e) => {
         dispatch(uploadImageFailure(e.message));
-        // console.log(e);
+        // console.log({e});
       });
   };
 };
@@ -47,7 +46,7 @@ const uploadImageSuccess = (data) => {
     type: UPLOAD_IMAGE_SUCCESS,
     payload: {
       image,
-      imageUpload: loading
+      imageUpload: loading,
     },
   };
 };

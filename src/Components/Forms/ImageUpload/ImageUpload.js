@@ -12,7 +12,8 @@ function ImageUpload({
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
-  // console.log(selectedFiles, "selectedFiles");
+  const [a, setA] = useState(0);
+  console.log(selectedFiles, "selectedFiles");
 
   const onImageChange = (e) => {
     if (e.target.files) {
@@ -21,19 +22,21 @@ function ImageUpload({
       );
       const files = [...e.target.files];
 
-      // console.log(files, "files");
+      console.log(files, "files");
       uploadImage(files);
 
       setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-
+      setA(a + 1);
       Array.from(e.target.files).map((file) => {
         URL.revokeObjectURL(file);
       });
     }
+    
+    setDelindex(null);
   };
 
   const deleteImage = (a) => {
-    // console.log(a, "delete image finction");
+    console.log(a, "delete image finction");
     deleteImageFromStore(a);
     setDelindex(a);
   };
@@ -88,8 +91,8 @@ function ImageUpload({
 
       <div className={`uploaded_files_container ${containerClassName} `}>
         {imageUpload ? (
-          <div class="loader-wrapper">
-            <div class="loader is-loading"></div>
+          <div className="loader-wrapper">
+            <div className="loader is-loading"></div>
           </div>
         ) : null}
         {renderPhotos(selectedFiles)}
@@ -99,6 +102,7 @@ function ImageUpload({
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     image: state.imageReducer.image,
     imageUpload: state.imageReducer?.imageUpload,
