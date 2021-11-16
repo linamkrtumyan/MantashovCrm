@@ -21,12 +21,9 @@ const Select = ({
   const [show, setShow] = useState(false);
   // const [value, setValue] = useState("");
   const [text, setText] = useState("");
-  // console.log(value, "value");
-  // console.log(items, "items");
   useEffect(() => {
     if (items.length > 0) {
       let item = items.find((i) => i.id === value);
-      // console.log(item);
       // setCurrent(item === undefined ? { id: 0, name: "" } : item);
       // formOnChange(id, value);
       setText(item ? item.name : "");
@@ -34,8 +31,6 @@ const Select = ({
   }, [items, value]);
 
   // const handleSelect = (item) => {
-  //   console.log(item, "item");
-  //   console.log(id, "id");
   //   formOnChange(id, item.id);
   //   // setValue(item.name);
   //   setText(item.name);
@@ -101,14 +96,11 @@ const Select = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(state, "state");
-  // console.log(state.formReducer[ownProps.id], "state.formReducer[ownProps.id]");
   return {
     value: state.formReducer[ownProps.id],
   };
 };
 const mapDispatchToProps = (dispatch) => {
-  //   console.log(dispatch);
   return {
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };

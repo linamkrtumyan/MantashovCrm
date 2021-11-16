@@ -21,6 +21,7 @@ import {
 } from "../../store";
 import AddAgendasAddress from "./components/AddAgendasAddress";
 import AgendaAdd from "./components/AgendaAdd";
+import { scrollToView } from "../../helpers/scrollToView";
 
 function AddEvent({
   addEvent,
@@ -56,13 +57,6 @@ function AddEvent({
       fetchCities(stateId);
     }
   }, [stateId]);
-
-  const addressType = [
-    {
-      id: 1,
-      name: "agendas",
-    },
-  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -112,6 +106,12 @@ function AddEvent({
     editAgendas([]);
   };
 
+  const handleCancel = () => {
+    history.push("/events");
+    cleanForm();
+    editAgendas([]);
+  };
+
   return (
     <div>
       <div>
@@ -122,7 +122,11 @@ function AddEvent({
           <p>Add Event</p>
         </div>
       </div>
-      <form onSubmit={handleSubmit} className="add_event_container">
+      <form
+        onFocus={scrollToView}
+        onSubmit={handleSubmit}
+        className="add_event_container"
+      >
         <div className="add_event_component">
           <div className="container_body">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -181,7 +185,11 @@ function AddEvent({
           </div>
 
           <div className="event_action_container">
-            <Button title="Cancel" className="action_btn cancel_btn" />
+            <Button
+              onClick={handleCancel}
+              title="Cancel"
+              className="action_btn cancel_btn"
+            />
             <Button title="Create" className="action_btn" />
           </div>
         </div>

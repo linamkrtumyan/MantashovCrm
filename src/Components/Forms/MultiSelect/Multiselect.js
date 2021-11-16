@@ -17,7 +17,6 @@ function Multiselect({
   selectedNames = [],
   checkeds = [],
 }) {
-  // console.log(checkeds, "checkeds");
   const [text, setText] = useState("");
   const [show, setShow] = useState(false);
   // const [selected, setSelected] = useState([]);
@@ -28,7 +27,6 @@ function Multiselect({
   const setSelectedNames = (arr) => {
     formOnChange(id + "Names", arr);
   };
-  // console.log(items, "items");
 
   useEffect(() => {
     if (items?.length > 0) {

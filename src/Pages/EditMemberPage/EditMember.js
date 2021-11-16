@@ -23,6 +23,7 @@ import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import EditPhone from "./components/EditPhone";
 import AddOrganization from "../AddMemberPage/components/AddOrganization";
+import { scrollToView } from "../../helpers/scrollToView";
 
 function EditMember({
   fetchMemberForEdit,
@@ -107,6 +108,9 @@ function EditMember({
 
     const header = store.getState().imageReducer.header[0];
 
+    if (!contacts) {
+      contacts = {};
+    }
     const cont = Object.values(contacts);
 
     const changePath = () => {
@@ -145,7 +149,11 @@ function EditMember({
 
   return (
     <div>
-      <div className="add_member_container">
+      <form
+        onFocus={scrollToView}
+        onSubmit={handleSubmit}
+        className="add_member_container"
+      >
         <div>
           <button onClick={() => history.goBack()} className="arrow_left">
             <i className="fas fa-chevron-left"></i>
@@ -287,15 +295,15 @@ function EditMember({
         </div>
 
         <div className="action_container">
-          <div onClick={() => handleCancel()}>
-            <Button title="Cancel" className="action_btn cancel_btn" />
-          </div>
+          <Button
+            onClick={handleCancel}
+            title="Cancel"
+            className="action_btn cancel_btn"
+          />
 
-          <div onClick={handleSubmit}>
-            <Button title="Save" className="action_btn" />
-          </div>
+          <Button title="Save" className="action_btn" />
         </div>
-      </div>
+      </form>
     </div>
   );
 }

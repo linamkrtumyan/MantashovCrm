@@ -13,7 +13,7 @@ function Textarea({
   value = "",
   formOnChange,
   placeholderText = null,
-  required=true
+  required = true,
 }) {
   const handleOnChange = (e) => {
     formOnChange(id, e.target.value);
@@ -45,8 +45,6 @@ function Textarea({
   );
 }
 const mapStateToProps = (state, ownProps) => {
-  // console.log(state, "state");
-  // console.log(ownProps, "ownProps");
   return {
     value: state.formReducer[ownProps.id],
   };

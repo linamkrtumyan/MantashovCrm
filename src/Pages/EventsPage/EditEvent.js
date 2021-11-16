@@ -24,6 +24,7 @@ import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import OpenImage from "./components/images/OpenImage";
 import AgendaEdit from "./AgendaEdit";
+import { scrollToView } from "../../helpers/scrollToView";
 
 function EditEvent({
   fetchCountries,
@@ -82,11 +83,13 @@ function EditEvent({
   }, [agendas]);
 
   const handleCancel = () => {
+    cleanImages();
+    cleanForm();
     history.push("/events");
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     let {
       locationArm,
       locationEng,
@@ -161,6 +164,7 @@ function EditEvent({
           </div>
         </div>
         <form
+          onFocus={scrollToView}
           onSubmit={handleSubmit}
           // className="add_event_container"
         >
@@ -356,13 +360,12 @@ function EditEvent({
               </div>
             </div>
             <div className="event_action_container">
-              <div onClick={() => handleCancel()}>
-                <Button title="Cancel" className="action_btn cancel_btn" />
-              </div>
-
-              <div onClick={handleSubmit}>
-                <Button title="Save" className="action_btn" />
-              </div>
+              <Button
+                onClick={handleCancel}
+                title="Cancel"
+                className="action_btn cancel_btn"
+              />
+              <Button title="Save" className="action_btn" />
             </div>
           </div>
 
@@ -374,7 +377,6 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state });
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

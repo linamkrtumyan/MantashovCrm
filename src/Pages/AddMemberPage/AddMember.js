@@ -27,6 +27,7 @@ import {
 import store from "../../store";
 import AddPhone from "./components/AddPhone";
 import AddOrganization from "./components/AddOrganization";
+import { scrollToView } from "../../helpers/scrollToView";
 
 function AddMember({
   fetchCountries,
@@ -148,7 +149,11 @@ function AddMember({
   };
   return (
     <div>
-      <form onSubmit={(e) => handleCreate(e)} className="add_member_container">
+      <form
+        onFocus={scrollToView}
+        onSubmit={(e) => handleCreate(e)}
+        className="add_member_container"
+      >
         <div>
           <button onClick={() => history.goBack()} className="arrow_left">
             <i className="fas fa-chevron-left"></i>

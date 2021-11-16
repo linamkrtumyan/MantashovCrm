@@ -5,14 +5,12 @@ import "./header.css";
 
 function Header({ userName, logout }) {
   const [dropdown, setDropdown] = useState(true);
-  // console.log(dropdown);
 
   const handleDropdown = () => {
     setDropdown(!dropdown);
   };
 
   const handleLogout = () => {
-    
     logout();
   };
 
@@ -67,7 +65,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
-    }
   };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
