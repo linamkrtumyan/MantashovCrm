@@ -60,6 +60,7 @@ function OneImageUpload({ uploadOneImage, label = "", oneImageLoading }) {
         // id="myfile"
         id="one-file-upload"
         name="myfile"
+        accept="image/png, image/gif, image/jpeg"
         // style={{ height: "60px" }}
         onChange={(e) => {
           onImageChange(e);
@@ -70,7 +71,6 @@ function OneImageUpload({ uploadOneImage, label = "", oneImageLoading }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     oneImageLoading: state.imageReducer?.oneImageLoading,
   };

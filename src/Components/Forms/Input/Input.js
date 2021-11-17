@@ -66,8 +66,6 @@ function Input({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(state, "state");
-  // console.log(ownProps, "ownProps");
   return {
     value: state.formReducer[ownProps.id],
   };

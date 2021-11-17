@@ -5,11 +5,12 @@ import Button from "../../Components/Forms/Button/Button";
 import { connect } from "react-redux";
 import store, { cleanForm, onLoginFunction } from "../../store";
 import { ToastContainer } from "react-toastify";
+import { scrollToView } from "../../helpers/scrollToView";
 
 function Login({ onLoginFunction, cleanForm, authentiacting }) {
-  useEffect(()=>{
+  useEffect(() => {
     cleanForm();
-  },[])
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     let { email, password } = store.getState().formReducer;
@@ -34,14 +35,31 @@ function Login({ onLoginFunction, cleanForm, authentiacting }) {
         </div>
         <div className="login_container_fragment">
           <div className="login_centered">
-            <form onSubmit={handleSubmit} className="login_form_conntainer">
+            <form
+              onFocus={scrollToView}
+              onSubmit={handleSubmit}
+              className="login_form_conntainer"
+            >
               <div className="login_title">
                 <p>Login</p>
               </div>
-              <Input id="email" readOnly={authentiacting} placeholder="Username" />
-              <Input id="password" readOnly={authentiacting} placeholder="Password" type="password" />
+              <Input
+                id="email"
+                readOnly={authentiacting}
+                placeholder="Username"
+              />
+              <Input
+                id="password"
+                readOnly={authentiacting}
+                placeholder="Password"
+                type="password"
+              />
               <div className="login_button">
-                <Button disabled={authentiacting} className="login_btn is-primary" title="Login" />
+                <Button
+                  disabled={authentiacting}
+                  className="login_btn is-primary"
+                  title="Login"
+                />
               </div>
             </form>
           </div>

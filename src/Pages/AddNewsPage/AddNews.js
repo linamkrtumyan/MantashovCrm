@@ -9,6 +9,7 @@ import store, { cleanForm, cleanImages } from "../../store";
 import { addNews } from "../../store/news/actions/addNews";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
+import { scrollToView } from "../../helpers/scrollToView";
 
 function AddNews({ addNews, cleanForm, cleanImages }) {
   const history = useHistory();
@@ -43,12 +44,17 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
     cleanImages();
   };
 
+  const handleCancel = () => {
+    cleanImages();
+    path.push("/news");
+  };
+
   return (
     <div>
       <button onClick={() => history.goBack()} className="arrow_left">
         ❮
       </button>
-      <form onSubmit={handleSubmit} className="">
+      <form onFocus={scrollToView} onSubmit={handleSubmit} className="">
         <div className="add_member_title">Add News</div>
         <div className="add_member_component">
           <div className="add_news_container">
@@ -117,8 +123,13 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
         </div>
 
         <div className="action_container">
-          <Button title="Cancel" className="action_btn cancel_btn" />
-          <Button title="Create" className="action_btn" />
+          <Button
+            onClick={handleCancel}
+            type="button"
+            title="Cancel"
+            className="action_btn cancel_btn"
+          />
+          <Button type="submit" title="Create" className="action_btn" />
         </div>
       </form>
     </div>

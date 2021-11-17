@@ -16,6 +16,7 @@ import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import { deletedImages } from "../../store/images/actions";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import OpenImage from "../EventsPage/components/images/OpenImage";
+import { scrollToView } from "../../helpers/scrollToView";
 
 function EditNews({
   fetchNewsDetails,
@@ -44,7 +45,7 @@ function EditNews({
     history.push("/news");
   };
 
-  const handleCrate = (e) => {
+  const handleCreate = (e) => {
     e.preventDefault();
     let { titleArm, titleEng, titleRu, textArm, textEng, textRu } =
       store.getState().formReducer;
@@ -99,8 +100,7 @@ function EditNews({
         </button>
         <div className="edit_news_container">
           <div className="edit_member_title">Edit News</div>
-          <div>
-            {/* <form onSubmit={handleSubmit} className=""> */}
+          <form onFocus={scrollToView} onSubmit={handleCreate} className="">
             <div className="add_member_component">
               <div className="add_news_container">
                 <div className="add_news_img">
@@ -247,14 +247,18 @@ function EditNews({
             </div>
 
             <div className="action_container">
-              <div onClick={() => handleCancel()}>
-                <Button title="Cancel" className="action_btn cancel_btn" />
+              <div>
+                <Button
+                  onClick={() => handleCancel()}
+                  title="Cancel"
+                  className="action_btn cancel_btn"
+                />
               </div>
-              <div onClick={(e) => handleCrate(e)}>
+              <div>
                 <Button title="Save" className="action_btn" />
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </>

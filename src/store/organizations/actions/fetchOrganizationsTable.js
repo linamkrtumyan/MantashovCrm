@@ -7,18 +7,14 @@ import {
 } from "../types";
 
 export const fetchOrganizationsTable = () => {
-  // console.log(categoryId, "categoryId");
-
   return (dispatch) => {
     dispatch(fetchOrganizationsTableRequest());
     request(`/admin/organizations/forTable`)
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchOrganizationsTableSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchOrganizationsTableFailure(e.message));
-        // console.log(e);
       });
   };
 };

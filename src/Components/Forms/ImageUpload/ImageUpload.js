@@ -13,7 +13,6 @@ function ImageUpload({
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
-  // console.log(selectedFiles, "selectedFiles");
 
   const onImageChange = (e) => {
     if (e.target.files) {
@@ -22,7 +21,6 @@ function ImageUpload({
       );
       const files = [...e.target.files];
 
-      // console.log(files, "files");
       uploadImage(files);
 
       setSelectedFiles((prevImages) => prevImages.concat(filesArray));
@@ -31,12 +29,11 @@ function ImageUpload({
         URL.revokeObjectURL(file);
       });
     }
-    
+
     setDelindex(null);
   };
 
   const deleteImage = (a) => {
-    // console.log(a, "delete image finction");
     deleteImageFromStore(a);
     setDelindex(a);
   };
@@ -46,9 +43,7 @@ function ImageUpload({
       source.splice(delindex, 1);
       // selectedFiles.splice(delindex, 1);
     }
-    // console.log("source: ", source);
     return source.map((photo) => {
-      // console.log(photo, "photo");
       return (
         <div className="upload_cont">
           <img className="uploaded_images" src={photo} alt="" key={photo} />
@@ -83,6 +78,7 @@ function ImageUpload({
         <input
           type="file"
           id="multiple-file-upload"
+          accept="image/png, image/gif, image/jpeg"
           name="myfile"
           onChange={(e) => onImageChange(e)}
           multiple
@@ -102,7 +98,6 @@ function ImageUpload({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   return {
     image: state.imageReducer.image,
     imageUpload: state.imageReducer?.imageUpload,

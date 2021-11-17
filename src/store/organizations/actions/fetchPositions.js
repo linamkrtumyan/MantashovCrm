@@ -7,18 +7,14 @@ import {
 } from "../types";
 
 export const fetchPositions = () => {
-  // console.log(page, "uxarkvox page");
-
   return (dispatch) => {
     dispatch(fetchPositionsRequest());
     request("/admin/organizations/positions")
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchPositionsSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchPositionsFailure(e.message));
-        // console.log(e);
       });
   };
 };
