@@ -155,7 +155,11 @@ function EditMember({
         className="add_member_container"
       >
         <div>
-          <button onClick={() => history.goBack()} className="arrow_left">
+          <button
+            type="button"
+            onClick={() => history.goBack()}
+            className="arrow_left"
+          >
             <i className="fas fa-chevron-left"></i>
           </button>
           <div className="add_member_title">
