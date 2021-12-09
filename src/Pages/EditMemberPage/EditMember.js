@@ -236,10 +236,10 @@ function EditMember({
                 <button
                   onClick={() => setIsActive(!isActive)}
                   style={{ width: "31%", margin: "0 14px" }}
+                  type="button"
                   className={isActive ? "button red" : "button"}
                 >
-                  {/* <input type="checkbox" /> */}
-                  <p>{isActive ? "Active" : "Passive"}</p>
+                  {isActive ? "Active" : "Passive"}
                 </button>
               </div>
             </div>

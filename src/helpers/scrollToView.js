@@ -1,3 +1,5 @@
 export const scrollToView = (e) => {
-  e.target.scrollIntoView({ block: "center", behavior: "smooth" });
+  if (e.target.type !== "button") {
+    e.target.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
 };

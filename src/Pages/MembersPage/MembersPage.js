@@ -5,7 +5,7 @@ import AddMemberCard from "../../Components/Members/AddMemberCard/AddMemberCard"
 import Pagination from "../../Components/Pagination/Pagination";
 import { connect } from "react-redux";
 import Loading from "../../Components/Loading/Loading";
-import { fetchMembersByPage } from "../../store";
+import { changeCurrentPage, fetchMembersByPage } from "../../store";
 import { useHistory } from "react-router-dom";
 import ResetPassword from "./components/ResetPassword";
 
@@ -16,6 +16,7 @@ function MembersPage({
   noMembers,
   count,
   currentPage,
+  changeCurrentPage,
   action,
 }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,7 +25,13 @@ function MembersPage({
   let history = useHistory();
 
   useEffect(() => {
-    fetchMembersByPage();
+    changeCurrentPage(1);
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      fetchMembersByPage();
+    }
   }, [currentPage, action]);
 
   function handleDetails(id) {
@@ -157,6 +164,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
     fetchMembersByPage: () => dispatch(fetchMembersByPage()),
   };
 };

@@ -6,12 +6,10 @@ import {
 } from "../types";
 
 export const deleteEvent = (id, changePath) => {
-  // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deleteEventRequest());
     request(`/admin/events/event/${id}`, "DELETE")
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
           dispatch(deleteEventSuccess(data));
           changePath();
@@ -19,7 +17,6 @@ export const deleteEvent = (id, changePath) => {
       })
       .catch((e) => {
         dispatch(deleteEventFailure(e.message));
-        // console.log(e);
       });
   };
 };

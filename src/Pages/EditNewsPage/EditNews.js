@@ -234,6 +234,7 @@ function EditNews({
                         width: "800px",
                         marginLeft: "10px",
                       }}
+                      type="button"
                       className={isActive ? "button red" : "button"}
                     >
                       {/* <input type="checkbox" /> */}
