@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 // import Select from "../../Components/Forms/Select/Select";
+import phoneIcon from "../../img/phone.png";
 import instagramIcon from "../../img/instagram.png";
 import facebookIcon from "../../img/facebook.png";
 import linkedinIcon from "../../img/linkedin.png";
@@ -267,7 +268,12 @@ function AddMember({
                   {/* {contactTypes.map((contactType) => (
                     <AddPhone key={contactType.id} contactType={contactType} />
                   ))} */}
-                  <Input id="phone" type="text" placeholder="Phone" />
+                  <Input
+                    id="phone"
+                    type="text"
+                    placeholder="Phone"
+                    labelIcon={phoneIcon}
+                  />
                   <Input
                     id="instagram"
                     type="url"
