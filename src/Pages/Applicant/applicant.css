@@ -1,0 +1,22 @@
+.applicant_page_container {
+  margin: auto;
+  margin-top: 50px;
+  width: 70%;
+  justify-content: left;
+}
+
+.applicant_page_title_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.applicant_page_title {
+  font-size: 24px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.applicant_input {
+  width: 150px;
+}

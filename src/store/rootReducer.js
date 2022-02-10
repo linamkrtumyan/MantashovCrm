@@ -8,6 +8,7 @@ import modalReducer from "./modal/modalReducer";
 import eventReducer from "./event/eventReducer";
 import locationsReducer from "./locations/locationsReducer";
 import organizationsReducer from "./organizations/organizationsReducer";
+import applicantsReducer from "./applicants/applicantsReducer";
 
 export const reducers = {
   membersReducer,
@@ -20,4 +21,5 @@ export const reducers = {
   eventReducer,
   locationsReducer,
   organizationsReducer,
+  applicantsReducer,
 };

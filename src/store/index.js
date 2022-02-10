@@ -71,4 +71,6 @@ export {
   cleanOrganization,
 } from "./organizations/actions";
 
+export { fetchApplicants, editApplicantStatus } from "./applicants/actions";
+
 export { default } from "./configureStore";
