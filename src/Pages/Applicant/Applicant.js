@@ -98,6 +98,9 @@ function Applicant({
                     onClick={() => {
                       changeApplicantStatus(applicant, 1);
                     }}
+                    style={{
+                      display: `${applicant.status === 1 ? "none" : ""}`,
+                    }}
                   >
                     <i
                       style={{ width: 17, height: 17 }}
@@ -111,10 +114,16 @@ function Applicant({
                     onClick={() => {
                       changeApplicantStatus(applicant, 2);
                     }}
+                    style={{
+                      display: `${applicant.status === 2 ? "none" : ""}`,
+                    }}
                   >
                     <i
                       className="fas fa-times "
-                      style={{ width: 17, height: 17 }}
+                      style={{
+                        width: 17,
+                        height: 17,
+                      }}
                     ></i>
                   </div>
                 </td>

@@ -6,7 +6,10 @@ import "./addMember.css";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
-import Select from "../../Components/Forms/Select/Select";
+// import Select from "../../Components/Forms/Select/Select";
+import instagramIcon from "../../img/instagram.png";
+import facebookIcon from "../../img/facebook.png";
+import linkedinIcon from "../../img/linkedin.png";
 import {
   cleanForm,
   cleanImages,
@@ -261,9 +264,28 @@ function AddMember({
             <div className="container_body">
               <div style={{ display: "flex" }}>
                 <div className="" style={{ display: "flex", maxWidth: "100%" }}>
-                  {contactTypes.map((contactType) => (
+                  {/* {contactTypes.map((contactType) => (
                     <AddPhone key={contactType.id} contactType={contactType} />
-                  ))}
+                  ))} */}
+                  <Input id="phone" type="text" placeholder="Phone" />
+                  <Input
+                    id="instagram"
+                    type="url"
+                    placeholder="Instagram"
+                    labelIcon={instagramIcon}
+                  />
+                  <Input
+                    id="facebook"
+                    type="url"
+                    placeholder="Facebook"
+                    labelIcon={facebookIcon}
+                  />
+                  <Input
+                    id="linkedin "
+                    type="url"
+                    placeholder="Linkedin"
+                    labelIcon={linkedinIcon}
+                  />
                 </div>
               </div>
 
