@@ -188,7 +188,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        fetch: false,
       };
     case DELETE_EVENT_SUCCESS:
       return {
@@ -196,7 +195,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: null,
         success: true,
-        fetch: true,
+        fetch: !state.fetch,
       };
     case DELETE_EVENT_FAILURE:
       return {

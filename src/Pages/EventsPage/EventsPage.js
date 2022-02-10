@@ -3,7 +3,7 @@ import "./eventsPage.css";
 import EventCard from "../../Components/Events/EventCard/EventCard";
 import AddEventCard from "../../Components/Events/AddEventCard/AddEventCard";
 import { connect } from "react-redux";
-import { fetchEventsByPage } from "../../store";
+import { fetchEventsByPage, changeCurrentPage } from "../../store";
 import { useHistory } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
 import EditEvent from "./EditEvent";
@@ -21,8 +21,8 @@ function EventsPage({
   eventsByPage,
   currentPage,
   fetch,
+  changeCurrentPage,
 }) {
-  const page = 0;
   // const [page, setPage] = useState(0);
   // console.log(page, "eventspage page");
   let history = useHistory();
@@ -40,7 +40,13 @@ function EventsPage({
   // console.log({ methods });
 
   useEffect(() => {
-    fetchEventsByPage();
+    changeCurrentPage(1);
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      fetchEventsByPage();
+    }
   }, [currentPage, fetch]);
 
   function handleEdit(id) {
@@ -212,6 +218,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
     fetchEventsByPage: (page) => dispatch(fetchEventsByPage(page)),
   };
 };

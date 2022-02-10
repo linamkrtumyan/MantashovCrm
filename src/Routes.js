@@ -22,6 +22,7 @@ import EventDetailsPage from "./Pages/EventDeatilsPage/EventDetailsPage";
 import WithBulma from "./Pages/BulmaExp/WithBulma";
 import Information from "./Pages/InformationPage/Information";
 import EditEvent from "./Pages/EventsPage/EditEvent";
+import Applicant from "./Pages/Applicant/Applicant";
 
 function Routes({ isLogin, userName }) {
   if (isLogin) {
@@ -54,7 +55,7 @@ function Routes({ isLogin, userName }) {
             <Route path="/edit-news/:id" component={EditNews} exact />
             <Route path="/bulma" component={WithBulma} exact />
             <Route path="/information" component={Information} exact />
-
+            <Route path="/applicant" component={Applicant} exact />
             <Redirect to="/news" />
           </Switch>
         </div>

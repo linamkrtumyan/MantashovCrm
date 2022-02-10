@@ -4,7 +4,7 @@ import NewsCard from "../../Components/News/NewsCard/NewsCard";
 import AddNewsCard from "../../Components/News/AddNewsCard/AddNewsCard";
 import Pagination from "../../Components/Pagination/Pagination";
 import { connect } from "react-redux";
-import { fetchNewsByPage } from "../../store";
+import { changeCurrentPage, fetchNewsByPage } from "../../store";
 import Loading from "../../Components/Loading/Loading";
 import { useHistory } from "react-router-dom";
 
@@ -15,12 +15,19 @@ function NewsPage({
   loading,
   noNews,
   currentPage,
+  changeCurrentPage,
   action,
 }) {
   let history = useHistory();
 
   useEffect(() => {
-    fetchNewsByPage();
+    changeCurrentPage(1);
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      fetchNewsByPage();
+    }
   }, [currentPage, action]);
 
   function handleDetails(id) {
@@ -42,9 +49,7 @@ function NewsPage({
   }
   return (
     <div>
-      <div 
-      className="members_container"
-      >
+      <div className="members_container">
         <AddNewsCard />
 
         <div
@@ -123,6 +128,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
     fetchNewsByPage: () => dispatch(fetchNewsByPage()),
   };
 };

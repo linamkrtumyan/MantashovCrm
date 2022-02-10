@@ -5,6 +5,7 @@ import {
   FETCH_MEMBERS_BY_PAGE_SUCCESS,
   FETCH_MEMBERS_BY_PAGE_FAILURE,
 } from "../types";
+import { changeCurrentPage } from "../../pagination/actions";
 
 export const fetchMembersByPage = () => {
   const page = store.getState().paginationReducer.currentPage - 1;
@@ -16,6 +17,10 @@ export const fetchMembersByPage = () => {
       .then((data) => {
         // console.log(data, "data");
         dispatch(fetchMembersByPageSuccess(data));
+        if (data.count > 0 && data.members.length === 0) {
+          dispatch(changeCurrentPage(page));
+          console.log(data);
+        }
       })
       .catch((e) => {
         dispatch(fetchMembersByPageFailure(e.message));

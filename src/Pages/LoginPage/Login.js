@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import store, { cleanForm, onLoginFunction } from "../../store";
 import { ToastContainer } from "react-toastify";
 import { scrollToView } from "../../helpers/scrollToView";
+import PasswordInput from "../../Components/Forms/PasswordInput/PasswordInput";
 
 function Login({ onLoginFunction, cleanForm, authentiacting }) {
   useEffect(() => {
@@ -48,11 +49,10 @@ function Login({ onLoginFunction, cleanForm, authentiacting }) {
                 readOnly={authentiacting}
                 placeholder="Username"
               />
-              <Input
+              <PasswordInput
                 id="password"
                 readOnly={authentiacting}
                 placeholder="Password"
-                type="password"
               />
               <div className="login_button">
                 <Button
