@@ -55,7 +55,7 @@ function AddMember({
     fetchCountries();
     fetchContactTypes();
     fetchCategories();
-    cleanForm();
+    // cleanForm();
     cleanMember();
     cleanLocation();
 
@@ -197,18 +197,23 @@ function AddMember({
                   placeholder="Описание"
                 />
               </div>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Input
                   placeholder="Birthdate"
                   id="birthdate"
                   type="date"
                   max={dateNow}
                 />
+                <Input
+                  id="turnover"
+                  type="text"
+                  placeholder="Annual turnover"
+                />
               </div>
             </div>
           </div>
 
-          <div className="location_container">
+          {/* <div className="location_container">
             <div className="container_title">Location</div>
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -232,13 +237,21 @@ function AddMember({
                 <Input id="locationRu" type="text" placeholder="Адрес" />
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="location_container">
             <div className="container_title">Occupation</div>
             <div className="container_body">
               <div>
                 <AddOrganization />
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Textarea
+                  id="orgdescriptionEng"
+                  type="text"
+                  placeholder="Organization Description"
+                  className="add_member-org_input"
+                />
               </div>
             </div>
           </div>
@@ -253,6 +266,8 @@ function AddMember({
                   ))}
                 </div>
               </div>
+
+              <div style={{ display: "flex" }}></div>
               <div className="">
                 <Input
                   id="email"
@@ -288,7 +303,7 @@ function AddMember({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
+  console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

@@ -3,7 +3,8 @@ import { cleanForm, formOnChangeArray } from "../../../store";
 import { connect } from "react-redux";
 import "./addPhone.css";
 
-function AddPhone({ contactType, formOnChange, value, cleanForm }) {
+function AddPhone({ contactType, formOnChange, value, cleanForm, phone }) {
+  // const [phone, setPhone] = useState("")
   // console.log(contactType, "contactType");
   useEffect(() => {
     formOnChange("contacts", contactType.id, []);
@@ -41,6 +42,7 @@ const mapStateToProps = (state, ownProps) => {
     value: !state.formReducer.contacts
       ? []
       : state.formReducer?.contacts[ownProps.contactType.id - 1],
+    phone: state.formReducer.phone,
   };
 };
 

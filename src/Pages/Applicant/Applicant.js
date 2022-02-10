@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./applicant.css";
-import Input from "../../Components/Forms/Input/Input";
 import { connect } from "react-redux";
 import {
   fetchApplicants,
   editApplicantStatus,
   changeCurrentPage,
+  formOnChange,
 } from "../../store";
 import Pagination from "../../Components/Pagination/Pagination";
 import { useHistory } from "react-router-dom";
@@ -17,20 +17,37 @@ function Applicant({
   loading,
   currentPage,
   fetch,
+  formOnChange,
 }) {
   const history = useHistory();
 
   useEffect(() => {
     changeCurrentPage(1);
   }, []);
+
   useEffect(() => {
     if (!loading) {
       fetchApplicants();
     }
   }, [currentPage, fetch]);
 
-  const changeApplicantStatus = (id, statusId) => {
-    editApplicantStatus(id, statusId);
+  const collectApplicantData = (applicant) => {
+    formOnChange("firstNameEng", `${applicant.fullName.split(" ")[0]}`);
+    formOnChange("firstNameArm", `${applicant.fullName.split(" ")[0]}`);
+    formOnChange("firstNameRu", `${applicant.fullName.split(" ")[0]}`);
+
+    formOnChange("lastNameEng", `${applicant.fullName.split(" ")[1]}`);
+    formOnChange("lastNameArm", `${applicant.fullName.split(" ")[1]}`);
+    formOnChange("lastNameRu", `${applicant.fullName.split(" ")[1]}`);
+
+    formOnChange("email", `${applicant.email}`);
+    formOnChange("phone", `${applicant.phone}`);
+    formOnChange("turnover", `${applicant.turnover}`);
+  };
+
+  const changeApplicantStatus = (applicant, statusId) => {
+    editApplicantStatus(applicant.id, statusId);
+    collectApplicantData(applicant);
     if (statusId === 1) {
       setTimeout(() => {
         history.push("add-member");
@@ -79,7 +96,7 @@ function Applicant({
                   <div
                     className="delete-agenda-btn"
                     onClick={() => {
-                      changeApplicantStatus(applicant.id, 1);
+                      changeApplicantStatus(applicant, 1);
                     }}
                   >
                     <i
@@ -92,7 +109,7 @@ function Applicant({
                   <div
                     className="delete-agenda-btn"
                     onClick={() => {
-                      changeApplicantStatus(applicant.id, 2);
+                      changeApplicantStatus(applicant, 2);
                     }}
                   >
                     <i
@@ -131,6 +148,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(editApplicantStatus(id, statusId));
     },
     changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
 
