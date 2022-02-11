@@ -7,7 +7,7 @@ import {
 } from "../types";
 
 export const fetchUpcomingEvents = (page) => {
-  //   const page = store.getState().paginationReducer.currentPage - 1;
+  //   const page = store.getState().paginationReducer.currentPage;
   // const page = 0;
   // console.log(page, "uxarkvox page");
   return (dispatch) => {

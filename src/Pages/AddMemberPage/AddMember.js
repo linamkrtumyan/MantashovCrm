@@ -91,11 +91,11 @@ function AddMember({
   const handleCreate = (e) => {
     e.preventDefault();
     let {
-      locationArm,
-      locationEng,
-      locationRu,
+      // locationArm,
+      // locationEng,
+      // locationRu,
 
-      cityId,
+      // cityId,
       descriptionArm,
       descriptionEng,
       descriptionRu,
@@ -107,26 +107,32 @@ function AddMember({
       lastNameRu,
       birthdate,
       email,
+      phone,
+      instagram,
+      facebook,
+      linkedin,
+      turnover,
+      addedOrganizations,
       organizationId,
       positionId,
-      contacts = {},
+      // contacts = {},
     } = store.getState().formReducer;
     const image = store.getState().imageReducer.header;
-    let keys = Object.keys(contacts);
-    const values = keys.map((key) => contacts[key]);
-    let ok = false;
-    values.map((value) => (value ? (ok = true) : (ok = false)));
-    const contacts1 = keys.map((key, index) =>
-      ok ? values[index].map((o) => ({ id: 1 + +key, value: o })) : []
-    );
-    let result = [];
-    contacts1.forEach((contact1) => (result = result.concat(contact1)));
+    // let keys = Object.keys(contacts);
+    // const values = keys.map((key) => contacts[key]);
+    // let ok = false;
+    // values.map((value) => (value ? (ok = true) : (ok = false)));
+    // const contacts1 = keys.map((key, index) =>
+    //   ok ? values[index].map((o) => ({ id: 1 + +key, value: o })) : []
+    // );
+    // let result = [];
+    // contacts1.forEach((contact1) => (result = result.concat(contact1)));
 
     let member = {
-      locationArm,
-      locationEng,
-      locationRu,
-      cityId,
+      // locationArm,
+      // locationEng,
+      // locationRu,
+      // cityId,
 
       firstNameArm,
       lastNameArm,
@@ -140,9 +146,14 @@ function AddMember({
       descriptionRu,
       birthdate,
       email,
+      phone,
+      instagram,
+      facebook,
+      linkedin,
+      turnover,
       organizations: addedOrganizations,
-      positionId,
-      contacts: result,
+      // positionId,
+      // contacts: result,
     };
 
     const changePath = () => {
@@ -249,14 +260,14 @@ function AddMember({
               <div>
                 <AddOrganization />
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Textarea
                   id="orgdescriptionEng"
                   type="text"
                   placeholder="Organization Description"
                   className="add_member-org_input"
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -331,7 +342,7 @@ function AddMember({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state");
+  // console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

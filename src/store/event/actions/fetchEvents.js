@@ -8,7 +8,7 @@ import {
 import { changeCurrentPage } from "../../pagination/actions";
 
 export const fetchEventsByPage = () => {
-  const page = store.getState().paginationReducer.currentPage - 1;
+  const page = store.getState().paginationReducer.currentPage;
 
   return (dispatch) => {
     dispatch(fetchEventsByPageRequest());

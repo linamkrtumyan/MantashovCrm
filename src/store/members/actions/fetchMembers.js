@@ -8,7 +8,7 @@ import {
 import { changeCurrentPage } from "../../pagination/actions";
 
 export const fetchMembersByPage = () => {
-  const page = store.getState().paginationReducer.currentPage - 1;
+  const page = store.getState().paginationReducer.currentPage;
   // console.log(page, "uxarkvox page");
 
   return (dispatch) => {

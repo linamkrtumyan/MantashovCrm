@@ -85,7 +85,7 @@ function MembersPage({
                   <th>Full Name</th>
                   <th>Organization</th>
                   <th>Phone</th>
-                  <th>Location</th>
+                  {/* <th>Location</th> */}
                   <th></th>
                 </tr>
               </thead>
@@ -117,9 +117,9 @@ function MembersPage({
                         <td onClick={() => handleDetails(memberByPage.id)}>
                           {memberByPage.phone}
                         </td>
-                        <td onClick={() => handleDetails(memberByPage.id)}>
+                        {/* <td onClick={() => handleDetails(memberByPage.id)}>
                           {memberByPage.location}
-                        </td>
+                        </td> */}
                         {/* <div
                           onClick={() => handleReset(memberByPage.id)}
                           style={{ zIndex: "10", position: "absolute" }}
