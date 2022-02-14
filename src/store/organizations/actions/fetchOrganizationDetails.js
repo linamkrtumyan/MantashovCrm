@@ -22,7 +22,7 @@ export const fetchOrganizationDetails = (id) => {
           .organizationsReducer.categories.filter((c) =>
             categoryIds.some((cat) => cat === c.id)
           );
-        console.log("data", data);
+        // console.log("data", data);
 
         dispatch(initForm(data));
 

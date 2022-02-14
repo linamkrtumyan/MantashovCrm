@@ -28,6 +28,9 @@ import {
   EDIT_AGENDAS,
   EDIT_IMAGES,
   DELETE_EVENT_IMAGE_FROM_STORE,
+  FETCH_ALL_SPEAKERS_REQUEST,
+  FETCH_ALL_SPEAKERS_SUCCESS,
+  FETCH_ALL_SPEAKERS_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -74,6 +77,28 @@ const reducer = (state = initialState, action) => {
         loading: false,
 
         eventsByPage: [],
+        error: action.payload.error,
+      };
+
+    case FETCH_ALL_SPEAKERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_ALL_SPEAKERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+
+        speakers: action.payload.speakers,
+        error: null,
+      };
+    case FETCH_ALL_SPEAKERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+
+        speakers: [],
         error: action.payload.error,
       };
     case FETCH_PAST_EVENTS_REQUEST:

@@ -34,6 +34,7 @@ export {
   editAgendas,
   editImages,
   deleteEventImageFromStore,
+  getSpeakers,
 } from "./event/actions";
 export {
   fetchCountries,

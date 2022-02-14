@@ -16,6 +16,7 @@ import store, {
   cleanLocation,
   cleanOrganization,
 } from "../../../../store";
+import request from "../../../../store/request";
 
 
 function AddOrganization({

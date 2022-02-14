@@ -18,10 +18,12 @@ import {
   cleanForm,
   formOnChangeArray,
   editAgendas,
+  getSpeakers,
 } from "../../store";
 import AddAgendasAddress from "./components/AddAgendasAddress";
 import AgendaAdd from "./components/AgendaAdd";
 import { scrollToView } from "../../helpers/scrollToView";
+import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 
 function AddEvent({
   addEvent,
@@ -37,6 +39,9 @@ function AddEvent({
   cleanForm,
   formOnChangeArray,
   editAgendas,
+  speakers,
+  getSpeakers,
+  // headers,
 }) {
   const history = useHistory();
 
@@ -45,6 +50,7 @@ function AddEvent({
     editAgendas([]);
     fetchCountries();
     formOnChangeArray("agendasAddresses", "agendas", []);
+    getSpeakers();
   }, []);
 
   useEffect(() => {
@@ -74,11 +80,17 @@ function AddEvent({
       descriptionRu,
       startDate,
       endDate,
+      speakers,
     } = store.getState().formReducer;
 
     // agendas, header, images
     // let { addresses } = store.getState().eventReducer;
-    let { header, image } = store.getState().imageReducer;
+    let { headers, image } = store.getState().imageReducer;
+
+    let headersImages = [];
+    headers.map((img) => {
+      headersImages.push(img.name);
+    });
 
     let event = {
       locationArm,
@@ -93,9 +105,10 @@ function AddEvent({
       descriptionRu,
       startDate,
       endDate,
-      agendas,
-      header: header[0],
+      // agendas,
+      headers: headersImages,
       images: image,
+      speakers,
     };
     //
     const changePath = () => {
@@ -141,25 +154,6 @@ function AddEvent({
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input
-                id="startDate"
-                type="datetime-local"
-                placeholder="Start Date"
-              />
-              <Input
-                id="endDate"
-                type="datetime-local"
-                placeholder="End Date"
-              />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="locationEng" type="text" placeholder="Address" />
-              <Input id="locationArm" type="text" placeholder="Հասցե" />
-              <Input id="locationRu" type="text" placeholder="Адрес" />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Textarea
                 id="descriptionEng"
                 type="text"
@@ -172,13 +166,45 @@ function AddEvent({
               />
               <Textarea id="descriptionRu" type="text" placeholder="Описание" />
             </div>
-            <div>
-              {/* <AddAgendasAddress addressType={addressType} /> */}
-              <AgendaAdd />
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input id="locationEng" type="text" placeholder="Address" />
+              <Input id="locationArm" type="text" placeholder="Հասցե" />
+              <Input id="locationRu" type="text" placeholder="Адрес" />
             </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input
+                id="startDate"
+                type="datetime-local"
+                placeholder="Start Date"
+              />
+              <Input
+                id="endDate"
+                type="datetime-local"
+                placeholder="End Date"
+              />
+
+              <Multiselect
+                placeholder="Speakers"
+                items={speakers}
+                id="speakers"
+              />
+            </div>
+
+            {/* <div>
+              <AgendaAdd />
+            </div> */}
             <div className="event_address_container " style={{ marginTop: 20 }}>
               <div style={{ marginRight: 20 }}>
-                <OneImageUpload label="Upload Header Image" />
+                <OneImageUpload label="Upload Header 1" index={1} />
+                {/* <ImageUpload label="Upload Headers (max 3)" /> */}
+              </div>
+              <div style={{ marginRight: 20 }}>
+                <OneImageUpload label="Upload Header 2" index={2} />
+              </div>
+              <div style={{ marginRight: 20 }}>
+                <OneImageUpload label="Upload Header 3" index={3} />
               </div>
               <ImageUpload label="Upload Images" />
             </div>
@@ -199,7 +225,7 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state|||");
+  console.log(state, "state|||");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -208,6 +234,9 @@ const mapStateToProps = (state) => {
     cities: state.locationsReducer.cities,
     cities: state.locationsReducer.cities,
     agendas: state.eventReducer?.agendas,
+    speakers: state.eventReducer?.speakers,
+    // selectedSpeakers: state.formReducer?.speakers ?? [],
+    headers: state.imageReducer?.headers,
   };
 };
 
@@ -221,6 +250,7 @@ const mapDispatchToProps = (dispatch) => {
     formOnChangeArray: (firstKey, secondKey, value) =>
       dispatch(formOnChangeArray(firstKey, secondKey, value)),
     editAgendas: (agendas) => dispatch(editAgendas(agendas)),
+    getSpeakers: () => dispatch(getSpeakers()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddEvent);

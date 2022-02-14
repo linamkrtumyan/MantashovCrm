@@ -9,28 +9,39 @@ function ImageUpload({
   className = "",
   containerClassName = "",
   imageUpload,
+  headers,
+  image,
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
+  const [imagesLength, setImagesLength] = useState(
+    headers.length + image.length
+  );
+
+  useEffect(() => {
+    setImagesLength(headers.length + image.length);
+  }, [headers, image]);
+
 
   const onImageChange = (e) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      const files = [...e.target.files];
+    if (imagesLength < 8) {
+      if (e.target.files) {
+        const filesArray = Array.from(e.target.files).map((file) =>
+          URL.createObjectURL(file)
+        );
+        const files = [...e.target.files];
+        uploadImage(files);
 
-      uploadImage(files);
+        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        setA(a + 1);
+        Array.from(e.target.files).map((file) => {
+          URL.revokeObjectURL(file);
+        });
+      }
 
-      setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-      setA(a + 1);
-      Array.from(e.target.files).map((file) => {
-        URL.revokeObjectURL(file);
-      });
+      setDelindex(null);
     }
-
-    setDelindex(null);
   };
 
   const deleteImage = (a) => {
@@ -99,7 +110,8 @@ function ImageUpload({
 
 const mapStateToProps = (state) => {
   return {
-    image: state.imageReducer.image,
+    headers: state.imageReducer?.headers,
+    image: state.imageReducer?.image,
     imageUpload: state.imageReducer?.imageUpload,
   };
 };

@@ -17,6 +17,7 @@ const initialState = {
   deletedImages: [],
   header: "",
   oneImageLoading: false,
+  headers: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -71,6 +72,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         header: action.payload.header,
+        headers: [...state.headers.concat(action.payload.header)],
         error: null,
         oneImageLoading: action.payload.loading,
       };

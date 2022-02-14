@@ -3,15 +3,28 @@ import { connect } from "react-redux";
 import { uploadOneImage } from "../../../store";
 import "./oneImageUpload.css";
 
-function OneImageUpload({ uploadOneImage, label = "", oneImageLoading }) {
+function OneImageUpload({
+  uploadOneImage,
+  label = "",
+  oneImageLoading,
+  headers,
+  index,
+}) {
   const [image, setImage] = useState([]);
   const onImageChange = (e) => {
     if (e.target.files) {
+      uploadOneImage(e.target.files);
       setImage(URL.createObjectURL(e.target.files[0]));
       //   const file = [...e.target.files];
-      uploadOneImage(e.target.files);
     }
   };
+
+  useEffect(() => {
+    if (headers && headers.length && headers[index - 1]) {
+      setImage(headers[index - 1]?.url);
+    }
+  }, [headers]);
+
 
   return (
     <div>
@@ -22,7 +35,15 @@ function OneImageUpload({ uploadOneImage, label = "", oneImageLoading }) {
       ) : null}
       {image.length > 0 ? (
         <div className="upload_cont">
-          <img className="uploaded_image" src={image} alt="" />
+          <img
+            className="uploaded_image"
+            src={
+              // image
+              // headers[index - 1]?.url ? headers[index - 1].url :
+              image
+            }
+            alt=""
+          />
           <div className="middle">
             <div
               // onClick={() => deleteImage(source.indexOf(photo))}
@@ -72,6 +93,7 @@ function OneImageUpload({ uploadOneImage, label = "", oneImageLoading }) {
 
 const mapStateToProps = (state) => {
   return {
+    headers: state.imageReducer?.headers,
     oneImageLoading: state.imageReducer?.oneImageLoading,
   };
 };
