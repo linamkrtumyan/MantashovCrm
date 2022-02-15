@@ -12,3 +12,4 @@ export { editAgendas } from "./editAgendas";
 export { editImages } from "./editImages";
 export { deleteEventImageFromStore } from "./deleteEventImageFromStore";
 export { getSpeakers } from "./getSpeakers";
+export { addEventDetails } from "./addEventDetails";

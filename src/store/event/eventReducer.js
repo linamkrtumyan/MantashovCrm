@@ -31,6 +31,7 @@ import {
   FETCH_ALL_SPEAKERS_REQUEST,
   FETCH_ALL_SPEAKERS_SUCCESS,
   FETCH_ALL_SPEAKERS_FAILURE,
+  ADD_EVENT_DETAILS,
 } from "./types";
 
 const initialState = {
@@ -51,10 +52,17 @@ const initialState = {
   agendas: [],
   eventImages: [],
   fetch: false,
+  eventId: null,
+  eventDetailsBlocks:[]
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_EVENT_DETAILS:
+      return {
+        ...state,
+        eventDetailsBlocks: action.payload.details,
+      };
     case FETCH_EVENTS_BY_PAGE_REQUEST:
       return {
         ...state,
@@ -183,6 +191,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
+        eventId: action.payload.eventId,
       };
     case ADD_EVENT_FAILURE:
       return {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../Components/Forms/Input/Input";
 import Textarea from "../../Components/Forms/Textarea/Textarea";
 import Button from "../../Components/Forms/Button/Button";
@@ -41,7 +41,8 @@ function AddEvent({
   editAgendas,
   speakers,
   getSpeakers,
-  // headers,
+  headers,
+  image,
 }) {
   const history = useHistory();
 
@@ -112,10 +113,11 @@ function AddEvent({
     };
     //
     const changePath = () => {
-      history.push("/events");
+      history.push("/eventDetails");
     };
     addEvent(event, changePath);
-    cleanForm();
+    // history.push(`/event/${id}`)
+    // cleanForm();
     editAgendas([]);
   };
 
@@ -206,7 +208,7 @@ function AddEvent({
               <div style={{ marginRight: 20 }}>
                 <OneImageUpload label="Upload Header 3" index={3} />
               </div>
-              <ImageUpload label="Upload Images" />
+              <ImageUpload label="Upload Images" limit={true} />
             </div>
           </div>
 
@@ -216,7 +218,7 @@ function AddEvent({
               title="Cancel"
               className="action_btn cancel_btn"
             />
-            <Button title="Create" className="action_btn" />
+            <Button title="Create ->" className="action_btn" />
           </div>
         </div>
       </form>
@@ -225,7 +227,7 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state|||");
+  // console.log(state, "state|||");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -237,6 +239,7 @@ const mapStateToProps = (state) => {
     speakers: state.eventReducer?.speakers,
     // selectedSpeakers: state.formReducer?.speakers ?? [],
     headers: state.imageReducer?.headers,
+    image: state.imageReducer?.image,
   };
 };
 

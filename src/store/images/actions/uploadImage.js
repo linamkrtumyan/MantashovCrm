@@ -4,9 +4,10 @@ import {
   UPLOAD_IMAGE_FAILURE,
 } from "../types";
 
-export const uploadImage = (img) => {
+export const uploadImage = (img, type) => {
+  // console.log({type}, "|||||||||||");
   // console.log("mtav");
-  // console.log(img, "stacoxy");
+  // console.log({ img }, "stacoxy");
   const data = new FormData();
 
   for (let i = 0; i < img.length; i++) {
@@ -23,7 +24,7 @@ export const uploadImage = (img) => {
         return res.json();
       })
       .then((data) => {
-        dispatch(uploadImageSuccess(data));
+        dispatch(uploadImageSuccess(data, img, type));
       })
       .catch((e) => {
         dispatch(uploadImageFailure(e.message));
@@ -38,15 +39,19 @@ const uploadImageRequest = () => {
   };
 };
 
-const uploadImageSuccess = (data) => {
-  const image = data ? data : [];
+const uploadImageSuccess = (data, img, type) => {
+  const image = data ? (type !== "video" ? data : []) : [];
+  const videos = type === "video" ? data : [];
   // console.log(typeof image);
   const loading = data ? false : true;
+  const imagesUrls = img;
   return {
     type: UPLOAD_IMAGE_SUCCESS,
     payload: {
       image,
       imageUpload: loading,
+      imagesUrls,
+      videos,
     },
   };
 };

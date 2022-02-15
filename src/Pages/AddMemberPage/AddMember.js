@@ -160,7 +160,7 @@ function AddMember({
       history.push("/members");
     };
     addMember(member, changePath);
-    cleanForm();
+    // cleanForm();
   };
   return (
     <div>

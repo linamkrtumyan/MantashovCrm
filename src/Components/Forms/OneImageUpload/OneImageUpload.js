@@ -9,13 +9,22 @@ function OneImageUpload({
   oneImageLoading,
   headers,
   index,
+  images,
 }) {
   const [image, setImage] = useState([]);
+  const [imagesLength, setImagesLength] = useState(
+    headers.length + images.length
+  );
+   useEffect(() => {
+     setImagesLength(headers.length + images.length);
+   }, [headers, images]);
   const onImageChange = (e) => {
-    if (e.target.files) {
-      uploadOneImage(e.target.files);
-      setImage(URL.createObjectURL(e.target.files[0]));
-      //   const file = [...e.target.files];
+    if (imagesLength < 8) {
+      if (e.target.files) {
+        uploadOneImage(e.target.files);
+        setImage(URL.createObjectURL(e.target.files[0]));
+        //   const file = [...e.target.files];
+      }
     }
   };
 
@@ -24,7 +33,6 @@ function OneImageUpload({
       setImage(headers[index - 1]?.url);
     }
   }, [headers]);
-
 
   return (
     <div>
@@ -94,6 +102,7 @@ function OneImageUpload({
 const mapStateToProps = (state) => {
   return {
     headers: state.imageReducer?.headers,
+    images: state.imageReducer?.image,
     oneImageLoading: state.imageReducer?.oneImageLoading,
   };
 };

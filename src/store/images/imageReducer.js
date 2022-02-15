@@ -1,3 +1,4 @@
+import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
 import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
@@ -17,7 +18,9 @@ const initialState = {
   deletedImages: [],
   header: "",
   oneImageLoading: false,
-  headers: []
+  headers: [],
+  imagesUrls: [],
+  videos: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,6 +43,8 @@ const reducer = (state = initialState, action) => {
         // image: state.image.push(action.payload.image),
         error: null,
         imageUpload: action.payload.imageUpload,
+        imagesUrls: action.payload.imagesUrls,
+        videos: action.payload.videos,
       };
     case UPLOAD_IMAGE_FAILURE:
       return {

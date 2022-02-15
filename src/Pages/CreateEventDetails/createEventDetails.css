@@ -1,0 +1,17 @@
+.plus_icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #dad6d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opened_field_container {
+  margin-left: 20px;
+}
+
+.eventText {
+  width: 850px;
+}

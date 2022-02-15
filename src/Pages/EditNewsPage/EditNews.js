@@ -267,7 +267,7 @@ function EditNews({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state news edit");
+  // console.log(state, "state news edit");
   return {
     header: state.imageReducer.header,
     news: state.newsReducer.newsDetails,

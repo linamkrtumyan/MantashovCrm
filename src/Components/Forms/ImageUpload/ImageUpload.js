@@ -11,29 +11,60 @@ function ImageUpload({
   imageUpload,
   headers,
   image,
+  limit = false,
+  type = "",
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedVideos, setSelectedVideos] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
   const [imagesLength, setImagesLength] = useState(
     headers.length + image.length
   );
 
+  const [fileType, setFileType] = useState(type);
+
+  useEffect(() => {
+    setFileType(type);
+    // console.log({ type }, "ooooooooooooooooooooo");
+  }, [type]);
+
   useEffect(() => {
     setImagesLength(headers.length + image.length);
   }, [headers, image]);
 
-
   const onImageChange = (e) => {
-    if (imagesLength < 8) {
+    if (limit) {
+      if (imagesLength < 8) {
+        if (e.target.files) {
+          const filesArray = Array.from(e.target.files).map((file) =>
+            URL.createObjectURL(file)
+          );
+          const files = [...e.target.files];
+
+          uploadImage(files, fileType);
+          fileType === "video"
+            ? setSelectedVideos((prevImages) => prevImages.concat(filesArray))
+            : setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          setA(a + 1);
+          Array.from(e.target.files).map((file) => {
+            URL.revokeObjectURL(file);
+          });
+        }
+
+        setDelindex(null);
+      }
+    } else {
       if (e.target.files) {
         const filesArray = Array.from(e.target.files).map((file) =>
           URL.createObjectURL(file)
         );
         const files = [...e.target.files];
-        uploadImage(files);
-
-        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        // console.log(type, "typeee");
+        uploadImage(files, fileType);
+        fileType === "video"
+          ? setSelectedVideos((prevImages) => prevImages.concat(filesArray))
+          : setSelectedFiles((prevImages) => prevImages.concat(filesArray));
         setA(a + 1);
         Array.from(e.target.files).map((file) => {
           URL.revokeObjectURL(file);
@@ -57,7 +88,21 @@ function ImageUpload({
     return source.map((photo) => {
       return (
         <div className="upload_cont">
-          <img className="uploaded_images" src={photo} alt="" key={photo} />
+          {fileType === "video" ? (
+            <video
+              className="uploaded_images"
+              // source={photo}
+              key={photo}
+              controls
+            >
+              <source src={photo} type="video/mp4" />
+              <source src={photo} type="video/ogg" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <img className="uploaded_images" src={photo} alt="" key={photo} />
+          )}
+
           <div className="middle">
             <div onClick={() => deleteImage(source.indexOf(photo))}>
               <svg viewBox="0 0 24 24" className="close">
@@ -89,7 +134,7 @@ function ImageUpload({
         <input
           type="file"
           id="multiple-file-upload"
-          accept="image/png, image/gif, image/jpeg"
+          accept="image/png, image/gif, image/jpeg, video/*"
           name="myfile"
           onChange={(e) => onImageChange(e)}
           multiple
@@ -102,7 +147,7 @@ function ImageUpload({
             <div className="loader is-loading"></div>
           </div>
         ) : null}
-        {renderPhotos(selectedFiles)}
+        {renderPhotos(fileType === "video" ? selectedVideos : selectedFiles)}
       </div>
     </div>
   );
