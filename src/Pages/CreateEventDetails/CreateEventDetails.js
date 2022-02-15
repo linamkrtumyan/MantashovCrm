@@ -35,12 +35,13 @@ function CreateEventDetails({
 
   const saveBlockData = () => {
     // // const linksArr = links.split(" ");
-
-    setNewBlock({ ...newBlock, id: eventDetailsBlocks.length });
-    eventDetailsBlocks.push(newBlock);
-    setRenderContent(renderContent + 1);
-    addEventDetails(eventDetailsBlocks);
-    setNewBlock({});
+    if (newBlock.length) {
+      setNewBlock({ ...newBlock, id: eventDetailsBlocks.length });
+      eventDetailsBlocks.push(newBlock);
+      setRenderContent(renderContent + 1);
+      addEventDetails(eventDetailsBlocks);
+      setNewBlock({});
+    }
   };
 
   const handleDelete = (block) => {
@@ -56,7 +57,6 @@ function CreateEventDetails({
       const linksArr = item.links ? item.links.split(" ") : [];
       item.links = linksArr;
     });
-
   };
 
   return (
@@ -73,7 +73,7 @@ function CreateEventDetails({
         {open && (
           <div className="container_body" style={{ paddingBottom: 20 }}>
             <div>
-              <div>
+              <div style={{ marginTop: 20 }}>
                 <label htmlFor="descriptionEng1">Description 1</label>
 
                 <textarea
@@ -91,7 +91,7 @@ function CreateEventDetails({
                   }}
                 />
               </div>
-              <div>
+              <div style={{ marginTop: 20 }}>
                 <label htmlFor="descriptionArm1">Նկարագիր 1</label>
 
                 <textarea
@@ -109,7 +109,7 @@ function CreateEventDetails({
                   }}
                 />
               </div>
-              <div>
+              <div style={{ marginTop: 20 }}>
                 <label htmlFor="descriptionArm1">Описание 1</label>
 
                 <textarea
@@ -128,7 +128,7 @@ function CreateEventDetails({
                 />
               </div>
             </div>
-            <div style={{ marginLeft: 11 }}>
+            <div style={{ marginTop: 20 }}>
               <ImageUpload
                 limit={false}
                 label="Upload Images"
@@ -143,7 +143,7 @@ function CreateEventDetails({
             </div>
 
             <div>
-              <div>
+              <div style={{ marginTop: 20 }}>
                 <label htmlFor="descriptionEng2">Description 2</label>
 
                 <textarea
@@ -162,7 +162,7 @@ function CreateEventDetails({
                 />
               </div>
 
-              <div>
+              <div style={{ marginTop: 20 }}>
                 <label htmlFor="descriptionArm2">Նկարագիր 2</label>
 
                 <textarea
@@ -180,7 +180,7 @@ function CreateEventDetails({
                   }}
                 />
               </div>
-              <div>
+              <div style={{ marginTop: 20 }}>
                 <label htmlFor="descriptionRu2">Описание 2</label>
 
                 <textarea
@@ -199,7 +199,7 @@ function CreateEventDetails({
                 />
               </div>
             </div>
-            <div className="links_container">
+            <div style={{ marginTop: 20 }}>
               <div>
                 <label htmlFor="links">
                   Links (input links separated by space)
