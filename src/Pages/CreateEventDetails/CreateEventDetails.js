@@ -77,7 +77,8 @@ function CreateEventDetails({
     let dataToSend = {
       eventId,
       eventDetailsBlocks,
-      images,
+      uploadedPhotos,
+      // headers
     };
     console.log({ dataToSend });
     // here must be function call of details add_________________________________
@@ -86,8 +87,8 @@ function CreateEventDetails({
   return (
     <div className="event-card-desc">
       <div className="images_container">
-        {images && images.length
-          ? images.map((image) => (
+        {uploadedPhotos && uploadedPhotos.length
+          ? uploadedPhotos.map((image) => (
               <img src={image} alt="" className="uploaded_image" key={image} />
             ))
           : null}

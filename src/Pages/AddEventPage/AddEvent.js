@@ -115,7 +115,6 @@ function AddEvent({
       speakers,
     };
 
-    
     //
     const changePath = () => {
       history.push("/eventDetails");
@@ -196,6 +195,7 @@ function AddEvent({
                 placeholder="Speakers"
                 items={speakers}
                 id="speakers"
+                required={false}
               />
             </div>
 
@@ -213,7 +213,7 @@ function AddEvent({
               <div style={{ marginRight: 20 }}>
                 <OneImageUpload label="Upload Header 3" index={3} />
               </div>
-              <ImageUpload label="Upload Images" limit={true} />
+              {/* <ImageUpload label="Upload Images" limit={true} /> */}
             </div>
           </div>
 

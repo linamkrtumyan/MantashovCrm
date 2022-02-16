@@ -9,7 +9,6 @@ function OneImageUpload({
   oneImageLoading,
   headers,
   index,
-  images,
 }) {
   const [image, setImage] = useState([]);
   const [imagesLength, setImagesLength] = useState(headers.length);
@@ -101,7 +100,6 @@ function OneImageUpload({
 const mapStateToProps = (state) => {
   return {
     headers: state.imageReducer?.headers,
-    images: state.imageReducer?.image,
     oneImageLoading: state.imageReducer?.oneImageLoading,
   };
 };

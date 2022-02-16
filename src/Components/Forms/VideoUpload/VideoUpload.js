@@ -46,7 +46,11 @@ function VideoUpload({
     return source.map((videos) => {
       return (
         <div className="upload_cont">
-          <img className="uploaded_images" src={videos} alt="" key={videos} />
+          <video className="uploaded_images" key={videos} controls>
+            <source src={videos} type="video/mp4" />
+            <source src={videos} type="video/ogg" />
+            Your browser does not support the video tag.
+          </video>
           <div className="middle">
             <div onClick={() => deleteVideo(source.indexOf(videos))}>
               <svg viewBox="0 0 24 24" className="close">
