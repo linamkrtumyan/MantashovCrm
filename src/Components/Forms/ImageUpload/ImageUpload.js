@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { deleteImageFromStore, uploadImage } from "../../../store";
+import {
+  deleteImageFromStore,
+  uploadImage,
+  setUploadedPhotos,
+} from "../../../store";
 import "./imageUpload.css";
 function ImageUpload({
   deleteImageFromStore,
@@ -12,26 +16,23 @@ function ImageUpload({
   headers,
   image,
   limit = false,
-  type = "",
+  setUploadedPhotos,
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [selectedVideos, setSelectedVideos] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
   const [imagesLength, setImagesLength] = useState(
     headers.length + image.length
   );
 
-  const [fileType, setFileType] = useState(type);
-
-  useEffect(() => {
-    setFileType(type);
-    // console.log({ type }, "ooooooooooooooooooooo");
-  }, [type]);
-
   useEffect(() => {
     setImagesLength(headers.length + image.length);
   }, [headers, image]);
+
+  useEffect(() => {
+    console.log({ selectedFiles });
+    setUploadedPhotos(selectedFiles);
+  }, [selectedFiles]);
 
   const onImageChange = (e) => {
     if (limit) {
@@ -42,10 +43,8 @@ function ImageUpload({
           );
           const files = [...e.target.files];
 
-          uploadImage(files, fileType);
-          fileType === "video"
-            ? setSelectedVideos((prevImages) => prevImages.concat(filesArray))
-            : setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          uploadImage(files);
+          setSelectedFiles((prevImages) => prevImages.concat(filesArray));
           setA(a + 1);
           Array.from(e.target.files).map((file) => {
             URL.revokeObjectURL(file);
@@ -60,11 +59,8 @@ function ImageUpload({
           URL.createObjectURL(file)
         );
         const files = [...e.target.files];
-        // console.log(type, "typeee");
-        uploadImage(files, fileType);
-        fileType === "video"
-          ? setSelectedVideos((prevImages) => prevImages.concat(filesArray))
-          : setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        uploadImage(files);
         setA(a + 1);
         Array.from(e.target.files).map((file) => {
           URL.revokeObjectURL(file);
@@ -87,21 +83,8 @@ function ImageUpload({
     }
     return source.map((photo) => {
       return (
-        <div className="upload_cont">
-          {fileType === "video" ? (
-            <video
-              className="uploaded_images"
-              // source={photo}
-              key={photo}
-              controls
-            >
-              <source src={photo} type="video/mp4" />
-              <source src={photo} type="video/ogg" />
-              Your browser does not support the video tag.
-            </video>
-          ) : (
-            <img className="uploaded_images" src={photo} alt="" key={photo} />
-          )}
+        <div className="upload_cont" key={photo}>
+          <img className="uploaded_images" src={photo} alt="" key={photo} />
 
           <div className="middle">
             <div onClick={() => deleteImage(source.indexOf(photo))}>
@@ -134,7 +117,7 @@ function ImageUpload({
         <input
           type="file"
           id="multiple-file-upload"
-          accept="image/png, image/gif, image/jpeg, video/*"
+          accept="image/png, image/gif, image/jpeg"
           name="myfile"
           onChange={(e) => onImageChange(e)}
           multiple
@@ -147,7 +130,7 @@ function ImageUpload({
             <div className="loader is-loading"></div>
           </div>
         ) : null}
-        {renderPhotos(fileType === "video" ? selectedVideos : selectedFiles)}
+        {renderPhotos(selectedFiles)}
       </div>
     </div>
   );
@@ -165,6 +148,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     uploadImage: (img) => dispatch(uploadImage(img)),
     deleteImageFromStore: (id) => dispatch(deleteImageFromStore(id)),
+    setUploadedPhotos: (photos) => dispatch(setUploadedPhotos(photos)),
   };
 };
 

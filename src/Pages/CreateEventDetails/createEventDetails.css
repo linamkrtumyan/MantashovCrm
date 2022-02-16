@@ -15,3 +15,16 @@
 .eventText {
   width: 850px;
 }
+
+.images_container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 800px;
+  margin-left: 20px;
+}
+
+.uploaded_image {
+  margin: 10px;
+  width: 150px;
+  height: 150px;
+}

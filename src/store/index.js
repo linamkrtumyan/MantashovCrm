@@ -36,6 +36,7 @@ export {
   deleteEventImageFromStore,
   getSpeakers,
   addEventDetails,
+  setUploadedPhotos,
 } from "./event/actions";
 export {
   fetchCountries,
@@ -53,6 +54,12 @@ export {
   uploadOneImage,
   deleteImageFromStore,
 } from "./images/actions";
+export {
+  uploadVideo,
+  cleanVideos,
+  deletedVideos,
+  deleteVideoFromStore,
+} from "./videos/actions";
 export { openModal, closeModal, callAction } from "./modal/actions";
 export {
   fetchCategories,

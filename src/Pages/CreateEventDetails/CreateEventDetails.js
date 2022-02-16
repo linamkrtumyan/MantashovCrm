@@ -5,6 +5,7 @@ import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import Textarea from "../../Components/Forms/Textarea/Textarea";
 import Button from "../../Components/Forms/Button/Button";
 import store, { addEventDetails } from "../../store";
+import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 
 function CreateEventDetails({
   eventId,
@@ -12,6 +13,8 @@ function CreateEventDetails({
   headers,
   addEventDetails,
   eventDetailsBlocks,
+  uploadedPhotos,
+  video,
 }) {
   const [images, setImages] = useState([]);
   const [open, setOpen] = useState(false);
@@ -19,35 +22,48 @@ function CreateEventDetails({
   const [newBlock, setNewBlock] = useState({});
 
   useEffect(() => {
-    // setAllAgendas(agendas);
     for (let i = 0; i < eventDetailsBlocks.length; i++) {
       eventDetailsBlocks[i].id = i;
     }
   }, [eventDetailsBlocks]);
 
   useEffect(() => {
-    setImages(headers.concat(image));
-  }, [image, headers]);
+    let headersUrls = [];
+    headers.map((img) => {
+      headersUrls.push(img.url);
+    });
+    setImages(headersUrls.concat(uploadedPhotos));
+  }, [headers, uploadedPhotos]);
+
+  useEffect(() => {
+    setNewBlock({
+      ...newBlock,
+      blockImages: image,
+      blockVideos: video,
+    });
+  }, [image, video]);
 
   const openField = () => {
     setOpen(true);
   };
 
   const saveBlockData = () => {
-    // // const linksArr = links.split(" ");
-    if (newBlock.length) {
-      setNewBlock({ ...newBlock, id: eventDetailsBlocks.length });
-      eventDetailsBlocks.push(newBlock);
-      setRenderContent(renderContent + 1);
-      addEventDetails(eventDetailsBlocks);
-      setNewBlock({});
-    }
+    // if (newBlock.length) {
+
+    setNewBlock({
+      ...newBlock,
+      id: eventDetailsBlocks.length,
+    });
+    eventDetailsBlocks.push(newBlock);
+    setRenderContent(renderContent + 1);
+    addEventDetails(eventDetailsBlocks);
+    setNewBlock({});
+    // }
   };
 
   const handleDelete = (block) => {
     const index = eventDetailsBlocks.indexOf(block);
     eventDetailsBlocks.splice(index, 1);
-    // setAllAgendas(eventDetailsBlocks);
     setRenderContent(renderContent + 1);
     addEventDetails(eventDetailsBlocks);
   };
@@ -57,14 +73,24 @@ function CreateEventDetails({
       const linksArr = item.links ? item.links.split(" ") : [];
       item.links = linksArr;
     });
+
+    let dataToSend = {
+      eventId,
+      eventDetailsBlocks,
+      images,
+    };
+    console.log({ dataToSend });
+    // here must be function call of details add_________________________________
   };
 
   return (
     <div className="event-card-desc">
       <div className="images_container">
-        {/* {images && images.length
-          ? images.map((image) => <img src={} alt="" />)
-          : null} */}
+        {images && images.length
+          ? images.map((image) => (
+              <img src={image} alt="" className="uploaded_image" key={image} />
+            ))
+          : null}
       </div>
       <div className="opened_field_container">
         <div className="plus_icon" onClick={openField}>
@@ -134,11 +160,9 @@ function CreateEventDetails({
                 label="Upload Images"
                 containerClassName="uploaded"
               />
-              <ImageUpload
-                limit={false}
+              <VideoUpload
                 label="Upload Videos"
                 containerClassName="uploaded"
-                type="video"
               />
             </div>
 
@@ -306,13 +330,14 @@ function CreateEventDetails({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state, "::::::::::");
+  console.log(state, "::::::::::");
   return {
     eventId: state.eventReducer.eventId,
     image: state.imageReducer?.image,
+    video: state.videoReducer?.video,
     headers: state.imageReducer?.headers,
-    imagesUrls: state.imageReducer?.imagesUrls,
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
+    uploadedPhotos: state.eventReducer.uploadedPhotos,
   };
 };
 const mapDispatchToProps = (dispatch) => {

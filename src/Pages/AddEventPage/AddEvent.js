@@ -5,7 +5,7 @@ import Button from "../../Components/Forms/Button/Button";
 import "./addEvent.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import store, { addEvent } from "../../store";
+import store, { addEvent, setUploadedPhotos } from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
@@ -20,8 +20,8 @@ import {
   editAgendas,
   getSpeakers,
 } from "../../store";
-import AddAgendasAddress from "./components/AddAgendasAddress";
-import AgendaAdd from "./components/AgendaAdd";
+// import AddAgendasAddress from "./components/AddAgendasAddress";
+// import AgendaAdd from "./components/AgendaAdd";
 import { scrollToView } from "../../helpers/scrollToView";
 import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 
@@ -35,14 +35,15 @@ function AddEvent({
   countryId,
   stateId,
   states,
-  agendas,
+  // agendas,
   cleanForm,
   formOnChangeArray,
   editAgendas,
   speakers,
   getSpeakers,
-  headers,
-  image,
+  // headers,
+  // image,
+  uploadedPhotos,
 }) {
   const history = useHistory();
 
@@ -89,8 +90,10 @@ function AddEvent({
     let { headers, image } = store.getState().imageReducer;
 
     let headersImages = [];
+    let headersUrls = [];
     headers.map((img) => {
       headersImages.push(img.name);
+      headersUrls.push(img.url);
     });
 
     let event = {
@@ -111,6 +114,8 @@ function AddEvent({
       images: image,
       speakers,
     };
+
+    
     //
     const changePath = () => {
       history.push("/eventDetails");
@@ -227,7 +232,7 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state|||");
+  console.log(state, "state|||");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

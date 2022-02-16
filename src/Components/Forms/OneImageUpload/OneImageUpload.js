@@ -12,14 +12,12 @@ function OneImageUpload({
   images,
 }) {
   const [image, setImage] = useState([]);
-  const [imagesLength, setImagesLength] = useState(
-    headers.length + images.length
-  );
-   useEffect(() => {
-     setImagesLength(headers.length + images.length);
-   }, [headers, images]);
+  const [imagesLength, setImagesLength] = useState(headers.length);
+  useEffect(() => {
+    setImagesLength(headers.length);
+  }, [headers]);
   const onImageChange = (e) => {
-    if (imagesLength < 8) {
+    if (imagesLength < 3) {
       if (e.target.files) {
         uploadOneImage(e.target.files);
         setImage(URL.createObjectURL(e.target.files[0]));
@@ -56,6 +54,7 @@ function OneImageUpload({
             <div
               // onClick={() => deleteImage(source.indexOf(photo))}
               onClick={() => {
+                // setImage([]);
                 setImage([]);
               }}
             >

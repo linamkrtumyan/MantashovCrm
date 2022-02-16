@@ -9,6 +9,7 @@ import eventReducer from "./event/eventReducer";
 import locationsReducer from "./locations/locationsReducer";
 import organizationsReducer from "./organizations/organizationsReducer";
 import applicantsReducer from "./applicants/applicantsReducer";
+import videoReducer from "./videos/videoReducer";
 
 export const reducers = {
   membersReducer,
@@ -22,4 +23,5 @@ export const reducers = {
   locationsReducer,
   organizationsReducer,
   applicantsReducer,
+  videoReducer,
 };

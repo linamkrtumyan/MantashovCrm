@@ -32,6 +32,7 @@ import {
   FETCH_ALL_SPEAKERS_SUCCESS,
   FETCH_ALL_SPEAKERS_FAILURE,
   ADD_EVENT_DETAILS,
+  SET_UPLOADED_PHOTOS,
 } from "./types";
 
 const initialState = {
@@ -53,7 +54,8 @@ const initialState = {
   eventImages: [],
   fetch: false,
   eventId: null,
-  eventDetailsBlocks:[]
+  eventDetailsBlocks: [],
+  uploadedPhotos: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -62,6 +64,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         eventDetailsBlocks: action.payload.details,
+      };
+    case SET_UPLOADED_PHOTOS:
+      return {
+        ...state,
+        uploadedPhotos: action.payload.uploadedPhotos,
       };
     case FETCH_EVENTS_BY_PAGE_REQUEST:
       return {
