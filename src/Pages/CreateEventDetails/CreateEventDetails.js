@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./createEventDetails.css";
 import { connect } from "react-redux";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
-import Textarea from "../../Components/Forms/Textarea/Textarea";
 import Button from "../../Components/Forms/Button/Button";
-import store, { addEventDetails } from "../../store";
+import { addEventDetails, cleanImages, cleanVideos } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 
 function CreateEventDetails({
@@ -15,11 +14,14 @@ function CreateEventDetails({
   eventDetailsBlocks,
   uploadedPhotos,
   video,
+  imgUrls,
 }) {
   const [images, setImages] = useState([]);
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
   const [newBlock, setNewBlock] = useState({});
+  const [shortDescription, setShortDescription] = useState("");
+  const [forRender, setForRender] = useState(0);
 
   useEffect(() => {
     for (let i = 0; i < eventDetailsBlocks.length; i++) {
@@ -40,6 +42,7 @@ function CreateEventDetails({
       ...newBlock,
       blockImages: image,
       blockVideos: video,
+      imgUrls,
     });
   }, [image, video]);
 
@@ -58,6 +61,9 @@ function CreateEventDetails({
     setRenderContent(renderContent + 1);
     addEventDetails(eventDetailsBlocks);
     setNewBlock({});
+    cleanImages();
+    setShortDescription("");
+    cleanVideos();
     // }
   };
 
@@ -70,7 +76,7 @@ function CreateEventDetails({
 
   const sendData = () => {
     eventDetailsBlocks.map((item) => {
-      const linksArr = item.links ? item.links.split(" ") : [];
+      const linksArr = item.links ? item.links.split("\n") : [];
       item.links = linksArr;
     });
 
@@ -78,17 +84,23 @@ function CreateEventDetails({
       eventId,
       eventDetailsBlocks,
       uploadedPhotos,
+      eventFixedDescription: shortDescription,
       // headers
     };
     console.log({ dataToSend });
     // here must be function call of details add_________________________________
   };
 
+  const deleteImageFromBlock = (img) => {
+    // deleteImageFromStore(a);
+    // setDelindex(a);
+  };
+
   return (
     <div className="event-card-desc">
       <div className="images_container">
-        {uploadedPhotos && uploadedPhotos.length
-          ? uploadedPhotos.map((image) => (
+        {images && images.length
+          ? images.map((image) => (
               <img src={image} alt="" className="uploaded_image" key={image} />
             ))
           : null}
@@ -100,6 +112,18 @@ function CreateEventDetails({
         {open && (
           <div className="container_body" style={{ paddingBottom: 20 }}>
             <div>
+              <div style={{ marginTop: 20 }}>
+                <label htmlFor="eventFixedDescription">Short Description</label>
+
+                <textarea
+                  className="add_news_input textarea eventText"
+                  value={shortDescription}
+                  onChange={(e) => {
+                    setShortDescription(e.target.value);
+                  }}
+                />
+              </div>
+
               <div style={{ marginTop: 20 }}>
                 <label htmlFor="descriptionEng1">Description 1</label>
 
@@ -227,7 +251,7 @@ function CreateEventDetails({
             <div style={{ marginTop: 20 }}>
               <div>
                 <label htmlFor="links">
-                  Links (input links separated by space)
+                  Links (input links separated by "Enter")
                 </label>
 
                 <textarea
@@ -304,13 +328,61 @@ function CreateEventDetails({
                       </div> */}
                       <div>
                         <label htmlFor="descriptionEng1">
-                          Links (input links separated by space)
+                          Links (input links separated by "Enter")
                         </label>
 
                         <textarea
                           className="textarea"
                           defaultValue={block.links}
                         />
+                      </div>
+                      <div style={{ display: "flex " }}>
+                        {block.imgUrls && block.imgUrls.length
+                          ? block.imgUrls.map((img) => {
+                              // console.log({ urls: block.imgUrls, img }, "kkk");
+                              return (
+                                <div className="upload_cont">
+                                  <img
+                                    className="uploaded_images"
+                                    src={img}
+                                    alt=""
+                                    key={img}
+                                  />
+                                  <div className="middle">
+                                    <div
+                                      onClick={() => {
+                                        const indexImg =
+                                          block.imgUrls.indexOf(img);
+                                        const newArr = block.imgUrls.slice(
+                                          indexImg,
+                                          1
+                                        );
+                                        const indexBlock =
+                                          eventDetailsBlocks.indexOf(block);
+                                        eventDetailsBlocks[indexBlock].imgUrls =
+                                          newArr;
+                                        setForRender(forRender + 1);
+                                        addEventDetails(eventDetailsBlocks);
+                                      }}
+                                    >
+                                      <svg
+                                        viewBox="0 0 24 24"
+                                        className="close"
+                                      >
+                                        <path
+                                          d="M 2 2 L 22 22 M 2 22 L22 2"
+                                          stroke="red"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="5"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })
+                          : null}
                       </div>
                       <Button
                         title="Delete"
@@ -339,6 +411,7 @@ const mapStateToProps = (state) => {
     headers: state.imageReducer?.headers,
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
     uploadedPhotos: state.eventReducer.uploadedPhotos,
+    imgUrls: state.imageReducer?.imgUrls,
   };
 };
 const mapDispatchToProps = (dispatch) => {
