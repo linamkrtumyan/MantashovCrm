@@ -13,6 +13,7 @@ import {
   DELETE_NEWS_FAILURE,
   TRANSFER_NEWS_DELETE,
   DELETE_NEWS_IMAGE_FROM_STORE,
+  ADD_NEWS_DETAILS,
 } from "./types";
 
 const initialState = {
@@ -25,11 +26,18 @@ const initialState = {
   success: null,
   news: {},
   detailsImages: [],
+  newsDetailsBlocks: [],
+  newsId: null,
 };
 
 const reducer = (state = initialState, action) => {
   // console.log(action, " action payload");
   switch (action.type) {
+    case ADD_NEWS_DETAILS:
+      return {
+        ...state,
+        newsDetailsBlocks: action.payload.details,
+      };
     case FETCH_NEWS_BY_PAGE_REQUEST:
       return {
         ...state,
@@ -86,6 +94,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
+        newsId: action.payload.newsId,
       };
     case ADD_NEWS_FAILURE:
       return {

@@ -38,7 +38,7 @@ const addNewsSuccess = (data) => {
   //   const login = data ? data : [];
   return {
     type: ADD_NEWS_SUCCESS,
-    payload: {},
+    payload: { newsId: data.id },
   };
 };
 

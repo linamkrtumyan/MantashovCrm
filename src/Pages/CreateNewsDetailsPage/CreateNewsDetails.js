@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import "./createEventDetails.css";
+// import "./createEventDetails.css";
 import { connect } from "react-redux";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import Button from "../../Components/Forms/Button/Button";
-import { addEventDetails, cleanImages, cleanVideos } from "../../store";
+import { addNewsDetails, cleanImages, cleanVideos } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 
-function CreateEventDetails({
-  eventId,
+function CreateNewsDetails({
+  newsId,
   image,
   headers,
-  addEventDetails,
-  eventDetailsBlocks,
+  addNewsDetails,
+  newsDetailsBlocks,
   uploadedPhotos,
   video,
   imgUrls,
@@ -24,10 +24,10 @@ function CreateEventDetails({
   const [forRender, setForRender] = useState(0);
 
   useEffect(() => {
-    for (let i = 0; i < eventDetailsBlocks.length; i++) {
-      eventDetailsBlocks[i].id = i;
+    for (let i = 0; i < newsDetailsBlocks.length; i++) {
+      newsDetailsBlocks[i].id = i;
     }
-  }, [eventDetailsBlocks]);
+  }, [newsDetailsBlocks]);
 
   useEffect(() => {
     let headersUrls = [];
@@ -55,11 +55,11 @@ function CreateEventDetails({
 
     setNewBlock({
       ...newBlock,
-      id: eventDetailsBlocks.length,
+      id: newsDetailsBlocks.length,
     });
-    eventDetailsBlocks.push(newBlock);
+    newsDetailsBlocks.push(newBlock);
     setRenderContent(renderContent + 1);
-    addEventDetails(eventDetailsBlocks);
+    addNewsDetails(newsDetailsBlocks);
     setNewBlock({});
     cleanImages();
     setShortDescription("");
@@ -68,23 +68,23 @@ function CreateEventDetails({
   };
 
   const handleDelete = (block) => {
-    const index = eventDetailsBlocks.indexOf(block);
-    eventDetailsBlocks.splice(index, 1);
+    const index = newsDetailsBlocks.indexOf(block);
+    newsDetailsBlocks.splice(index, 1);
     setRenderContent(renderContent + 1);
-    addEventDetails(eventDetailsBlocks);
+    addNewsDetails(newsDetailsBlocks);
   };
 
   const sendData = () => {
-    eventDetailsBlocks.map((item) => {
+    newsDetailsBlocks.map((item) => {
       const linksArr = item.links ? item.links.split("\n") : [];
       item.links = linksArr;
     });
 
     let dataToSend = {
-      eventId,
-      eventDetailsBlocks,
+      newsId,
+      newsDetailsBlocks,
       uploadedPhotos,
-      eventFixedDescription: shortDescription,
+      newsFixedDescription: shortDescription,
       // headers
     };
     console.log({ dataToSend });
@@ -99,11 +99,11 @@ function CreateEventDetails({
   return (
     <div className="event-card-desc">
       <div className="applicant_page_title_container">
-        <p className="applicant_page_title">Event Details</p>
+        <p className="applicant_page_title">News Details</p>
       </div>
       <div className="images_container">
         {headers && headers.length
-          ? images.map((image) => (
+          ? headers.map((image) => (
               <img
                 src={image.url}
                 alt=""
@@ -120,8 +120,8 @@ function CreateEventDetails({
         {open && (
           <div className="container_body" style={{ paddingBottom: 20 }}>
             <div>
-              <div style={{ marginTop: 20 }}>
-                <label htmlFor="eventFixedDescription">Short Description</label>
+              {/* <div style={{ marginTop: 20 }}>
+                <label htmlFor="newsFixedDescription">Short Description</label>
 
                 <textarea
                   className="add_news_input textarea eventText"
@@ -130,7 +130,7 @@ function CreateEventDetails({
                     setShortDescription(e.target.value);
                   }}
                 />
-              </div>
+              </div> */}
 
               <div style={{ marginTop: 20 }}>
                 <label htmlFor="descriptionEng1">Description 1</label>
@@ -138,14 +138,14 @@ function CreateEventDetails({
                 <textarea
                   className="add_news_input textarea eventText"
                   value={
-                    newBlock.eventDescriptionEng1
-                      ? newBlock.eventDescriptionEng1
+                    newBlock.newsDescriptionEng1
+                      ? newBlock.newsDescriptionEng1
                       : ""
                   }
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionEng1: e.target.value,
+                      newsDescriptionEng1: e.target.value,
                     });
                   }}
                 />
@@ -156,14 +156,14 @@ function CreateEventDetails({
                 <textarea
                   className="add_news_input textarea"
                   value={
-                    newBlock.eventDescriptionArm1
-                      ? newBlock.eventDescriptionArm1
+                    newBlock.newsDescriptionArm1
+                      ? newBlock.newsDescriptionArm1
                       : ""
                   }
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionArm1: e.target.value,
+                      newsDescriptionArm1: e.target.value,
                     });
                   }}
                 />
@@ -174,14 +174,14 @@ function CreateEventDetails({
                 <textarea
                   className="add_news_input textarea"
                   value={
-                    newBlock.eventDescriptionRu1
-                      ? newBlock.eventDescriptionRu1
+                    newBlock.newsDescriptionRu1
+                      ? newBlock.newsDescriptionRu1
                       : ""
                   }
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionRu1: e.target.value,
+                      newsDescriptionRu1: e.target.value,
                     });
                   }}
                 />
@@ -206,14 +206,14 @@ function CreateEventDetails({
                 <textarea
                   className="add_news_input textarea"
                   value={
-                    newBlock.eventDescriptionEng2
-                      ? newBlock.eventDescriptionEng2
+                    newBlock.newsDescriptionEng2
+                      ? newBlock.newsDescriptionEng2
                       : ""
                   }
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionEng2: e.target.value,
+                      newsDescriptionEng2: e.target.value,
                     });
                   }}
                 />
@@ -225,14 +225,14 @@ function CreateEventDetails({
                 <textarea
                   className="add_news_input textarea"
                   value={
-                    newBlock.eventDescriptionArm2
-                      ? newBlock.eventDescriptionArm2
+                    newBlock.newsDescriptionArm2
+                      ? newBlock.newsDescriptionArm2
                       : ""
                   }
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionArm2: e.target.value,
+                      newsDescriptionArm2: e.target.value,
                     });
                   }}
                 />
@@ -243,14 +243,14 @@ function CreateEventDetails({
                 <textarea
                   className="add_news_input textarea"
                   value={
-                    newBlock.eventDescriptionRu2
-                      ? newBlock.eventDescriptionRu2
+                    newBlock.newsDescriptionRu2
+                      ? newBlock.newsDescriptionRu2
                       : ""
                   }
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionRu2: e.target.value,
+                      newsDescriptionRu2: e.target.value,
                     });
                   }}
                 />
@@ -282,8 +282,8 @@ function CreateEventDetails({
               />
             </div>
             <div>
-              {eventDetailsBlocks && eventDetailsBlocks.length
-                ? eventDetailsBlocks.map((block, index) => (
+              {newsDetailsBlocks && newsDetailsBlocks.length
+                ? newsDetailsBlocks.map((block, index) => (
                     <div
                       className="location_container"
                       style={{ display: "block" }}
@@ -300,13 +300,13 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionEng1}
+                            defaultValue={block.newsDescriptionEng1}
                             onChange={(e) => {
-                              const index = eventDetailsBlocks.indexOf(block);
-                              eventDetailsBlocks[index].eventDescriptionEng1 =
+                              const index = newsDetailsBlocks.indexOf(block);
+                              newsDetailsBlocks[index].newsDescriptionEng1 =
                                 e.target.value;
                               // formOnChange("editedAndAddedAgendas", agendas);
-                              addEventDetails(eventDetailsBlocks);
+                              addNewsDetails(newsDetailsBlocks);
                             }}
                           />
                         </div>
@@ -315,7 +315,7 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionArm1}
+                            defaultValue={block.newsDescriptionArm1}
                           />
                         </div>
                         <div className="input_container">
@@ -323,7 +323,7 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionRu1}
+                            defaultValue={block.newsDescriptionRu1}
                           />
                         </div>
                       </div>
@@ -359,11 +359,11 @@ function CreateEventDetails({
                                           1
                                         );
                                         const indexBlock =
-                                          eventDetailsBlocks.indexOf(block);
-                                        eventDetailsBlocks[indexBlock].imgUrls =
+                                          newsDetailsBlocks.indexOf(block);
+                                        newsDetailsBlocks[indexBlock].imgUrls =
                                           newArr;
                                         setForRender(forRender + 1);
-                                        addEventDetails(eventDetailsBlocks);
+                                        addNewsDetails(newsDetailsBlocks);
                                       }}
                                     >
                                       <svg
@@ -396,13 +396,13 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionEng2}
+                            defaultValue={block.newsDescriptionEng2}
                             onChange={(e) => {
-                              const index = eventDetailsBlocks.indexOf(block);
-                              eventDetailsBlocks[index].eventDescriptionEng2 =
+                              const index = newsDetailsBlocks.indexOf(block);
+                              newsDetailsBlocks[index].newsDescriptionEng2 =
                                 e.target.value;
                               // formOnChange("editedAndAddedAgendas", agendas);
-                              addEventDetails(eventDetailsBlocks);
+                              addNewsDetails(newsDetailsBlocks);
                             }}
                           />
                         </div>
@@ -411,7 +411,7 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionArm2}
+                            defaultValue={block.newsDescriptionArm2}
                           />
                         </div>
                         <div className="input_container">
@@ -419,7 +419,7 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionRu2}
+                            defaultValue={block.newsDescriptionRu2}
                           />
                         </div>
                       </div>
@@ -432,7 +432,7 @@ function CreateEventDetails({
                   ))
                 : null}
             </div>
-            {eventDetailsBlocks.length ? (
+            {newsDetailsBlocks.length ? (
               <Button title="Send" className="action_btn" onClick={sendData} />
             ) : null}
           </div>
@@ -444,18 +444,18 @@ function CreateEventDetails({
 const mapStateToProps = (state) => {
   console.log(state, "::::::::::");
   return {
-    eventId: state.eventReducer.eventId,
+    newsId: state.newsReducer.newsId,
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
     headers: state.imageReducer?.headers,
-    eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
-    uploadedPhotos: state.eventReducer.uploadedPhotos,
+    newsDetailsBlocks: state.newsReducer.newsDetailsBlocks,
+    uploadedPhotos: state.newsReducer.uploadedPhotos,
     imgUrls: state.imageReducer?.imgUrls,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    addEventDetails: (blockData) => dispatch(addEventDetails(blockData)),
+    addNewsDetails: (blockData) => dispatch(addNewsDetails(blockData)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(CreateEventDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateNewsDetails);

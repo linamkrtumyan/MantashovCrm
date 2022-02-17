@@ -19,6 +19,7 @@ export {
   transferNewsDelete,
   editNews,
   deleteNewsImageFromStore,
+  addNewsDetails,
 } from "./news/actions";
 export {
   fetchPastEvents,
@@ -53,6 +54,7 @@ export {
   deletedImages,
   uploadOneImage,
   deleteImageFromStore,
+  deleteHeader,
 } from "./images/actions";
 export {
   uploadVideo,

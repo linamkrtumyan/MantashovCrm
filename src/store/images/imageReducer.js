@@ -8,6 +8,7 @@ import {
   UPLOAD_ONE_IMAGE_SUCCESS,
   UPLOAD_ONE_IMAGE_FAILURE,
   DELETE_IMAGE_FROM_STORE,
+  DELETE_HEADER,
 } from "./types";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   oneImageLoading: false,
   headers: [],
   imageUpload: false,
+  imgUrls: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -41,6 +43,7 @@ const reducer = (state = initialState, action) => {
         // image: state.image.push(action.payload.image),
         error: null,
         imageUpload: action.payload.imageUpload,
+        imgUrls: action.payload.imgUrls,
       };
     case UPLOAD_IMAGE_FAILURE:
       return {
@@ -91,6 +94,14 @@ const reducer = (state = initialState, action) => {
         image: [
           ...state.image.slice(0, action.payload.deleteId),
           ...state.image.slice(action.payload.deleteId + 1),
+        ],
+      };
+    case DELETE_HEADER:
+      return {
+        ...state,
+        headers: [
+          ...state.headers.slice(0, action.payload.deletedHeaderId),
+          ...state.headers.slice(action.payload.deletedHeaderId + 1),
         ],
       };
     default:

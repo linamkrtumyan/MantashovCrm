@@ -41,7 +41,7 @@ function AddEvent({
   editAgendas,
   speakers,
   getSpeakers,
-  // headers,
+  headers,
   // image,
   uploadedPhotos,
 }) {
@@ -90,10 +90,8 @@ function AddEvent({
     let { headers, image } = store.getState().imageReducer;
 
     let headersImages = [];
-    let headersUrls = [];
     headers.map((img) => {
       headersImages.push(img.name);
-      headersUrls.push(img.url);
     });
 
     let event = {
@@ -122,13 +120,13 @@ function AddEvent({
     addEvent(event, changePath);
     // history.push(`/event/${id}`)
     // cleanForm();
-    editAgendas([]);
+    // editAgendas([]);
   };
 
   const handleCancel = () => {
     history.push("/events");
     cleanForm();
-    editAgendas([]);
+    // editAgendas([]);
   };
 
   return (
@@ -207,10 +205,20 @@ function AddEvent({
                 <OneImageUpload label="Upload Header 1" index={1} />
                 {/* <ImageUpload label="Upload Headers (max 3)" /> */}
               </div>
-              <div style={{ marginRight: 20 }}>
+              <div
+                style={{
+                  marginRight: 20,
+                  pointerEvents: `${!headers[0] ? "none" : ""}`,
+                }}
+              >
                 <OneImageUpload label="Upload Header 2" index={2} />
               </div>
-              <div style={{ marginRight: 20 }}>
+              <div
+                style={{
+                  marginRight: 20,
+                  pointerEvents: `${!headers[1] ? "none" : ""}`,
+                }}
+              >
                 <OneImageUpload label="Upload Header 3" index={3} />
               </div>
               {/* <ImageUpload label="Upload Images" limit={true} /> */}

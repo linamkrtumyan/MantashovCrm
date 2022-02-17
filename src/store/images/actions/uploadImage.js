@@ -23,7 +23,7 @@ export const uploadImage = (img) => {
         return res.json();
       })
       .then((data) => {
-        dispatch(uploadImageSuccess(data));
+        dispatch(uploadImageSuccess(data, img));
       })
       .catch((e) => {
         dispatch(uploadImageFailure(e.message));
@@ -38,15 +38,20 @@ const uploadImageRequest = () => {
   };
 };
 
-const uploadImageSuccess = (data) => {
+const uploadImageSuccess = (data, urls) => {
   const image = data ? data : [];
-  // console.log(typeof image);
+  console.log(urls, "??????????????///");
   const loading = data ? false : true;
+  const imgUrls = urls
+    ? Array.from(urls).map((file) => URL.createObjectURL(file))
+    : [];
+  // const imgUrls = urls ? urls : [];
   return {
     type: UPLOAD_IMAGE_SUCCESS,
     payload: {
       image,
       imageUpload: loading,
+      imgUrls,
     },
   };
 };

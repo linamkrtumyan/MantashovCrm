@@ -24,9 +24,9 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
     let { title_arm, title_eng, title_ru, text_arm, text_eng, text_ru } =
       store.getState().formReducer;
     const image = store.getState().imageReducer.image;
-    const header = store.getState().imageReducer.header[0];
+    const header = store.getState().imageReducer.header[0].name;
     const changePath = () => {
-      path.push("/news");
+      path.push("/newsDetails");
     };
     let news = {
       titleArm: title_arm,
@@ -41,7 +41,7 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
     };
     addNews(news, changePath);
     // cleanForm();
-    cleanImages();
+    // cleanImages();
   };
 
   const handleCancel = () => {
@@ -137,7 +137,7 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
+  console.log(state, "9999");
   return {};
 };
 
