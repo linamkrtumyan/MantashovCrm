@@ -451,7 +451,10 @@ function CreateEventDetails({
                       </div>
                       {block.videoUrls && block.videoUrls.length
                         ? block.videoUrls.map((video) => {
-                          console.log();
+                            console.log(
+                              { urls: block.videoUrls, video },
+                              "==========="
+                            );
                             return (
                               <div className="upload_cont">
                                 <video

@@ -436,52 +436,60 @@ function CreateNewsDetails({
                           />
                         </div>
                       </div>
-                      {block.videoUrls && block.videoUrls.length
-                        ? block.videoUrls.map((video) => {
-                            <div className="upload_cont">
-                              <video
-                                className="uploaded_images"
-                                key={video}
-                                controls
-                              >
-                                <source src={video} type="video/mp4" />
-                                <source src={video} type="video/ogg" />
-                                Your browser does not support the video tag.
-                              </video>
-                              <div className="middle">
-                                <div
-                                  onClick={() =>
-                                    // deleteVideo(source.indexOf(video))
-                                    {
-                                      const indexImg =
-                                        block.videoUrls.indexOf(video);
-                                      const newArr = block.videoUrls.slice(
-                                        indexImg,
-                                        1
-                                      );
-                                      const indexBlock =
-                                        newsDetailsBlocks.indexOf(block);
-                                      newsDetailsBlocks[indexBlock].videoUrls =
-                                        newArr;
-                                      setForRender(forRender + 1);
-                                      addNewsDetails(newsDetailsBlocks);
-                                    }
-                                  }
-                                >
-                                  <svg viewBox="0 0 24 24" className="close">
-                                    <path
-                                      d="M 2 2 L 22 22 M 2 22 L22 2"
-                                      stroke="red"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="5"
-                                    />
-                                  </svg>
+                      <div style={{ display: "flex " }}>
+                        {block.videoUrls && block.videoUrls.length
+                          ? block.videoUrls.map((video) => {
+                              return (
+                                <div className="upload_cont">
+                                  <video
+                                    className="uploaded_images"
+                                    key={video}
+                                    controls
+                                  >
+                                    <source src={video} type="video/mp4" />
+                                    <source src={video} type="video/ogg" />
+                                    Your browser does not support the video tag.
+                                  </video>
+                                  <div className="middle">
+                                    <div
+                                      onClick={() =>
+                                        // deleteVideo(source.indexOf(video))
+                                        {
+                                          const indexImg =
+                                            block.videoUrls.indexOf(video);
+                                          const newArr = block.videoUrls.slice(
+                                            indexImg,
+                                            1
+                                          );
+                                          const indexBlock =
+                                            newsDetailsBlocks.indexOf(block);
+                                          newsDetailsBlocks[
+                                            indexBlock
+                                          ].videoUrls = newArr;
+                                          setForRender(forRender + 1);
+                                          addNewsDetails(newsDetailsBlocks);
+                                        }
+                                      }
+                                    >
+                                      <svg
+                                        viewBox="0 0 24 24"
+                                        className="close"
+                                      >
+                                        <path
+                                          d="M 2 2 L 22 22 M 2 22 L22 2"
+                                          stroke="red"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="5"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>;
-                          })
-                        : null}
+                              );
+                            })
+                          : null}
+                      </div>
                       <Button
                         title="Delete"
                         onClick={() => handleDelete(block)}
