@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { uploadOneImage } from "../../../store";
+import { uploadOneImage, deleteHeader } from "../../../store";
 import "./oneImageUpload.css";
 
 function OneImageUpload({
@@ -8,28 +8,48 @@ function OneImageUpload({
   label = "",
   oneImageLoading,
   headers,
-  index,
+  index = 0,
+  deleteHeader,
 }) {
   const [image, setImage] = useState([]);
-  const [imagesLength, setImagesLength] = useState(headers.length);
-  useEffect(() => {
-    setImagesLength(headers.length);
-  }, [headers]);
+
   const onImageChange = (e) => {
-    if (imagesLength < 3) {
-      if (e.target.files) {
-        uploadOneImage(e.target.files);
-        setImage(URL.createObjectURL(e.target.files[0]));
-        //   const file = [...e.target.files];
-      }
+    if (e.target.files) {
+      uploadOneImage(e.target.files, index);
+      setImage(URL.createObjectURL(e.target.files[0]));
+      //   const file = [...e.target.files];
+      // change headers[index - 1]?.url to image
     }
   };
 
+  // useEffect(() => {
+  //   console.log({ image }, "7777");
+  // }, [image]);
+
   useEffect(() => {
-    if (headers && headers.length && headers[index - 1]) {
+    // console.log({ index }, "-------");
+    if (headers.length && headers[index - 1] && index) {
+      // console.log({ mmmm: headers[index - 1] });
       setImage(headers[index - 1]?.url);
+      console.log("if");
+    } else {
+      console.log("else");
+      setImage([]);
     }
+
+    console.log({ offf: headers[index - 1], index }, "headers[index - 1]");
   }, [headers]);
+
+  const handleDelete = () => {
+    // let index;
+    headers.map((img) => {
+      if (img.url === image) {
+        const index = headers.indexOf(img);
+        deleteHeader(index);
+      }
+    });
+    setImage([]);
+  };
 
   return (
     <div>
@@ -43,9 +63,9 @@ function OneImageUpload({
           <img
             className="uploaded_image"
             src={
-              // image
-              // headers[index - 1]?.url ? headers[index - 1].url :
               image
+              // headers[index - 1]?.url
+              // ? headers[index - 1].url : image
             }
             alt=""
           />
@@ -55,6 +75,8 @@ function OneImageUpload({
               onClick={() => {
                 // setImage([]);
                 setImage([]);
+                handleDelete();
+                // console.log({ index }, "HHHHHHHHHHHHHHHhhhh");
               }}
             >
               <svg viewBox="0 0 24 24" className="close">
@@ -98,6 +120,7 @@ function OneImageUpload({
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.imageReducer?.headers, "////");
   return {
     headers: state.imageReducer?.headers,
     oneImageLoading: state.imageReducer?.oneImageLoading,
@@ -107,6 +130,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     uploadOneImage: (img) => dispatch(uploadOneImage(img)),
+    deleteHeader: (id) => dispatch(deleteHeader(id)),
   };
 };
 

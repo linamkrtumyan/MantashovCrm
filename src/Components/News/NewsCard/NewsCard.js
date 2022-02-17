@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./newsCard.css";
 import { useHistory } from "react-router-dom";
-import ModalComponent from "../../Modal/Modal";
 import { connect } from "react-redux";
 import { openModal, deleteNews, transferNewsDelete } from "../../../store";
 import DeleteNews from "../DeleteNewsModal/DeleteNews";

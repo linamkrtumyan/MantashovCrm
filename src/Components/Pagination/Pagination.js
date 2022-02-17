@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import React from "react";
 import { Link } from "react-router-dom";
-import Input from "../../Components/Forms/Input/Input";
 import "./pagination.css";
 import { connect } from "react-redux";
 import { changeCurrentPage } from "../../store";

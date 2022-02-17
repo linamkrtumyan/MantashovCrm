@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { deleteNews, transferNewsDelete } from "../../../store";
+import { deleteNews } from "../../../store";
 import ModalComponent from "../../Modal/Modal";
 
 export const DeleteNews = ({ action, show, news, deleteNews }) => {

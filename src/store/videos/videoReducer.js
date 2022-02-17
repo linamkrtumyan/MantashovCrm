@@ -13,6 +13,7 @@ const initialState = {
   error: null,
   deletedVideos: [],
   videoUpload: false,
+  videoUrls: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,6 +31,7 @@ const reducer = (state = initialState, action) => {
         video: state.video.concat(action.payload.video),
         error: null,
         videoUpload: action.payload.videoUpload,
+        videoUrls: action.payload.videoUrls,
       };
     case UPLOAD_VIDEO_FAILURE:
       return {

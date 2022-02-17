@@ -24,7 +24,7 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
     let { title_arm, title_eng, title_ru, text_arm, text_eng, text_ru } =
       store.getState().formReducer;
     const image = store.getState().imageReducer.image;
-    const header = store.getState().imageReducer.header[0].name;
+    const header = store.getState().imageReducer.header[0]?.name ?? null;
     const changePath = () => {
       path.push("/newsDetails");
     };

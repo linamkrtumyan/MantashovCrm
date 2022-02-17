@@ -24,6 +24,8 @@ import Information from "./Pages/InformationPage/Information";
 import EditEvent from "./Pages/EventsPage/EditEvent";
 import Applicant from "./Pages/Applicant/Applicant";
 import CreateEventDetails from "./Pages/CreateEventDetails/CreateEventDetails";
+import CreateNewsDetails from "./Pages/CreateNewsDetailsPage/CreateNewsDetails";
+
 
 
 function Routes({ isLogin, userName }) {
@@ -48,11 +50,8 @@ function Routes({ isLogin, userName }) {
               component={EventDetailsPage}
               exact
             />
-            <Route
-              path="/eventDetails"
-              component={CreateEventDetails}
-              exact
-            />
+            <Route path="/eventDetails" component={CreateEventDetails} exact />
+            <Route path="/newsDetails" component={CreateNewsDetails} exact />
             <Route path="/members" component={MembersPage} exact />
             <Route path="/member-details/:id" component={MemberDetails} exact />
             <Route path="/add-member" component={AddMember} exact />

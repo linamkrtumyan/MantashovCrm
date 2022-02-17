@@ -29,10 +29,10 @@ function ImageUpload({
     setImagesLength(headers.length + image.length);
   }, [headers, image]);
 
-  useEffect(() => {
-    console.log({ selectedFiles });
-    setUploadedPhotos(selectedFiles);
-  }, [selectedFiles]);
+  // useEffect(() => {
+  //   // console.log({ selectedFiles }, ")))))))))))))))))))))0");
+  //   setUploadedPhotos(selectedFiles);
+  // }, [selectedFiles]);
 
   const onImageChange = (e) => {
     if (limit) {
@@ -42,9 +42,10 @@ function ImageUpload({
             URL.createObjectURL(file)
           );
           const files = [...e.target.files];
-
           uploadImage(files);
           setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+
+          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
           setA(a + 1);
           Array.from(e.target.files).map((file) => {
             URL.revokeObjectURL(file);
@@ -59,8 +60,9 @@ function ImageUpload({
           URL.createObjectURL(file)
         );
         const files = [...e.target.files];
-        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
         uploadImage(files);
+        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+
         setA(a + 1);
         Array.from(e.target.files).map((file) => {
           URL.revokeObjectURL(file);
@@ -84,7 +86,7 @@ function ImageUpload({
     return source.map((photo) => {
       return (
         <div className="upload_cont" key={photo}>
-          <img className="uploaded_images" src={photo} alt="" key={photo} />
+          <img className="uploaded_images" src={photo} alt="" />
 
           <div className="middle">
             <div onClick={() => deleteImage(source.indexOf(photo))}>

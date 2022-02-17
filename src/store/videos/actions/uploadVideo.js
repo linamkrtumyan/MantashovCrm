@@ -16,7 +16,7 @@ export const uploadVideo = (vid) => {
         return res.json();
       })
       .then((data) => {
-        dispatch(uploadVideoSuccess(data));
+        dispatch(uploadVideoSuccess(data, vid));
       })
       .catch((e) => {
         dispatch(uploadVideoFailure(e.message));
@@ -31,14 +31,18 @@ const uploadVideoRequest = () => {
   };
 };
 
-const uploadVideoSuccess = (data) => {
+const uploadVideoSuccess = (data, urls) => {
   const video = data ? data : [];
   const loading = data ? false : true;
+  const videoUrls = urls
+    ? Array.from(urls).map((file) => URL.createObjectURL(file))
+    : [];
   return {
     type: UPLOAD_VIDEO_SUCCESS,
     payload: {
       video,
       videoUpload: loading,
+      videoUrls,
     },
   };
 };

@@ -3,8 +3,14 @@ import "./createEventDetails.css";
 import { connect } from "react-redux";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import Button from "../../Components/Forms/Button/Button";
-import { addEventDetails, cleanImages, cleanVideos } from "../../store";
+import {
+  addEventDetails,
+  cleanImages,
+  cleanVideos,
+  cleanForm,
+} from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
+import { useHistory } from "react-router-dom";
 
 function CreateEventDetails({
   eventId,
@@ -15,6 +21,7 @@ function CreateEventDetails({
   uploadedPhotos,
   video,
   imgUrls,
+  videoUrls,
 }) {
   const [images, setImages] = useState([]);
   const [open, setOpen] = useState(false);
@@ -22,6 +29,9 @@ function CreateEventDetails({
   const [newBlock, setNewBlock] = useState({});
   const [shortDescription, setShortDescription] = useState("");
   const [forRender, setForRender] = useState(0);
+  const [requiredClass, setRequiredClass] = useState("");
+
+  let history = useHistory();
 
   useEffect(() => {
     for (let i = 0; i < eventDetailsBlocks.length; i++) {
@@ -43,6 +53,7 @@ function CreateEventDetails({
       blockImages: image,
       blockVideos: video,
       imgUrls,
+      videoUrls,
     });
   }, [image, video]);
 
@@ -51,20 +62,21 @@ function CreateEventDetails({
   };
 
   const saveBlockData = () => {
-    // if (newBlock.length) {
-
-    setNewBlock({
-      ...newBlock,
-      id: eventDetailsBlocks.length,
-    });
-    eventDetailsBlocks.push(newBlock);
-    setRenderContent(renderContent + 1);
-    addEventDetails(eventDetailsBlocks);
-    setNewBlock({});
-    cleanImages();
-    setShortDescription("");
-    cleanVideos();
-    // }
+    if (shortDescription !== "") {
+      setNewBlock({
+        ...newBlock,
+        id: eventDetailsBlocks.length,
+      });
+      eventDetailsBlocks.push(newBlock);
+      setRenderContent(renderContent + 1);
+      addEventDetails(eventDetailsBlocks);
+      setNewBlock({});
+      cleanImages();
+      setShortDescription("");
+      cleanVideos();
+    } else {
+      setRequiredClass("requiredField");
+    }
   };
 
   const handleDelete = (block) => {
@@ -80,15 +92,24 @@ function CreateEventDetails({
       item.links = linksArr;
     });
 
+    let headersImages = [];
+    headers?.map((img) => {
+      headersImages.push(img.name);
+    });
+
     let dataToSend = {
       eventId,
       eventDetailsBlocks,
       uploadedPhotos,
       eventFixedDescription: shortDescription,
-      // headers
+      headers: headersImages,
     };
     console.log({ dataToSend });
+    cleanImages();
+    cleanVideos();
+    cleanForm();
     // here must be function call of details add_________________________________
+    // history.push("/events");
   };
 
   const deleteImageFromBlock = (img) => {
@@ -121,7 +142,12 @@ function CreateEventDetails({
           <div className="container_body" style={{ paddingBottom: 20 }}>
             <div>
               <div style={{ marginTop: 20 }}>
-                <label htmlFor="eventFixedDescription">Short Description</label>
+                <label
+                  htmlFor="eventFixedDescription"
+                  className={shortDescription === "" ? requiredClass : ""}
+                >
+                  Short Description
+                </label>
 
                 <textarea
                   className="add_news_input textarea eventText"
@@ -423,6 +449,56 @@ function CreateEventDetails({
                           />
                         </div>
                       </div>
+                      {block.videoUrls && block.videoUrls.length
+                        ? block.videoUrls.map((video) => {
+                          console.log();
+                            return (
+                              <div className="upload_cont">
+                                <video
+                                  className="uploaded_images"
+                                  key={video}
+                                  controls
+                                >
+                                  <source src={video} type="video/mp4" />
+                                  <source src={video} type="video/ogg" />
+                                  Your browser does not support the video tag.
+                                </video>
+                                <div className="middle">
+                                  <div
+                                    onClick={() =>
+                                      // deleteVideo(source.indexOf(video))
+                                      {
+                                        const indexImg =
+                                          block.videoUrls.indexOf(video);
+                                        const newArr = block.videoUrls.slice(
+                                          indexImg,
+                                          1
+                                        );
+                                        const indexBlock =
+                                          eventDetailsBlocks.indexOf(block);
+                                        eventDetailsBlocks[
+                                          indexBlock
+                                        ].videoUrls = newArr;
+                                        setForRender(forRender + 1);
+                                        addEventDetails(eventDetailsBlocks);
+                                      }
+                                    }
+                                  >
+                                    <svg viewBox="0 0 24 24" className="close">
+                                      <path
+                                        d="M 2 2 L 22 22 M 2 22 L22 2"
+                                        stroke="red"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="5"
+                                      />
+                                    </svg>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })
+                        : null}
                       <Button
                         title="Delete"
                         onClick={() => handleDelete(block)}
@@ -451,6 +527,7 @@ const mapStateToProps = (state) => {
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
     uploadedPhotos: state.eventReducer.uploadedPhotos,
     imgUrls: state.imageReducer?.imgUrls,
+    videoUrls: state.videoReducer?.videoUrls,
   };
 };
 const mapDispatchToProps = (dispatch) => {
