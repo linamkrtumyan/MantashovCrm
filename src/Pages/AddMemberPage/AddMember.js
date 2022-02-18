@@ -291,18 +291,21 @@ function AddMember({
                     type="url"
                     placeholder="Instagram"
                     labelIcon={instagramIcon}
+                    required={false}
                   />
                   <Input
                     id="facebook"
                     type="url"
                     placeholder="Facebook"
                     labelIcon={facebookIcon}
+                    required={false}
                   />
                   <Input
                     id="linkedin "
                     type="url"
                     placeholder="Linkedin"
                     labelIcon={linkedinIcon}
+                    required={false}
                   />
                 </div>
               </div>

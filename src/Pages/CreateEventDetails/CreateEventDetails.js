@@ -8,6 +8,7 @@ import {
   cleanImages,
   cleanVideos,
   cleanForm,
+  addEventBlock,
 } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 import { useHistory } from "react-router-dom";
@@ -22,6 +23,7 @@ function CreateEventDetails({
   video,
   imgUrls,
   videoUrls,
+  addEventBlock,
 }) {
   const [images, setImages] = useState([]);
   const [open, setOpen] = useState(false);
@@ -50,8 +52,8 @@ function CreateEventDetails({
   useEffect(() => {
     setNewBlock({
       ...newBlock,
-      blockImages: image,
-      blockVideos: video,
+      blockImages: image ?? [],
+      blockVideos: video ?? [],
       imgUrls,
       videoUrls,
     });
@@ -65,11 +67,12 @@ function CreateEventDetails({
     if (shortDescription !== "") {
       setNewBlock({
         ...newBlock,
-        id: eventDetailsBlocks.length,
+        eventId: 48,
       });
       eventDetailsBlocks.push(newBlock);
       setRenderContent(renderContent + 1);
       addEventDetails(eventDetailsBlocks);
+      // addEventBlock(newBlock);
       setNewBlock({});
       cleanImages();
       setShortDescription("");
@@ -124,7 +127,7 @@ function CreateEventDetails({
       </div>
       <div className="images_container">
         {headers && headers.length
-          ? images.map((image) => (
+          ? headers.map((image) => (
               <img
                 src={image.url}
                 alt=""
@@ -163,15 +166,11 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea eventText"
-                  value={
-                    newBlock.eventDescriptionEng1
-                      ? newBlock.eventDescriptionEng1
-                      : ""
-                  }
+                  value={newBlock.topTextEng ? newBlock.topTextEng : ""}
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionEng1: e.target.value,
+                      topTextEng: e.target.value,
                     });
                   }}
                 />
@@ -181,15 +180,11 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={
-                    newBlock.eventDescriptionArm1
-                      ? newBlock.eventDescriptionArm1
-                      : ""
-                  }
+                  value={newBlock.topTextArm ? newBlock.topTextArm : ""}
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionArm1: e.target.value,
+                      topTextArm: e.target.value,
                     });
                   }}
                 />
@@ -199,15 +194,11 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={
-                    newBlock.eventDescriptionRu1
-                      ? newBlock.eventDescriptionRu1
-                      : ""
-                  }
+                  value={newBlock.topTextRu ? newBlock.topTextRu : ""}
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionRu1: e.target.value,
+                      topTextRu: e.target.value,
                     });
                   }}
                 />
@@ -231,15 +222,11 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={
-                    newBlock.eventDescriptionEng2
-                      ? newBlock.eventDescriptionEng2
-                      : ""
-                  }
+                  value={newBlock.topTextEng ? newBlock.bottomTextEng : ""}
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionEng2: e.target.value,
+                      bottomTextEng: e.target.value,
                     });
                   }}
                 />
@@ -250,15 +237,11 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={
-                    newBlock.eventDescriptionArm2
-                      ? newBlock.eventDescriptionArm2
-                      : ""
-                  }
+                  value={newBlock.bottomTextArm ? newBlock.bottomTextArm : ""}
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionArm2: e.target.value,
+                      bottomTextArm: e.target.value,
                     });
                   }}
                 />
@@ -268,15 +251,11 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={
-                    newBlock.eventDescriptionRu2
-                      ? newBlock.eventDescriptionRu2
-                      : ""
-                  }
+                  value={newBlock.bottomTextRu ? newBlock.bottomTextRu : ""}
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
-                      eventDescriptionRu2: e.target.value,
+                      bottomTextRu: e.target.value,
                     });
                   }}
                 />
@@ -326,10 +305,10 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionEng1}
+                            defaultValue={block.topTextEng}
                             onChange={(e) => {
                               const index = eventDetailsBlocks.indexOf(block);
-                              eventDetailsBlocks[index].eventDescriptionEng1 =
+                              eventDetailsBlocks[index].topTextEng =
                                 e.target.value;
                               // formOnChange("editedAndAddedAgendas", agendas);
                               addEventDetails(eventDetailsBlocks);
@@ -341,7 +320,7 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionArm1}
+                            defaultValue={block.topTextArm}
                           />
                         </div>
                         <div className="input_container">
@@ -349,7 +328,7 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionRu1}
+                            defaultValue={block.topTextRu}
                           />
                         </div>
                       </div>
@@ -422,10 +401,10 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionEng2}
+                            defaultValue={block.bottomTextEng}
                             onChange={(e) => {
                               const index = eventDetailsBlocks.indexOf(block);
-                              eventDetailsBlocks[index].eventDescriptionEng2 =
+                              eventDetailsBlocks[index].bottomTextEng =
                                 e.target.value;
                               // formOnChange("editedAndAddedAgendas", agendas);
                               addEventDetails(eventDetailsBlocks);
@@ -437,7 +416,7 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionArm2}
+                            defaultValue={block.bottomTextArm}
                           />
                         </div>
                         <div className="input_container">
@@ -445,7 +424,7 @@ function CreateEventDetails({
 
                           <textarea
                             className="textarea"
-                            defaultValue={block.eventDescriptionRu2}
+                            defaultValue={block.bottomTextRu}
                           />
                         </div>
                       </div>
@@ -502,11 +481,19 @@ function CreateEventDetails({
                             );
                           })
                         : null}
-                      <Button
-                        title="Delete"
-                        onClick={() => handleDelete(block)}
-                        className="action_btn cancel_btn"
-                      />
+                      <div style={{ display: "flex" }}>
+                        <Button
+                          title="Delete"
+                          onClick={() => handleDelete(block)}
+                          className="action_btn cancel_btn"
+                        />
+
+                        <Button
+                          title="Edit"
+                          // onClick={() => handleEdit(block)}
+                          className="action_btn cancel_btn"
+                        />
+                      </div>
                     </div>
                   ))
                 : null}
@@ -536,6 +523,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addEventDetails: (blockData) => dispatch(addEventDetails(blockData)),
+    addEventBlock: (blockData) => dispatch(addEventBlock(blockData)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEventDetails);

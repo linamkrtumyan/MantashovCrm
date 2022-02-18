@@ -38,6 +38,9 @@ export {
   getSpeakers,
   addEventDetails,
   setUploadedPhotos,
+  addEventBlock,
+  editEventBlock,
+  deleteEventBlock,
 } from "./event/actions";
 export {
   fetchCountries,

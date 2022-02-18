@@ -93,6 +93,7 @@ function MembersPage({
               <tbody>
                 {membersByPage.length > 0 ? (
                   membersByPage.map((memberByPage, index) => {
+                    console.log({ memberByPage }, "aaaaaaaaaaaaaaaaaaaaaaa");
                     return (
                       <tr
                         key={memberByPage.id}
@@ -107,12 +108,18 @@ function MembersPage({
                           />
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
-                          {memberByPage.firstName} {memberByPage.lastName}
+                          {memberByPage.fullName}
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
-                          {memberByPage.organizations.map((org) => (
-                            <p key={org}>{org}</p>
-                          ))}
+                          {
+                            // memberByPage
+                            // .organizations.map((org) => (
+                            <p key={memberByPage.organization}>
+                              {memberByPage.organization.name}{" "}
+                              {memberByPage.organization.position}
+                            </p>
+                            // ))
+                          }
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
                           {memberByPage.phone}

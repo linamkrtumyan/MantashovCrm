@@ -110,7 +110,7 @@ function EditNews({
                       <div className="upload_cont">
                         <img
                           className="uploaded_image"
-                          src={`/images/newsHeader/${id}/header.png`}
+                          src={`http://localhost:5001/images/newsHeader/${id}/header.png`}
                           alt=""
                         />
                         <div className="middle">
