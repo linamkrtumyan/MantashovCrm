@@ -10,6 +10,7 @@ function OneImageUpload({
   headers,
   index = 0,
   deleteHeader,
+  header,
 }) {
   const [image, setImage] = useState([]);
 
@@ -22,23 +23,23 @@ function OneImageUpload({
     }
   };
 
-  // useEffect(() => {
-  //   console.log({ image }, "7777");
-  // }, [image]);
+  useEffect(() => {
+    console.log({ image }, "7777");
+  }, [image]);
 
   useEffect(() => {
     // console.log({ index }, "-------");
     if (headers.length && headers[index - 1] && index) {
-      // console.log({ mmmm: headers[index - 1] });
+      console.log({ mmmm: index });
       setImage(headers[index - 1]?.url);
       console.log("if");
+    } else if (!index && header) {
+      console.log("else", header);
+      setImage([header[0].url]);
     } else {
-      console.log("else");
       setImage([]);
     }
-
-    console.log({ offf: headers[index - 1], index }, "headers[index - 1]");
-  }, [headers]);
+  }, [headers, header]);
 
   const handleDelete = () => {
     // let index;
@@ -124,6 +125,7 @@ const mapStateToProps = (state) => {
   return {
     headers: state.imageReducer?.headers,
     oneImageLoading: state.imageReducer?.oneImageLoading,
+    header: state.imageReducer?.header,
   };
 };
 

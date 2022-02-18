@@ -5,7 +5,7 @@ import Button from "../../Components/Forms/Button/Button";
 import "./addEvent.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import store, { addEvent, setUploadedPhotos } from "../../store";
+import store, { addEvent, setUploadedPhotos, cleanImages } from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
@@ -44,6 +44,7 @@ function AddEvent({
   headers,
   // image,
   uploadedPhotos,
+  cleanImages,
 }) {
   const history = useHistory();
 
@@ -53,6 +54,7 @@ function AddEvent({
     fetchCountries();
     formOnChangeArray("agendasAddresses", "agendas", []);
     getSpeakers();
+    cleanImages();
   }, []);
 
   useEffect(() => {
@@ -267,6 +269,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(formOnChangeArray(firstKey, secondKey, value)),
     editAgendas: (agendas) => dispatch(editAgendas(agendas)),
     getSpeakers: () => dispatch(getSpeakers()),
+    cleanImages: () => dispatch(cleanImages()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddEvent);

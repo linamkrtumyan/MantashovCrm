@@ -17,6 +17,7 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
 
   useEffect(() => {
     cleanForm();
+    cleanImages();
   }, []);
 
   const handleSubmit = (e) => {

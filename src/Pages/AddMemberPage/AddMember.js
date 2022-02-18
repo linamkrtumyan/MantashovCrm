@@ -51,6 +51,7 @@ function AddMember({
   cleanLocation,
   // organizationsType,
   addedOrganizations = [],
+  cleanImages,
 }) {
   const [dateNow] = useState(new Date(Date.now()).toISOString().split("T")[0]);
   // console.log(isActive, "is active");
@@ -62,7 +63,7 @@ function AddMember({
     // cleanForm();
     cleanMember();
     cleanLocation();
-
+    cleanImages();
     // organizationsType.map((org) => {
     //   formOnChangeArray("organizations", org.name, "");
     // });
@@ -371,6 +372,7 @@ const mapDispatchToProps = (dispatch) => {
     cleanLocation: () => dispatch(cleanLocation()),
     formOnChangeArray: (firstKey, secondKey, value) =>
       dispatch(formOnChangeArray(firstKey, secondKey, value)),
+    cleanImages: () => dispatch(cleanImages()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddMember);

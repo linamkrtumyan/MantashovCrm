@@ -45,7 +45,6 @@ const uploadOneImageRequest = () => {
 const uploadOneImageSuccess = (data, url, index) => {
   const headerData = data ? data[0] : "";
   const header = [{ url, name: headerData, index }];
-  // console.log(typeof image);
   const loading = data ? false : true;
   return {
     type: UPLOAD_ONE_IMAGE_SUCCESS,

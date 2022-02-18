@@ -58,6 +58,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         image: [],
         deletedImages: [],
+        headers: [],
+        header: "",
       };
     case DELETED_IMAGES:
       return {
