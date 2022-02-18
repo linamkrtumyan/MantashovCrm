@@ -301,7 +301,7 @@ function AddMember({
                     required={false}
                   />
                   <Input
-                    id="linkedin "
+                    id="linkedin"
                     type="url"
                     placeholder="Linkedin"
                     labelIcon={linkedinIcon}

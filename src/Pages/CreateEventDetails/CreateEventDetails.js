@@ -64,7 +64,7 @@ function CreateEventDetails({
   };
 
   const saveBlockData = () => {
-    if (shortDescription !== "") {
+    if (newBlock.topTextEng !== "") {
       setNewBlock({
         ...newBlock,
         eventId: 48,
@@ -162,7 +162,12 @@ function CreateEventDetails({
               </div>
 
               <div style={{ marginTop: 20 }}>
-                <label htmlFor="descriptionEng1">Description 1</label>
+                <label
+                  htmlFor="descriptionEng1"
+                  className={shortDescription === "" ? requiredClass : ""}
+                >
+                  Description 1
+                </label>
 
                 <textarea
                   className="add_news_input textarea eventText"
