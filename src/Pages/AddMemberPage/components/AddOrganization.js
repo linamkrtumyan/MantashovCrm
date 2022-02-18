@@ -63,13 +63,13 @@ function AddOrganization({
   return (
     <>
       {addedOrganizations.map((org, index) => {
+        console.log({ addedOrganizations }, "////////");
         const orgValue = organizations.find(
           (organization) => organization.id === org.organizationId
         );
         const posValue = positions.find(
           (position) => position.id === org.positionId
         );
-
         return (
           <div
             key={`${org.positionId}${org.organizationId}`}
@@ -81,6 +81,26 @@ function AddOrganization({
             <div className="added_orgs">
               <p>{posValue.name}</p>
             </div>
+
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            {/* դնել սովորական սելեքթ՝ իր ֆունկցիոնալլով */}
+
+            {/* <Select
+              placeholder="Select Organization"
+              items={organizations}
+              id="organizationId"
+              value={orgValue.name}
+            />
+
+            <Select
+              placeholder="Select Position"
+              items={positions}
+              id="positionId"
+              defaultValue={posValue.name}
+            /> */}
+
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+
             <div onClick={() => handleDelete(org)}>
               <div className="added_orgs">
                 <i

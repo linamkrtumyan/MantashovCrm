@@ -47,6 +47,7 @@ function AddEvent({
   cleanImages,
 }) {
   const history = useHistory();
+  const [isPublic, setIsPublic] = useState(false);
 
   useEffect(() => {
     cleanForm();
@@ -113,6 +114,7 @@ function AddEvent({
       headers: headersImages,
       images: image,
       speakers,
+      isPublic,
     };
 
     //
@@ -174,9 +176,24 @@ function AddEvent({
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="locationEng" type="text" placeholder="Address" />
-              <Input id="locationArm" type="text" placeholder="Հասցե" />
-              <Input id="locationRu" type="text" placeholder="Адрес" />
+              <Input
+                id="locationEng"
+                type="text"
+                placeholder="Address"
+                required={false}
+              />
+              <Input
+                id="locationArm"
+                type="text"
+                placeholder="Հասցե"
+                required={false}
+              />
+              <Input
+                id="locationRu"
+                type="text"
+                placeholder="Адрес"
+                required={false}
+              />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -224,6 +241,23 @@ function AddEvent({
                 <OneImageUpload label="Upload Header 3" index={3} />
               </div>
               {/* <ImageUpload label="Upload Images" limit={true} /> */}
+              <div
+                style={{
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <label>Public</label>
+                <input
+                  style={{ marginLeft: 8 }}
+                  type="checkbox"
+                  onChange={() => {
+                    setIsPublic(!isPublic);
+                  }}
+                />
+              </div>
             </div>
           </div>
 

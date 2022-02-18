@@ -112,6 +112,7 @@ function EditMember({
       phone,
       linkedin,
       instagram,
+      annualTurnover,
     } = store.getState().formReducer;
 
     const header = store.getState().imageReducer.header[0]?.name ?? null;
@@ -146,6 +147,7 @@ function EditMember({
       organizations: addedOrganizations,
       positionId: position,
       // contacts: cont,
+      turnover: annualTurnover,
       isActive,
       imageDeleted,
       facebook,
@@ -243,18 +245,22 @@ function EditMember({
                   id="birthDate"
                   type="date"
                   max={dateNow}
-                  placeholder=""
-                  // value={birthDate}
+                  placeholder="Birthdate"
                 />
-                <button
-                  onClick={() => setIsActive(!isActive)}
-                  style={{ width: "31%", margin: "0 14px" }}
-                  type="button"
-                  className={isActive ? "button red" : "button"}
-                >
-                  {isActive ? "Active" : "Passive"}
-                </button>
+                <Input
+                  id="annualTurnover"
+                  type="text"
+                  placeholder="Annual Turnover"
+                />
               </div>
+              <button
+                onClick={() => setIsActive(!isActive)}
+                style={{ width: "31%", margin: "0 14px" }}
+                type="button"
+                className={isActive ? "button red" : "button"}
+              >
+                {isActive ? "Active" : "Passive"}
+              </button>
             </div>
           </div>
 

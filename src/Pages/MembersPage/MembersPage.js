@@ -93,7 +93,6 @@ function MembersPage({
               <tbody>
                 {membersByPage.length > 0 ? (
                   membersByPage.map((memberByPage, index) => {
-                    console.log({ memberByPage }, "aaaaaaaaaaaaaaaaaaaaaaa");
                     return (
                       <tr
                         key={memberByPage.id}
