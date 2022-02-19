@@ -25,8 +25,8 @@ import EditEvent from "./Pages/EventsPage/EditEvent";
 import Applicant from "./Pages/Applicant/Applicant";
 import CreateEventDetails from "./Pages/CreateEventDetails/CreateEventDetails";
 import CreateNewsDetails from "./Pages/CreateNewsDetailsPage/CreateNewsDetails";
-
-
+import SpeakersPage from "./Pages/SpeakersPage/SpeakersPage";
+import AddSpeakerPage from "./Pages/AddSpeakerPage/AddSpeakerPage";
 
 function Routes({ isLogin, userName }) {
   if (isLogin) {
@@ -62,6 +62,8 @@ function Routes({ isLogin, userName }) {
             <Route path="/bulma" component={WithBulma} exact />
             <Route path="/information" component={Information} exact />
             <Route path="/applicant" component={Applicant} exact />
+            <Route path="/speakers" component={SpeakersPage} exact />
+            <Route path="/add-speaker" component={AddSpeakerPage} exact />
             <Redirect to="/news" />
           </Switch>
         </div>

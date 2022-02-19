@@ -7,6 +7,7 @@ import event from "../../img/event.svg";
 import setting from "../../img/setting.svg";
 import members from "../../img/members.svg";
 import applicant from "../../img/applicant.svg";
+import speaker from "../../img/speaker.svg";
 
 function Sidebar() {
   const [navbarOpen, setNavbarOpen] = useState(true);
@@ -150,6 +151,26 @@ function Sidebar() {
                 </div>
               ) : (
                 <img alt="" className="sidebar_icon" src={applicant} />
+              )}
+            </NavLink>
+
+            <NavLink
+              className="menu_title"
+              to="/speakers"
+              activeClassName="active-link"
+              // onClick={() => closeMenu()}
+            >
+              {navbarOpen ? (
+                <div className="sidebar_title">
+                  <div className="open_sidebar_icon">
+                    {/* <img alt="" className="sidebar_icon" src={setting} /> */}
+                    <i className="fas fa-solid fa-user-tie"></i>
+                    {/* <img alt="" className="sidebar_icon" src={speaker} /> */}
+                  </div>
+                  <div>Speakers</div>
+                </div>
+              ) : (
+                <img alt="" className="sidebar_icon" src={""} />
               )}
             </NavLink>
           </ul>

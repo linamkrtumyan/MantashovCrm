@@ -63,23 +63,17 @@ function EventsPage({
     setInfoModalOpen(true);
   }
 
-  const getDates = (startDate, endDate) => {
+  const getDates = (startDate) => {
     let fullDate;
 
     const sd = new Date(startDate);
-    const ed = new Date(endDate);
 
     const d1 = `${sd.getFullYear()}-${sd.getMonth() + 1}-${sd.getDate()}`;
-    const d2 = `${ed.getFullYear()}-${ed.getMonth() + 1}-${ed.getDate()}`;
 
     const t1 = `${sd.getHours()}:${sd.getMinutes()}`;
-    const t2 = `${ed.getHours()}:${ed.getMinutes()}`;
 
-    if (d1 === d2) {
-      fullDate = `${d1}  ${t1}-${t2}`;
-    } else {
-      fullDate = `${d1}  ${t1} / ${d2} ${t2}`;
-    }
+      fullDate = `${d1}  ${t1} `;
+   
 
     return fullDate;
   };
@@ -139,8 +133,7 @@ function EventsPage({
                   <th>Name</th>
                   <th>Location</th>
                   <th>Date</th>
-                  <th>Going/Seen</th>
-                  <th>Description</th>
+                  {/* <th>Description</th> */}
                   <th></th>
                   <th></th>
                   <th></th>
@@ -151,16 +144,18 @@ function EventsPage({
                   <tr key={event.id}>
                     <td>{event.name}</td>
                     <td>{event.location}</td>
-                    <td>{getDates(event.startDate, event.endDate)}</td>
-                    {/* <td>{event.endDate}</td> */}
                     <td>
-                      {event.going}/{event.viewed}
+                      {
+                        getDates(event.startDate)
+                      }
                     </td>
-                    {event.description?.length > 15 ? (
+                    {/* <td>{event.endDate}</td> */}
+                   
+                    {/* {event.description?.length > 15 ? (
                       <td>{event.description.substring(0, 15)}...</td>
                     ) : (
                       <td>{event.description}</td>
-                    )}
+                    )} */}
 
                     <td style={{ width: "10px" }}>
                       <div
@@ -183,14 +178,14 @@ function EventsPage({
                       </div>
                     </td>
                     <td style={{ width: "10px" }}>
-                      <div
+                      {/* <div
                         style={{ cursor: "pointer" }}
                         onClick={() => {
                           handleInfo(event.id);
                         }}
                       >
                         <i className="fas fa-eye"></i>
-                      </div>
+                      </div> */}
                     </td>
                   </tr>
                 ))}
