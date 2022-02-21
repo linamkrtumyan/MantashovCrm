@@ -40,7 +40,6 @@ const uploadImageRequest = () => {
 
 const uploadImageSuccess = (data, urls) => {
   const image = data ? data : [];
-  console.log(urls, "??????????????///");
   const loading = data ? false : true;
   const imgUrls = urls
     ? Array.from(urls).map((file) => URL.createObjectURL(file))

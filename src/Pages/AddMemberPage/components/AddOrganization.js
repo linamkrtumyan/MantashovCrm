@@ -63,7 +63,6 @@ function AddOrganization({
   return (
     <>
       {addedOrganizations.map((org, index) => {
-        console.log({ addedOrganizations }, "////////");
         const orgValue = organizations.find(
           (organization) => organization.id === org.organizationId
         );

@@ -3,7 +3,7 @@ import "./createEventDetails.css";
 import { connect } from "react-redux";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import Button from "../../Components/Forms/Button/Button";
-import {
+import store, {
   addEventDetails,
   cleanImages,
   cleanVideos,
@@ -32,6 +32,7 @@ function CreateEventDetails({
   const [shortDescription, setShortDescription] = useState("");
   const [forRender, setForRender] = useState(0);
   const [requiredClass, setRequiredClass] = useState("");
+  const [blockLinks, setBlockLinks] = useState();
 
   let history = useHistory();
 
@@ -59,20 +60,30 @@ function CreateEventDetails({
     });
   }, [image, video]);
 
+  useEffect(() => {
+    let links = blockLinks && blockLinks !== "" ? blockLinks.split("\n") : [];
+    setNewBlock({
+      ...newBlock,
+      links,
+    });
+  }, [blockLinks]);
+
   const openField = () => {
     setOpen(true);
   };
 
   const saveBlockData = () => {
     if (newBlock.topTextEng !== "") {
+      let links = blockLinks ? blockLinks.split("\n") : [];
       setNewBlock({
         ...newBlock,
-        eventId: 48,
+        links,
       });
+
       eventDetailsBlocks.push(newBlock);
       setRenderContent(renderContent + 1);
       addEventDetails(eventDetailsBlocks);
-      // addEventBlock(newBlock);
+      addEventBlock({ eventId, block: newBlock });
       setNewBlock({});
       cleanImages();
       setShortDescription("");
@@ -136,6 +147,13 @@ function CreateEventDetails({
               />
             ))
           : null}
+      </div>
+      <div style={{ marginLeft: 30 }}>
+        <ImageUpload
+          limit={true}
+          label="Upload Fixed Images"
+          containerClassName="uploaded"
+        />
       </div>
       <div className="opened_field_container">
         <div className="plus_icon" onClick={openField}>
@@ -274,12 +292,13 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={newBlock.links ? newBlock.links : ""}
+                  value={blockLinks ? blockLinks : ""}
                   onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
-                      links: e.target.value,
-                    });
+                    setBlockLinks(e.target.value);
+                    // setNewBlock({
+                    //   ...newBlock,
+                    //   links: e.target.value,
+                    // });
                   }}
                 />
               </div>
@@ -435,10 +454,6 @@ function CreateEventDetails({
                       </div>
                       {block.videoUrls && block.videoUrls.length
                         ? block.videoUrls.map((video) => {
-                            console.log(
-                              { urls: block.videoUrls, video },
-                              "==========="
-                            );
                             return (
                               <div className="upload_cont">
                                 <video
@@ -513,7 +528,6 @@ function CreateEventDetails({
   );
 }
 const mapStateToProps = (state) => {
-  console.log(state, "::::::::::");
   return {
     eventId: state.eventReducer.eventId,
     image: state.imageReducer?.image,

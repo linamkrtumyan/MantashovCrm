@@ -14,16 +14,13 @@ export const fetchSpeakers = () => {
     dispatch(fetchSpeakersRequest());
     request(`/admin/speakers/all`)
       .then((data) => {
-        console.log(data, "speakers");
         dispatch(fetchSpeakersSuccess(data));
         if (data.count > 0 && data.length === 0) {
           // dispatch(changeCurrentPage(page));
-          console.log(data);
         }
       })
       .catch((e) => {
         dispatch(fetchSpeakersFailure(e.message));
-        // console.log(e);
       });
   };
 };

@@ -19,7 +19,6 @@ export const fetchMembersByPage = () => {
         dispatch(fetchMembersByPageSuccess(data));
         if (data.count > 0 && data.members.length === 0) {
           dispatch(changeCurrentPage(page));
-          console.log(data);
         }
       })
       .catch((e) => {

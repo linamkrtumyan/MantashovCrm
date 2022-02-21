@@ -8,6 +8,9 @@ import {
   ADD_SPEAKER_REQUEST,
   ADD_SPEAKER_SUCCESS,
   ADD_SPEAKER_FAILURE,
+  SPEAKER_EDIT_REQUEST,
+  SPEAKER_EDIT_SUCCESS,
+  SPEAKER_EDIT_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -65,6 +68,23 @@ const speakerReducer = (state = initialState, action) => {
         error: null,
       };
     case ADD_SPEAKER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    case SPEAKER_EDIT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SPEAKER_EDIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case SPEAKER_EDIT_FAILURE:
       return {
         ...state,
         loading: false,

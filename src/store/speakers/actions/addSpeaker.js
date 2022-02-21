@@ -27,7 +27,6 @@ export const addSpeaker = (speaker, changePath) => {
       .catch((e) => {
         dispatch(addSpeakerFailure(e.message));
         toast.error("Something bad happened");
-        console.log({ error: e });
       });
   };
 };

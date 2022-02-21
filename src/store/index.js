@@ -86,6 +86,11 @@ export {
 } from "./organizations/actions";
 
 export { fetchApplicants, editApplicantStatus } from "./applicants/actions";
-export { fetchSpeakers, deleteSpeaker, addSpeaker } from "./speakers/actions";
+export {
+  fetchSpeakers,
+  deleteSpeaker,
+  addSpeaker,
+  editSpeaker,
+} from "./speakers/actions";
 
 export { default } from "./configureStore";

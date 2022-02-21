@@ -8,21 +8,19 @@ import {
 import { toast } from "react-toastify";
 
 export const addEventBlock = (block, changePath) => {
-  console.log({ block }, "addEventBlock");
 
   return (dispatch) => {
     dispatch(addEventBlockRequest());
     request("/admin/events/eventDetails", "POST", block)
       .then((data) => {
         if (data.success) {
-          console.log({ success: data }, "lllllllllllllllllll");
           dispatch(addEventBlockSuccess(data));
           //   toast.dark("Event added");
-          //   changePath();
+            // changePath();
         }
       })
       .catch((e) => {
-        dispatch(addEventBlockFailure(e.message));
+        dispatch(addEventBlockFailure(e.errorMessage));
         toast.error("Something bad happened");
       });
   };
@@ -37,7 +35,6 @@ const addEventBlockRequest = () => {
 const addEventBlockSuccess = (data) => {
   // console.log(data, "news success data");
   //   const login = data ? data : [];
-  console.log({ data }, "///");
   return {
     type: ADD_EVENT_BLOCK_SUCCESS,
     payload: { eventId: data.id },

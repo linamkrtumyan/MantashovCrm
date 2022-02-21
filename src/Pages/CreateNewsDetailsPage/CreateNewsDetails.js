@@ -58,7 +58,6 @@ function CreateNewsDetails({
 
   const saveBlockData = () => {
     if (shortDescription !== "") {
-      console.log({ requiredClass });
       setNewBlock({
         ...newBlock,
         id: newsDetailsBlocks.length,
@@ -94,7 +93,6 @@ function CreateNewsDetails({
       newsFixedDescription: shortDescription,
       headers: headers[0]?.name ?? null,
     };
-    console.log({ dataToSend });
     // here must be function call of details add_________________________________
     history.push("/news");
   };
@@ -509,7 +507,6 @@ function CreateNewsDetails({
   );
 }
 const mapStateToProps = (state) => {
-  console.log(state, "::::::::::");
   return {
     newsId: state.newsReducer.newsId,
     image: state.imageReducer?.image,

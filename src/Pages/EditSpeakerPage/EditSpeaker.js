@@ -1,53 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Button from "../../Components/Forms/Button/Button";
 import Input from "../../Components/Forms/Input/Input";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
 import { scrollToView } from "../../helpers/scrollToView";
 import store, {
-  fetchOrganizations,
-  addSpeaker,
+  editSpeaker,
   cleanForm,
   cleanImages,
+  formOnChange,
+  fetchOrganizations,
 } from "../../store";
 
-function AddSpeakerPage({
-  fetchOrganizations,
-  addSpeaker,
+function EditSpeaker({
+  editSpeaker,
   organizations,
   cleanForm,
   cleanImages,
+  speakers,
+  formOnChange,
+  fetchOrganizations,
 }) {
   let history = useHistory();
+  let { id } = useParams();
 
   useEffect(() => {
     fetchOrganizations();
+
+    if (speakers.length) {
+      const speaker = speakers.find((s) => s.id === parseInt(id));
+      formOnChange("fullNameEng", `${speaker.nameEng}`);
+      formOnChange("fullNameArm", `${speaker.nameArm}`);
+      formOnChange("fullNameRu", `${speaker.nameRu}`);
+    }
   }, []);
 
-  const cancelAdd = () => {
+  const cancelEdit = () => {
     history.push("/speakers");
   };
 
-  const handleCreate = (e) => {
+  const handleEdit = (e) => {
     e.preventDefault();
 
     let { fullNameEng, fullNameArm, fullNameRu, organizationId } =
       store.getState().formReducer;
-    let header = store.getState().imageReducer.header[0];
-
+    let header = store.getState().imageReducer.header;
+    const changePath = () => {
+      history.push("/speakers");
+    };
     let speaker = {
+      id: parseInt(id),
       fullNameEng,
       fullNameArm,
       fullNameRu,
       organizationId,
-      image: header[0] ? header[0].name : null,
+      image: header && header[0] ? header[0].name : null,
     };
-    const changePath = () => {
-      history.push("/speakers");
-    };
-    addSpeaker(speaker, changePath);
+    editSpeaker(speaker, changePath);
     cleanForm();
     cleanImages();
   };
@@ -55,7 +66,7 @@ function AddSpeakerPage({
     <div>
       <form
         onFocus={scrollToView}
-        onSubmit={(e) => handleCreate(e)}
+        onSubmit={(e) => handleEdit(e)}
         className="add_member_container"
       >
         <div>
@@ -63,7 +74,7 @@ function AddSpeakerPage({
             <i className="fas fa-chevron-left"></i>
           </button>
           <div className="add_member_title">
-            <p>Add Speaker</p>
+            <p>Edit Speaker</p>
           </div>
         </div>
 
@@ -92,7 +103,7 @@ function AddSpeakerPage({
         </div>
 
         <div className="action_container">
-          <div onClick={() => cancelAdd()}>
+          <div onClick={() => cancelEdit()}>
             <Button
               type="reset"
               title="Cancel"
@@ -103,7 +114,7 @@ function AddSpeakerPage({
           <div>
             <Button
               type="submit"
-              title="Create"
+              title="Edit"
               className="action_btn is-primary"
             />
           </div>
@@ -115,17 +126,20 @@ function AddSpeakerPage({
 
 const mapStateToProps = (state) => {
   return {
+    speakers: state.speakerReducer.speakers,
     organizations: state.organizationsReducer.organizations,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrganizations: () => dispatch(fetchOrganizations()),
-    addSpeaker: (speaker, callback) => dispatch(addSpeaker(speaker, callback)),
+    editSpeaker: (speaker, callback) =>
+      dispatch(editSpeaker(speaker, callback)),
     cleanForm: () => dispatch(cleanForm()),
     cleanImages: () => dispatch(cleanImages()),
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+    fetchOrganizations: () => dispatch(fetchOrganizations()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSpeakerPage);
+export default connect(mapStateToProps, mapDispatchToProps)(EditSpeaker);

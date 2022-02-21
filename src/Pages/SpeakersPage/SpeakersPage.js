@@ -4,6 +4,7 @@ import { fetchSpeakers, deleteSpeaker } from "../../store";
 import { connect } from "react-redux";
 import Loading from "../../Components/Loading/Loading";
 import AddSpeakerCard from "../../Components/Speakers/AddSpeakerCard/AddSpeakerCard";
+import { useHistory } from "react-router-dom";
 
 function SpeakersPage({
   fetchSpeakers,
@@ -12,13 +13,16 @@ function SpeakersPage({
   loading,
   fetch,
 }) {
+  let history = useHistory();
   useEffect(() => {
     if (!loading) {
       fetchSpeakers();
     }
   }, [fetch]);
 
-  const handleDetails = () => {};
+  const handleDetails = (id) => {
+    history.push(`/edit-speaker/${id}`);
+  };
 
   const handleDelete = (id) => {
     deleteSpeaker(id);
@@ -69,7 +73,7 @@ function SpeakersPage({
                     <tr
                       key={speaker.id}
                       style={{ cursor: "pointer", position: "relative" }}
-                      // onClick={() => handleDetails(speaker.id)}
+                      onClick={() => handleDetails(speaker.id)}
                     >
                       <td onClick={() => handleDetails(speaker.id)}>
                         <img
@@ -79,7 +83,7 @@ function SpeakersPage({
                         />
                       </td>
                       <td onClick={() => handleDetails(speaker.id)}>
-                        {speaker.name}
+                        {speaker.nameEng}
                       </td>
                       <td onClick={() => handleDetails(speaker.id)}>
                         {

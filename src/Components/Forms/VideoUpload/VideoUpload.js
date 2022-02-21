@@ -104,7 +104,6 @@ function VideoUpload({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.videoReducer, ".................");
   return {
     videoUpload: state.videoReducer?.videoUpload,
   };

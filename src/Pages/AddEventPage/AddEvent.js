@@ -276,7 +276,6 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, "state|||");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

@@ -8,7 +8,6 @@ import {
 import { toast } from "react-toastify";
 
 export const addEvent = (event, changePath) => {
-  console.log({ event });
   const data = new FormData();
 
   return (dispatch) => {
@@ -37,7 +36,6 @@ const addEventRequest = () => {
 const addEventSuccess = (data) => {
   // console.log(data, "news success data");
   //   const login = data ? data : [];
-  console.log({ data }, "///");
   return {
     type: ADD_EVENT_SUCCESS,
     payload: { eventId: data.id },

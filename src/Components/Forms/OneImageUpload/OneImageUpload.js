@@ -23,18 +23,15 @@ function OneImageUpload({
     }
   };
 
-  useEffect(() => {
-    console.log({ image }, "7777");
-  }, [image]);
+  // useEffect(() => {
+  //   console.log({ image }, "7777");
+  // }, [image]);
 
   useEffect(() => {
     // console.log({ index }, "-------");
     if (headers.length && headers[index - 1] && index) {
-      console.log({ mmmm: index });
       setImage(headers[index - 1]?.url);
-      console.log("if");
     } else if (!index && header) {
-      console.log("else", header);
       setImage([header[0].url]);
     } else {
       setImage([]);
@@ -121,7 +118,6 @@ function OneImageUpload({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.imageReducer?.headers, "////");
   return {
     headers: state.imageReducer?.headers,
     oneImageLoading: state.imageReducer?.oneImageLoading,

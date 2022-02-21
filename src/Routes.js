@@ -27,6 +27,7 @@ import CreateEventDetails from "./Pages/CreateEventDetails/CreateEventDetails";
 import CreateNewsDetails from "./Pages/CreateNewsDetailsPage/CreateNewsDetails";
 import SpeakersPage from "./Pages/SpeakersPage/SpeakersPage";
 import AddSpeakerPage from "./Pages/AddSpeakerPage/AddSpeakerPage";
+import EditSpeaker from "./Pages/EditSpeakerPage/EditSpeaker";
 
 function Routes({ isLogin, userName }) {
   if (isLogin) {
@@ -64,6 +65,7 @@ function Routes({ isLogin, userName }) {
             <Route path="/applicant" component={Applicant} exact />
             <Route path="/speakers" component={SpeakersPage} exact />
             <Route path="/add-speaker" component={AddSpeakerPage} exact />
+            <Route path="/edit-speaker/:id" component={EditSpeaker} exact />
             <Redirect to="/news" />
           </Switch>
         </div>
