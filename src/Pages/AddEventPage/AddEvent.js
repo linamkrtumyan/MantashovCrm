@@ -48,6 +48,7 @@ function AddEvent({
 }) {
   const history = useHistory();
   const [isPublic, setIsPublic] = useState(false);
+  const [allSpeakers, setAllSpeakers] = useState([]);
 
   useEffect(() => {
     cleanForm();
@@ -68,6 +69,13 @@ function AddEvent({
       fetchCities(stateId);
     }
   }, [stateId]);
+  useEffect(() => {
+    let arr = [];
+    speakers.map((item) => {
+      arr.push({ id: item.id, name: item.nameEng });
+    });
+    setAllSpeakers(arr);
+  }, [speakers]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -210,7 +218,7 @@ function AddEvent({
 
               <Multiselect
                 placeholder="Speakers"
-                items={speakers}
+                items={allSpeakers}
                 id="speakers"
                 required={false}
               />
@@ -276,6 +284,7 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
+  console.log({ speakers: state.eventReducer?.speakers });
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
