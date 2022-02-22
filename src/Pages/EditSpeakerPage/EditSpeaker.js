@@ -12,6 +12,7 @@ import store, {
   cleanImages,
   formOnChange,
   fetchOrganizations,
+  fetchSpeakers,
 } from "../../store";
 
 function EditSpeaker({
@@ -22,20 +23,28 @@ function EditSpeaker({
   speakers,
   formOnChange,
   fetchOrganizations,
+  fetchSpeakers,
+  loading,
+  fetch,
 }) {
   let history = useHistory();
   let { id } = useParams();
 
   useEffect(() => {
     fetchOrganizations();
+  }, []);
 
+  useEffect(() => {
+    if (!loading) {
+      fetchSpeakers();
+    }
     if (speakers.length) {
       const speaker = speakers.find((s) => s.id === parseInt(id));
       formOnChange("fullNameEng", `${speaker.nameEng}`);
       formOnChange("fullNameArm", `${speaker.nameArm}`);
       formOnChange("fullNameRu", `${speaker.nameRu}`);
     }
-  }, []);
+  }, [fetch]);
 
   const cancelEdit = () => {
     history.push("/speakers");
@@ -128,6 +137,8 @@ const mapStateToProps = (state) => {
   return {
     speakers: state.speakerReducer.speakers,
     organizations: state.organizationsReducer.organizations,
+    fetch: state.speakerReducer.fetch,
+    loading: state.speakerReducer.loading,
   };
 };
 
@@ -139,6 +150,9 @@ const mapDispatchToProps = (dispatch) => {
     cleanImages: () => dispatch(cleanImages()),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     fetchOrganizations: () => dispatch(fetchOrganizations()),
+    fetchSpeakers: () => {
+      dispatch(fetchSpeakers());
+    },
   };
 };
 

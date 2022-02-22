@@ -201,9 +201,24 @@ function EditEvent({
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="locationEng" type="text" placeholder="Address" />
-                <Input id="locationArm" type="text" placeholder="Հասցե" />
-                <Input id="locationRu" type="text" placeholder="Адрес" />
+                <Input
+                  id="locationEng"
+                  type="text"
+                  placeholder="Address"
+                  required={false}
+                />
+                <Input
+                  id="locationArm"
+                  type="text"
+                  placeholder="Հասցե"
+                  required={false}
+                />
+                <Input
+                  id="locationRu"
+                  type="text"
+                  placeholder="Адрес"
+                  required={false}
+                />
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -225,7 +240,7 @@ function EditEvent({
               </div>
             </div>
 
-            <div
+            {/* <div
               style={{
                 background: "#e7e7e7",
                 // padding: 15,
@@ -252,7 +267,7 @@ function EditEvent({
                   <AgendaEdit />
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div
               style={{
