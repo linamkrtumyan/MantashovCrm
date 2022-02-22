@@ -194,11 +194,13 @@ const reducer = (state = initialState, action) => {
         loading: true,
       };
     case ADD_EVENT_SUCCESS:
+      console.log(action.payload, "action.payload");
       return {
         ...state,
         loading: false,
         error: null,
         eventId: action.payload.eventId,
+        event: action.payload.event,
       };
     case ADD_EVENT_FAILURE:
       return {

@@ -4,9 +4,8 @@ import { deleteMember} from "../../../store";
 import ModalComponent from "../../Modal/Modal";
 
 export const DeleteMember = ({ action, show, member, deleteMember }) => {
-  //   console.log(news, "news id");
+ 
   //   if (action) {
-  //     console.log("mtav deletei if");
   //     deleteNews(news);
   //   }
   //   useEffect(() => {
@@ -20,7 +19,6 @@ export const DeleteMember = ({ action, show, member, deleteMember }) => {
   );
 };
 const mapStateToProps = (state) => {
-  // console.log(state, "news delete state");
   return {
     // currentPage: state.paginationReducer.currentPage,
     //   show: state.modalReducer.show,

@@ -30,7 +30,6 @@ function ImageUpload({
   }, [headers, image]);
 
   // useEffect(() => {
-  //   // console.log({ selectedFiles }, ")))))))))))))))))))))0");
   //   setUploadedPhotos(selectedFiles);
   // }, [selectedFiles]);
 

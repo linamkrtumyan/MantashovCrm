@@ -23,12 +23,8 @@ function OneImageUpload({
     }
   };
 
-  // useEffect(() => {
-  //   console.log({ image }, "7777");
-  // }, [image]);
 
   useEffect(() => {
-    // console.log({ index }, "-------");
     if (headers.length && headers[index - 1] && index) {
       setImage(headers[index - 1]?.url);
     } else if (!index && header) {
@@ -74,7 +70,6 @@ function OneImageUpload({
                 // setImage([]);
                 setImage([]);
                 handleDelete();
-                // console.log({ index }, "HHHHHHHHHHHHHHHhhhh");
               }}
             >
               <svg viewBox="0 0 24 24" className="close">

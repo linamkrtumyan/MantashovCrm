@@ -24,7 +24,6 @@ function EventsPage({
   changeCurrentPage,
 }) {
   // const [page, setPage] = useState(0);
-  // console.log(page, "eventspage page");
   let history = useHistory();
 
   const [infoModalOpen, setInfoModalOpen] = useState(false);
@@ -37,7 +36,6 @@ function EventsPage({
   // const methods = a.substr(1, a.length - 2).split(",").map(function (item) {
   //   return parseInt(item);
   // });
-  // console.log({ methods });
 
   useEffect(() => {
     changeCurrentPage(1);
@@ -199,7 +197,6 @@ function EventsPage({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log({ action: state.modalReducer.action });
   return {
     loading: state.eventReducer.loading,
     noEvents: state.eventReducer.eventsByPage.length === 0,

@@ -4,13 +4,11 @@ import { deleteEvent, cleanEvent } from "../../store";
 import { useHistory } from "react-router-dom";
 
 function DeleteEvent({ modalOpen, setModalOpen, id, deleteEvent, cleanEvent }) {
-  // console.log(modalOpen, "modalOpen");
-  // console.log(id, "id");
+
 
   const history = useHistory();
 
   const handleDelete = () => {
-    // console.log({ id });
     // if (id) {
     const changePath = () => {
       history.push("/events");
@@ -61,7 +59,6 @@ function DeleteEvent({ modalOpen, setModalOpen, id, deleteEvent, cleanEvent }) {
 }
 
 const mapStateToProps = (state) => {
-  //   console.log(state, "state");
   return {};
 };
 

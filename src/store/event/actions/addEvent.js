@@ -17,7 +17,7 @@ export const addEvent = (event, changePath) => {
         if (data.success) {
           dispatch(addEventSuccess(data));
           toast.dark("Event added");
-          changePath();
+          // changePath();
         }
       })
       .catch((e) => {
@@ -38,7 +38,7 @@ const addEventSuccess = (data) => {
   //   const login = data ? data : [];
   return {
     type: ADD_EVENT_SUCCESS,
-    payload: { eventId: data.id },
+    payload: { eventId: data.id, event: data },
   };
 };
 

@@ -155,7 +155,6 @@ function EditMember({
       linkedin,
       instagram,
     };
-    // console.log(member, "sended member");
     editMember(member, changePath);
     cleanForm();
     // cleanImages();

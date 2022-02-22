@@ -5,7 +5,6 @@ import "./addPhone.css";
 
 function AddPhone({ contactType, formOnChange, value, cleanForm, phone }) {
   // const [phone, setPhone] = useState("")
-  // console.log(contactType, "contactType");
   useEffect(() => {
     formOnChange("contacts", contactType.id, []);
     // return () => {

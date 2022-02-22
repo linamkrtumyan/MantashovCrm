@@ -31,9 +31,7 @@ function EditOrganizations({
   posId2,
   posId3,
 }) {
-  //   console.log(existedOrganizations, "existedOrganizations");
   const [orgs, setOrgs] = useState(0);
-  // console.log(orgs, "orgs");
   useEffect(() => {
     fetchPositions();
     fetchOrganizations();
@@ -105,7 +103,6 @@ function EditOrganizations({
 
   const handleAdd = () => {
     // if (allAddedOrganizations === null) {
-    //   console.log("mtav if ****");
     //   // Array.from(allAddedOrganizations);
     //   // allAddedOrganizations = Array.from(addedOrganizations);
     //   // allAddedOrganizations.push(addedOrganizations);
@@ -120,7 +117,6 @@ function EditOrganizations({
     allAddedOrganizations.splice(index, 1);
     setOrgs(orgs + 1);
   };
-  // console.log("dfdsf", allAddedOrganizations);
   return (
     <>
       {allAddedOrganizations?.map((org, index) => {
@@ -194,7 +190,6 @@ function EditOrganizations({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state.formReducer.organizations, ";;;;;;;;");
   return {
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,

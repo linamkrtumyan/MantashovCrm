@@ -14,7 +14,6 @@ function ModalComponent({
   handleDelete,
   id,
 }) {
-  // console.log(action, "action");
   const handleClose = () => {
     // console.log("object");
   };
@@ -56,7 +55,6 @@ function ModalComponent({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     show: state.modalReducer.show,
     action: state.modalReducer.action,

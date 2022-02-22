@@ -137,7 +137,6 @@ function AddOrganization({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,

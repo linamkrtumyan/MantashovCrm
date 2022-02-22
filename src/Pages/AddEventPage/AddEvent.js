@@ -45,10 +45,12 @@ function AddEvent({
   // image,
   uploadedPhotos,
   cleanImages,
+  eventId,
 }) {
   const history = useHistory();
   const [isPublic, setIsPublic] = useState(false);
   const [allSpeakers, setAllSpeakers] = useState([]);
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     cleanForm();
@@ -58,6 +60,12 @@ function AddEvent({
     getSpeakers();
     cleanImages();
   }, []);
+
+  useEffect(() => {
+    if (eventId) {
+      history.push(`/eventDetails/${eventId}`);
+    }
+  }, [eventId]);
 
   useEffect(() => {
     if (countryId) {
@@ -71,13 +79,13 @@ function AddEvent({
   }, [stateId]);
   useEffect(() => {
     let arr = [];
-    speakers.map((item) => {
+    speakers?.map((item) => {
       arr.push({ id: item.id, name: item.nameEng });
     });
     setAllSpeakers(arr);
   }, [speakers]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let {
@@ -97,7 +105,7 @@ function AddEvent({
     } = store.getState().formReducer;
 
     // agendas, header, images
-    // let { addresses } = store.getState().eventReducer;
+
     let { headers, image } = store.getState().imageReducer;
 
     let headersImages = [];
@@ -126,10 +134,17 @@ function AddEvent({
     };
 
     //
-    const changePath = () => {
-      history.push("/eventDetails");
-    };
-    addEvent(event, changePath);
+
+    await addEvent(event);
+    // if (id) {
+    // let { eventId } = store.getState().eventReducer.eventId;
+    // handlePageChange(id);
+    // }
+
+    // const changePath = () => {
+
+    // };
+    // changePath();
     // history.push(`/event/${id}`)
     // cleanForm();
     // editAgendas([]);
@@ -284,7 +299,6 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log({ speakers: state.eventReducer?.speakers });
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -297,6 +311,7 @@ const mapStateToProps = (state) => {
     // selectedSpeakers: state.formReducer?.speakers ?? [],
     headers: state.imageReducer?.headers,
     image: state.imageReducer?.image,
+    eventId: state.eventReducer?.eventId,
   };
 };
 

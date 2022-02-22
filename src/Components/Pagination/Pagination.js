@@ -6,7 +6,6 @@ import { changeCurrentPage } from "../../store";
 
 // const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
 const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
-  // console.log(totalPosts, "totalPosts");
   const postsPerPage = 10;
   // const totalPosts =50
   // const [currentPage, setCurrentPage] = useState(1);
@@ -76,7 +75,6 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
 };
 
 const mapStateToProps = (state) => {
-  // console.log(state, "pagination state");
   return {
     currentPage: state.paginationReducer.currentPage,
   };

@@ -351,7 +351,6 @@ function CreateNewsDetails({
                       <div style={{ display: "flex " }}>
                         {block.imgUrls && block.imgUrls.length
                           ? block.imgUrls.map((img) => {
-                              // console.log({ urls: block.imgUrls, img }, "kkk");
                               return (
                                 <div className="upload_cont">
                                   <img

@@ -32,6 +32,7 @@ const fetchEventDetailsRequest = () => {
 
 const fetchEventDetailsSuccess = (data) => {
   const eventDetails = data ? data : [];
+  console.log({ data }, "///////////////////");
   return {
     type: FETCH_EVENT_DETAILS_SUCCESS,
     payload: {

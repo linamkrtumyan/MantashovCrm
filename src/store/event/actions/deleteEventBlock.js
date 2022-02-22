@@ -6,14 +6,15 @@ import {
 } from "../types";
 
 export const deleteEventBlock = (id, changePath) => {
-    // set api for block delete
+  console.log({ id }, "idddddddddddddddddddd");
+  // set api for block delete
   return (dispatch) => {
     dispatch(deleteEventBlockRequest());
-    request(`/admin/events/event/${id}`, "DELETE")
+    request(`/admin/events/eventDetails/${id}`, "DELETE")
       .then((data) => {
         if (data.success) {
           dispatch(deleteEventBlockSuccess(data));
-          changePath();
+          // changePath();
         }
       })
       .catch((e) => {

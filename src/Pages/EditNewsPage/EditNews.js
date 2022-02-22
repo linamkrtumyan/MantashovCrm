@@ -28,7 +28,6 @@ function EditNews({
   deleteNewsImageFromStore,
   detailsImages,
 }) {
-  // console.log(news, "news");
   const [mainImg, setMainImg] = useState(true);
   const [isActive, setIsActive] = useState(true);
   const [openImgModal, setOpenImgModal] = useState(false);
@@ -50,7 +49,6 @@ function EditNews({
     let { titleArm, titleEng, titleRu, textArm, textEng, textRu } =
       store.getState().formReducer;
     const addedImages = store.getState().imageReducer.image;
-    // console.log(typeof addedImages);
     const deleted = store.getState().imageReducer.deletedImages;
     const header = store.getState().imageReducer.header[0];
 
@@ -73,7 +71,6 @@ function EditNews({
       deletedImages: deleted,
     };
 
-    // console.log(news, "news send");
     editNews(news, changePath);
     cleanImages();
   };
@@ -267,7 +264,6 @@ function EditNews({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state news edit");
   return {
     header: state.imageReducer.header,
     news: state.newsReducer.newsDetails,

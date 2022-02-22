@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { resetPassword } from "../../../store";
 
 function ResetPassword({ modalOpen, setModalOpen, id, resetPassword }) {
-  // console.log(id, "id reseti ///");
 
   const handleDelete = () => {
     let member = {

@@ -34,12 +34,6 @@ export default function Slider({ imgPath, dataSlider }) {
   return (
     <div className="container-slider">
       {dataSlider.map((obj, index) => {
-        // console.log({
-        //   dataSlider,
-        //   currentImage,
-        //   // index: dataSlider.indexOf(currentImage),
-        //   obj,
-        // });
         return (
           <div
             key={index}

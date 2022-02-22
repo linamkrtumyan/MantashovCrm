@@ -89,7 +89,8 @@ function NewsPage({
                             e.target.src =
                               require("../../img/unnamed.png").default;
                           }}
-                          src={`/images/newsHeader/${news.id}/header.png`}
+                          // src={`/images/newsHeader/${news.id}/header.png`}
+                          src={`${news.image}`}
                         />
                       </td>
                       <td>{news.title}</td>

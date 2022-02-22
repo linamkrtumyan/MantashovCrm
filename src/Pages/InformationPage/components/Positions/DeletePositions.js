@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { deletePosition } from "../../../../store";
 
 function DeleteSphere({ modalOpen, setModalOpen, id, deletePosition }) {
-  // console.log(modalOpen, "modalOpen");
-  // console.log(id, "id");
+ 
 
   const handleDelete = () => {
     if (id) {
@@ -51,7 +50,6 @@ function DeleteSphere({ modalOpen, setModalOpen, id, deletePosition }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {};
 };
 

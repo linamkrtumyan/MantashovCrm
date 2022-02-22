@@ -93,4 +93,11 @@ export {
   editSpeaker,
 } from "./speakers/actions";
 
+export {
+  deleteFixedImageFromStore,
+  deletedFixedImages,
+  uploadFixedImages,
+  cleanFixedImages,
+} from "./fixedImages/actions";
+
 export { default } from "./configureStore";

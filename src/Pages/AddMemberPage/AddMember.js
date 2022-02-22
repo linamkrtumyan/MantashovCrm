@@ -54,7 +54,6 @@ function AddMember({
   cleanImages,
 }) {
   const [dateNow] = useState(new Date(Date.now()).toISOString().split("T")[0]);
-  // console.log(isActive, "is active");
   const history = useHistory();
   useEffect(() => {
     fetchCountries();
@@ -346,7 +345,6 @@ function AddMember({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

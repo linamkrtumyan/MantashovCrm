@@ -11,6 +11,7 @@ import organizationsReducer from "./organizations/organizationsReducer";
 import applicantsReducer from "./applicants/applicantsReducer";
 import videoReducer from "./videos/videoReducer";
 import speakerReducer from "./speakers/speakerReducer";
+import fixedImagesReducer from './fixedImages/fixedImagesReducer'
 
 export const reducers = {
   membersReducer,
@@ -26,4 +27,5 @@ export const reducers = {
   applicantsReducer,
   videoReducer,
   speakerReducer,
+  fixedImagesReducer,
 };
