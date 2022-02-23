@@ -17,13 +17,13 @@ import store, {
   cleanImages,
   deleteEventImageFromStore,
   cleanForm,
+  fetchEventDetails,
 } from "../../store";
 import { deletedImages } from "../../store/images/actions";
 
 import { connect } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import OpenImage from "./components/images/OpenImage";
-import AgendaEdit from "./AgendaEdit";
 import { scrollToView } from "../../helpers/scrollToView";
 
 function EditEvent({
@@ -37,7 +37,6 @@ function EditEvent({
   fetchCities,
   // cleanForm,
   fetchEventDetailsForEdit,
-  agendas,
   editEvent,
 
   cleanImages,
@@ -45,21 +44,22 @@ function EditEvent({
   deleteEventImageFromStore,
   detailsImages,
   cleanForm,
-  editedAndAddedAgendas,
+  fetchEventDetails,
+  eventDetails,
 }) {
   const history = useHistory();
 
   const [changeImage, setChangeImage] = useState(false);
   const [headerDeleted, setHeaderDeleted] = useState(false);
-  const [agenda, setAgenda] = useState([]);
   const [openImgModal, setOpenImgModal] = useState(false);
   const [imgPath, setImgPath] = useState("");
+  const [details, setDetails] = useState([]);
 
   let { id } = useParams();
 
   useEffect(() => {
     if (id) {
-      fetchEventDetailsForEdit(id);
+      fetchEventDetails(parseInt(id));
     }
   }, [id]);
 
@@ -79,8 +79,8 @@ function EditEvent({
   }, [stateId]);
 
   useEffect(() => {
-    setAgenda(agendas);
-  }, [agendas]);
+    setDetails(eventDetails);
+  }, [eventDetails]);
 
   const handleCancel = () => {
     cleanImages();
@@ -125,7 +125,6 @@ function EditEvent({
       startDate,
       header,
       headerDeleted,
-      agendas: agenda,
       addedImages,
       deletedImages: deleted,
     };
@@ -240,36 +239,8 @@ function EditEvent({
               </div>
             </div>
 
+           
             {/* <div
-              style={{
-                background: "#e7e7e7",
-                // padding: 15,
-                margin: 15,
-                // display: "flex",
-                border: "1px solid #e7e7e7",
-                boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
-                // justifyContent: "space-around",
-              }}
-              className="container_body"
-            >
-              <div style={{ margin: 15 }}>
-                <p
-                  style={{
-                    textAlign: "center",
-                    fontSize: 20,
-                  }}
-                >
-                  Edit agendas
-                </p>
-              </div>
-              <div>
-                <div>
-                  <AgendaEdit />
-                </div>
-              </div>
-            </div> */}
-
-            <div
               style={{
                 height: 200,
                 width: 200,
@@ -312,7 +283,7 @@ function EditEvent({
                   </div>
                 </>
               )}
-            </div>
+            </div> */}
             <div
             // style={{
             //     margin: 15,
@@ -370,8 +341,10 @@ function EditEvent({
                 })}
               </div>
 
-              <div style={{ marginLeft: 15 }}>
-                <ImageUpload label="  Add Images" />
+              <div className="container_body">
+                <div style={{ marginLeft: 15 }}>
+                  <ImageUpload label="Add Images" />
+                </div>
               </div>
             </div>
             <div className="event_action_container">
@@ -398,10 +371,8 @@ const mapStateToProps = (state) => {
     states: state.locationsReducer.states,
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
-    // agendas: state.formReducer?.agenda,
-    agendas: state.eventReducer.agendas,
     detailsImages: state.eventReducer.detailsImages,
-    editedAndAddedAgendas: state.formReducer?.editedAndAddedAgendas,
+    eventDetails: state.eventReducer?.eventDetails,
   };
 };
 
@@ -412,7 +383,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCities: (state) => dispatch(fetchCities(state)),
     cleanForm: () => dispatch(cleanForm()),
     cleanLocation: () => dispatch(cleanLocation()),
-    fetchEventDetailsForEdit: (id) => dispatch(fetchEventDetailsForEdit(id)),
+    fetchEventDetails: (id) => dispatch(fetchEventDetails(id)),
     editEvent: (event, changePath) => dispatch(editEvent(event, changePath)),
     editImages: (eventImages) => dispatch(editImages(eventImages)),
 

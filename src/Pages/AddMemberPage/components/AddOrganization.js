@@ -69,36 +69,33 @@ function AddOrganization({
         const posValue = positions.find(
           (position) => position.id === org.positionId
         );
+
+        console.log({ id: orgValue.id, posValue });
         return (
           <div
             key={`${org.positionId}${org.organizationId}`}
             style={{ display: "flex" }}
           >
-            <div className="added_orgs">
+            {/* <div className="added_orgs">
               <p>{orgValue.name}</p>
             </div>
             <div className="added_orgs">
               <p>{posValue.name}</p>
-            </div>
+            </div> */}
 
-            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
-            {/* դնել սովորական սելեքթ՝ իր ֆունկցիոնալլով */}
-
-            {/* <Select
-              placeholder="Select Organization"
+            <Select
+              placeholder="Organization"
               items={organizations}
               id="organizationId"
-              value={orgValue.name}
+              defaultValue={orgValue.name}
             />
 
             <Select
-              placeholder="Select Position"
+              placeholder="Position"
               items={positions}
               id="positionId"
               defaultValue={posValue.name}
-            /> */}
-
-            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            />
 
             <div onClick={() => handleDelete(org)}>
               <div className="added_orgs">

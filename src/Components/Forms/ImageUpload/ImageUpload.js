@@ -35,10 +35,6 @@ function ImageUpload({
   }, [id]);
 
   useEffect(() => {
-    console.log({ uploadedImages }, "uploadedImages");
-  }, [uploadedImages]);
-
-  useEffect(() => {
     setImagesLength(headers.length + image.length);
   }, [headers, image]);
 

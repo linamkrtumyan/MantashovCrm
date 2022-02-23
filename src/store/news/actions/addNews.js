@@ -3,8 +3,7 @@ import request from "../../request";
 import { ADD_NEWS_REQUEST, ADD_NEWS_SUCCESS, ADD_NEWS_FAILURE } from "../types";
 import { toast } from "react-toastify";
 
-
-export const addNews = (news, changePath) => {
+export const addNews = (news) => {
   const data = new FormData();
 
   return (dispatch) => {
@@ -14,10 +13,9 @@ export const addNews = (news, changePath) => {
         if (data.success) {
           dispatch(addNewsSuccess(data));
           toast.dark("News added");
-          changePath();
-          cleanForm()
+          cleanForm();
         } else {
-          cleanForm()
+          cleanForm();
         }
       })
       .catch((e) => {
@@ -34,8 +32,6 @@ const addNewsRequest = () => {
 };
 
 const addNewsSuccess = (data) => {
-  // console.log(data, "news success data");
-  //   const login = data ? data : [];
   return {
     type: ADD_NEWS_SUCCESS,
     payload: { newsId: data.id },

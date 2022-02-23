@@ -57,12 +57,7 @@ function CreateEventDetails({
 
   useEffect(() => {
     setDetails(eventDetails);
-    console.log({ eventDetails });
   }, [eventDetails]);
-
-  useEffect(() => {
-    console.log({ details }, "details");
-  }, [details]);
 
   useEffect(() => {
     let headersUrls = [];
@@ -70,6 +65,10 @@ function CreateEventDetails({
       headersUrls.push(img.url);
     });
   }, [headers]);
+
+  useEffect(() => {
+    fetchEventDetails(parseInt(eventId));
+  }, [renderContent]);
 
   useEffect(() => {
     setNewBlock({
@@ -124,10 +123,24 @@ function CreateEventDetails({
 
   const handleEdit = (block) => {
     let editedBlock = block;
+    console.log({ block }, "edittttt");
+    const addedImgs = store.getState().formReducer[`block${block.id}`];
+    const addedVids = store.getState().formReducer[`videoBlock${block.id}`];
+    console.log({ addedVids }, "}}}");
+    let newAddedimgs = [];
+    let newAddedVids = [];
+    addedImgs?.map((img) => {
+      newAddedimgs.push(img.name);
+    });
+    addedVids?.map((img) => {
+      newAddedVids.push(img.name);
+    });
+    console.log({ newAddedVids });
     editedBlock.deletedImages = [];
-    editedBlock.addedImages = [];
+    editedBlock.addedImages = newAddedimgs;
+
     editedBlock.deletedVideos = [];
-    editedBlock.addedVideos = [];
+    editedBlock.addedVideos = newAddedVids;
     editEventBlock(editedBlock);
   };
 
@@ -161,6 +174,48 @@ function CreateEventDetails({
     cleanVideos();
     cleanForm();
     addEventShortDescription(dataToSend);
+  };
+
+  const deleteBlockImage = (block, index) => {
+    console.log({ ekacBlock: block, ekecIndex: index });
+    const deletedImage = block.images[index].split("/");
+    const blockData = {
+      id: block.id,
+      topTextEng: block.topTextEng,
+      topTextArm: block.topTextArm,
+      topTextRu: block.topTextRu,
+      bottomTextEng: block.bottomTextEng,
+      bottomTextArm: block.bottomTextArm,
+      bottomTextRu: block.bottomTextRu,
+      links: block.links,
+      deletedImages: [deletedImage[deletedImage.length - 1]],
+      addedImages: [],
+      deletedVideos: [],
+      addedVideos: [],
+    };
+    editEventBlock(blockData);
+    setRenderContent(renderContent + 1);
+  };
+
+  const deleteBlockVideos = (block, index) => {
+    console.log({ ekacBlock: block, ekecIndex: index });
+    const deletedVideo = block.videos[index].split("/");
+    const blockData = {
+      id: block.id,
+      topTextEng: block.topTextEng,
+      topTextArm: block.topTextArm,
+      topTextRu: block.topTextRu,
+      bottomTextEng: block.bottomTextEng,
+      bottomTextArm: block.bottomTextArm,
+      bottomTextRu: block.bottomTextRu,
+      links: block.links,
+      deletedImages: [],
+      addedImages: [],
+      deletedVideos: [deletedVideo[deletedVideo.length - 1]],
+      addedVideos: [],
+    };
+    editEventBlock(blockData);
+    setRenderContent(renderContent + 1);
   };
 
   return (
@@ -253,13 +308,13 @@ function CreateEventDetails({
       </div>
 
       <div className="images_container">
-        {headers && headers.length
-          ? headers.map((image) => (
+        {details && details.length && details.headers.length
+          ? details.headers.map((image) => (
               <img
                 src={image.url}
                 alt=""
                 className="uploaded_image"
-                key={image}
+                key={image.url}
               />
             ))
           : null}
@@ -335,10 +390,12 @@ function CreateEventDetails({
                 label="Upload Images"
                 containerClassName="uploaded"
                 id="blockImages"
+                limit={0}
               />
               <VideoUpload
                 label="Upload Videos"
                 containerClassName="uploaded"
+                id="blockVideos"
               />
             </div>
 
@@ -421,12 +478,11 @@ function CreateEventDetails({
           details.details.length &&
           details.details[0].topTextEng
             ? details.details.map((block, index) => {
-                console.log({ wwwwwww: block }, "blockblockblockblockblock");
                 return (
                   <div
                     className="location_container"
                     style={{ display: "block" }}
-                    key={block}
+                    key={block.id}
                   >
                     <div
                       style={{
@@ -489,8 +545,8 @@ function CreateEventDetails({
                       />
                     </div>
                     <div style={{ display: "flex " }}>
-                      {block.imgUrls && block.imgUrls.length
-                        ? block.imgUrls.map((img) => {
+                      {block.images && block.images.length
+                        ? block.images.map((img) => {
                             return (
                               <div className="upload_cont">
                                 <img
@@ -503,17 +559,15 @@ function CreateEventDetails({
                                   <div
                                     onClick={() => {
                                       const indexImg =
-                                        block.imgUrls.indexOf(img);
-                                      const newArr = block.imgUrls.slice(
-                                        indexImg,
-                                        1
-                                      );
+                                        block.images.indexOf(img);
                                       const indexBlock =
                                         details.details.indexOf(block);
-                                      details.details[indexBlock].imgUrls =
-                                        newArr;
                                       setForRender(forRender + 1);
-                                      addEventDetails(details.details);
+                                      console.log({
+                                        blockkkk: details.details[indexBlock],
+                                        indexImg,
+                                      });
+                                      deleteBlockImage(block, indexImg);
                                     }}
                                   >
                                     <svg viewBox="0 0 24 24" className="close">
@@ -532,6 +586,12 @@ function CreateEventDetails({
                           })
                         : null}
                     </div>
+                    <ImageUpload
+                      label="Upload Images"
+                      containerClassName="uploaded"
+                      id={`block${block.id}`}
+                      limit={0}
+                    />
                     <div
                       style={{
                         display: "flex",
@@ -581,8 +641,8 @@ function CreateEventDetails({
                         />
                       </div>
                     </div>
-                    {block.videoUrls && block.videoUrls.length
-                      ? block.videoUrls.map((video) => {
+                    {block.videos && block.videos.length
+                      ? block.videos.map((video) => {
                           return (
                             <div className="upload_cont">
                               <video
@@ -596,23 +656,18 @@ function CreateEventDetails({
                               </video>
                               <div className="middle">
                                 <div
-                                  onClick={() =>
-                                    // deleteVideo(source.indexOf(video))
-                                    {
-                                      const indexImg =
-                                        block.videoUrls.indexOf(video);
-                                      const newArr = block.videoUrls.slice(
-                                        indexImg,
-                                        1
-                                      );
-                                      const indexBlock =
-                                        details.details.indexOf(block);
-                                      details.details[indexBlock].videoUrls =
-                                        newArr;
-                                      setForRender(forRender + 1);
-                                      addEventDetails(details.details);
-                                    }
-                                  }
+                                  onClick={() => {
+                                    const indexVideo =
+                                      block.videos.indexOf(video);
+                                    const indexBlock =
+                                      details.details.indexOf(block);
+                                    setForRender(forRender + 1);
+                                    console.log({
+                                      blockkkk: details.details[indexBlock],
+                                      indexVideo,
+                                    });
+                                    deleteBlockVideos(block, indexVideo);
+                                  }}
                                 >
                                   <svg viewBox="0 0 24 24" className="close">
                                     <path
@@ -629,6 +684,11 @@ function CreateEventDetails({
                           );
                         })
                       : null}
+                    <VideoUpload
+                      label="Upload Videos"
+                      containerClassName="uploaded"
+                      id={`videoBlock${block.id}`}
+                    />
                     <div style={{ display: "flex" }}>
                       <Button
                         title="Delete"
@@ -657,7 +717,6 @@ function CreateEventDetails({
 const mapStateToProps = (state) => {
   console.log({ state }, "state");
   return {
-    id: state.eventReducer.eventId,
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
     headers: state.imageReducer?.headers,

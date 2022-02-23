@@ -11,7 +11,7 @@ export const uploadVideo = (vid) => {
   return (dispatch) => {
     dispatch(uploadVideoRequest());
 
-    fetch("/admin/image", { method: "POST", body: data })
+    fetch("/admin/video", { method: "POST", body: data })
       .then((res) => {
         return res.json();
       })

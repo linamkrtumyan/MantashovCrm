@@ -23,7 +23,6 @@ function OneImageUpload({
     }
   };
 
-
   useEffect(() => {
     if (headers.length && headers[index - 1] && index) {
       setImage(headers[index - 1]?.url);

@@ -11,7 +11,7 @@ import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import { scrollToView } from "../../helpers/scrollToView";
 
-function AddNews({ addNews, cleanForm, cleanImages }) {
+function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
   const history = useHistory();
   const path = useHistory();
 
@@ -20,27 +20,27 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
     cleanImages();
   }, []);
 
+  useEffect(() => {
+    if (newsId) {
+      history.push(`/newsDetails/${newsId}`);
+    }
+  }, [newsId]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let { title_arm, title_eng, title_ru, text_arm, text_eng, text_ru } =
       store.getState().formReducer;
     const image = store.getState().imageReducer.image;
     const header = store.getState().imageReducer.header[0]?.name ?? null;
-    const changePath = () => {
-      path.push("/newsDetails");
-    };
+    console.log({ header }, "headerrrrrrrrrrr");
+
     let news = {
       titleArm: title_arm,
       titleEng: title_eng,
       titleRu: title_ru,
-      textArm: text_arm,
-      textEng: text_eng,
-      textRu: text_ru,
-
       header,
-      images: image,
     };
-    addNews(news, changePath);
+    addNews(news);
     // cleanForm();
     // cleanImages();
   };
@@ -63,9 +63,6 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
               <div style={{ marginBottom: "20px" }}>
                 <OneImageUpload label="Header Image" />
               </div>
-              <div>
-                <ImageUpload label="Images" />
-              </div>
             </div>
             <div>
               <div className="news_inputs_container">
@@ -76,13 +73,6 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
                   className="add_news_input"
                   textareaSize="textareaSize"
                 />
-
-                <Textarea
-                  id="text_eng"
-                  type="text"
-                  placeholder="Text"
-                  className="add_news_textarea"
-                />
               </div>
               <div className="news_inputs_container">
                 <Textarea
@@ -91,13 +81,6 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
                   placeholder="Վերնագիր"
                   className="add_news_input"
                   textareaSize="textareaSize"
-                />
-
-                <Textarea
-                  id="text_arm"
-                  type="text"
-                  placeholder="Տեքստ"
-                  className="add_news_textarea"
                 />
               </div>
 
@@ -108,13 +91,6 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
                   placeholder="Заглавие"
                   className="add_news_input"
                   textareaSize="textareaSize"
-                />
-
-                <Textarea
-                  id="text_ru"
-                  type="text"
-                  placeholder="Текст"
-                  className="add_news_textarea"
                 />
               </div>
             </div>
@@ -138,7 +114,10 @@ function AddNews({ addNews, cleanForm, cleanImages }) {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  console.log({ state }, "kkkkkkkkk");
+  return {
+    newsId: state.newsReducer.newsId,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

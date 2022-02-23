@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { deleteVideoFromStore, uploadVideo } from "../../../store";
+import {
+  deleteVideoFromStore,
+  uploadVideo,
+  formOnChange,
+} from "../../../store";
 import "../ImageUpload/imageUpload.css";
 function VideoUpload({
   deleteVideoFromStore,
@@ -9,10 +13,18 @@ function VideoUpload({
   className = "",
   containerClassName = "",
   videoUpload,
+  formOnChange,
+  id,
+  uploadedVideos,
 }) {
   const [selectedVideos, setSelectedVideos] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
+
+  useEffect(() => {
+    formOnChange(`${id}`, []);
+    formOnChange(`${id}Deleted`, []);
+  }, [id]);
 
   const onVideoChange = (e) => {
     if (e.target.files) {
@@ -22,8 +34,9 @@ function VideoUpload({
       const files = [...e.target.files];
 
       uploadVideo(files);
-
+      const arr = uploadedVideos ? uploadedVideos.concat(files) : files;
       setSelectedVideos((prevVideos) => prevVideos.concat(filesArray));
+      formOnChange(`${id}`, arr);
       setA(a + 1);
       Array.from(e.target.files).map((file) => {
         URL.revokeObjectURL(file);
@@ -103,9 +116,10 @@ function VideoUpload({
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     videoUpload: state.videoReducer?.videoUpload,
+    uploadedVideos: state.formReducer[ownProps.id],
   };
 };
 
@@ -113,6 +127,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     uploadVideo: (vid) => dispatch(uploadVideo(vid)),
     deleteVideoFromStore: (id) => dispatch(deleteVideoFromStore(id)),
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
 

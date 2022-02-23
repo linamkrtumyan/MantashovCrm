@@ -29,7 +29,6 @@ import SpeakersPage from "./Pages/SpeakersPage/SpeakersPage";
 import AddSpeakerPage from "./Pages/AddSpeakerPage/AddSpeakerPage";
 import EditSpeaker from "./Pages/EditSpeakerPage/EditSpeaker";
 
-
 function Routes({ isLogin, userName }) {
   if (isLogin) {
     return (
@@ -57,7 +56,11 @@ function Routes({ isLogin, userName }) {
               component={CreateEventDetails}
               exact
             />
-            <Route path="/newsDetails" component={CreateNewsDetails} exact />
+            <Route
+              path="/newsDetails/:newsId"
+              component={CreateNewsDetails}
+              exact
+            />
             <Route path="/members" component={MembersPage} exact />
             <Route path="/member-details/:id" component={MemberDetails} exact />
             <Route path="/add-member" component={AddMember} exact />
