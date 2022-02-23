@@ -39,6 +39,11 @@ function EditSpeaker({
     if (!loading) {
       fetchSpeakers();
     }
+
+    console.log({ fetch });
+  }, [fetch]);
+
+  useEffect(() => {
     if (speakers.length) {
       const speaker = speakers.find((s) => s.id === parseInt(id));
       formOnChange("fullNameEng", `${speaker.nameEng}`);
@@ -46,7 +51,7 @@ function EditSpeaker({
       formOnChange("fullNameRu", `${speaker.nameRu}`);
       formOnChange("organizationId", `${speaker.organizationId}`);
     }
-  }, [fetch]);
+  }, [speakers]);
 
   const cancelEdit = () => {
     history.push("/speakers");
@@ -108,7 +113,7 @@ function EditSpeaker({
                 placeholder="Select Organization"
                 items={organizations}
                 id="organizationId"
-                value={parseInt(organizationId)}
+                value={organizationId}
               />
             </div>
           </div>

@@ -23,11 +23,13 @@ const Select = ({
   const [text, setText] = useState("");
   useEffect(() => {
     if (items.length > 0) {
-      let item = items.find((i) => i.id === value);
+      let item = items.find((i) => i.id === parseInt(value));
       // setCurrent(item === undefined ? { id: 0, name: "" } : item);
       // formOnChange(id, value);
       setText(item ? item.name : "");
     }
+
+    console.log({ value });
   }, [items, value]);
 
   // const handleSelect = (item) => {
