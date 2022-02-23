@@ -18,3 +18,5 @@ export { addEventBlock } from "./addEventBlock";
 export { editEventBlock } from "./editEventBlock";
 export { deleteEventBlock } from "./deleteEventBlock";
 export { addEventShortDescription } from "./addEventShortDescription";
+export { getEventForEdit } from "./getEventForEdit";
+export { editShortDetails } from "./editShortDetails";

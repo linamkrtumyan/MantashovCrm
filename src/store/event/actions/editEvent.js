@@ -7,6 +7,7 @@ import {
 import { toast } from "react-toastify";
 
 export const editEvent = (event, changePath) => {
+  console.log("66666666666666");
   return (dispatch) => {
     dispatch(editEventRequest());
     request("/admin/events/event", "PUT", event)
@@ -14,7 +15,7 @@ export const editEvent = (event, changePath) => {
         if (data.success) {
           dispatch(editEventSuccess(data));
           toast.dark("Event edited");
-          changePath();
+          // changePath();
         }
       })
       .catch((e) => {

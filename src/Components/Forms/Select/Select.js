@@ -34,8 +34,6 @@ const Select = ({
     if (!value) {
       setText(defaultValue);
     }
-
-    console.log({ value, items });
   }, [items, value, defaultValue]);
 
   // const handleSelect = (item) => {

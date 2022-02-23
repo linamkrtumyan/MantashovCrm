@@ -699,7 +699,7 @@ function CreateEventDetails({
                       <Button
                         title="Edit"
                         onClick={() => handleEdit(block)}
-                        className="action_btn cancel_btn"
+                        className="action_btn"
                       />
                     </div>
                   </div>

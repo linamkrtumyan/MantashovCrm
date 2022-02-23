@@ -46,11 +46,12 @@ function EditNews({
 
   const handleCreate = (e) => {
     e.preventDefault();
-    let { titleArm, titleEng, titleRu, textArm, textEng, textRu } =
-      store.getState().formReducer;
-    const addedImages = store.getState().imageReducer.image;
-    const deleted = store.getState().imageReducer.deletedImages;
-    const header = store.getState().imageReducer.header[0];
+    let { titleArm, titleEng, titleRu } = store.getState().formReducer;
+    // const addedImages = store.getState().imageReducer.image;
+    // const deleted = store.getState().imageReducer.deletedImages;
+    const header = store.getState().imageReducer.header[0].name;
+
+    console.log({ header });
 
     const changePath = () => {
       path.push("/news");
@@ -60,15 +61,12 @@ function EditNews({
       titleArm,
       titleEng,
       titleRu,
-      textArm,
-      textEng,
-      textRu,
       isActive,
       headerDeleted: !mainImg,
       id,
       header,
-      addedImages: addedImages,
-      deletedImages: deleted,
+      // addedImages: addedImages,
+      // deletedImages: deleted,
     };
 
     editNews(news, changePath);
@@ -128,8 +126,7 @@ function EditNews({
                       <OneImageUpload label="Header Image" />
                     )}
                   </div>
-                  <div>
-                    {/* <div style={{ margin: "10px" }}> */}
+                  {/* <div>
                     <div>All images</div>
                     <div className="edit_news_images_container">
                       {detailsImages.map((image, index) => {
@@ -174,7 +171,7 @@ function EditNews({
                     </div>
 
                     <ImageUpload label="Images" />
-                  </div>
+                  </div> */}
                 </div>
                 <div>
                   <div className="news_inputs_container">
@@ -186,12 +183,12 @@ function EditNews({
                       textareaSize="textareaSize"
                     />
 
-                    <Textarea
+                    {/* <Textarea
                       id="textEng"
                       type="text"
                       placeholder="Text"
                       className="add_news_textarea"
-                    />
+                    /> */}
                   </div>
                   <div className="news_inputs_container">
                     <Textarea
@@ -202,12 +199,12 @@ function EditNews({
                       textareaSize="textareaSize"
                     />
 
-                    <Textarea
+                    {/* <Textarea
                       id="textArm"
                       type="text"
                       placeholder="Տեքստ"
                       className="add_news_textarea"
-                    />
+                    /> */}
                   </div>
 
                   <div className="news_inputs_container">
@@ -219,12 +216,12 @@ function EditNews({
                       textareaSize="textareaSize"
                     />
 
-                    <Textarea
+                    {/* <Textarea
                       id="textRu"
                       type="text"
                       placeholder="Текст"
                       className="add_news_textarea"
-                    />
+                    /> */}
                     <button
                       onClick={() => setIsActive(!isActive)}
                       style={{

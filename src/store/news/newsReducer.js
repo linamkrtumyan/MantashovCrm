@@ -14,6 +14,12 @@ import {
   TRANSFER_NEWS_DELETE,
   DELETE_NEWS_IMAGE_FROM_STORE,
   ADD_NEWS_DETAILS,
+  ADD_NEWS_DETAILS_REQUEST,
+  ADD_NEWS_DETAILS_SUCCESS,
+  ADD_NEWS_DETAILS_FAILURE,
+  FETCH_NEWS_BLOCK_DETAILS_REQUEST,
+  FETCH_NEWS_BLOCK_DETAILS_SUCCESS,
+  FETCH_NEWS_BLOCK_DETAILS_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -62,6 +68,26 @@ const reducer = (state = initialState, action) => {
         newsByPage: [],
         error: action.payload.error,
       };
+      case FETCH_NEWS_BLOCK_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_NEWS_BLOCK_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        newsDetails: action.payload.newsDetails,
+        detailsImages: action.payload.newsDetails.images,
+        error: null,
+      };
+    case FETCH_NEWS_BLOCK_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        newsDetails: [],
+        error: action.payload.error,
+      };
 
     case FETCH_NEWS_DETAILS_REQUEST:
       return {
@@ -81,6 +107,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         newsDetails: [],
+        error: action.payload.error,
+      };
+
+    case ADD_NEWS_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_NEWS_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        newsId: action.payload.newsId,
+      };
+    case ADD_NEWS_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
         error: action.payload.error,
       };
 

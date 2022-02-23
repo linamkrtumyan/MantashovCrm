@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import Button from "../../Components/Forms/Button/Button";
 import store, {
-  addEventDetails,
   cleanImages,
   cleanVideos,
   cleanForm,
-  addEventBlock,
   fetchEventDetails,
   deleteEventBlock,
   editEventBlock,
   formOnChange,
+  addNewsBlock,
+  getNewsDetails,
 } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 import { useHistory, useParams } from "react-router-dom";
@@ -19,18 +19,17 @@ import { useHistory, useParams } from "react-router-dom";
 function CreateNewsDetails({
   image,
   headers,
-  addEventDetails,
   video,
   imgUrls,
   videoUrls,
-  addEventBlock,
-  fetchEventDetails,
-  eventDetails,
-  deleteEventBlock,
+  newsDetails,
+  // deleteEventBlock,
   editEventBlock,
   formOnChange,
   fixedImages,
   fixedImagesDeleted,
+  addNewsBlock,
+  getNewsDetails
 }) {
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
@@ -46,12 +45,12 @@ function CreateNewsDetails({
   let history = useHistory();
   let { newsId } = useParams();
   useEffect(() => {
-    fetchEventDetails(parseInt(newsId));
+    getNewsDetails(parseInt(newsId));
   }, []);
 
   useEffect(() => {
-    setDetails(eventDetails);
-  }, [eventDetails]);
+    setDetails(newsDetails);
+  }, [newsDetails]);
 
   useEffect(() => {
     let headersUrls = [];
@@ -93,8 +92,8 @@ function CreateNewsDetails({
       });
 
       setRenderContent(renderContent + 1);
-      addEventBlock({ newsId: parseInt(newsId), block: newBlock });
-      fetchEventDetails(parseInt(newsId));
+      addNewsBlock({ newsId: parseInt(newsId), block: newBlock });
+      getNewsDetails(parseInt(newsId));
       setNewBlock({});
       setBlockLinks("");
       cleanImages();
@@ -151,147 +150,77 @@ function CreateNewsDetails({
   return (
     <div className="event-card-desc">
       <div className="applicant_page_title_container">
-        <p className="applicant_page_title">Event Details</p>
+        <p className="applicant_page_title">News Details</p>
       </div>
 
-      <div className="images_container">
-        {headers && headers.length
-          ? headers.map((image) => (
-              <img
-                src={image.url}
-                alt=""
-                className="uploaded_image"
-                key={image}
-              />
-            ))
-          : null}
-      </div>
-      <div style={{ marginLeft: 30 }}>
-        <p style={{ paddingBottom: 10 }}>
-          Կցված նկարների քանակը չպետք է գերազանցի 8-ը։
-        </p>
-        <ImageUpload
-          label="Upload Images"
-          containerClassName="uploaded"
-          id="fixedImages"
-          limit={headers && headers.length ? 8 - headers.length : 8}
-        />
-      </div>
       <div className="opened_field_container">
         <div className="plus_icon" onClick={openField}>
           <i className="fas fa-solid fa-plus"></i>
         </div>
-        {open && (
-          <div className="container_body" style={{ paddingBottom: 20 }}>
-            <div>
-              <div style={{ marginTop: 20 }}>
-                <label
-                  htmlFor="descriptionEng1"
-                  className={newBlock.topTextEng === "" ? requiredClass : ""}
-                >
-                  Description 1
-                </label>
-
-                <textarea
-                  className="add_news_input textarea eventText"
-                  value={newBlock.topTextEng ? newBlock.topTextEng : ""}
-                  onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
-                      topTextEng: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <div style={{ marginTop: 20 }}>
-                <label htmlFor="descriptionArm1">Նկարագիր 1</label>
-
-                <textarea
-                  className="add_news_input textarea"
-                  value={newBlock.topTextArm ? newBlock.topTextArm : ""}
-                  onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
-                      topTextArm: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <div style={{ marginTop: 20 }}>
-                <label htmlFor="descriptionArm1">Описание 1</label>
-
-                <textarea
-                  className="add_news_input textarea"
-                  value={newBlock.topTextRu ? newBlock.topTextRu : ""}
-                  onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
-                      topTextRu: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-            </div>
+        {/* {open && ( */}
+        <div className="container_body" style={{ paddingBottom: 20 }}>
+          <div>
             <div style={{ marginTop: 20 }}>
-              <ImageUpload
-                label="Upload Images"
-                containerClassName="uploaded"
-                id="blockImages"
-                limit={0}
-              />
-              <VideoUpload
-                label="Upload Videos"
-                containerClassName="uploaded"
+              <label
+                htmlFor="topTextEng"
+                className={newBlock.topTextEng === "" ? requiredClass : ""}
+              >
+                Description
+              </label>
+
+              <textarea
+                className="add_news_input textarea eventText"
+                value={newBlock.topTextEng ? newBlock.topTextEng : ""}
+                onChange={(e) => {
+                  setNewBlock({
+                    ...newBlock,
+                    topTextEng: e.target.value,
+                  });
+                }}
               />
             </div>
+            <div style={{ marginTop: 20 }}>
+              <label htmlFor="topTextArm">Նկարագիր</label>
 
-            <div>
-              <div style={{ marginTop: 20 }}>
-                <label htmlFor="descriptionEng2">Description 2</label>
-
-                <textarea
-                  className="add_news_input textarea"
-                  value={newBlock.bottomTextEng ? newBlock.bottomTextEng : ""}
-                  onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
-                      bottomTextEng: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-
-              <div style={{ marginTop: 20 }}>
-                <label htmlFor="descriptionArm2">Նկարագիր 2</label>
-
-                <textarea
-                  className="add_news_input textarea"
-                  value={newBlock.bottomTextArm ? newBlock.bottomTextArm : ""}
-                  onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
-                      bottomTextArm: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <div style={{ marginTop: 20 }}>
-                <label htmlFor="descriptionRu2">Описание 2</label>
-
-                <textarea
-                  className="add_news_input textarea"
-                  value={newBlock.bottomTextRu ? newBlock.bottomTextRu : ""}
-                  onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
-                      bottomTextRu: e.target.value,
-                    });
-                  }}
-                />
-              </div>
+              <textarea
+                className="add_news_input textarea"
+                value={newBlock.topTextArm ? newBlock.topTextArm : ""}
+                onChange={(e) => {
+                  setNewBlock({
+                    ...newBlock,
+                    topTextArm: e.target.value,
+                  });
+                }}
+              />
             </div>
             <div style={{ marginTop: 20 }}>
-              <div>
+              <label htmlFor="topTextRu">Описание</label>
+
+              <textarea
+                className="add_news_input textarea"
+                value={newBlock.topTextRu ? newBlock.topTextRu : ""}
+                onChange={(e) => {
+                  setNewBlock({
+                    ...newBlock,
+                    topTextRu: e.target.value,
+                  });
+                }}
+              />
+            </div>
+          </div>
+          <div style={{ marginTop: 20 }}>
+            <ImageUpload
+              label="Upload Images"
+              containerClassName="uploaded"
+              id="blockImages"
+              limit={0}
+            />
+            <VideoUpload label="Upload Videos" containerClassName="uploaded" />
+          </div>
+
+          <div></div>
+          <div style={{ marginTop: 20 }}>
+            {/* <div>
                 <label htmlFor="links">
                   Links (input links separated by "Enter")
                 </label>
@@ -307,17 +236,16 @@ function CreateNewsDetails({
                     // });
                   }}
                 />
-              </div>
-            </div>
-            <div>
-              <Button
-                onClick={saveBlockData}
-                title="Save"
-                className="action_btn"
-              />
-            </div>
+              </div> */}
           </div>
-        )}
+          <div>
+            <Button
+              onClick={saveBlockData}
+              title="Save"
+              className="action_btn"
+            />
+          </div>
+        </div>
         <div>
           {details &&
           details.details &&
@@ -416,7 +344,6 @@ function CreateNewsDetails({
                                       details.details[indexBlock].images =
                                         newArr;
                                       setForRender(forRender + 1);
-                                      addEventDetails(details.details);
                                     }}
                                   >
                                     <svg viewBox="0 0 24 24" className="close">
@@ -451,7 +378,6 @@ function CreateNewsDetails({
                             const index = details.details.indexOf(block);
                             details.details[index].bottomTextEng =
                               e.target.value;
-                            // addEventDetails(details.details);
                           }}
                         />
                       </div>
@@ -465,7 +391,6 @@ function CreateNewsDetails({
                             const index = details.details.indexOf(block);
                             details.details[index].bottomTextArm =
                               e.target.value;
-                            // addEventDetails(details.details);
                           }}
                         />
                       </div>
@@ -479,7 +404,6 @@ function CreateNewsDetails({
                             const index = details.details.indexOf(block);
                             details.details[index].bottomTextRu =
                               e.target.value;
-                            // addEventDetails(details.details);
                           }}
                         />
                       </div>
@@ -513,7 +437,6 @@ function CreateNewsDetails({
                                       details.details[indexBlock].videos =
                                         newArr;
                                       setForRender(forRender + 1);
-                                      addEventDetails(details.details);
                                     }
                                   }
                                 >
@@ -568,17 +491,17 @@ const mapStateToProps = (state) => {
     fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
     imgUrls: state.imageReducer?.imgUrls,
     videoUrls: state.videoReducer?.videoUrls,
-    eventDetails: state.eventReducer?.eventDetails,
+    newsDetails: state.newsReducer?.newsDetails,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    addEventDetails: (blockData) => dispatch(addEventDetails(blockData)),
-    addEventBlock: (blockData) => dispatch(addEventBlock(blockData)),
+    addNewsBlock: (blockData) => dispatch(addNewsBlock(blockData)),
     fetchEventDetails: (id) => dispatch(fetchEventDetails(id)),
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
     editEventBlock: (block) => dispatch(editEventBlock(block)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+    getNewsDetails: (id) => dispatch(getNewsDetails(id)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewsDetails);

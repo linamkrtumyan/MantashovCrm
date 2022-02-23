@@ -12,9 +12,7 @@ export const fetchEventDetails = (id) => {
     dispatch(fetchEventDetailsRequest());
     request(`/admin/events/event/details/${id}`)
       .then((data) => {
-        // console.log("mtav");
-        // console.log(data, "data");
-        dispatch(initForm(data));
+        // dispatch(initForm(data));
         dispatch(fetchEventDetailsSuccess(data));
       })
       .catch((e) => {

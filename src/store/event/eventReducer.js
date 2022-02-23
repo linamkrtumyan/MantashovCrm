@@ -39,6 +39,9 @@ import {
   ADD_EVENT_SHORT_DESC_REQUEST,
   ADD_EVENT_SHORT_DESC_SUCCESS,
   ADD_EVENT_SHORT_DESC_FAILURE,
+  FETCH_EVENT_DETAILS_FOR_EDIT_REQUEST,
+  FETCH_EVENT_DETAILS_FOR_EDIT_SUCCESS,
+  FETCH_EVENT_DETAILS_FOR_EDIT_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -62,6 +65,7 @@ const initialState = {
   eventId: null,
   eventDetailsBlocks: [],
   uploadedPhotos: [],
+  eventDetailsForEdit: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -76,6 +80,29 @@ const reducer = (state = initialState, action) => {
         ...state,
         uploadedPhotos: action.payload.uploadedPhotos,
       };
+
+    case FETCH_EVENT_DETAILS_FOR_EDIT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_EVENT_DETAILS_FOR_EDIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+
+        eventDetailsForEdit: action.payload.eventDetailsForEdit,
+        error: null,
+      };
+    case FETCH_EVENT_DETAILS_FOR_EDIT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+
+        eventDetailsForEdit: [],
+        error: action.payload.error,
+      };
+
     case FETCH_EVENTS_BY_PAGE_REQUEST:
       return {
         ...state,
@@ -295,15 +322,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         event: action.payload.event,
       };
-
-    //   case DELETE_NEWS_IMAGE_FROM_STORE:
-    //     return {
-    //       ...state,
-    //       detailsImages: [
-    //         ...state.detailsImages.slice(0, action.payload.deleteId),
-    //         ...state.detailsImages.slice(action.payload.deleteId + 1),
-    //       ],
-    //     };
     case FETCH_EVENTS_BY_PAGE_REQUEST:
       return {
         ...state,

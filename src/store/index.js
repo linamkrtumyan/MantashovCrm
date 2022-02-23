@@ -20,6 +20,8 @@ export {
   editNews,
   deleteNewsImageFromStore,
   addNewsDetails,
+  addNewsBlock,
+  getNewsDetails,
 } from "./news/actions";
 export {
   fetchPastEvents,
@@ -42,6 +44,8 @@ export {
   editEventBlock,
   deleteEventBlock,
   addEventShortDescription,
+  getEventForEdit,
+  editShortDetails,
 } from "./event/actions";
 export {
   fetchCountries,
@@ -93,6 +97,5 @@ export {
   addSpeaker,
   editSpeaker,
 } from "./speakers/actions";
-
 
 export { default } from "./configureStore";
