@@ -26,6 +26,7 @@ function EditSpeaker({
   fetchSpeakers,
   loading,
   fetch,
+  organizationId,
 }) {
   let history = useHistory();
   let { id } = useParams();
@@ -43,6 +44,7 @@ function EditSpeaker({
       formOnChange("fullNameEng", `${speaker.nameEng}`);
       formOnChange("fullNameArm", `${speaker.nameArm}`);
       formOnChange("fullNameRu", `${speaker.nameRu}`);
+      formOnChange("organizationId", `${speaker.organizationId}`);
     }
   }, [fetch]);
 
@@ -106,6 +108,7 @@ function EditSpeaker({
                 placeholder="Select Organization"
                 items={organizations}
                 id="organizationId"
+                value={parseInt(organizationId)}
               />
             </div>
           </div>
@@ -139,6 +142,7 @@ const mapStateToProps = (state) => {
     organizations: state.organizationsReducer.organizations,
     fetch: state.speakerReducer.fetch,
     loading: state.speakerReducer.loading,
+    organizationId: state.formReducer.organizationId,
   };
 };
 

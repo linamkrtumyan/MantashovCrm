@@ -4,6 +4,7 @@ import {
   deleteImageFromStore,
   uploadImage,
   setUploadedPhotos,
+  formOnChange,
 } from "../../../store";
 import "./imageUpload.css";
 function ImageUpload({
@@ -15,8 +16,11 @@ function ImageUpload({
   imageUpload,
   headers,
   image,
-  limit = false,
+  limit,
   setUploadedPhotos,
+  id,
+  formOnChange,
+  uploadedImages,
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
@@ -26,54 +30,70 @@ function ImageUpload({
   );
 
   useEffect(() => {
+    formOnChange(`${id}`, []);
+    formOnChange(`${id}Deleted`, []);
+  }, [id]);
+
+  useEffect(() => {
+    console.log({ uploadedImages }, "uploadedImages");
+  }, [uploadedImages]);
+
+  useEffect(() => {
     setImagesLength(headers.length + image.length);
   }, [headers, image]);
 
-  // useEffect(() => {
-  //   setUploadedPhotos(selectedFiles);
-  // }, [selectedFiles]);
-
   const onImageChange = (e) => {
-    if (limit) {
-      if (imagesLength < 8) {
-        if (e.target.files) {
-          const filesArray = Array.from(e.target.files).map((file) =>
-            URL.createObjectURL(file)
-          );
-          const files = [...e.target.files];
-          uploadImage(files);
-          setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-
-          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-          setA(a + 1);
-          Array.from(e.target.files).map((file) => {
-            URL.revokeObjectURL(file);
-          });
-        }
-
-        setDelindex(null);
-      }
-    } else {
-      if (e.target.files) {
+    if (e.target.files) {
+      if (
+        limit &&
+        selectedFiles.length < limit &&
+        e.target.files.length < limit
+      ) {
         const filesArray = Array.from(e.target.files).map((file) =>
           URL.createObjectURL(file)
         );
         const files = [...e.target.files];
         uploadImage(files);
-        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        const arr = uploadedImages ? uploadedImages.concat(files) : files;
 
+        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        formOnChange(`${id}`, arr);
+
+        // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        setA(a + 1);
+        Array.from(e.target.files).map((file) => {
+          URL.revokeObjectURL(file);
+        });
+      } else {
+        const filesArray = Array.from(e.target.files).map((file) =>
+          URL.createObjectURL(file)
+        );
+        const files = [...e.target.files];
+        uploadImage(files);
+        const arr = uploadedImages ? uploadedImages.concat(files) : files;
+
+        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        formOnChange(`${id}`, arr);
+
+        // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
         setA(a + 1);
         Array.from(e.target.files).map((file) => {
           URL.revokeObjectURL(file);
         });
       }
-
-      setDelindex(null);
     }
+
+    setDelindex(null);
   };
 
   const deleteImage = (a) => {
+    let deletedImages = uploadedImages[a];
+    const newArr = uploadedImages
+      .slice(0, a)
+      .concat(uploadedImages.slice(a + 1));
     deleteImageFromStore(a);
+    formOnChange(`${id}Deleted`, [deletedImages]);
+    formOnChange(`${id}`, newArr);
     setDelindex(a);
   };
 
@@ -109,7 +129,8 @@ function ImageUpload({
     <div className="upload_container">
       <div>
         <label
-          htmlFor="multiple-file-upload"
+          // htmlFor="multiple-file-upload"
+          htmlFor={`${id}`}
           className={`multiple-custom-file-upload ${className}`}
         >
           <i className="fas fa-cloud-upload-alt"></i>
@@ -117,7 +138,8 @@ function ImageUpload({
         </label>
         <input
           type="file"
-          id="multiple-file-upload"
+          // id="multiple-file-upload"
+          id={`${id}`}
           accept="image/png, image/gif, image/jpeg"
           name="myfile"
           onChange={(e) => onImageChange(e)}
@@ -137,11 +159,12 @@ function ImageUpload({
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     headers: state.imageReducer?.headers,
     image: state.imageReducer?.image,
     imageUpload: state.imageReducer?.imageUpload,
+    uploadedImages: state.formReducer[ownProps.id],
   };
 };
 
@@ -150,6 +173,7 @@ const mapDispatchToProps = (dispatch) => {
     uploadImage: (img) => dispatch(uploadImage(img)),
     deleteImageFromStore: (id) => dispatch(deleteImageFromStore(id)),
     setUploadedPhotos: (photos) => dispatch(setUploadedPhotos(photos)),
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
 

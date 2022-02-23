@@ -11,18 +11,17 @@ import store, {
   addEventBlock,
   fetchEventDetails,
   deleteEventBlock,
+  editEventBlock,
+  formOnChange,
+  addEventShortDescription,
 } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 import { useHistory, useParams } from "react-router-dom";
-import FixedImagesUpload from "../../Components/Forms/FixedImagedUpload/FixedImagesUpload";
 
 function CreateEventDetails({
-  id,
   image,
   headers,
   addEventDetails,
-  eventDetailsBlocks,
-  uploadedPhotos,
   video,
   imgUrls,
   videoUrls,
@@ -30,28 +29,28 @@ function CreateEventDetails({
   fetchEventDetails,
   eventDetails,
   deleteEventBlock,
+  editEventBlock,
+  formOnChange,
+  shortDescriptionRu,
+  shortDescriptionArm,
+  shortDescriptionEng,
+  fixedImages,
+  addEventShortDescription,
+  fixedImagesDeleted,
 }) {
-  const [images, setImages] = useState([]);
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
   const [newBlock, setNewBlock] = useState({
     blockImages: [],
     blockVideos: [],
   });
-  const [shortDescription, setShortDescription] = useState("");
   const [forRender, setForRender] = useState(0);
   const [requiredClass, setRequiredClass] = useState("");
-  const [blockLinks, setBlockLinks] = useState();
+  const [blockLinks, setBlockLinks] = useState("");
   const [details, setDetails] = useState([]);
 
   let history = useHistory();
   let { eventId } = useParams();
-
-  // useEffect(() => {
-  //   history.push(`/eventDetails/${id}`);
-  //   fetchEventDetails(parseInt(eventId));
-  // }, [id]);
-
   useEffect(() => {
     fetchEventDetails(parseInt(eventId));
   }, []);
@@ -66,18 +65,11 @@ function CreateEventDetails({
   }, [details]);
 
   useEffect(() => {
-    for (let i = 0; i < eventDetailsBlocks.length; i++) {
-      eventDetailsBlocks[i].id = i;
-    }
-  }, [eventDetailsBlocks]);
-
-  useEffect(() => {
     let headersUrls = [];
     headers.map((img) => {
       headersUrls.push(img.url);
     });
-    setImages(headersUrls.concat(uploadedPhotos));
-  }, [headers, uploadedPhotos]);
+  }, [headers]);
 
   useEffect(() => {
     setNewBlock({
@@ -111,18 +103,15 @@ function CreateEventDetails({
         blockVideos: video ?? [],
       });
 
-      eventDetailsBlocks.push(newBlock);
       setRenderContent(renderContent + 1);
-      addEventDetails(eventDetailsBlocks);
-      addEventBlock({ eventId, block: newBlock });
+      addEventBlock({ eventId: parseInt(eventId), block: newBlock });
       fetchEventDetails(parseInt(eventId));
-      setNewBlock({
-        ...newBlock,
-        // id,
-      });
       setNewBlock({});
+      setBlockLinks("");
       cleanImages();
-      setShortDescription("");
+      formOnChange(`shortDescriptionEng`, "");
+      formOnChange(`shortDescriptionArm`, "");
+      formOnChange(`shortDescriptionRu`, "");
       cleanVideos();
     } else {
       setRequiredClass("requiredField");
@@ -130,43 +119,48 @@ function CreateEventDetails({
   };
 
   const handleDelete = (id) => {
-    // const index = eventDetailsBlocks.indexOf(block);
-    // eventDetailsBlocks.splice(index, 1);
-    // setRenderContent(renderContent + 1);
-    // addEventDetails(eventDetailsBlocks);
-    // console.log({block}, "LLLLLLLLLLLLLLLLLLLL");
-    deleteEventBlock(id)
+    deleteEventBlock(id);
+  };
+
+  const handleEdit = (block) => {
+    let editedBlock = block;
+    editedBlock.deletedImages = [];
+    editedBlock.addedImages = [];
+    editedBlock.deletedVideos = [];
+    editedBlock.addedVideos = [];
+    editEventBlock(editedBlock);
   };
 
   const sendData = () => {
-    // eventDetailsBlocks.map((item) => {
-    //   const linksArr = item.links ? item.links.split("\n") : [];
-    //   item.links = linksArr;
-    // });
-
     let headersImages = [];
     headers?.map((img) => {
       headersImages.push(img.name);
     });
 
+    let addedImages = [];
+    let deletedImages = [];
+
+    fixedImages?.map((img) => {
+      addedImages.push(img.name);
+    });
+
+    fixedImagesDeleted?.map((img) => {
+      deletedImages.push(img.name);
+    });
+
     let dataToSend = {
-      eventId,
-      eventDetailsBlocks,
-      uploadedPhotos,
-      eventFixedDescription: shortDescription,
-      headers: headersImages,
+      id: parseInt(eventId),
+      addedImages,
+      deletedImages,
+      shortDescriptionEng,
+      shortDescriptionArm,
+      shortDescriptionRu,
     };
     console.log({ dataToSend });
     cleanImages();
     cleanVideos();
     cleanForm();
-    // here must be function call of details add_________________________________
-    // history.push("/events");
-  };
-
-  const deleteImageFromBlock = (img) => {
-    // deleteImageFromStore(a);
-    // setDelindex(a);
+    addEventShortDescription(dataToSend);
   };
 
   return (
@@ -176,23 +170,88 @@ function CreateEventDetails({
       </div>
       <div
         className="container_body"
-        style={{ paddingBottom: 20, marginTop: 20, marginLeft: 20 }}
+        style={{
+          paddingBottom: 20,
+          marginTop: 20,
+          marginLeft: 20,
+        }}
       >
-        <label
-          htmlFor="eventFixedDescription"
-          className={shortDescription === "" ? requiredClass : ""}
-        >
-          Short Description
-        </label>
-
-        <textarea
-          className="add_news_input textarea eventText"
-          value={shortDescription}
-          onChange={(e) => {
-            setShortDescription(e.target.value);
+        <div
+          style={{
+            marginTop: 20,
           }}
-        />
+        >
+          <label
+            htmlFor="shortDescriptionEng"
+            className={
+              shortDescriptionEng && shortDescriptionEng === ""
+                ? requiredClass
+                : ""
+            }
+          >
+            Short Description
+          </label>
+
+          <textarea
+            className="add_news_input textarea eventText"
+            value={shortDescriptionEng ?? ""}
+            onChange={(e) => {
+              formOnChange(`shortDescriptionEng`, e.target.value);
+            }}
+          />
+        </div>
+
+        <div
+          style={{
+            marginTop: 20,
+          }}
+        >
+          <label
+            htmlFor="shortDescriptionArm"
+            className={
+              shortDescriptionArm && shortDescriptionArm === ""
+                ? requiredClass
+                : ""
+            }
+          >
+            Համառոտ նկարագիր
+          </label>
+
+          <textarea
+            className="add_news_input textarea eventText"
+            value={shortDescriptionArm ?? ""}
+            onChange={(e) => {
+              formOnChange(`shortDescriptionArm`, e.target.value);
+            }}
+          />
+        </div>
+
+        <div
+          style={{
+            marginTop: 20,
+          }}
+        >
+          <label
+            htmlFor="shortDescriptionRu"
+            className={
+              shortDescriptionRu && shortDescriptionRu === ""
+                ? requiredClass
+                : ""
+            }
+          >
+            Краткое описание
+          </label>
+
+          <textarea
+            className="add_news_input textarea eventText"
+            value={shortDescriptionRu ?? ""}
+            onChange={(e) => {
+              formOnChange(`shortDescriptionRu`, e.target.value);
+            }}
+          />
+        </div>
       </div>
+
       <div className="images_container">
         {headers && headers.length
           ? headers.map((image) => (
@@ -209,9 +268,11 @@ function CreateEventDetails({
         <p style={{ paddingBottom: 10 }}>
           Կցված նկարների քանակը չպետք է գերազանցի 8-ը։
         </p>
-        <FixedImagesUpload
-          label="Upload Fixed Images"
+        <ImageUpload
+          label="Upload Images"
           containerClassName="uploaded"
+          id="fixedImages"
+          limit={headers && headers.length ? 8 - headers.length : 8}
         />
       </div>
       <div className="opened_field_container">
@@ -224,7 +285,7 @@ function CreateEventDetails({
               <div style={{ marginTop: 20 }}>
                 <label
                   htmlFor="descriptionEng1"
-                  className={shortDescription === "" ? requiredClass : ""}
+                  className={newBlock.topTextEng === "" ? requiredClass : ""}
                 >
                   Description 1
                 </label>
@@ -271,9 +332,9 @@ function CreateEventDetails({
             </div>
             <div style={{ marginTop: 20 }}>
               <ImageUpload
-                limit={false}
                 label="Upload Images"
                 containerClassName="uploaded"
+                id="blockImages"
               />
               <VideoUpload
                 label="Upload Videos"
@@ -287,7 +348,7 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={newBlock.topTextEng ? newBlock.bottomTextEng : ""}
+                  value={newBlock.bottomTextEng ? newBlock.bottomTextEng : ""}
                   onChange={(e) => {
                     setNewBlock({
                       ...newBlock,
@@ -382,8 +443,7 @@ function CreateEventDetails({
                           onChange={(e) => {
                             const index = details.details.indexOf(block);
                             details.details[index].topTextEng = e.target.value;
-                            // formOnChange("editedAndAddedAgendas", agendas);
-                            addEventDetails(details.details);
+                            // addEventDetails(details.details);
                           }}
                         />
                       </div>
@@ -393,6 +453,11 @@ function CreateEventDetails({
                         <textarea
                           className="textarea"
                           defaultValue={block.topTextArm}
+                          onChange={(e) => {
+                            const index = details.details.indexOf(block);
+                            details.details[index].topTextArm = e.target.value;
+                            // addEventDetails(details.details);
+                          }}
                         />
                       </div>
                       <div className="input_container">
@@ -401,6 +466,11 @@ function CreateEventDetails({
                         <textarea
                           className="textarea"
                           defaultValue={block.topTextRu}
+                          onChange={(e) => {
+                            const index = details.details.indexOf(block);
+                            details.details[index].topTextRu = e.target.value;
+                            // addEventDetails(details.details);
+                          }}
                         />
                       </div>
                     </div>
@@ -412,6 +482,10 @@ function CreateEventDetails({
                       <textarea
                         className="textarea"
                         defaultValue={block.links}
+                        onChange={(e) => {
+                          const index = details.details.indexOf(block);
+                          details.details[index].links = e.target.value;
+                        }}
                       />
                     </div>
                     <div style={{ display: "flex " }}>
@@ -474,8 +548,7 @@ function CreateEventDetails({
                             const index = details.details.indexOf(block);
                             details.details[index].bottomTextEng =
                               e.target.value;
-                            // formOnChange("editedAndAddedAgendas", agendas);
-                            addEventDetails(details.details);
+                            // addEventDetails(details.details);
                           }}
                         />
                       </div>
@@ -485,6 +558,12 @@ function CreateEventDetails({
                         <textarea
                           className="textarea"
                           defaultValue={block.bottomTextArm}
+                          onChange={(e) => {
+                            const index = details.details.indexOf(block);
+                            details.details[index].bottomTextArm =
+                              e.target.value;
+                            // addEventDetails(details.details);
+                          }}
                         />
                       </div>
                       <div className="input_container">
@@ -493,6 +572,12 @@ function CreateEventDetails({
                         <textarea
                           className="textarea"
                           defaultValue={block.bottomTextRu}
+                          onChange={(e) => {
+                            const index = details.details.indexOf(block);
+                            details.details[index].bottomTextRu =
+                              e.target.value;
+                            // addEventDetails(details.details);
+                          }}
                         />
                       </div>
                     </div>
@@ -553,7 +638,7 @@ function CreateEventDetails({
 
                       <Button
                         title="Edit"
-                        // onClick={() => handleEdit(block)}
+                        onClick={() => handleEdit(block)}
                         className="action_btn cancel_btn"
                       />
                     </div>
@@ -577,10 +662,14 @@ const mapStateToProps = (state) => {
     video: state.videoReducer?.video,
     headers: state.imageReducer?.headers,
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
-    uploadedPhotos: state.eventReducer.uploadedPhotos,
+    fixedImages: state.formReducer?.fixedImages ?? [],
+    fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
     imgUrls: state.imageReducer?.imgUrls,
     videoUrls: state.videoReducer?.videoUrls,
     eventDetails: state.eventReducer?.eventDetails,
+    shortDescriptionEng: state.formReducer?.shortDescriptionEng ?? "",
+    shortDescriptionArm: state.formReducer?.shortDescriptionArm ?? "",
+    shortDescriptionRu: state.formReducer?.shortDescriptionRu ?? "",
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -588,7 +677,11 @@ const mapDispatchToProps = (dispatch) => {
     addEventDetails: (blockData) => dispatch(addEventDetails(blockData)),
     addEventBlock: (blockData) => dispatch(addEventBlock(blockData)),
     fetchEventDetails: (id) => dispatch(fetchEventDetails(id)),
+    addEventShortDescription: (data) =>
+      dispatch(addEventShortDescription(data)),
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
+    editEventBlock: (block) => dispatch(editEventBlock(block)),
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEventDetails);

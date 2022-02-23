@@ -33,6 +33,12 @@ import {
   FETCH_ALL_SPEAKERS_FAILURE,
   ADD_EVENT_DETAILS,
   SET_UPLOADED_PHOTOS,
+  EVENT_EDIT_BLOCK_REQUEST,
+  EVENT_EDIT_BLOCK_SUCCESS,
+  EVENT_EDIT_BLOCK_FAILURE,
+  ADD_EVENT_SHORT_DESC_REQUEST,
+  ADD_EVENT_SHORT_DESC_SUCCESS,
+  ADD_EVENT_SHORT_DESC_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -209,6 +215,24 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
       };
 
+    case ADD_EVENT_SHORT_DESC_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_EVENT_SHORT_DESC_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case ADD_EVENT_SHORT_DESC_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+
     case EVENT_EDIT_REQUEST:
       return {
         ...state,
@@ -221,6 +245,24 @@ const reducer = (state = initialState, action) => {
         error: null,
       };
     case EVENT_EDIT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+
+    case EVENT_EDIT_BLOCK_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case EVENT_EDIT_BLOCK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case EVENT_EDIT_BLOCK_FAILURE:
       return {
         ...state,
         loading: false,

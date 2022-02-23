@@ -10,12 +10,12 @@ export const editEventBlock = (block, changePath) => {
   // set api for block edit
   return (dispatch) => {
     dispatch(editEventBlockRequest());
-    request("/admin/events/event", "PUT", block)
+    request("/admin/events/eventDetails", "PUT", block)
       .then((data) => {
         if (data.success) {
           dispatch(editEventBlockSuccess(data));
-        //   toast.dark("Event edited");
-        //   changePath();
+          //   toast.dark("Event edited");
+          //   changePath();
         }
       })
       .catch((e) => {

@@ -47,9 +47,11 @@ function Input({
           src={labelIcon}
           alt=""
           // className="member_edit_image"
-          style={{ 
-            width: "20px", 
-            verticalAlign: "middle", padding: "2px" }}
+          style={{
+            width: "20px",
+            verticalAlign: "middle",
+            padding: "2px",
+          }}
         />
       ) : null}
       <label htmlFor={id}>{placeholder}</label>

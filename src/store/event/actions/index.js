@@ -17,3 +17,4 @@ export { setUploadedPhotos } from "./setUploadedPhotos";
 export { addEventBlock } from "./addEventBlock";
 export { editEventBlock } from "./editEventBlock";
 export { deleteEventBlock } from "./deleteEventBlock";
+export { addEventShortDescription } from "./addEventShortDescription";
