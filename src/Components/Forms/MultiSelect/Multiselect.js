@@ -39,6 +39,7 @@ function Multiselect({
     };
   }, []);
 
+
   const clear = () => {
     formOnChange(id + "Names", []);
     formOnChange(id, []);
@@ -56,14 +57,16 @@ function Multiselect({
       //   },
       // ]);
       checkeds.push(thing.id);
+
       formOnChange(id, [...checkeds]);
-      setSelectedNames([...selectedNames, { name: thing.name }]);
+      setSelectedNames([...selectedNames, { name: thing.name, id: thing.id }]);
+      setText(selectedNames);
     } else {
       formOnChange(
         id,
         checkeds.filter((s) => thing.id !== s)
       );
-      setSelectedNames(selectedNames.filter((s) => thing.name !== s.name));
+      setSelectedNames(selectedNames.filter((s) => thing.id !== s.id));
     }
   };
   useOutsideClick(ref, handleSelect);

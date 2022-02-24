@@ -5,7 +5,12 @@ import Button from "../../Components/Forms/Button/Button";
 import "./addEvent.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import store, { addEvent, setUploadedPhotos, cleanImages } from "../../store";
+import store, {
+  addEvent,
+  setUploadedPhotos,
+  cleanImages,
+  formOnChange,
+} from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
