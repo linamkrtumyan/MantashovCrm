@@ -42,7 +42,7 @@ function ImageUpload({
     if (e.target.files) {
       if (
         limit &&
-        selectedFiles.length < limit &&
+        // selectedFiles.length < limit &&
         e.target.files.length < limit
       ) {
         const filesArray = Array.from(e.target.files).map((file) =>
@@ -60,7 +60,8 @@ function ImageUpload({
         Array.from(e.target.files).map((file) => {
           URL.revokeObjectURL(file);
         });
-      } else {
+      } else if (!limit) {
+        // console.log({ limit, aaa: e.target.files.length });
         const filesArray = Array.from(e.target.files).map((file) =>
           URL.createObjectURL(file)
         );
