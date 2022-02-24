@@ -117,7 +117,7 @@ function AddMember({
       positionId,
       // contacts = {},
     } = store.getState().formReducer;
-    const image = store.getState().imageReducer.header;
+    const image = store.getState().imageReducer.header[0]?.name ?? null;
     // let keys = Object.keys(contacts);
     // const values = keys.map((key) => contacts[key]);
     // let ok = false;

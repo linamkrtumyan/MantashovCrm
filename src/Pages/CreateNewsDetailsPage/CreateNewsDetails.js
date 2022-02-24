@@ -157,9 +157,9 @@ function CreateNewsDetails({
       </div>
 
       <div className="opened_field_container">
-        <div className="plus_icon" onClick={openField}>
+        {/* <div className="plus_icon" onClick={openField}>
           <i className="fas fa-solid fa-plus"></i>
-        </div>
+        </div> */}
         {/* {open && ( */}
         <div className="container_body" style={{ paddingBottom: 20 }}>
           <div>

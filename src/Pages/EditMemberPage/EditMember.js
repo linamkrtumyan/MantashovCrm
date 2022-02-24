@@ -117,7 +117,6 @@ function EditMember({
 
     const header = store.getState().imageReducer.header[0]?.name ?? null;
 
-
     // if (!contacts) {
     //   contacts = {};
     // }
@@ -138,7 +137,7 @@ function EditMember({
       lastNameEng,
       firstNameRu,
       lastNameRu,
-      header,
+      image: header,
       descriptionArm,
       descriptionEng,
       descriptionRu,
