@@ -88,7 +88,7 @@ function EditEvent({
       getEventForEdit(parseInt(id));
       fetchEventDetails(parseInt(id));
     }
-  }, [id,forRender]);
+  }, [id, forRender]);
 
   useEffect(() => {
     fetchCountries();

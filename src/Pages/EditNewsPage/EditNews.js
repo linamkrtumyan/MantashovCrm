@@ -94,8 +94,7 @@ function EditNews({
     let { titleArm, titleEng, titleRu } = store.getState().formReducer;
     // const addedImages = store.getState().imageReducer.image;
     // const deleted = store.getState().imageReducer.deletedImages;
-    // const header = store.getState().imageReducer.header[0].name;
-
+    const header = store.getState().imageReducer.header[0].name;
 
     // const changePath = () => {
     //   path.push("/news");
@@ -108,7 +107,7 @@ function EditNews({
       isActive,
       headerDeleted: !mainImg,
       id,
-      // header,
+      header,
       // addedImages: addedImages,
       // deletedImages: deleted,
     };
@@ -209,6 +208,7 @@ function EditNews({
     cleanImages();
     cleanVideos();
     cleanForm();
+    history.push("/news");
   };
 
   return (
@@ -469,9 +469,11 @@ function EditNews({
             </div>
           </div>
           <div>
-            {details && details.details && details.details.length
-              ? // &&details.details[0].topTextEng
-                details.details.map((block, index) => {
+            {details &&
+            details.details &&
+            details.details.length &&
+            details.details[0].id
+              ? details.details.map((block, index) => {
                   return (
                     <div
                       className="location_container"

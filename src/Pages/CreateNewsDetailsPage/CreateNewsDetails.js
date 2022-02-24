@@ -47,6 +47,9 @@ function CreateNewsDetails({
   let history = useHistory();
   let { newsId } = useParams();
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
     getNewsDetails(parseInt(newsId));
   }, [renderContent, newsId]);
 
@@ -148,6 +151,7 @@ function CreateNewsDetails({
     cleanImages();
     cleanVideos();
     cleanForm();
+    history.push("/news");
   };
 
   return (
@@ -294,9 +298,11 @@ function CreateNewsDetails({
           </div>
         </div>
         <div>
-          {details && details.details && details.details.length
-            ? // &&details.details[0].topTextEng
-              details.details.map((block, index) => {
+          {details &&
+          details.details &&
+          details.details.length &&
+          details.details[0].id
+            ? details.details.map((block, index) => {
                 return (
                   <div
                     className="location_container"

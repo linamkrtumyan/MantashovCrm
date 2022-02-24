@@ -52,6 +52,9 @@ function CreateEventDetails({
   let history = useHistory();
   let { eventId } = useParams();
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
     fetchEventDetails(parseInt(eventId));
   }, []);
 
@@ -171,6 +174,7 @@ function CreateEventDetails({
     cleanVideos();
     cleanForm();
     addEventShortDescription(dataToSend);
+    history.push("/event");
   };
 
   const deleteBlockImage = (block, index) => {
@@ -471,7 +475,10 @@ function CreateEventDetails({
           </div>
         )}
         <div>
-          {details && details.details && details.details.length
+          {details &&
+          details.details &&
+          details.details.length &&
+          details.details[0].id
             ? details.details.map((block, index) => {
                 return (
                   <div
@@ -558,7 +565,7 @@ function CreateEventDetails({
                                       const indexBlock =
                                         details.details.indexOf(block);
                                       setForRender(forRender + 1);
-                                      
+
                                       deleteBlockImage(block, indexImg);
                                     }}
                                   >
@@ -654,7 +661,7 @@ function CreateEventDetails({
                                     const indexBlock =
                                       details.details.indexOf(block);
                                     setForRender(forRender + 1);
-                                    
+
                                     deleteBlockVideos(block, indexVideo);
                                   }}
                                 >
