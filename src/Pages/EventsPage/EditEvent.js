@@ -23,6 +23,8 @@ import store, {
   getEventForEdit,
   formOnChange,
   editShortDetails,
+  addEventBlock,
+  cleanVideos,
 } from "../../store";
 import { deletedImages } from "../../store/images/actions";
 
@@ -57,6 +59,9 @@ function EditEvent({
   getEventForEdit,
   formOnChange,
   editShortDetails,
+  video,
+  image,
+  addEventBlock,
 }) {
   const history = useHistory();
 
@@ -73,6 +78,8 @@ function EditEvent({
   });
   const [blockLinks, setBlockLinks] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [requiredClass, setRequiredClass] = useState("");
 
   let { id } = useParams();
 
@@ -81,7 +88,7 @@ function EditEvent({
       getEventForEdit(parseInt(id));
       fetchEventDetails(parseInt(id));
     }
-  }, [id]);
+  }, [id,forRender]);
 
   useEffect(() => {
     fetchCountries();
@@ -190,6 +197,7 @@ function EditEvent({
 
   const handleDelete = (id) => {
     deleteEventBlock(id);
+    setRenderContent(renderContent + 1);
   };
 
   const deleteBlockImage = (block, index) => {
@@ -246,6 +254,36 @@ function EditEvent({
     };
 
     editShortDetails(details);
+  };
+
+  const openField = () => {
+    setOpen(true);
+  };
+
+  const saveBlockData = () => {
+    if (newBlock.topTextEng !== "") {
+      let links = blockLinks ? blockLinks.split("\n") : [];
+      setNewBlock({
+        ...newBlock,
+        links,
+        blockImages: image ?? [],
+        blockVideos: video ?? [],
+      });
+
+      setForRender(renderContent + 1);
+      addEventBlock({ eventId: parseInt(id), block: newBlock });
+      fetchEventDetails(parseInt(id));
+      setNewBlock({});
+      setBlockLinks("");
+      cleanImages();
+      formOnChange(`shortDescriptionEng`, "");
+      formOnChange(`shortDescriptionArm`, "");
+      formOnChange(`shortDescriptionRu`, "");
+      cleanVideos();
+    } else {
+      setRequiredClass("requiredField");
+    }
+    setForRender(renderContent + 1);
   };
 
   return (
@@ -316,6 +354,7 @@ function EditEvent({
                   <input
                     style={{ marginLeft: 8 }}
                     type="checkbox"
+                    defaultChecked={store.getState().formReducer.isPublic}
                     onChange={() => {
                       setIsPublic(!isPublic);
                     }}
@@ -460,8 +499,158 @@ function EditEvent({
             />
           </div>
         </div>
+        <div
+          className="plus_icon"
+          onClick={openField}
+          style={{ marginLeft: 30, marginBottom: 50 }}
+        >
+          <i className="fas fa-solid fa-plus"></i>
+        </div>
+        <div style={{ marginLeft: 30, marginBottom: 50 }}>
+          {open && (
+            <div className="container_body" style={{ paddingBottom: 20 }}>
+              <div>
+                <div style={{ marginTop: 20 }}>
+                  <label
+                    htmlFor="descriptionEng1"
+                    className={newBlock.topTextEng === "" ? requiredClass : ""}
+                  >
+                    Description 1
+                  </label>
+
+                  <textarea
+                    className="add_news_input textarea eventText"
+                    value={newBlock.topTextEng ? newBlock.topTextEng : ""}
+                    onChange={(e) => {
+                      setNewBlock({
+                        ...newBlock,
+                        topTextEng: e.target.value,
+                      });
+                    }}
+                  />
+                </div>
+                <div style={{ marginTop: 20 }}>
+                  <label htmlFor="descriptionArm1">Նկարագիր 1</label>
+
+                  <textarea
+                    className="add_news_input textarea"
+                    value={newBlock.topTextArm ? newBlock.topTextArm : ""}
+                    onChange={(e) => {
+                      setNewBlock({
+                        ...newBlock,
+                        topTextArm: e.target.value,
+                      });
+                    }}
+                  />
+                </div>
+                <div style={{ marginTop: 20 }}>
+                  <label htmlFor="descriptionArm1">Описание 1</label>
+
+                  <textarea
+                    className="add_news_input textarea"
+                    value={newBlock.topTextRu ? newBlock.topTextRu : ""}
+                    onChange={(e) => {
+                      setNewBlock({
+                        ...newBlock,
+                        topTextRu: e.target.value,
+                      });
+                    }}
+                  />
+                </div>
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <ImageUpload
+                  label="Upload Images"
+                  containerClassName="uploaded"
+                  id="blockImages"
+                  limit={0}
+                />
+                <VideoUpload
+                  label="Upload Videos"
+                  containerClassName="uploaded"
+                  id="blockVideos"
+                />
+              </div>
+
+              <div>
+                <div style={{ marginTop: 20 }}>
+                  <label htmlFor="descriptionEng2">Description 2</label>
+
+                  <textarea
+                    className="add_news_input textarea"
+                    value={newBlock.bottomTextEng ? newBlock.bottomTextEng : ""}
+                    onChange={(e) => {
+                      setNewBlock({
+                        ...newBlock,
+                        bottomTextEng: e.target.value,
+                      });
+                    }}
+                  />
+                </div>
+
+                <div style={{ marginTop: 20 }}>
+                  <label htmlFor="descriptionArm2">Նկարագիր 2</label>
+
+                  <textarea
+                    className="add_news_input textarea"
+                    value={newBlock.bottomTextArm ? newBlock.bottomTextArm : ""}
+                    onChange={(e) => {
+                      setNewBlock({
+                        ...newBlock,
+                        bottomTextArm: e.target.value,
+                      });
+                    }}
+                  />
+                </div>
+                <div style={{ marginTop: 20 }}>
+                  <label htmlFor="descriptionRu2">Описание 2</label>
+
+                  <textarea
+                    className="add_news_input textarea"
+                    value={newBlock.bottomTextRu ? newBlock.bottomTextRu : ""}
+                    onChange={(e) => {
+                      setNewBlock({
+                        ...newBlock,
+                        bottomTextRu: e.target.value,
+                      });
+                    }}
+                  />
+                </div>
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <div>
+                  <label htmlFor="links">
+                    Links (input links separated by "Enter")
+                  </label>
+
+                  <textarea
+                    className="add_news_input textarea"
+                    value={blockLinks ? blockLinks : ""}
+                    onChange={(e) => {
+                      setBlockLinks(e.target.value);
+                      // setNewBlock({
+                      //   ...newBlock,
+                      //   links: e.target.value,
+                      // });
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <Button
+                  onClick={saveBlockData}
+                  title="Save"
+                  className="action_btn"
+                />
+              </div>
+            </div>
+          )}
+        </div>
         <div className="event-details-container">
-          {details && details.details && details.details.length
+          {details &&
+          details.details &&
+          details.details.length &&
+          details.details[0].id
             ? details.details.map((block, index) => {
                 console.log({ block }, "8888888888888888888888");
                 return (
@@ -706,6 +895,8 @@ const mapStateToProps = (state) => {
     cities: state.locationsReducer.cities,
     detailsImages: state.eventReducer.detailsImages,
     eventDetails: state.eventReducer?.eventDetails,
+    image: state.imageReducer?.image,
+    video: state.videoReducer?.video,
   };
 };
 
@@ -727,6 +918,7 @@ const mapDispatchToProps = (dispatch) => {
     getEventForEdit: (id) => dispatch(getEventForEdit(id)),
     editShortDetails: (details) => dispatch(editShortDetails(details)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+    addEventBlock: (blockData) => dispatch(addEventBlock(blockData)),
   };
 };
 

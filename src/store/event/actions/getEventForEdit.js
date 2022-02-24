@@ -6,7 +6,6 @@ import {
   FETCH_EVENT_DETAILS_FOR_EDIT_FAILURE,
 } from "../types";
 
-
 export const getEventForEdit = (id) => {
   return (dispatch) => {
     dispatch(fetchEventForEditRequest());

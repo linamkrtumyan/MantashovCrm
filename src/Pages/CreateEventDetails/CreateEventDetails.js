@@ -742,6 +742,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
     editEventBlock: (block) => dispatch(editEventBlock(block)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+    
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEventDetails);
