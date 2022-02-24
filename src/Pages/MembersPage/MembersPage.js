@@ -109,15 +109,12 @@ function MembersPage({
                           {memberByPage.fullName}
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
-                          {
-                            // memberByPage
-                            // .organizations.map((org) => (
+                          {memberByPage.organization && (
                             <p key={memberByPage.organization}>
                               {memberByPage.organization.name}{" "}
                               {memberByPage.organization.position}
                             </p>
-                            // ))
-                          }
+                          )}
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
                           {memberByPage.phone}

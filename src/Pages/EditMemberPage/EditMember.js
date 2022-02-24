@@ -90,7 +90,7 @@ function EditMember({
   const handleSubmit = (e) => {
     e.preventDefault();
     let {
-      birthdate,
+      birthDate,
       // city,
       // contacts = {},
       descriptionArm,
@@ -117,6 +117,8 @@ function EditMember({
 
     const header = store.getState().imageReducer.header[0]?.name ?? null;
 
+    console.log({ annualTurnover });
+
     // if (!contacts) {
     //   contacts = {};
     // }
@@ -141,7 +143,7 @@ function EditMember({
       descriptionArm,
       descriptionEng,
       descriptionRu,
-      birthdate,
+      birthDate,
       email,
       // organizationId: organization,
       organizations: addedOrganizations,

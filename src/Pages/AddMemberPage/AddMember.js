@@ -59,7 +59,7 @@ function AddMember({
     fetchCountries();
     fetchContactTypes();
     fetchCategories();
-    // cleanForm();
+    cleanForm();
     cleanMember();
     cleanLocation();
     cleanImages();
