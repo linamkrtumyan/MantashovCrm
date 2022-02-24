@@ -28,7 +28,7 @@ const fetchNewsDetailsRequest = () => {
 };
 
 const fetchNewsDetailsSuccess = (data) => {
-  const newsDetails = data ? data : [];
+  const newsDetails = data ? data : {};
   return {
     type: FETCH_NEWS_BLOCK_DETAILS_SUCCESS,
     payload: {

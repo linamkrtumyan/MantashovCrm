@@ -13,7 +13,6 @@ export const fetchMemberForEdit = (id) => {
     request(`/admin/members/member/${id}`)
       .then((data) => {
         // console.log("mtav");
-        console.log(data, "dataaaaaaaaaaaaaaaaa");
         data.addedOrganizations = data.organizations ? data.organizations : [];
         delete data.organizations;
         dispatch(initForm(data));

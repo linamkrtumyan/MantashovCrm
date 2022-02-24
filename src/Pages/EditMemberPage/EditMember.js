@@ -117,7 +117,6 @@ function EditMember({
 
     const header = store.getState().imageReducer.header[0]?.name ?? null;
 
-    console.log({ annualTurnover });
 
     // if (!contacts) {
     //   contacts = {};

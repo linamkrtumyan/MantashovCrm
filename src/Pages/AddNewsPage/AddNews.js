@@ -32,7 +32,6 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
       store.getState().formReducer;
     const image = store.getState().imageReducer.image;
     const header = store.getState().imageReducer.header[0]?.name ?? null;
-    console.log({ header }, "headerrrrrrrrrrr");
 
     let news = {
       titleArm: title_arm,
@@ -114,7 +113,6 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state }, "kkkkkkkkk");
   return {
     newsId: state.newsReducer.newsId,
   };

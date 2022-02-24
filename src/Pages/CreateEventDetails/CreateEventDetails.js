@@ -124,10 +124,8 @@ function CreateEventDetails({
 
   const handleEdit = (block) => {
     let editedBlock = block;
-    console.log({ block }, "edittttt");
     const addedImgs = store.getState().formReducer[`block${block.id}`];
     const addedVids = store.getState().formReducer[`videoBlock${block.id}`];
-    console.log({ addedVids }, "}}}");
     let newAddedimgs = [];
     let newAddedVids = [];
     addedImgs?.map((img) => {
@@ -136,7 +134,6 @@ function CreateEventDetails({
     addedVids?.map((img) => {
       newAddedVids.push(img.name);
     });
-    console.log({ newAddedVids });
     editedBlock.deletedImages = [];
     editedBlock.addedImages = newAddedimgs;
 
@@ -170,7 +167,6 @@ function CreateEventDetails({
       shortDescriptionArm,
       shortDescriptionRu,
     };
-    console.log({ dataToSend });
     cleanImages();
     cleanVideos();
     cleanForm();
@@ -178,7 +174,6 @@ function CreateEventDetails({
   };
 
   const deleteBlockImage = (block, index) => {
-    console.log({ ekacBlock: block, ekecIndex: index });
     const deletedImage = block.images[index].split("/");
     const blockData = {
       id: block.id,
@@ -199,7 +194,6 @@ function CreateEventDetails({
   };
 
   const deleteBlockVideos = (block, index) => {
-    console.log({ ekacBlock: block, ekecIndex: index });
     const deletedVideo = block.videos[index].split("/");
     const blockData = {
       id: block.id,
@@ -470,7 +464,7 @@ function CreateEventDetails({
             <div>
               <Button
                 onClick={saveBlockData}
-                title="Save"
+                title="Save Block"
                 className="action_btn"
               />
             </div>
@@ -545,7 +539,7 @@ function CreateEventDetails({
                         }}
                       />
                     </div>
-                    <div style={{ display: "flex ", marginBottom: 20, }}>
+                    <div style={{ display: "flex ", marginBottom: 20 }}>
                       {block.images && block.images.length
                         ? block.images.map((img) => {
                             return (
@@ -564,10 +558,7 @@ function CreateEventDetails({
                                       const indexBlock =
                                         details.details.indexOf(block);
                                       setForRender(forRender + 1);
-                                      console.log({
-                                        blockkkk: details.details[indexBlock],
-                                        indexImg,
-                                      });
+                                      
                                       deleteBlockImage(block, indexImg);
                                     }}
                                   >
@@ -663,10 +654,7 @@ function CreateEventDetails({
                                     const indexBlock =
                                       details.details.indexOf(block);
                                     setForRender(forRender + 1);
-                                    console.log({
-                                      blockkkk: details.details[indexBlock],
-                                      indexVideo,
-                                    });
+                                    
                                     deleteBlockVideos(block, indexVideo);
                                   }}
                                 >
@@ -716,7 +704,6 @@ function CreateEventDetails({
   );
 }
 const mapStateToProps = (state) => {
-  console.log({ state }, "state");
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
@@ -742,7 +729,6 @@ const mapDispatchToProps = (dispatch) => {
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
     editEventBlock: (block) => dispatch(editEventBlock(block)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
-    
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEventDetails);

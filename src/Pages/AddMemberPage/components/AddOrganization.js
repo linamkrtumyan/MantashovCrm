@@ -70,7 +70,6 @@ function AddOrganization({
           (position) => position.id === org.positionId
         );
 
-        console.log({ id: orgValue.id, posValue });
         return (
           <div
             key={`${org.positionId}${org.organizationId}`}
@@ -134,7 +133,6 @@ function AddOrganization({
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state }, "///////");
   return {
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,

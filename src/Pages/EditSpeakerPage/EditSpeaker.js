@@ -40,7 +40,6 @@ function EditSpeaker({
       fetchSpeakers();
     }
 
-    console.log({ fetch });
   }, [fetch]);
 
   useEffect(() => {

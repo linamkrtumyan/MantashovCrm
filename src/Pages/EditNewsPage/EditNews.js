@@ -6,17 +6,26 @@ import "./editNews.css";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
+
 import store, {
   fetchNewsDetails,
   editNews,
   cleanImages,
   deleteNewsImageFromStore,
+  formOnChange,
+  addNewsBlock,
+  getNewsDetails,
+  cleanVideos,
+  deleteNewsBlock,
+  editNewsBlock,
+  cleanForm,
 } from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import { deletedImages } from "../../store/images/actions";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import OpenImage from "../EventsPage/components/images/OpenImage";
 import { scrollToView } from "../../helpers/scrollToView";
+import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 
 function EditNews({
   fetchNewsDetails,
@@ -27,11 +36,32 @@ function EditNews({
   header,
   deleteNewsImageFromStore,
   detailsImages,
+  formOnChange,
+  video,
+  image,
+  addNewsBlock,
+  getNewsDetails,
+  deleteNewsBlock,
+  editNewsBlock,
+  headers,
+  fixedImages,
+  fixedImagesDeleted,
+  newsDetails,
 }) {
   const [mainImg, setMainImg] = useState(true);
   const [isActive, setIsActive] = useState(true);
   const [openImgModal, setOpenImgModal] = useState(false);
   const [imgPath, setImgPath] = useState("");
+  const [open, setOpen] = useState(false);
+  const [renderContent, setRenderContent] = useState(0);
+  const [newBlock, setNewBlock] = useState({
+    blockImages: [],
+    blockVideos: [],
+  });
+  const [forRender, setForRender] = useState(0);
+  const [requiredClass, setRequiredClass] = useState("");
+  const [blockLinks, setBlockLinks] = useState("");
+  const [details, setDetails] = useState([]);
 
   const history = useHistory();
   const path = useHistory();
@@ -40,22 +70,36 @@ function EditNews({
     fetchNewsDetails(id);
   }, []);
 
+  useEffect(() => {
+    getNewsDetails(parseInt(id));
+  }, [renderContent, id]);
+
   const handleCancel = () => {
     history.push("/news");
   };
+
+  useEffect(() => {
+    setDetails(newsDetails);
+  }, [newsDetails]);
+
+  useEffect(() => {
+    let headersUrls = [];
+    headers.map((img) => {
+      headersUrls.push(img.url);
+    });
+  }, [headers]);
 
   const handleCreate = (e) => {
     e.preventDefault();
     let { titleArm, titleEng, titleRu } = store.getState().formReducer;
     // const addedImages = store.getState().imageReducer.image;
     // const deleted = store.getState().imageReducer.deletedImages;
-    const header = store.getState().imageReducer.header[0].name;
+    // const header = store.getState().imageReducer.header[0].name;
 
-    console.log({ header });
 
-    const changePath = () => {
-      path.push("/news");
-    };
+    // const changePath = () => {
+    //   path.push("/news");
+    // };
 
     let news = {
       titleArm,
@@ -64,18 +108,107 @@ function EditNews({
       isActive,
       headerDeleted: !mainImg,
       id,
-      header,
+      // header,
       // addedImages: addedImages,
       // deletedImages: deleted,
     };
 
-    editNews(news, changePath);
+    editNews(news);
     cleanImages();
   };
 
   const openImageModal = (imagePath) => {
     setImgPath(imagePath);
     setOpenImgModal(true);
+  };
+
+  useEffect(() => {
+    setNewBlock({
+      ...newBlock,
+      blockImages: image ?? [],
+      blockVideos: video ?? [],
+    });
+  }, [image, video]);
+
+  useEffect(() => {
+    let links = blockLinks && blockLinks !== "" ? blockLinks.split("\n") : [];
+    setNewBlock({
+      ...newBlock,
+      links,
+    });
+  }, [blockLinks]);
+
+  const openField = () => {
+    setOpen(true);
+  };
+
+  const saveBlockData = () => {
+    setNewBlock({
+      ...newBlock,
+
+      blockImages: image ?? [],
+      blockVideos: video ?? [],
+    });
+    if (newBlock.topTextEng !== "") {
+      let links = blockLinks ? blockLinks.split("\n") : [];
+      setNewBlock({
+        ...newBlock,
+        links,
+      });
+      setRenderContent(renderContent + 1);
+      addNewsBlock({ newsId: parseInt(id), block: newBlock });
+      getNewsDetails(parseInt(id));
+      setNewBlock({});
+      setBlockLinks("");
+      cleanImages();
+      formOnChange(`shortDescriptionEng`, "");
+      formOnChange(`shortDescriptionArm`, "");
+      formOnChange(`shortDescriptionRu`, "");
+      cleanVideos();
+    } else {
+      setRequiredClass("requiredField");
+    }
+  };
+
+  const handleDelete = (id) => {
+    deleteNewsBlock(id);
+    setRenderContent(renderContent + 1);
+  };
+
+  const handleEdit = (block) => {
+    let editedBlock = block;
+    editedBlock.deletedImages = [];
+    editedBlock.addedImages = [];
+    editedBlock.deletedVideos = [];
+    editedBlock.addedVideos = [];
+    editNewsBlock(editedBlock);
+  };
+
+  const sendData = () => {
+    let headersImages = [];
+    headers?.map((img) => {
+      headersImages.push(img.name);
+    });
+
+    let addedImages = [];
+    let deletedImages = [];
+
+    fixedImages?.map((img) => {
+      addedImages.push(img.name);
+    });
+
+    fixedImagesDeleted?.map((img) => {
+      deletedImages.push(img.name);
+    });
+
+    let dataToSend = {
+      id: parseInt(id),
+      addedImages,
+      deletedImages,
+    };
+    cleanImages();
+    cleanVideos();
+    cleanForm();
   };
 
   return (
@@ -126,52 +259,6 @@ function EditNews({
                       <OneImageUpload label="Header Image" />
                     )}
                   </div>
-                  {/* <div>
-                    <div>All images</div>
-                    <div className="edit_news_images_container">
-                      {detailsImages.map((image, index) => {
-                        const imagePath = `/images/news/${id}/${image}`;
-                        return (
-                          <div
-                            className="edit_news_image_item"
-                            key={index}
-                            // onClick={() => {
-                            //   deletedImages(image);
-                            // }}
-                          >
-                            <img
-                              alt=""
-                              className="edit_news_images"
-                              src={imagePath}
-                              onClick={() => {
-                                openImageModal(imagePath);
-                              }}
-                            />
-                            <div className="middle">
-                              <div
-                                onClick={() => {
-                                  deletedImages(image);
-                                  deleteNewsImageFromStore(index);
-                                }}
-                              >
-                                <svg viewBox="0 0 24 24" className="close">
-                                  <path
-                                    d="M 2 2 L 22 22 M 2 22 L22 2"
-                                    stroke="red"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="5"
-                                  />
-                                </svg>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    <ImageUpload label="Images" />
-                  </div> */}
                 </div>
                 <div>
                   <div className="news_inputs_container">
@@ -182,13 +269,6 @@ function EditNews({
                       className="add_news_input"
                       textareaSize="textareaSize"
                     />
-
-                    {/* <Textarea
-                      id="textEng"
-                      type="text"
-                      placeholder="Text"
-                      className="add_news_textarea"
-                    /> */}
                   </div>
                   <div className="news_inputs_container">
                     <Textarea
@@ -198,13 +278,6 @@ function EditNews({
                       className="add_news_input"
                       textareaSize="textareaSize"
                     />
-
-                    {/* <Textarea
-                      id="textArm"
-                      type="text"
-                      placeholder="Տեքստ"
-                      className="add_news_textarea"
-                    /> */}
                   </div>
 
                   <div className="news_inputs_container">
@@ -215,13 +288,6 @@ function EditNews({
                       className="add_news_input"
                       textareaSize="textareaSize"
                     />
-
-                    {/* <Textarea
-                      id="textRu"
-                      type="text"
-                      placeholder="Текст"
-                      className="add_news_textarea"
-                    /> */}
                     <button
                       onClick={() => setIsActive(!isActive)}
                       style={{
@@ -250,10 +316,390 @@ function EditNews({
                 />
               </div>
               <div>
-                <Button title="Save" className="action_btn" />
+                <Button title="Save Changes" className="action_btn" />
               </div>
             </div>
           </form>
+        </div>
+      </div>
+
+      <div className="event-card-desc">
+        <div className="applicant_page_title_container">
+          <p className="applicant_page_title">News Details</p>
+        </div>
+
+        <div className="opened_field_container">
+          <div className="plus_icon" onClick={openField}>
+            <i className="fas fa-solid fa-plus"></i>
+          </div>
+          {/* {open && ( */}
+          <div className="container_body" style={{ paddingBottom: 20 }}>
+            <div>
+              <div style={{ marginTop: 20 }}>
+                <label
+                  htmlFor="topTextEng"
+                  className={newBlock.topTextEng === "" ? requiredClass : ""}
+                >
+                  Description
+                </label>
+
+                <textarea
+                  className="add_news_input textarea eventText"
+                  value={newBlock.topTextEng ? newBlock.topTextEng : ""}
+                  onChange={(e) => {
+                    setNewBlock({
+                      ...newBlock,
+                      topTextEng: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <label htmlFor="topTextArm">Նկարագիր</label>
+
+                <textarea
+                  className="add_news_input textarea"
+                  value={newBlock.topTextArm ? newBlock.topTextArm : ""}
+                  onChange={(e) => {
+                    setNewBlock({
+                      ...newBlock,
+                      topTextArm: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <label htmlFor="topTextRu">Описание</label>
+
+                <textarea
+                  className="add_news_input textarea"
+                  value={newBlock.topTextRu ? newBlock.topTextRu : ""}
+                  onChange={(e) => {
+                    setNewBlock({
+                      ...newBlock,
+                      topTextRu: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+            </div>
+            <div style={{ marginTop: 20 }}>
+              <ImageUpload
+                label="Upload Images"
+                containerClassName="uploaded"
+                id="blockImages"
+                limit={0}
+              />
+              <VideoUpload
+                label="Upload Videos"
+                containerClassName="uploaded"
+              />
+            </div>
+
+            <div>
+              <div style={{ marginTop: 20 }}>
+                <label htmlFor="descriptionEng2">Description 2</label>
+
+                <textarea
+                  className="add_news_input textarea"
+                  value={newBlock.bottomTextEng ? newBlock.bottomTextEng : ""}
+                  onChange={(e) => {
+                    setNewBlock({
+                      ...newBlock,
+                      bottomTextEng: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div style={{ marginTop: 20 }}>
+                <label htmlFor="descriptionArm2">Նկարագիր 2</label>
+
+                <textarea
+                  className="add_news_input textarea"
+                  value={newBlock.bottomTextArm ? newBlock.bottomTextArm : ""}
+                  onChange={(e) => {
+                    setNewBlock({
+                      ...newBlock,
+                      bottomTextArm: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+              <div style={{ marginTop: 20 }}>
+                <label htmlFor="descriptionRu2">Описание 2</label>
+
+                <textarea
+                  className="add_news_input textarea"
+                  value={newBlock.bottomTextRu ? newBlock.bottomTextRu : ""}
+                  onChange={(e) => {
+                    setNewBlock({
+                      ...newBlock,
+                      bottomTextRu: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+            </div>
+            <div style={{ marginTop: 20 }}>
+              <div>
+                <label htmlFor="links">
+                  Links (input links separated by "Enter")
+                </label>
+
+                <textarea
+                  className="add_news_input textarea"
+                  value={blockLinks ? blockLinks : ""}
+                  onChange={(e) => {
+                    setBlockLinks(e.target.value);
+                    // setNewBlock({
+                    //   ...newBlock,
+                    //   links: e.target.value,
+                    // });
+                  }}
+                />
+              </div>
+            </div>
+            <div>
+              <Button
+                onClick={saveBlockData}
+                title="Save Block"
+                className="action_btn"
+              />
+            </div>
+          </div>
+          <div>
+            {details && details.details && details.details.length
+              ? // &&details.details[0].topTextEng
+                details.details.map((block, index) => {
+                  return (
+                    <div
+                      className="location_container"
+                      style={{ display: "block" }}
+                      key={block}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div className="input_container">
+                          <label htmlFor="descriptionEng1">Description 1</label>
+
+                          <textarea
+                            className="textarea"
+                            defaultValue={block.topTextEng}
+                            onChange={(e) => {
+                              const index = details.details.indexOf(block);
+                              details.details[index].topTextEng =
+                                e.target.value;
+                              // addEventDetails(details.details);
+                            }}
+                          />
+                        </div>
+                        <div className="input_container">
+                          <label htmlFor="descriptionArm1">Նկարագիր 1</label>
+
+                          <textarea
+                            className="textarea"
+                            defaultValue={block.topTextArm}
+                            onChange={(e) => {
+                              const index = details.details.indexOf(block);
+                              details.details[index].topTextArm =
+                                e.target.value;
+                              // addEventDetails(details.details);
+                            }}
+                          />
+                        </div>
+                        <div className="input_container">
+                          <label htmlFor="descriptionRu1">Описание 1</label>
+
+                          <textarea
+                            className="textarea"
+                            defaultValue={block.topTextRu}
+                            onChange={(e) => {
+                              const index = details.details.indexOf(block);
+                              details.details[index].topTextRu = e.target.value;
+                              // addEventDetails(details.details);
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label htmlFor="descriptionEng1">
+                          Links (input links separated by "Enter")
+                        </label>
+
+                        <textarea
+                          className="textarea"
+                          defaultValue={block.links}
+                          onChange={(e) => {
+                            const index = details.details.indexOf(block);
+                            details.details[index].links = e.target.value;
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: "flex " }}>
+                        {block.images && block.images.length
+                          ? block.images.map((img) => {
+                              return (
+                                <div className="upload_cont">
+                                  <img
+                                    className="uploaded_images"
+                                    src={img}
+                                    alt=""
+                                    key={img}
+                                  />
+                                  <div className="middle">
+                                    <div
+                                      onClick={() => {
+                                        const indexImg =
+                                          block.imgUrls.indexOf(img);
+                                        const newArr = block.imgUrls.slice(
+                                          indexImg,
+                                          1
+                                        );
+                                        const indexBlock =
+                                          details.details.indexOf(block);
+                                        details.details[indexBlock].images =
+                                          newArr;
+                                        setForRender(forRender + 1);
+                                      }}
+                                    >
+                                      <svg
+                                        viewBox="0 0 24 24"
+                                        className="close"
+                                      >
+                                        <path
+                                          d="M 2 2 L 22 22 M 2 22 L22 2"
+                                          stroke="red"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="5"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })
+                          : null}
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div className="input_container">
+                          <label htmlFor="descriptionEng2">Description 2</label>
+
+                          <textarea
+                            className="textarea"
+                            defaultValue={block.bottomTextEng}
+                            onChange={(e) => {
+                              const index = details.details.indexOf(block);
+                              details.details[index].bottomTextEng =
+                                e.target.value;
+                            }}
+                          />
+                        </div>
+                        <div className="input_container">
+                          <label htmlFor="descriptionArm2">Նկարագիր 2</label>
+
+                          <textarea
+                            className="textarea"
+                            defaultValue={block.bottomTextArm}
+                            onChange={(e) => {
+                              const index = details.details.indexOf(block);
+                              details.details[index].bottomTextArm =
+                                e.target.value;
+                            }}
+                          />
+                        </div>
+                        <div className="input_container">
+                          <label htmlFor="descriptionRu2">Описание 2</label>
+
+                          <textarea
+                            className="textarea"
+                            defaultValue={block.bottomTextRu}
+                            onChange={(e) => {
+                              const index = details.details.indexOf(block);
+                              details.details[index].bottomTextRu =
+                                e.target.value;
+                            }}
+                          />
+                        </div>
+                      </div>
+                      {block.videos && block.videos.length
+                        ? block.videos.map((video) => {
+                            return (
+                              <div className="upload_cont">
+                                <video
+                                  className="uploaded_images"
+                                  key={video}
+                                  controls
+                                >
+                                  <source src={video} type="video/mp4" />
+                                  <source src={video} type="video/ogg" />
+                                  Your browser does not support the video tag.
+                                </video>
+                                <div className="middle">
+                                  <div
+                                    onClick={() =>
+                                      // deleteVideo(source.indexOf(video))
+                                      {
+                                        const indexImg =
+                                          block.videos.indexOf(video);
+                                        const newArr = block.videoUrls.slice(
+                                          indexImg,
+                                          1
+                                        );
+                                        const indexBlock =
+                                          details.details.indexOf(block);
+                                        details.details[indexBlock].videos =
+                                          newArr;
+                                        setForRender(forRender + 1);
+                                      }
+                                    }
+                                  >
+                                    <svg viewBox="0 0 24 24" className="close">
+                                      <path
+                                        d="M 2 2 L 22 22 M 2 22 L22 2"
+                                        stroke="red"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="5"
+                                      />
+                                    </svg>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })
+                        : null}
+                      <div style={{ display: "flex" }}>
+                        <Button
+                          title="Delete"
+                          onClick={() => handleDelete(block.id)}
+                          className="action_btn cancel_btn"
+                        />
+
+                        <Button
+                          title="Edit"
+                          onClick={() => handleEdit(block)}
+                          className="action_btn cancel_btn"
+                        />
+                      </div>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
+          {details && details.details && details.details.length ? (
+            <Button title="Send" className="action_btn" onClick={sendData} />
+          ) : null}
         </div>
       </div>
     </>
@@ -265,16 +711,27 @@ const mapStateToProps = (state) => {
     header: state.imageReducer.header,
     news: state.newsReducer.newsDetails,
     detailsImages: state.newsReducer.detailsImages,
+    image: state.imageReducer?.image,
+    video: state.videoReducer?.video,
+    headers: state.imageReducer?.headers,
+    fixedImages: state.formReducer?.fixedImages ?? [],
+    fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
+    newsDetails: state.newsReducer?.newsDetails,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     fetchNewsDetails: (id) => dispatch(fetchNewsDetails(id)),
     editNews: (news, changePath) => dispatch(editNews(news, changePath)),
     cleanImages: () => dispatch(cleanImages()),
     deletedImages: (img) => dispatch(deletedImages(img)),
     deleteNewsImageFromStore: (id) => dispatch(deleteNewsImageFromStore(id)),
+    addNewsBlock: (blockData) => dispatch(addNewsBlock(blockData)),
+    getNewsDetails: (id) => dispatch(getNewsDetails(id)),
+    deleteNewsBlock: (id) => dispatch(deleteNewsBlock(id)),
+    editNewsBlock: (block) => dispatch(editNewsBlock(block)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditNews);

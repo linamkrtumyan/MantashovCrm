@@ -7,7 +7,7 @@ import {
 
 export const uploadOneImage = (img, index) => {
   // console.log("mtav");
-  console.log(img, "stacoxy", URL.createObjectURL(img[0]));
+  // console.log(img, "stacoxy", URL.createObjectURL(img[0]));
   const data = new FormData();
   for (let i = 0; i < img.length; i++) {
     data.append(`image${i}`, img[i], img[i].name);

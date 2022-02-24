@@ -652,7 +652,6 @@ function EditEvent({
           details.details.length &&
           details.details[0].id
             ? details.details.map((block, index) => {
-                console.log({ block }, "8888888888888888888888");
                 return (
                   <div
                     className="location_container"
@@ -738,10 +737,6 @@ function EditEvent({
                                       const indexBlock =
                                         details.details.indexOf(block);
                                       setForRender(forRender + 1);
-                                      console.log({
-                                        blockkkk: details.details[indexBlock],
-                                        indexImg,
-                                      });
                                       deleteBlockImage(block, indexImg);
                                     }}
                                   >
@@ -886,7 +881,6 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state }, "event edit");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

@@ -8,10 +8,11 @@ import store, {
   cleanForm,
   fetchEventDetails,
   deleteEventBlock,
-  editEventBlock,
+  editNewsBlock,
   formOnChange,
   addNewsBlock,
   getNewsDetails,
+  deleteNewsBlock,
 } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 import { useHistory, useParams } from "react-router-dom";
@@ -24,12 +25,13 @@ function CreateNewsDetails({
   videoUrls,
   newsDetails,
   // deleteEventBlock,
-  editEventBlock,
+  editNewsBlock,
   formOnChange,
   fixedImages,
   fixedImagesDeleted,
   addNewsBlock,
-  getNewsDetails
+  getNewsDetails,
+  deleteNewsBlock,
 }) {
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
@@ -46,7 +48,7 @@ function CreateNewsDetails({
   let { newsId } = useParams();
   useEffect(() => {
     getNewsDetails(parseInt(newsId));
-  }, []);
+  }, [renderContent, newsId]);
 
   useEffect(() => {
     setDetails(newsDetails);
@@ -64,8 +66,6 @@ function CreateNewsDetails({
       ...newBlock,
       blockImages: image ?? [],
       blockVideos: video ?? [],
-      imgUrls,
-      videoUrls,
     });
   }, [image, video]);
 
@@ -82,15 +82,18 @@ function CreateNewsDetails({
   };
 
   const saveBlockData = () => {
+    setNewBlock({
+      ...newBlock,
+
+      blockImages: image ?? [],
+      blockVideos: video ?? [],
+    });
     if (newBlock.topTextEng !== "") {
       let links = blockLinks ? blockLinks.split("\n") : [];
       setNewBlock({
         ...newBlock,
         links,
-        blockImages: image ?? [],
-        blockVideos: video ?? [],
       });
-
       setRenderContent(renderContent + 1);
       addNewsBlock({ newsId: parseInt(newsId), block: newBlock });
       getNewsDetails(parseInt(newsId));
@@ -107,7 +110,8 @@ function CreateNewsDetails({
   };
 
   const handleDelete = (id) => {
-    deleteEventBlock(id);
+    deleteNewsBlock(id);
+    setRenderContent(renderContent + 1);
   };
 
   const handleEdit = (block) => {
@@ -116,7 +120,7 @@ function CreateNewsDetails({
     editedBlock.addedImages = [];
     editedBlock.deletedVideos = [];
     editedBlock.addedVideos = [];
-    editEventBlock(editedBlock);
+    editNewsBlock(editedBlock);
   };
 
   const sendData = () => {
@@ -141,7 +145,6 @@ function CreateNewsDetails({
       addedImages,
       deletedImages,
     };
-    console.log({ dataToSend });
     cleanImages();
     cleanVideos();
     cleanForm();
@@ -218,41 +221,82 @@ function CreateNewsDetails({
             <VideoUpload label="Upload Videos" containerClassName="uploaded" />
           </div>
 
-          <div></div>
-          <div style={{ marginTop: 20 }}>
-            {/* <div>
-                <label htmlFor="links">
-                  Links (input links separated by "Enter")
-                </label>
+          <div>
+            <div style={{ marginTop: 20 }}>
+              <label htmlFor="descriptionEng2">Description 2</label>
 
-                <textarea
-                  className="add_news_input textarea"
-                  value={blockLinks ? blockLinks : ""}
-                  onChange={(e) => {
-                    setBlockLinks(e.target.value);
-                    // setNewBlock({
-                    //   ...newBlock,
-                    //   links: e.target.value,
-                    // });
-                  }}
-                />
-              </div> */}
+              <textarea
+                className="add_news_input textarea"
+                value={newBlock.bottomTextEng ? newBlock.bottomTextEng : ""}
+                onChange={(e) => {
+                  setNewBlock({
+                    ...newBlock,
+                    bottomTextEng: e.target.value,
+                  });
+                }}
+              />
+            </div>
+
+            <div style={{ marginTop: 20 }}>
+              <label htmlFor="descriptionArm2">Նկարագիր 2</label>
+
+              <textarea
+                className="add_news_input textarea"
+                value={newBlock.bottomTextArm ? newBlock.bottomTextArm : ""}
+                onChange={(e) => {
+                  setNewBlock({
+                    ...newBlock,
+                    bottomTextArm: e.target.value,
+                  });
+                }}
+              />
+            </div>
+            <div style={{ marginTop: 20 }}>
+              <label htmlFor="descriptionRu2">Описание 2</label>
+
+              <textarea
+                className="add_news_input textarea"
+                value={newBlock.bottomTextRu ? newBlock.bottomTextRu : ""}
+                onChange={(e) => {
+                  setNewBlock({
+                    ...newBlock,
+                    bottomTextRu: e.target.value,
+                  });
+                }}
+              />
+            </div>
+          </div>
+          <div style={{ marginTop: 20 }}>
+            <div>
+              <label htmlFor="links">
+                Links (input links separated by "Enter")
+              </label>
+
+              <textarea
+                className="add_news_input textarea"
+                value={blockLinks ? blockLinks : ""}
+                onChange={(e) => {
+                  setBlockLinks(e.target.value);
+                  // setNewBlock({
+                  //   ...newBlock,
+                  //   links: e.target.value,
+                  // });
+                }}
+              />
+            </div>
           </div>
           <div>
             <Button
               onClick={saveBlockData}
-              title="Save"
+              title="Save Block"
               className="action_btn"
             />
           </div>
         </div>
         <div>
-          {details &&
-          details.details &&
-          details.details.length &&
-          details.details[0].topTextEng
-            ? details.details.map((block, index) => {
-                console.log({ wwwwwww: block }, "blockblockblockblockblock");
+          {details && details.details && details.details.length
+            ? // &&details.details[0].topTextEng
+              details.details.map((block, index) => {
                 return (
                   <div
                     className="location_container"
@@ -481,7 +525,6 @@ function CreateNewsDetails({
   );
 }
 const mapStateToProps = (state) => {
-  console.log({ state }, "state");
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
@@ -499,9 +542,10 @@ const mapDispatchToProps = (dispatch) => {
     addNewsBlock: (blockData) => dispatch(addNewsBlock(blockData)),
     fetchEventDetails: (id) => dispatch(fetchEventDetails(id)),
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
-    editEventBlock: (block) => dispatch(editEventBlock(block)),
+    editNewsBlock: (block) => dispatch(editNewsBlock(block)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     getNewsDetails: (id) => dispatch(getNewsDetails(id)),
+    deleteNewsBlock: (id) => dispatch(deleteNewsBlock(id)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewsDetails);

@@ -14,9 +14,6 @@ export const fetchEventDetails = (id) => {
     request(`/admin/events/event/details/${id}`)
       .then((data) => {
         // dispatch(formOnChange("shortDescriptionEng", data.shortDescriptionEng));
-
-        console.log({ data });
-
         dispatch(fetchEventDetailsSuccess(data));
       })
       .catch((e) => {
@@ -34,7 +31,6 @@ const fetchEventDetailsRequest = () => {
 
 const fetchEventDetailsSuccess = (data) => {
   const eventDetails = data ? data : [];
-  console.log({ data }, "///////////////////");
   return {
     type: FETCH_EVENT_DETAILS_SUCCESS,
     payload: {

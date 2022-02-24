@@ -22,6 +22,8 @@ export {
   addNewsDetails,
   addNewsBlock,
   getNewsDetails,
+  deleteNewsBlock,
+  editNewsBlock,
 } from "./news/actions";
 export {
   fetchPastEvents,
