@@ -18,6 +18,7 @@ function Input({
   readOnly = false,
   required = true,
   labelIcon = "",
+  min,
 }) {
   if (type === "date") {
     if (value !== null && value !== "") {
@@ -64,6 +65,7 @@ function Input({
         // defaultValue={defaultValue}
         data-date-format={dataDateFormat}
         max={max}
+        min={min}
         onChange={handleOnChange}
         className={`input input_width ${className}`}
         // className={`input `}

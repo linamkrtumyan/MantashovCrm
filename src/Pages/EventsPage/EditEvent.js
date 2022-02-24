@@ -62,6 +62,7 @@ function EditEvent({
   video,
   image,
   addEventBlock,
+  eventDetailsForEdit,
 }) {
   const history = useHistory();
 
@@ -93,6 +94,10 @@ function EditEvent({
   useEffect(() => {
     fetchCountries();
   }, []);
+
+  useEffect(() => {
+    console.log({ eventDetailsForEdit });
+  }, [eventDetailsForEdit]);
 
   useEffect(() => {
     if (countryId) {
@@ -441,49 +446,64 @@ function EditEvent({
           <div
             style={{
               display: "flex",
-              // // maxWidth: 150,
-              // flexWrap: "wrap",
-              // margin: 15,
-              // background: "#e7e7e7",
-              // marginTop: 20,
-              // border: "1px solid #e7e7e7",
-              // boxShadow: "0 1px 6px 1px rgb(0 0 0 / 26%)",
             }}
             className="container_body"
           >
-            {detailsImages.map((image, index) => {
-              const imagePath = `/images/events/${id}/${image}`;
-              return (
-                <div className="edit_news_image_item" key={index}>
-                  <img
-                    alt=""
-                    className="edit_news_images"
-                    src={imagePath}
-                    // onClick={() => {
-                    //   openImageModal(imagePath);
-                    // }}
-                  />
-                  <div className="middle">
-                    <div
-                      onClick={() => {
-                        deletedImages(image);
-                        deleteEventImageFromStore(index);
-                      }}
-                    >
-                      <svg viewBox="0 0 24 24" className="close">
-                        <path
-                          d="M 2 2 L 22 22 M 2 22 L22 2"
-                          stroke="red"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="5"
-                        />
-                      </svg>
+            {eventDetailsForEdit && eventDetailsForEdit.headers
+              ? eventDetailsForEdit.headers.map((image, index) => {
+                  return (
+                    <div className="edit_news_image_item" key={index}>
+                      <img alt="" className="edit_news_images" src={image} />
+                      {/* <div className="middle">
+                        <div
+                          onClick={() => {
+                            deletedImages(image);
+                            deleteEventImageFromStore(index);
+                          }}
+                        >
+                          <svg viewBox="0 0 24 24" className="close">
+                            <path
+                              d="M 2 2 L 22 22 M 2 22 L22 2"
+                              stroke="red"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="5"
+                            />
+                          </svg>
+                        </div>
+                      </div> */}
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })
+              : null}
+
+            {eventDetailsForEdit && eventDetailsForEdit.images
+              ? eventDetailsForEdit.images.map((image, index) => {
+                  return (
+                    <div className="edit_news_image_item" key={index}>
+                      <img alt="" className="edit_news_images" src={image} />
+                      {/* <div className="middle">
+                        <div
+                          onClick={() => {
+                            deletedImages(image);
+                            deleteEventImageFromStore(index);
+                          }}
+                        >
+                          <svg viewBox="0 0 24 24" className="close">
+                            <path
+                              d="M 2 2 L 22 22 M 2 22 L22 2"
+                              stroke="red"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="5"
+                            />
+                          </svg>
+                        </div>
+                      </div> */}
+                    </div>
+                  );
+                })
+              : null}
           </div>
 
           <div className="container_body">
@@ -891,6 +911,7 @@ const mapStateToProps = (state) => {
     eventDetails: state.eventReducer?.eventDetails,
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
+    eventDetailsForEdit: state.eventReducer.eventDetailsForEdit,
   };
 };
 

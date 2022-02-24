@@ -39,13 +39,14 @@ function AddOrganization({
     if (
       !addedOrganizations.some(
         (org) =>
-          organizationId === org.organizationId1 && positionId === org.positionId1
+          organizationId === org.organizationId1 &&
+          positionId === org.positionId1
       )
     ) {
       addedOrganizations.push(newOrganization);
       formOnChange("addedOrganizations", [...addedOrganizations]);
-      formOnChange("positionId", null);
-      formOnChange("organizationId", null);
+      formOnChange("positionId1", null);
+      formOnChange("organizationId1", null);
     }
   };
 

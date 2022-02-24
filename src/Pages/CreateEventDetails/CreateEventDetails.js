@@ -96,13 +96,16 @@ function CreateEventDetails({
   };
 
   const saveBlockData = () => {
+    setNewBlock({
+      ...newBlock,
+      blockImages: image ?? [],
+      blockVideos: video ?? [],
+    });
     if (newBlock.topTextEng !== "") {
       let links = blockLinks ? blockLinks.split("\n") : [];
       setNewBlock({
         ...newBlock,
         links,
-        blockImages: image ?? [],
-        blockVideos: video ?? [],
       });
 
       setRenderContent(renderContent + 1);
@@ -174,7 +177,7 @@ function CreateEventDetails({
     cleanVideos();
     cleanForm();
     addEventShortDescription(dataToSend);
-    history.push("/event");
+    history.push("/events");
   };
 
   const deleteBlockImage = (block, index) => {
@@ -323,7 +326,11 @@ function CreateEventDetails({
       </div>
       <div style={{ marginLeft: 30 }}>
         <p style={{ paddingBottom: 10 }}>
-          Կցված նկարների քանակը չպետք է գերազանցի 8-ը։
+          Կցված նկարների քանակը չպետք է գերազանցի{" "}
+          {details && details.headers && details.headers.length
+            ? 8 - details.headers.length
+            : 8}
+          -ը։
         </p>
         <ImageUpload
           label="Upload Images"
@@ -703,7 +710,7 @@ function CreateEventDetails({
               })
             : null}
         </div>
-        {details && details.details && details.details.length ? (
+        {details ? (
           <Button title="Send" className="action_btn" onClick={sendData} />
         ) : null}
       </div>
@@ -711,6 +718,7 @@ function CreateEventDetails({
   );
 }
 const mapStateToProps = (state) => {
+  console.log({ state });
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,

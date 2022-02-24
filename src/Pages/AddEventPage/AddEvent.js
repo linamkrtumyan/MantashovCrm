@@ -46,6 +46,8 @@ function AddEvent({
   uploadedPhotos,
   cleanImages,
   eventId,
+  endDate,
+  startDate,
 }) {
   const history = useHistory();
   const [isPublic, setIsPublic] = useState(false);
@@ -85,6 +87,10 @@ function AddEvent({
     setAllSpeakers(arr);
   }, [speakers]);
 
+  useEffect(() => {
+    console.log({ startDate, endDate });
+  }, [startDate, endDate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -103,8 +109,6 @@ function AddEvent({
       endDate,
       speakers,
     } = store.getState().formReducer;
-
-    // agendas, header, images
 
     let { headers, image } = store.getState().imageReducer;
 
@@ -229,6 +233,7 @@ function AddEvent({
                 id="endDate"
                 type="datetime-local"
                 placeholder="End Date"
+                min={startDate}
               />
 
               <Multiselect
@@ -312,6 +317,8 @@ const mapStateToProps = (state) => {
     headers: state.imageReducer?.headers,
     image: state.imageReducer?.image,
     eventId: state.eventReducer?.eventId,
+    startDate: state.formReducer.startDate,
+    endDate: state.formReducer.endDate,
   };
 };
 

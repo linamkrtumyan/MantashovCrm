@@ -65,6 +65,7 @@ function CreateNewsDetails({
   }, [headers]);
 
   useEffect(() => {
+    // console.log({ image, video });
     setNewBlock({
       ...newBlock,
       blockImages: image ?? [],
