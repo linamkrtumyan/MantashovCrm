@@ -119,6 +119,7 @@ function CreateEventDetails({
 
   const handleDelete = (id) => {
     deleteEventBlock(id);
+    setRenderContent(renderContent + 1);
   };
 
   const handleEdit = (block) => {
@@ -311,13 +312,16 @@ function CreateEventDetails({
         {details && details.length && details.headers.length
           ? details.headers.map((image) => (
               <img
-                src={image.url}
+                src={image}
                 alt=""
                 className="uploaded_image"
                 key={image.url}
               />
             ))
           : null}
+        {/* {
+
+          } */}
       </div>
       <div style={{ marginLeft: 30 }}>
         <p style={{ paddingBottom: 10 }}>
@@ -473,10 +477,7 @@ function CreateEventDetails({
           </div>
         )}
         <div>
-          {details &&
-          details.details &&
-          details.details.length &&
-          details.details[0].topTextEng
+          {details && details.details && details.details.length
             ? details.details.map((block, index) => {
                 return (
                   <div
@@ -544,7 +545,7 @@ function CreateEventDetails({
                         }}
                       />
                     </div>
-                    <div style={{ display: "flex " }}>
+                    <div style={{ display: "flex ", marginBottom: 20, }}>
                       {block.images && block.images.length
                         ? block.images.map((img) => {
                             return (

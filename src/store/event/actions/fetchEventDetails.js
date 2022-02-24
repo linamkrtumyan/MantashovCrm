@@ -12,8 +12,11 @@ export const fetchEventDetails = (id) => {
     dispatch(fetchEventDetailsRequest());
     request(`/admin/events/event/details/${id}`)
       .then((data) => {
-        // dispatch(initForm(data));
+        dispatch(initForm(data));
+        console.log({ data });
+
         dispatch(fetchEventDetailsSuccess(data));
+        
       })
       .catch((e) => {
         dispatch(fetchEventDetailsFailure(e.message));

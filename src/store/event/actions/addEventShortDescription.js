@@ -6,6 +6,7 @@ import {
   ADD_EVENT_SHORT_DESC_FAILURE,
 } from "../types";
 import { toast } from "react-toastify";
+import { initForm } from "../../form/actions/initForm";
 
 export const addEventShortDescription = (data) => {
   return (dispatch) => {
@@ -14,6 +15,8 @@ export const addEventShortDescription = (data) => {
       .then((data) => {
         if (data.success) {
           dispatch(addEventShortDescriptionSuccess());
+          toast.dark("Added");
+          
         }
       })
       .catch((e) => {

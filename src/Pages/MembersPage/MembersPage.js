@@ -102,7 +102,7 @@ function MembersPage({
                           <img
                             alt=""
                             className="membercard_img"
-                            src={`/images/profile/${memberByPage.id}/profile_picture.png`}
+                            src={`${memberByPage.image}`}
                           />
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
