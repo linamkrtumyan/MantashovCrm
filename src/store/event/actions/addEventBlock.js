@@ -8,7 +8,11 @@ import {
 import { toast } from "react-toastify";
 
 export const addEventBlock = (block, changePath) => {
+  const { blockImages } = store.getState().imageReducer;
+  const { blockVideos } = store.getState().videoReducer;
 
+  block.block.blockImages = blockImages ?? [];
+  block.block.blockVideos = blockVideos ?? [];
   return (dispatch) => {
     dispatch(addEventBlockRequest());
     request("/admin/events/eventDetails", "POST", block)
@@ -16,7 +20,7 @@ export const addEventBlock = (block, changePath) => {
         if (data.success) {
           dispatch(addEventBlockSuccess(data));
           //   toast.dark("Event added");
-            // changePath();
+          // changePath();
         }
       })
       .catch((e) => {
@@ -33,8 +37,6 @@ const addEventBlockRequest = () => {
 };
 
 const addEventBlockSuccess = (data) => {
-  // console.log(data, "news success data");
-  //   const login = data ? data : [];
   return {
     type: ADD_EVENT_BLOCK_SUCCESS,
     payload: { eventId: data.id },

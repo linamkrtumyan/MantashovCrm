@@ -95,9 +95,6 @@ function EditEvent({
     fetchCountries();
   }, []);
 
-  useEffect(() => {
-    console.log({ eventDetailsForEdit });
-  }, [eventDetailsForEdit]);
 
   useEffect(() => {
     if (countryId) {

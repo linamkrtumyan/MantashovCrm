@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./pagination.css";
 import { connect } from "react-redux";
@@ -18,6 +18,10 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
     pageNumbers.push(i);
   }
 
+  useEffect(() => {
+    console.log({ pageNumbers });
+  }, [pageNumbers]);
+
   return (
     <nav>
       {pageNumbers.length > 0 ? (
@@ -29,14 +33,16 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
             <button
               className="pgn_item"
               onClick={() => changeCurrentPage(1)}
-              disabled={currentPage - 1 <= 0}
+              disabled={currentPage <= 1}
+              style={{ cursor: `${currentPage <= 1 ? "default" : "pointer"}` }}
             >
               ❮❮
             </button>
             <button
               className="pgn_item"
               onClick={() => changeCurrentPage(currentPage - 1)}
-              disabled={currentPage - 1 <= 0}
+              disabled={currentPage <= 1}
+              style={{ cursor: `${currentPage <= 1 ? "default" : "pointer"}` }}
             >
               ❮
             </button>
@@ -55,6 +61,13 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
               className="pgn_item"
               onClick={() => changeCurrentPage(currentPage + 1)}
               disabled={currentPage >= pageNumbers[pageNumbers.length - 1]}
+              style={{
+                cursor: `${
+                  currentPage >= pageNumbers.length
+                    ? "default"
+                    : "pointer"
+                }`,
+              }}
             >
               ❯
             </button>
@@ -64,6 +77,13 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
                 changeCurrentPage(pageNumbers[pageNumbers.length - 1])
               }
               disabled={currentPage >= pageNumbers[pageNumbers.length - 1]}
+              style={{
+                cursor: `${
+                  currentPage >= pageNumbers.length
+                    ? "default"
+                    : "pointer"
+                }`,
+              }}
             >
               ❯❯
             </button>

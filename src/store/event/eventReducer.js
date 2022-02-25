@@ -227,7 +227,6 @@ const reducer = (state = initialState, action) => {
         loading: true,
       };
     case ADD_EVENT_SUCCESS:
-      console.log(action.payload, "action.payload");
       return {
         ...state,
         loading: false,

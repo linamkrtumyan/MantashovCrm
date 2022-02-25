@@ -35,10 +35,7 @@ function CreateNewsDetails({
 }) {
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
-  const [newBlock, setNewBlock] = useState({
-    blockImages: [],
-    blockVideos: [],
-  });
+  const [newBlock, setNewBlock] = useState({});
   const [forRender, setForRender] = useState(0);
   const [requiredClass, setRequiredClass] = useState("");
   const [blockLinks, setBlockLinks] = useState("");
@@ -65,15 +62,6 @@ function CreateNewsDetails({
   }, [headers]);
 
   useEffect(() => {
-    // console.log({ image, video });
-    setNewBlock({
-      ...newBlock,
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
-    });
-  }, [image, video]);
-
-  useEffect(() => {
     let links = blockLinks && blockLinks !== "" ? blockLinks.split("\n") : [];
     setNewBlock({
       ...newBlock,
@@ -86,12 +74,6 @@ function CreateNewsDetails({
   };
 
   const saveBlockData = () => {
-    setNewBlock({
-      ...newBlock,
-
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
-    });
     if (newBlock.topTextEng !== "") {
       let links = blockLinks ? blockLinks.split("\n") : [];
       setNewBlock({
@@ -107,6 +89,8 @@ function CreateNewsDetails({
       formOnChange(`shortDescriptionEng`, "");
       formOnChange(`shortDescriptionArm`, "");
       formOnChange(`shortDescriptionRu`, "");
+      formOnChange(`blockImages`, []);
+      formOnChange(`blockVideos`, []);
       cleanVideos();
     } else {
       setRequiredClass("requiredField");
@@ -223,7 +207,11 @@ function CreateNewsDetails({
               id="blockImages"
               limit={0}
             />
-            <VideoUpload label="Upload Videos" containerClassName="uploaded" />
+            <VideoUpload
+              label="Upload Videos"
+              containerClassName="uploaded"
+              id="blockVideos"
+            />
           </div>
 
           <div>
@@ -308,7 +296,7 @@ function CreateNewsDetails({
                   <div
                     className="location_container"
                     style={{ display: "block" }}
-                    key={block}
+                    key={block.id}
                   >
                     <div
                       style={{
@@ -374,12 +362,11 @@ function CreateNewsDetails({
                       {block.images && block.images.length
                         ? block.images.map((img) => {
                             return (
-                              <div className="upload_cont">
+                              <div className="upload_cont" key={img}>
                                 <img
                                   className="uploaded_images"
                                   src={img}
                                   alt=""
-                                  key={img}
                                 />
                                 <div className="middle">
                                   <div
@@ -462,12 +449,8 @@ function CreateNewsDetails({
                     {block.videos && block.videos.length
                       ? block.videos.map((video) => {
                           return (
-                            <div className="upload_cont">
-                              <video
-                                className="uploaded_images"
-                                key={video}
-                                controls
-                              >
+                            <div className="upload_cont" key={video}>
+                              <video className="uploaded_images" controls>
                                 <source src={video} type="video/mp4" />
                                 <source src={video} type="video/ogg" />
                                 Your browser does not support the video tag.

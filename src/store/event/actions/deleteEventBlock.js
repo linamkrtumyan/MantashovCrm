@@ -6,7 +6,6 @@ import {
 } from "../types";
 
 export const deleteEventBlock = (id, changePath) => {
-  console.log({ id }, "idddddddddddddddddddd");
   // set api for block delete
   return (dispatch) => {
     dispatch(deleteEventBlockRequest());

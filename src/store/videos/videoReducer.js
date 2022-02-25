@@ -32,6 +32,7 @@ const reducer = (state = initialState, action) => {
         error: null,
         videoUpload: action.payload.videoUpload,
         videoUrls: action.payload.videoUrls,
+        [action.payload.key]: action.payload.videos,
       };
     case UPLOAD_VIDEO_FAILURE:
       return {
@@ -53,11 +54,16 @@ const reducer = (state = initialState, action) => {
         deletedVideos: state.deletedVideos.concat(action.payload.deletedVideo),
       };
     case DELETE_VIDEO_FROM_STORE:
+      console.log(action.payload.key, "action.payload.key");
       return {
         ...state,
         video: [
           ...state.video.slice(0, action.payload.deleteId),
           ...state.video.slice(action.payload.deleteId + 1),
+        ],
+        [action.payload.key]: [
+          ...state[action.payload.key].slice(0, action.payload.deleteId),
+          ...state[action.payload.key].slice(action.payload.deleteId + 1),
         ],
       };
     default:

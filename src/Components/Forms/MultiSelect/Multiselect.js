@@ -39,7 +39,6 @@ function Multiselect({
     };
   }, []);
 
-
   const clear = () => {
     formOnChange(id + "Names", []);
     formOnChange(id, []);

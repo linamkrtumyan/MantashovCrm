@@ -44,6 +44,7 @@ const reducer = (state = initialState, action) => {
         error: null,
         imageUpload: action.payload.imageUpload,
         imgUrls: action.payload.imgUrls,
+        [action.payload.key]: action.payload.images,
       };
     case UPLOAD_IMAGE_FAILURE:
       return {
@@ -60,6 +61,7 @@ const reducer = (state = initialState, action) => {
         deletedImages: [],
         headers: [],
         header: "",
+        imgUrls: [],
       };
     case DELETED_IMAGES:
       return {
@@ -96,6 +98,10 @@ const reducer = (state = initialState, action) => {
         image: [
           ...state.image.slice(0, action.payload.deleteId),
           ...state.image.slice(action.payload.deleteId + 1),
+        ],
+        [action.payload.key]: [
+          ...state[action.payload.key].slice(0, action.payload.deleteId),
+          ...state[action.payload.key].slice(action.payload.deleteId + 1),
         ],
       };
     case DELETE_HEADER:

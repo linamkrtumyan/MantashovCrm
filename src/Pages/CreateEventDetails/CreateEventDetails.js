@@ -23,8 +23,6 @@ function CreateEventDetails({
   headers,
   addEventDetails,
   video,
-  imgUrls,
-  videoUrls,
   addEventBlock,
   fetchEventDetails,
   eventDetails,
@@ -37,13 +35,12 @@ function CreateEventDetails({
   fixedImages,
   addEventShortDescription,
   fixedImagesDeleted,
+  cleanImages,
+  cleanVideos,
 }) {
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
-  const [newBlock, setNewBlock] = useState({
-    blockImages: [],
-    blockVideos: [],
-  });
+  const [newBlock, setNewBlock] = useState({});
   const [forRender, setForRender] = useState(0);
   const [requiredClass, setRequiredClass] = useState("");
   const [blockLinks, setBlockLinks] = useState("");
@@ -60,6 +57,9 @@ function CreateEventDetails({
 
   useEffect(() => {
     setDetails(eventDetails);
+    formOnChange(`shortDescriptionEng`, eventDetails.shortDescriptionEng);
+    formOnChange(`shortDescriptionArm`, eventDetails.shortDescriptionArm);
+    formOnChange(`shortDescriptionRu`, eventDetails.shortDescriptionRu);
   }, [eventDetails]);
 
   useEffect(() => {
@@ -71,17 +71,11 @@ function CreateEventDetails({
 
   useEffect(() => {
     fetchEventDetails(parseInt(eventId));
-  }, [renderContent]);
+  }, []);
 
   useEffect(() => {
-    setNewBlock({
-      ...newBlock,
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
-      imgUrls,
-      videoUrls,
-    });
-  }, [image, video]);
+    fetchEventDetails(parseInt(eventId));
+  }, [renderContent]);
 
   useEffect(() => {
     let links = blockLinks && blockLinks !== "" ? blockLinks.split("\n") : [];
@@ -114,9 +108,8 @@ function CreateEventDetails({
       setNewBlock({});
       setBlockLinks("");
       cleanImages();
-      formOnChange(`shortDescriptionEng`, "");
-      formOnChange(`shortDescriptionArm`, "");
-      formOnChange(`shortDescriptionRu`, "");
+      formOnChange(`blockImages`, []);
+      formOnChange(`blockVideos`, []);
       cleanVideos();
     } else {
       setRequiredClass("requiredField");
@@ -718,7 +711,6 @@ function CreateEventDetails({
   );
 }
 const mapStateToProps = (state) => {
-  console.log({ state });
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
@@ -726,8 +718,6 @@ const mapStateToProps = (state) => {
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
     fixedImages: state.formReducer?.fixedImages ?? [],
     fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
-    imgUrls: state.imageReducer?.imgUrls,
-    videoUrls: state.videoReducer?.videoUrls,
     eventDetails: state.eventReducer?.eventDetails,
     shortDescriptionEng: state.formReducer?.shortDescriptionEng ?? "",
     shortDescriptionArm: state.formReducer?.shortDescriptionArm ?? "",
@@ -744,6 +734,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
     editEventBlock: (block) => dispatch(editEventBlock(block)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
+    cleanImages: () => dispatch(cleanImages()),
+    cleanVideos: () => dispatch(cleanVideos()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEventDetails);

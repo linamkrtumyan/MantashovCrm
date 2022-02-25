@@ -9,6 +9,11 @@ import { toast } from "react-toastify";
 
 export const addNewsBlock = (block) => {
   const data = new FormData();
+  const { blockImages } = store.getState().imageReducer;
+  const { blockVideos } = store.getState().videoReducer;
+
+  block.block.blockImages = blockImages ?? [];
+  block.block.blockVideos = blockVideos ?? [];
 
   return (dispatch) => {
     dispatch(addNewsBlockRequest());

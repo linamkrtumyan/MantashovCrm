@@ -32,8 +32,7 @@ function VideoUpload({
         URL.createObjectURL(file)
       );
       const files = [...e.target.files];
-
-      uploadVideo(files);
+      uploadVideo(files, id);
       const arr = uploadedVideos ? uploadedVideos.concat(files) : files;
       setSelectedVideos((prevVideos) => prevVideos.concat(filesArray));
       formOnChange(`${id}`, arr);
@@ -47,7 +46,7 @@ function VideoUpload({
   };
 
   const deleteVideo = (a) => {
-    deleteVideoFromStore(a);
+    deleteVideoFromStore(a, id);
     setDelindex(a);
   };
 
@@ -59,7 +58,7 @@ function VideoUpload({
     return source.map((videos) => {
       return (
         <div className="upload_cont">
-          <video className="uploaded_images" key={videos} controls>
+          <video className="uploaded_images" key={videos.name} controls>
             <source src={videos} type="video/mp4" />
             <source src={videos} type="video/ogg" />
             Your browser does not support the video tag.
@@ -125,8 +124,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadVideo: (vid) => dispatch(uploadVideo(vid)),
-    deleteVideoFromStore: (id) => dispatch(deleteVideoFromStore(id)),
+    uploadVideo: (vid, key) => dispatch(uploadVideo(vid, key)),
+    deleteVideoFromStore: (id, key) => dispatch(deleteVideoFromStore(id, key)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };

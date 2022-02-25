@@ -4,7 +4,7 @@ import {
   UPLOAD_IMAGE_FAILURE,
 } from "../types";
 
-export const uploadImage = (img) => {
+export const uploadImage = (img, key) => {
   // console.log("mtav");
   // console.log(img, "stacoxy");
   const data = new FormData();
@@ -23,7 +23,7 @@ export const uploadImage = (img) => {
         return res.json();
       })
       .then((data) => {
-        dispatch(uploadImageSuccess(data, img));
+        dispatch(uploadImageSuccess(data, img, key));
       })
       .catch((e) => {
         dispatch(uploadImageFailure(e.message));
@@ -38,7 +38,7 @@ const uploadImageRequest = () => {
   };
 };
 
-const uploadImageSuccess = (data, urls) => {
+const uploadImageSuccess = (data, urls, key) => {
   const image = data ? data : [];
   const loading = data ? false : true;
   const imgUrls = urls
@@ -51,6 +51,8 @@ const uploadImageSuccess = (data, urls) => {
       image,
       imageUpload: loading,
       imgUrls,
+      key,
+      images: image,
     },
   };
 };

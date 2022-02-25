@@ -105,6 +105,7 @@ function OneImageUpload({
         // style={{ height: "60px" }}
         onChange={(e) => {
           onImageChange(e);
+          e.target.value = "";
         }}
       />
     </div>

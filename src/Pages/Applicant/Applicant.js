@@ -18,6 +18,7 @@ function Applicant({
   currentPage,
   fetch,
   formOnChange,
+  count,
 }) {
   const history = useHistory();
 
@@ -32,13 +33,13 @@ function Applicant({
   }, [currentPage, fetch]);
 
   const collectApplicantData = (applicant) => {
-    formOnChange("firstNameEng", `${applicant.fullName.split(" ")[0]}`);
-    formOnChange("firstNameArm", `${applicant.fullName.split(" ")[0]}`);
-    formOnChange("firstNameRu", `${applicant.fullName.split(" ")[0]}`);
+    formOnChange("firstNameEng", `${applicant.fullName?.split(" ")[0]}`);
+    formOnChange("firstNameArm", `${applicant.fullName?.split(" ")[0]}`);
+    formOnChange("firstNameRu", `${applicant.fullName?.split(" ")[0]}`);
 
-    formOnChange("lastNameEng", `${applicant.fullName.split(" ")[1]}`);
-    formOnChange("lastNameArm", `${applicant.fullName.split(" ")[1]}`);
-    formOnChange("lastNameRu", `${applicant.fullName.split(" ")[1]}`);
+    formOnChange("lastNameEng", `${applicant.fullName?.split(" ")[1]}`);
+    formOnChange("lastNameArm", `${applicant.fullName?.split(" ")[1]}`);
+    formOnChange("lastNameRu", `${applicant.fullName?.split(" ")[1]}`);
 
     formOnChange("email", `${applicant.email}`);
     formOnChange("phone", `${applicant.phone}`);
@@ -133,7 +134,7 @@ function Applicant({
         </tbody>
       </table>
       <div style={{ marginTop: 20, marginBottom: 20 }}>
-        <Pagination totalPosts={63} />
+        <Pagination totalPosts={count} />
       </div>
     </div>
   );
@@ -145,6 +146,7 @@ const mapStateToProps = (state) => {
     loading: state.applicantsReducer.loading,
     currentPage: state.paginationReducer.currentPage,
     fetch: state.applicantsReducer.fetch,
+    count: state.applicantsReducer.count,
   };
 };
 

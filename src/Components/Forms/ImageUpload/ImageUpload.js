@@ -38,6 +38,17 @@ function ImageUpload({
     setImagesLength(headers.length + image.length);
   }, [headers, image]);
 
+  useEffect(() => {
+    if (uploadedImages) {
+      const filesArray = Array.from(uploadedImages).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setSelectedFiles(filesArray);
+    } else {
+      setSelectedFiles(uploadedImages);
+    }
+  }, [uploadedImages]);
+
   const onImageChange = (e) => {
     if (e.target.files) {
       if (
@@ -49,7 +60,7 @@ function ImageUpload({
           URL.createObjectURL(file)
         );
         const files = [...e.target.files];
-        uploadImage(files);
+        uploadImage(files, id);
         const arr = uploadedImages ? uploadedImages.concat(files) : files;
 
         setSelectedFiles((prevImages) => prevImages.concat(filesArray));
@@ -61,15 +72,14 @@ function ImageUpload({
           URL.revokeObjectURL(file);
         });
       } else if (!limit) {
-        // console.log({ limit, aaa: e.target.files.length });
         const filesArray = Array.from(e.target.files).map((file) =>
           URL.createObjectURL(file)
         );
         const files = [...e.target.files];
-        uploadImage(files);
+        uploadImage(files, id);
         const arr = uploadedImages ? uploadedImages.concat(files) : files;
 
-        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+        // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
         formOnChange(`${id}`, arr);
 
         // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
@@ -92,6 +102,7 @@ function ImageUpload({
     formOnChange(`${id}Deleted`, [deletedImages]);
     formOnChange(`${id}`, newArr);
     setDelindex(a);
+    setA(a + 1);
   };
 
   const renderPhotos = (source) => {
@@ -99,7 +110,7 @@ function ImageUpload({
       source.splice(delindex, 1);
       // selectedFiles.splice(delindex, 1);
     }
-    return source.map((photo) => {
+    return source?.map((photo) => {
       return (
         <div className="upload_cont" key={photo}>
           <img className="uploaded_images" src={photo} alt="" />
@@ -139,7 +150,9 @@ function ImageUpload({
           id={`${id}`}
           accept="image/png, image/gif, image/jpeg"
           name="myfile"
-          onChange={(e) => onImageChange(e)}
+          onChange={(e) => {
+            onImageChange(e);
+          }}
           multiple
         />
       </div>
@@ -167,7 +180,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadImage: (img) => dispatch(uploadImage(img)),
+    uploadImage: (img, key) => dispatch(uploadImage(img, key)),
     deleteImageFromStore: (id) => dispatch(deleteImageFromStore(id)),
     setUploadedPhotos: (photos) => dispatch(setUploadedPhotos(photos)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),

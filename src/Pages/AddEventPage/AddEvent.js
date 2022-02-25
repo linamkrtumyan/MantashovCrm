@@ -92,9 +92,6 @@ function AddEvent({
     setAllSpeakers(arr);
   }, [speakers]);
 
-  useEffect(() => {
-    console.log({ startDate, endDate });
-  }, [startDate, endDate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
