@@ -45,7 +45,7 @@ function AddSpeakerPage({
       image: header && header[0] ? header[0].name : null,
     };
     const changePath = () => {
-      // history.push("/speakers");
+      history.push("/speakers");
     };
     addSpeaker(speaker, changePath);
     cleanForm();

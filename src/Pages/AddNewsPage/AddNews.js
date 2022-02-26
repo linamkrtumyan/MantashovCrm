@@ -18,6 +18,7 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
   useEffect(() => {
     cleanForm();
     cleanImages();
+    newsId = null;
   }, []);
 
   useEffect(() => {
@@ -113,6 +114,7 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
 }
 
 const mapStateToProps = (state) => {
+  console.log({ state });
   return {
     newsId: state.newsReducer.newsId,
   };

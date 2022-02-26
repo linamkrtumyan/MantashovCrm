@@ -128,11 +128,11 @@ function CreateNewsDetails({
       deletedImages.push(img.name);
     });
 
-    let dataToSend = {
-      id: parseInt(newsId),
-      addedImages,
-      deletedImages,
-    };
+    // let dataToSend = {
+    //   id: parseInt(newsId),
+    //   addedImages,
+    //   deletedImages,
+    // };
     cleanImages();
     cleanVideos();
     cleanForm();

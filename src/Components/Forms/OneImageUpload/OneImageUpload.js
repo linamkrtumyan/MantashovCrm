@@ -13,21 +13,29 @@ function OneImageUpload({
   header,
 }) {
   const [image, setImage] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
   const onImageChange = (e) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files.length !== 0) {
+      setInputValue(e.target.value === inputValue ? "" : e.target.value);
       uploadOneImage(e.target.files, index);
+      console.log(
+        { filesssss: URL.createObjectURL(e.target.files[0]) },
+        "filessssssssssssss"
+      );
       setImage(URL.createObjectURL(e.target.files[0]));
       //   const file = [...e.target.files];
       // change headers[index - 1]?.url to image
     }
+    // e.target.value = "";
+    setInputValue("");
   };
 
   useEffect(() => {
     if (headers.length && headers[index - 1] && index) {
-      setImage(headers[index - 1]?.url);
+      setImage(headers[index - 1]);
     } else if (!index && header) {
-      setImage([header[0].url]);
+      setImage([header[0]]);
     } else {
       setImage([]);
     }
@@ -36,7 +44,7 @@ function OneImageUpload({
   const handleDelete = () => {
     // let index;
     headers.map((img) => {
-      if (img.url === image) {
+      if (img === image) {
         const index = headers.indexOf(img);
         deleteHeader(index);
       }
@@ -105,7 +113,6 @@ function OneImageUpload({
         // style={{ height: "60px" }}
         onChange={(e) => {
           onImageChange(e);
-          e.target.value = "";
         }}
       />
     </div>
@@ -113,6 +120,7 @@ function OneImageUpload({
 }
 
 const mapStateToProps = (state) => {
+  console.log({ state: state.imageReducer });
   return {
     headers: state.imageReducer?.headers,
     oneImageLoading: state.imageReducer?.oneImageLoading,
