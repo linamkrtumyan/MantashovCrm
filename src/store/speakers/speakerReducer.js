@@ -11,6 +11,9 @@ import {
   SPEAKER_EDIT_REQUEST,
   SPEAKER_EDIT_SUCCESS,
   SPEAKER_EDIT_FAILURE,
+  FETCH_SPEAKERS_BY_PAGE_REQUEST,
+  FETCH_SPEAKERS_BY_PAGE_SUCCESS,
+  FETCH_SPEAKERS_BY_PAGE_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -18,10 +21,29 @@ const initialState = {
   loading: false,
   error: null,
   fetch: false,
+  speakersByPage: [],
+  count: 0,
 };
 
 const speakerReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_SPEAKERS_BY_PAGE_REQUEST:
+      return { ...state, loading: true };
+    case FETCH_SPEAKERS_BY_PAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        speakersByPage: action.payload.speakersByPage.speakers,
+        count: action.payload.speakersByPage.count,
+      };
+    case FETCH_SPEAKERS_BY_PAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        speakersByPage: [],
+      };
     case FETCH_SPEAKERS_REQUEST:
       return { ...state, loading: true };
     case FETCH_SPEAKERS_SUCCESS:

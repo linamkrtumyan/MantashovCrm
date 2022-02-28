@@ -98,6 +98,7 @@ export {
   deleteSpeaker,
   addSpeaker,
   editSpeaker,
+  fetchSpeakersByPage,
 } from "./speakers/actions";
 
 export { default } from "./configureStore";
