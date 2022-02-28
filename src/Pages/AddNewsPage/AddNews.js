@@ -114,7 +114,6 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state });
   return {
     newsId: state.newsReducer.newsId,
   };

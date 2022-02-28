@@ -27,9 +27,11 @@ function EditSpeaker({
   loading,
   fetch,
   organizationId,
+  image,
 }) {
   let history = useHistory();
   let { id } = useParams();
+  const [mainImg, setMainImg] = useState(true);
 
   useEffect(() => {
     fetchOrganizations();
@@ -39,7 +41,6 @@ function EditSpeaker({
     if (!loading) {
       fetchSpeakers();
     }
-
   }, [fetch]);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ function EditSpeaker({
       formOnChange("fullNameArm", `${speaker.nameArm}`);
       formOnChange("fullNameRu", `${speaker.nameRu}`);
       formOnChange("organizationId", `${speaker.organizationId}`);
+      formOnChange("image", `${speaker.image}`);
     }
   }, [speakers]);
 
@@ -95,9 +97,29 @@ function EditSpeaker({
 
         <div className="add_member_component">
           <div className="location_container">
-            <div style={{ margin: "20px 0" }} className="">
+            {mainImg ? (
+              <div className="upload_cont">
+                <img className="uploaded_image" src={`${image}`} alt="" />
+                <div className="middle">
+                  <div onClick={() => setMainImg(false)}>
+                    <svg viewBox="0 0 24 24" className="close">
+                      <path
+                        d="M 2 2 L 22 22 M 2 22 L22 2"
+                        stroke="red"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="5"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <OneImageUpload label="Header Image" />
+            )}
+            {/* <div style={{ margin: "20px 0" }} className="">
               <OneImageUpload label="Upload Image" />
-            </div>
+            </div> */}
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Input id="fullNameEng" type="text" placeholder="Fullname" />
@@ -147,6 +169,7 @@ const mapStateToProps = (state) => {
     fetch: state.speakerReducer.fetch,
     loading: state.speakerReducer.loading,
     organizationId: state.formReducer.organizationId,
+    image: state.formReducer?.image,
   };
 };
 

@@ -4,7 +4,6 @@ import {
   UPLOAD_VIDEO_FAILURE,
 } from "../types";
 export const uploadVideo = (vid, key) => {
-  console.log({ key });
   const data = new FormData();
   for (let i = 0; i < vid.length; i++) {
     data.append(`video${i}`, vid[i], vid[i].name);
@@ -17,7 +16,6 @@ export const uploadVideo = (vid, key) => {
         return res.json();
       })
       .then((data) => {
-        console.log({ dataaaaaa: data });
         dispatch(uploadVideoSuccess(data, vid, key));
       })
       .catch((e) => {

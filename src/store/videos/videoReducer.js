@@ -54,7 +54,6 @@ const reducer = (state = initialState, action) => {
         deletedVideos: state.deletedVideos.concat(action.payload.deletedVideo),
       };
     case DELETE_VIDEO_FROM_STORE:
-      console.log(action.payload.key, "action.payload.key");
       return {
         ...state,
         video: [

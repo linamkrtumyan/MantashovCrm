@@ -47,6 +47,7 @@ function EditNews({
   fixedImages,
   fixedImagesDeleted,
   newsDetails,
+  headerImage,
 }) {
   const [mainImg, setMainImg] = useState(true);
   const [isActive, setIsActive] = useState(true);
@@ -238,7 +239,7 @@ function EditNews({
                       <div className="upload_cont">
                         <img
                           className="uploaded_image"
-                          src={`http://localhost:5001/images/newsHeader/${id}/header.png`}
+                          src={`${headerImage}`}
                           alt=""
                         />
                         <div className="middle">
@@ -719,6 +720,7 @@ const mapStateToProps = (state) => {
     fixedImages: state.formReducer?.fixedImages ?? [],
     fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
     newsDetails: state.newsReducer?.newsDetails,
+    headerImage: state.formReducer?.image,
   };
 };
 

@@ -79,7 +79,7 @@ function SpeakersPage({
                         <img
                           alt=""
                           className="membercard_img"
-                          src={`/images/profile/${speaker.id}/profile_picture.png`}
+                          src={`${speaker.image}`}
                         />
                       </td>
                       <td onClick={() => handleDetails(speaker.id)}>

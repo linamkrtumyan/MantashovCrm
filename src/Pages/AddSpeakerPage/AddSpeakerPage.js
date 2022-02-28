@@ -24,6 +24,8 @@ function AddSpeakerPage({
 
   useEffect(() => {
     fetchOrganizations();
+    cleanImages();
+    cleanForm();
   }, []);
 
   const cancelAdd = () => {
@@ -42,7 +44,7 @@ function AddSpeakerPage({
       fullNameArm,
       fullNameRu,
       organizationId,
-      image: header && header[0] ? header[0].name : null,
+      image: header ? header.name : null,
     };
     const changePath = () => {
       history.push("/speakers");

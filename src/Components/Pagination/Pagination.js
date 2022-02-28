@@ -17,11 +17,7 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
   }
-
-  useEffect(() => {
-    console.log({ pageNumbers });
-  }, [pageNumbers]);
-
+  
   return (
     <nav>
       {pageNumbers.length > 0 ? (
