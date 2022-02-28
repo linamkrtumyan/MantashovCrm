@@ -60,33 +60,60 @@ function ImageUpload({
           URL.createObjectURL(file)
         );
         const files = [...e.target.files];
-        uploadImage(files, id);
-        const arr = uploadedImages ? uploadedImages.concat(files) : files;
-
-        setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-        formOnChange(`${id}`, arr);
-
-        // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-        setA(a + 1);
-        Array.from(e.target.files).map((file) => {
-          URL.revokeObjectURL(file);
+        let isUpload = true;
+        files.map((file) => {
+          if (file.size / 1024 / 1024 > 5) {
+            isUpload = false;
+          } else {
+            isUpload = true;
+          }
         });
+
+        if (!isUpload) {
+          alert("Նկարի չափը չպետք է գերազանցի 5 ՄԲ-ը։");
+        } else {
+          uploadImage(files, id);
+          const arr = uploadedImages ? uploadedImages.concat(files) : files;
+
+          setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          formOnChange(`${id}`, arr);
+
+          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          setA(a + 1);
+          Array.from(e.target.files).map((file) => {
+            URL.revokeObjectURL(file);
+          });
+        }
       } else if (!limit) {
         const filesArray = Array.from(e.target.files).map((file) =>
           URL.createObjectURL(file)
         );
         const files = [...e.target.files];
-        uploadImage(files, id);
-        const arr = uploadedImages ? uploadedImages.concat(files) : files;
-
-        // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-        formOnChange(`${id}`, arr);
-
-        // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-        setA(a + 1);
-        Array.from(e.target.files).map((file) => {
-          URL.revokeObjectURL(file);
+        let isUpload = true;
+        files.map((file) => {
+          if (file.size / 1024 / 1024 > 5) {
+            isUpload = false;
+          } 
+          // else {
+          //   isUpload = true;
+          // }
         });
+
+        if (!isUpload) {
+          alert("Նկարի չափը չպետք է գերազանցի 5 ՄԲ-ը։");
+        } else {
+          uploadImage(files, id);
+          const arr = uploadedImages ? uploadedImages.concat(files) : files;
+
+          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          formOnChange(`${id}`, arr);
+
+          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          setA(a + 1);
+          Array.from(e.target.files).map((file) => {
+            URL.revokeObjectURL(file);
+          });
+        }
       }
     }
 

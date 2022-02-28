@@ -32,14 +32,28 @@ function VideoUpload({
         URL.createObjectURL(file)
       );
       const files = [...e.target.files];
-      uploadVideo(files, id);
-      const arr = uploadedVideos ? uploadedVideos.concat(files) : files;
-      setSelectedVideos((prevVideos) => prevVideos.concat(filesArray));
-      formOnChange(`${id}`, arr);
-      setA(a + 1);
-      Array.from(e.target.files).map((file) => {
-        URL.revokeObjectURL(file);
+
+      let isUpload = true;
+      files.map((file) => {
+        if (file.size / 1024 / 1024 > 50) {
+          isUpload = false;
+        } else {
+          isUpload = true;
+        }
       });
+
+      if (!isUpload) {
+        alert("Վիդեոյի չափը չպետք է գերազանցի 50 ՄԲ-ը։");
+      } else {
+        uploadVideo(files, id);
+        const arr = uploadedVideos ? uploadedVideos.concat(files) : files;
+        setSelectedVideos((prevVideos) => prevVideos.concat(filesArray));
+        formOnChange(`${id}`, arr);
+        setA(a + 1);
+        Array.from(e.target.files).map((file) => {
+          URL.revokeObjectURL(file);
+        });
+      }
     }
 
     setDelindex(null);

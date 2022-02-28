@@ -14,14 +14,16 @@ function OneImageUpload({
 }) {
   const [image, setImage] = useState([]);
 
-
   const onImageChange = (e) => {
     if (e.target.files && e.target.files.length !== 0) {
-      uploadOneImage(e.target.files, URL.createObjectURL(e.target.files[0]));
-      setImage(URL.createObjectURL(e.target.files[0]));
-      //   const file = [...e.target.files];
+      // check image size limitation
+      if (e.target.files[0].size / 1024 / 1024 > 8) {
+        alert("Նկարի չափը չպետք է գերազանցի 5 ՄԲ-ը։");
+      } else {
+        uploadOneImage(e.target.files, URL.createObjectURL(e.target.files[0]));
+        setImage(URL.createObjectURL(e.target.files[0]));
+      }
     }
-
   };
 
   useEffect(() => {
