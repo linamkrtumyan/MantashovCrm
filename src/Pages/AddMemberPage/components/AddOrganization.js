@@ -97,7 +97,10 @@ function AddOrganization({
               defaultValue={posValue?.name}
             />
 
-            <div onClick={() => handleDelete(org)}>
+            <div
+              onClick={() => handleDelete(org)}
+              style={{ margin: "14px 10px 10px" }}
+            >
               <div className="added_orgs">
                 <i
                   style={{ marginRight: "10px", cursor: "pointer" }}
