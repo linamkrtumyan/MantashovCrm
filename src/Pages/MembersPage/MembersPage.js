@@ -39,7 +39,6 @@ function MembersPage({
   }
 
   const handleReset = (id) => {
-    // console.log(id, "id***");
     setMemberId(id);
     setModalOpen(true);
   };
@@ -85,7 +84,7 @@ function MembersPage({
                   <th>Full Name</th>
                   <th>Organization</th>
                   <th>Phone</th>
-                  <th>Location</th>
+                  {/* <th>Location</th> */}
                   <th></th>
                 </tr>
               </thead>
@@ -103,23 +102,26 @@ function MembersPage({
                           <img
                             alt=""
                             className="membercard_img"
-                            src={`/images/profile/${memberByPage.id}/profile_picture.png`}
+                            src={`${memberByPage.image}`}
                           />
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
-                          {memberByPage.firstName} {memberByPage.lastName}
+                          {memberByPage.fullName}
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
-                          {memberByPage.organizations.map((org) => (
-                            <p key={org}>{org}</p>
-                          ))}
+                          {memberByPage.organization && (
+                            <p key={memberByPage.organization}>
+                              {memberByPage.organization.name}{" "}
+                              {memberByPage.organization.position}
+                            </p>
+                          )}
                         </td>
                         <td onClick={() => handleDetails(memberByPage.id)}>
                           {memberByPage.phone}
                         </td>
-                        <td onClick={() => handleDetails(memberByPage.id)}>
+                        {/* <td onClick={() => handleDetails(memberByPage.id)}>
                           {memberByPage.location}
-                        </td>
+                        </td> */}
                         {/* <div
                           onClick={() => handleReset(memberByPage.id)}
                           style={{ zIndex: "10", position: "absolute" }}
@@ -151,7 +153,6 @@ function MembersPage({
 }
 
 const mapStateToProps = (state) => {
-  // console.log({state});
   return {
     membersByPage: state.membersReducer.membersByPage,
     loading: state.membersReducer.loading,

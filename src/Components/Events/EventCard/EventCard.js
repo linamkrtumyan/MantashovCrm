@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./eventCard.css";
 import { useHistory } from "react-router-dom";
-import ModalComponent from "../../Modal/Modal";
 import { connect } from "react-redux";
 import { openModal, deleteEvent, transferEventDelete } from "../../../store";
 import DeleteEvent from "../DeleteEventModal/DeleteEvent";

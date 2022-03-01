@@ -17,6 +17,8 @@ function Input({
   dataDateFormat = "",
   readOnly = false,
   required = true,
+  labelIcon = "",
+  min,
 }) {
   if (type === "date") {
     if (value !== null && value !== "") {
@@ -41,6 +43,18 @@ function Input({
 
   return (
     <div className={`input_container ${className}`}>
+      {labelIcon && labelIcon !== "" ? (
+        <img
+          src={labelIcon}
+          alt=""
+          // className="member_edit_image"
+          style={{
+            width: "20px",
+            verticalAlign: "middle",
+            padding: "2px",
+          }}
+        />
+      ) : null}
       <label htmlFor={id}>{placeholder}</label>
       <input
         // autoComplete="new-password"
@@ -51,6 +65,7 @@ function Input({
         // defaultValue={defaultValue}
         data-date-format={dataDateFormat}
         max={max}
+        min={min}
         onChange={handleOnChange}
         className={`input input_width ${className}`}
         // className={`input `}

@@ -19,6 +19,11 @@ export {
   transferNewsDelete,
   editNews,
   deleteNewsImageFromStore,
+  addNewsDetails,
+  addNewsBlock,
+  getNewsDetails,
+  deleteNewsBlock,
+  editNewsBlock,
 } from "./news/actions";
 export {
   fetchPastEvents,
@@ -34,6 +39,15 @@ export {
   editAgendas,
   editImages,
   deleteEventImageFromStore,
+  getSpeakers,
+  addEventDetails,
+  setUploadedPhotos,
+  addEventBlock,
+  editEventBlock,
+  deleteEventBlock,
+  addEventShortDescription,
+  getEventForEdit,
+  editShortDetails,
 } from "./event/actions";
 export {
   fetchCountries,
@@ -50,7 +64,14 @@ export {
   deletedImages,
   uploadOneImage,
   deleteImageFromStore,
+  deleteHeader,
 } from "./images/actions";
+export {
+  uploadVideo,
+  cleanVideos,
+  deletedVideos,
+  deleteVideoFromStore,
+} from "./videos/actions";
 export { openModal, closeModal, callAction } from "./modal/actions";
 export {
   fetchCategories,
@@ -72,5 +93,12 @@ export {
 } from "./organizations/actions";
 
 export { fetchApplicants, editApplicantStatus } from "./applicants/actions";
+export {
+  fetchSpeakers,
+  deleteSpeaker,
+  addSpeaker,
+  editSpeaker,
+  fetchSpeakersByPage,
+} from "./speakers/actions";
 
 export { default } from "./configureStore";

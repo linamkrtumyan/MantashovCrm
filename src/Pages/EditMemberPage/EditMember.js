@@ -24,20 +24,24 @@ import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload
 import EditPhone from "./components/EditPhone";
 import AddOrganization from "../AddMemberPage/components/AddOrganization";
 import { scrollToView } from "../../helpers/scrollToView";
+import instagramIcon from "../../img/instagram.png";
+import facebookIcon from "../../img/facebook.png";
+import linkedinIcon from "../../img/linkedin.png";
+import phoneIcon from "../../img/phone.png";
 
 function EditMember({
   fetchMemberForEdit,
-  countries,
-  fetchCountries,
-  states,
-  cities,
+  // countries,
+  // fetchCountries,
+  // states,
+  // cities,
   fetchStates,
   fetchCities,
   state,
   country,
   editMember,
-  fetchContactTypes,
-  contactTypes,
+  // fetchContactTypes,
+  // contactTypes,
   fetchCategories,
   category,
   fetchOrganizations,
@@ -56,28 +60,28 @@ function EditMember({
   useEffect(() => {
     cleanForm();
     fetchMemberForEdit(id);
-    fetchCountries();
-    fetchContactTypes();
+    // fetchCountries();
+    // fetchContactTypes();
     fetchCategories();
     fetchPositions();
   }, []);
 
-  useEffect(() => {
-    if (country) {
-      fetchStates(country);
-    }
-  }, [country]);
+  // useEffect(() => {
+  //   if (country) {
+  //     fetchStates(country);
+  //   }
+  // }, [country]);
 
-  useEffect(() => {
-    if (state) {
-      fetchCities(state);
-    }
-  }, [state]);
-  useEffect(() => {
-    if (category) {
-      fetchOrganizations(category);
-    }
-  }, [category]);
+  // useEffect(() => {
+  //   if (state) {
+  //     fetchCities(state);
+  //   }
+  // }, [state]);
+  // useEffect(() => {
+  //   if (category) {
+  //     fetchOrganizations(category);
+  //   }
+  // }, [category]);
 
   const handleCancel = () => {
     history.push("/members");
@@ -86,9 +90,9 @@ function EditMember({
   const handleSubmit = (e) => {
     e.preventDefault();
     let {
-      birthdate,
-      city,
-      contacts = {},
+      birthDate,
+      // city,
+      // contacts = {},
       descriptionArm,
       descriptionEng,
       descriptionRu,
@@ -99,28 +103,33 @@ function EditMember({
       lastNameArm,
       lastNameEng,
       lastNameRu,
-      locationArm,
-      locationEng,
-      locationRu,
+      // locationArm,
+      // locationEng,
+      // locationRu,
       addedOrganizations = [],
       position,
+      facebook,
+      phone,
+      linkedin,
+      instagram,
+      annualTurnover,
     } = store.getState().formReducer;
 
-    const header = store.getState().imageReducer.header[0];
+    const header = store.getState().imageReducer.header[0]?.name ?? null;
 
-    if (!contacts) {
-      contacts = {};
-    }
-    const cont = Object.values(contacts);
+    // if (!contacts) {
+    //   contacts = {};
+    // }
+    // const cont = Object.values(contacts);
 
     const changePath = () => {
       path.push("/members");
     };
     let member = {
-      locationArm,
-      locationEng,
-      locationRu,
-      cityId: city,
+      // locationArm,
+      // locationEng,
+      // locationRu,
+      // cityId: city,
       id: +id,
       firstNameArm,
       lastNameArm,
@@ -128,20 +137,24 @@ function EditMember({
       lastNameEng,
       firstNameRu,
       lastNameRu,
-      header,
+      image: header,
       descriptionArm,
       descriptionEng,
       descriptionRu,
-      birthdate,
+      birthDate,
       email,
       // organizationId: organization,
       organizations: addedOrganizations,
       positionId: position,
-      contacts: cont,
+      // contacts: cont,
+      turnover: annualTurnover,
       isActive,
       imageDeleted,
+      facebook,
+      phone,
+      linkedin,
+      instagram,
     };
-    // console.log(member, "sended member");
     editMember(member, changePath);
     cleanForm();
     // cleanImages();
@@ -228,24 +241,29 @@ function EditMember({
 
               <div style={{ display: "flex" }}>
                 <Input
-                  id="birthdate"
+                  id="birthDate"
                   type="date"
                   max={dateNow}
-                  placeholder=""
+                  placeholder="Birthdate"
                 />
-                <button
-                  onClick={() => setIsActive(!isActive)}
-                  style={{ width: "31%", margin: "0 14px" }}
-                  type="button"
-                  className={isActive ? "button red" : "button"}
-                >
-                  {isActive ? "Active" : "Passive"}
-                </button>
+                <Input
+                  id="annualTurnover"
+                  type="text"
+                  placeholder="Annual Turnover"
+                />
               </div>
+              <button
+                onClick={() => setIsActive(!isActive)}
+                style={{ width: "31%", margin: "0 14px" }}
+                type="button"
+                className={isActive ? "button red" : "button"}
+              >
+                {isActive ? "Active" : "Passive"}
+              </button>
             </div>
           </div>
 
-          <div className="location_container">
+          {/* <div className="location_container">
             <div className="container_title">Location</div>
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -265,7 +283,7 @@ function EditMember({
                 <Input id="locationRu" type="text" placeholder="Адрес" />
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="location_container">
             <div className="container_title">Occupation</div>
@@ -280,10 +298,49 @@ function EditMember({
             <div className="container_title">Contact</div>
             <div className="container_body">
               <div style={{ display: "flex" }}>
-                <div className="" style={{ display: "flex", maxWidth: "100%" }}>
+                {/* <div className="" style={{ display: "flex", maxWidth: "100%" }}>
                   {contactTypes.map((contactType) => (
                     <EditPhone key={contactType.id} contactType={contactType} />
                   ))}
+                </div> */}
+                <div>
+                  <div
+                    className=""
+                    style={{ display: "flex", maxWidth: "100%" }}
+                  >
+                    {/* {contactTypes.map((contactType) => (
+                    <AddPhone key={contactType.id} contactType={contactType} />
+                  ))} */}
+                    <Input
+                      id="phone"
+                      type="text"
+                      placeholder="Phone"
+                      labelIcon={phoneIcon}
+                    />
+                    <Input
+                      id="instagram"
+                      type="url"
+                      placeholder="Instagram"
+                      labelIcon={instagramIcon}
+                      required={false}
+                    />
+                  </div>
+                  <div style={{ display: "flex" }}>
+                    <Input
+                      id="facebook"
+                      type="url"
+                      placeholder="Facebook"
+                      labelIcon={facebookIcon}
+                      required={false}
+                    />
+                    <Input
+                      id="linkedin"
+                      type="url"
+                      placeholder="Linkedin"
+                      labelIcon={linkedinIcon}
+                      required={false}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="">
@@ -313,7 +370,6 @@ function EditMember({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     states: state.locationsReducer?.states,

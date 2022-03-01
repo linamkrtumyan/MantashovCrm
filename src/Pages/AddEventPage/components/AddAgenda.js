@@ -14,14 +14,8 @@ function AddAgenda({
   setChange,
   index,
 }) {
-  // console.log(addressesAgenda, "addressesAgenda");
-  // console.log(agendas, "agendas");
-  // console.log(addresses, "addresses");
-  // console.log(index, "index");
-  // console.log(addresses[index - 1], " addresses[index - 1]");
 
   const [newAgenda, setNewAgenda] = useState(0);
-  //   console.log(addressId, "addressId");
   //   const [change, setChange] = useState(1);
   const [agendasAdded, setAgendasAdded] = useState(false);
   const [id, setId] = useState(0);

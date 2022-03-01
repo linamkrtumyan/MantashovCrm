@@ -15,7 +15,7 @@ export const editNews = (news, changePath) => {
           dispatch({
             type: NEWS_EDIT_SUCCESS_FAILURE,
           });
-          changePath();
+          // changePath();
           toast.dark("News edited");
         } else {
           dispatch({

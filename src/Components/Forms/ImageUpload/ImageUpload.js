@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { deleteImageFromStore, uploadImage } from "../../../store";
+import {
+  deleteImageFromStore,
+  uploadImage,
+  setUploadedPhotos,
+  formOnChange,
+} from "../../../store";
 import "./imageUpload.css";
 function ImageUpload({
   deleteImageFromStore,
@@ -9,33 +14,122 @@ function ImageUpload({
   className = "",
   containerClassName = "",
   imageUpload,
+  headers,
+  image,
+  limit,
+  setUploadedPhotos,
+  id,
+  formOnChange,
+  uploadedImages,
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
+  const [imagesLength, setImagesLength] = useState(
+    headers.length + image.length
+  );
+
+  useEffect(() => {
+    formOnChange(`${id}`, []);
+    formOnChange(`${id}Deleted`, []);
+  }, [id]);
+
+  useEffect(() => {
+    setImagesLength(headers.length + image.length);
+  }, [headers, image]);
+
+  useEffect(() => {
+    if (uploadedImages) {
+      const filesArray = Array.from(uploadedImages).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setSelectedFiles(filesArray);
+    } else {
+      setSelectedFiles(uploadedImages);
+    }
+  }, [uploadedImages]);
 
   const onImageChange = (e) => {
     if (e.target.files) {
-      const filesArray = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      const files = [...e.target.files];
+      if (
+        limit &&
+        // selectedFiles.length < limit &&
+        e.target.files.length < limit
+      ) {
+        const filesArray = Array.from(e.target.files).map((file) =>
+          URL.createObjectURL(file)
+        );
+        const files = [...e.target.files];
+        let isUpload = true;
+        files.map((file) => {
+          if (file.size / 1024 / 1024 > 5) {
+            isUpload = false;
+          } else {
+            isUpload = true;
+          }
+        });
 
-      uploadImage(files);
+        if (!isUpload) {
+          alert("Նկարի չափը չպետք է գերազանցի 5 ՄԲ-ը։");
+        } else {
+          uploadImage(files, id);
+          const arr = uploadedImages ? uploadedImages.concat(files) : files;
 
-      setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-      setA(a + 1);
-      Array.from(e.target.files).map((file) => {
-        URL.revokeObjectURL(file);
-      });
+          setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          formOnChange(`${id}`, arr);
+
+          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          setA(a + 1);
+          Array.from(e.target.files).map((file) => {
+            URL.revokeObjectURL(file);
+          });
+        }
+      } else if (!limit) {
+        const filesArray = Array.from(e.target.files).map((file) =>
+          URL.createObjectURL(file)
+        );
+        const files = [...e.target.files];
+        let isUpload = true;
+        files.map((file) => {
+          if (file.size / 1024 / 1024 > 5) {
+            isUpload = false;
+          } 
+          // else {
+          //   isUpload = true;
+          // }
+        });
+
+        if (!isUpload) {
+          alert("Նկարի չափը չպետք է գերազանցի 5 ՄԲ-ը։");
+        } else {
+          uploadImage(files, id);
+          const arr = uploadedImages ? uploadedImages.concat(files) : files;
+
+          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          formOnChange(`${id}`, arr);
+
+          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          setA(a + 1);
+          Array.from(e.target.files).map((file) => {
+            URL.revokeObjectURL(file);
+          });
+        }
+      }
     }
 
     setDelindex(null);
   };
 
   const deleteImage = (a) => {
+    let deletedImages = uploadedImages[a];
+    const newArr = uploadedImages
+      .slice(0, a)
+      .concat(uploadedImages.slice(a + 1));
     deleteImageFromStore(a);
+    formOnChange(`${id}Deleted`, [deletedImages]);
+    formOnChange(`${id}`, newArr);
     setDelindex(a);
+    setA(a + 1);
   };
 
   const renderPhotos = (source) => {
@@ -43,10 +137,11 @@ function ImageUpload({
       source.splice(delindex, 1);
       // selectedFiles.splice(delindex, 1);
     }
-    return source.map((photo) => {
+    return source?.map((photo) => {
       return (
-        <div className="upload_cont">
-          <img className="uploaded_images" src={photo} alt="" key={photo} />
+        <div className="upload_cont" key={photo}>
+          <img className="uploaded_images" src={photo} alt="" />
+
           <div className="middle">
             <div onClick={() => deleteImage(source.indexOf(photo))}>
               <svg viewBox="0 0 24 24" className="close">
@@ -69,7 +164,8 @@ function ImageUpload({
     <div className="upload_container">
       <div>
         <label
-          htmlFor="multiple-file-upload"
+          // htmlFor="multiple-file-upload"
+          htmlFor={`${id}`}
           className={`multiple-custom-file-upload ${className}`}
         >
           <i className="fas fa-cloud-upload-alt"></i>
@@ -77,10 +173,13 @@ function ImageUpload({
         </label>
         <input
           type="file"
-          id="multiple-file-upload"
+          // id="multiple-file-upload"
+          id={`${id}`}
           accept="image/png, image/gif, image/jpeg"
           name="myfile"
-          onChange={(e) => onImageChange(e)}
+          onChange={(e) => {
+            onImageChange(e);
+          }}
           multiple
         />
       </div>
@@ -97,17 +196,21 @@ function ImageUpload({
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    image: state.imageReducer.image,
+    headers: state.imageReducer?.headers,
+    image: state.imageReducer?.image,
     imageUpload: state.imageReducer?.imageUpload,
+    uploadedImages: state.formReducer[ownProps.id],
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadImage: (img) => dispatch(uploadImage(img)),
+    uploadImage: (img, key) => dispatch(uploadImage(img, key)),
     deleteImageFromStore: (id) => dispatch(deleteImageFromStore(id)),
+    setUploadedPhotos: (photos) => dispatch(setUploadedPhotos(photos)),
+    formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };
 };
 

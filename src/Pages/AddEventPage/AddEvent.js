@@ -1,11 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../Components/Forms/Input/Input";
 import Textarea from "../../Components/Forms/Textarea/Textarea";
 import Button from "../../Components/Forms/Button/Button";
 import "./addEvent.css";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import store, { addEvent } from "../../store";
+import store, {
+  addEvent,
+  setUploadedPhotos,
+  cleanImages,
+  formOnChange,
+} from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
 import Select from "../../Components/Forms/Select/Select";
@@ -18,10 +23,12 @@ import {
   cleanForm,
   formOnChangeArray,
   editAgendas,
+  getSpeakers,
 } from "../../store";
-import AddAgendasAddress from "./components/AddAgendasAddress";
-import AgendaAdd from "./components/AgendaAdd";
+// import AddAgendasAddress from "./components/AddAgendasAddress";
+// import AgendaAdd from "./components/AgendaAdd";
 import { scrollToView } from "../../helpers/scrollToView";
+import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 
 function AddEvent({
   addEvent,
@@ -33,19 +40,39 @@ function AddEvent({
   countryId,
   stateId,
   states,
-  agendas,
+  // agendas,
   cleanForm,
   formOnChangeArray,
   editAgendas,
+  speakers,
+  getSpeakers,
+  headers,
+  // image,
+  uploadedPhotos,
+  cleanImages,
+  eventId,
+  endDate,
+  startDate,
 }) {
   const history = useHistory();
+  const [isPublic, setIsPublic] = useState(false);
+  const [allSpeakers, setAllSpeakers] = useState([]);
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     cleanForm();
     editAgendas([]);
     fetchCountries();
     formOnChangeArray("agendasAddresses", "agendas", []);
+    getSpeakers();
+    cleanImages();
   }, []);
+
+  useEffect(() => {
+    if (eventId) {
+      history.push(`/eventDetails/${eventId}`);
+    }
+  }, [eventId]);
 
   useEffect(() => {
     if (countryId) {
@@ -57,8 +84,16 @@ function AddEvent({
       fetchCities(stateId);
     }
   }, [stateId]);
+  useEffect(() => {
+    let arr = [];
+    speakers?.map((item) => {
+      arr.push({ id: item.id, name: item.nameEng });
+    });
+    setAllSpeakers(arr);
+  }, [speakers]);
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let {
@@ -74,11 +109,15 @@ function AddEvent({
       descriptionRu,
       startDate,
       endDate,
+      speakers,
     } = store.getState().formReducer;
 
-    // agendas, header, images
-    // let { addresses } = store.getState().eventReducer;
-    let { header, image } = store.getState().imageReducer;
+    let { headers, image } = store.getState().imageReducer;
+
+    let headersImages = [];
+    headers.map((img) => {
+      headersImages.push(img.name);
+    });
 
     let event = {
       locationArm,
@@ -93,23 +132,34 @@ function AddEvent({
       descriptionRu,
       startDate,
       endDate,
-      agendas,
-      header: header[0],
+      // agendas,
+      headers: headersImages,
       images: image,
+      speakers,
+      isPublic,
     };
+
     //
-    const changePath = () => {
-      history.push("/events");
-    };
-    addEvent(event, changePath);
-    cleanForm();
-    editAgendas([]);
+
+    await addEvent(event);
+    // if (id) {
+    // let { eventId } = store.getState().eventReducer.eventId;
+    // handlePageChange(id);
+    // }
+
+    // const changePath = () => {
+
+    // };
+    // changePath();
+    // history.push(`/event/${id}`)
+    // cleanForm();
+    // editAgendas([]);
   };
 
   const handleCancel = () => {
     history.push("/events");
     cleanForm();
-    editAgendas([]);
+    // editAgendas([]);
   };
 
   return (
@@ -141,25 +191,6 @@ function AddEvent({
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input
-                id="startDate"
-                type="datetime-local"
-                placeholder="Start Date"
-              />
-              <Input
-                id="endDate"
-                type="datetime-local"
-                placeholder="End Date"
-              />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="locationEng" type="text" placeholder="Address" />
-              <Input id="locationArm" type="text" placeholder="Հասցե" />
-              <Input id="locationRu" type="text" placeholder="Адрес" />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Textarea
                 id="descriptionEng"
                 type="text"
@@ -172,15 +203,91 @@ function AddEvent({
               />
               <Textarea id="descriptionRu" type="text" placeholder="Описание" />
             </div>
-            <div>
-              {/* <AddAgendasAddress addressType={addressType} /> */}
-              <AgendaAdd />
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input
+                id="locationEng"
+                type="text"
+                placeholder="Address"
+                required={false}
+              />
+              <Input
+                id="locationArm"
+                type="text"
+                placeholder="Հասցե"
+                required={false}
+              />
+              <Input
+                id="locationRu"
+                type="text"
+                placeholder="Адрес"
+                required={false}
+              />
             </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Input
+                id="startDate"
+                type="datetime-local"
+                placeholder="Start Date"
+              />
+              <Input
+                id="endDate"
+                type="datetime-local"
+                placeholder="End Date"
+                min={startDate}
+              />
+
+              <Multiselect
+                placeholder="Speakers"
+                items={allSpeakers}
+                id="speakers"
+                required={false}
+              />
+            </div>
+
+            {/* <div>
+              <AgendaAdd />
+            </div> */}
             <div className="event_address_container " style={{ marginTop: 20 }}>
               <div style={{ marginRight: 20 }}>
-                <OneImageUpload label="Upload Header Image" />
+                <OneImageUpload label="Upload Header 1" index={1} />
+                {/* <ImageUpload label="Upload Headers (max 3)" /> */}
               </div>
-              <ImageUpload label="Upload Images" />
+              <div
+                style={{
+                  marginRight: 20,
+                  pointerEvents: `${!headers[0] ? "none" : ""}`,
+                }}
+              >
+                <OneImageUpload label="Upload Header 2" index={2} />
+              </div>
+              <div
+                style={{
+                  marginRight: 20,
+                  pointerEvents: `${!headers[1] ? "none" : ""}`,
+                }}
+              >
+                <OneImageUpload label="Upload Header 3" index={3} />
+              </div>
+              {/* <ImageUpload label="Upload Images" limit={true} /> */}
+              <div
+                style={{
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <label>Public</label>
+                <input
+                  style={{ marginLeft: 8 }}
+                  type="checkbox"
+                  onChange={() => {
+                    setIsPublic(!isPublic);
+                  }}
+                />
+              </div>
             </div>
           </div>
 
@@ -190,7 +297,7 @@ function AddEvent({
               title="Cancel"
               className="action_btn cancel_btn"
             />
-            <Button title="Create" className="action_btn" />
+            <Button title="Create ->" className="action_btn" />
           </div>
         </div>
       </form>
@@ -199,7 +306,6 @@ function AddEvent({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state|||");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -208,6 +314,13 @@ const mapStateToProps = (state) => {
     cities: state.locationsReducer.cities,
     cities: state.locationsReducer.cities,
     agendas: state.eventReducer?.agendas,
+    speakers: state.eventReducer?.speakers,
+    // selectedSpeakers: state.formReducer?.speakers ?? [],
+    headers: state.imageReducer?.headers,
+    image: state.imageReducer?.image,
+    eventId: state.eventReducer?.eventId,
+    startDate: state.formReducer.startDate,
+    endDate: state.formReducer.endDate,
   };
 };
 
@@ -221,6 +334,8 @@ const mapDispatchToProps = (dispatch) => {
     formOnChangeArray: (firstKey, secondKey, value) =>
       dispatch(formOnChangeArray(firstKey, secondKey, value)),
     editAgendas: (agendas) => dispatch(editAgendas(agendas)),
+    getSpeakers: () => dispatch(getSpeakers()),
+    cleanImages: () => dispatch(cleanImages()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddEvent);

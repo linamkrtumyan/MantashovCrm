@@ -8,12 +8,8 @@ import { useHistory } from "react-router-dom";
 function MemberDetails({ fetchMemberDetails, memberDetails, images }) {
   const history = useHistory();
 
-  // console.log(newsDetails.images, "images");
-  // newsDetails.images.map((image) => {
-  //   console.log(image, "image ");
-  // });
+  
   let { id } = useParams();
-  // console.log(memberDetails, "memberDetails");
   useEffect(() => {
     fetchMemberDetails(id);
   }, []);
@@ -100,7 +96,6 @@ function MemberDetails({ fetchMemberDetails, memberDetails, images }) {
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     // newsByPage: state.newsReducer.newsByPage,
     memberDetails: state.membersReducer.memberDetails,

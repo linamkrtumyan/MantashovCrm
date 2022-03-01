@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { deleteEvent } from "../../../store";
 import ModalComponent from "../../Modal/Modal";
 
 export const DeleteEvent = ({ action, show, event, deleteEvent }) => {
-
   return (
     <div>
       <ModalComponent show={show} handleDelete={deleteEvent} id={event} />;

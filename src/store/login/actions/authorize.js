@@ -10,7 +10,7 @@ export const authorize = () => {
     dispatch(authorizeRequest());
     request("/admin/authorize")
       .then((data) => {
-        if (data.success) {
+        if (data) {
           dispatch(authorizeSuccess(data));
         } else {
           dispatch(authorizeFailure());

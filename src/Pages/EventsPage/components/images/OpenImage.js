@@ -82,11 +82,6 @@ function OpenImage({
 
             <div className="container-slider">
               {dataSlider.map((obj, index) => {
-                // console.log({
-                //   dataSlider,
-                //   currentImage,
-                //   index: dataSlider.indexOf(currentImage),
-                // });
                 return (
                   <div
                     key={index}

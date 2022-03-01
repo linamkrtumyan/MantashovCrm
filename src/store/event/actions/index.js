@@ -11,4 +11,12 @@ export { cleanEvent } from "./cleanEvent";
 export { editAgendas } from "./editAgendas";
 export { editImages } from "./editImages";
 export { deleteEventImageFromStore } from "./deleteEventImageFromStore";
-
+export { getSpeakers } from "./getSpeakers";
+export { addEventDetails } from "./addEventDetails";
+export { setUploadedPhotos } from "./setUploadedPhotos";
+export { addEventBlock } from "./addEventBlock";
+export { editEventBlock } from "./editEventBlock";
+export { deleteEventBlock } from "./deleteEventBlock";
+export { addEventShortDescription } from "./addEventShortDescription";
+export { getEventForEdit } from "./getEventForEdit";
+export { editShortDetails } from "./editShortDetails";

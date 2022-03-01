@@ -62,7 +62,6 @@ function Spheres({
     };
 
     const changePath = () => {};
-    // console.log(category, "uxarkvox category");
     editCategory(category, changePath);
     cleanForm();
     setEditingId(-1);
@@ -202,7 +201,6 @@ function Spheres({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     spheres: state.organizationsReducer.categoriesAll,
     fetch: state.organizationsReducer.fetch,

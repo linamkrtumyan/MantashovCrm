@@ -61,7 +61,6 @@ function AddAgendasAddress({
       {addressAdded ? (
         <div>
           {
-          // console.log({gggggggggg: addresses}),
           addresses.map((address, index) => (
             <div>
               <div>
@@ -89,7 +88,6 @@ function AddAgendasAddress({
                           setIndexOfAgenda(agendaIndex);
                           address.agendas[indexOfAgenda].dateAndTime =
                             e.target.value;
-                          // console.log({ agendaIndex });
                         }}
                       />
                       {/* <p>{{agenda.dateAndTime}}</p> */}
@@ -103,7 +101,6 @@ function AddAgendasAddress({
                           setIndexOfAgenda(agendaIndex);
                           address.agendas[indexOfAgenda].agendaDescriptionEng =
                             e.target.value;
-                          // console.log({ agendaIndex });
                         }}
                       />
                       {/* {agenda.agendaDescriptionEng} */}
@@ -117,7 +114,6 @@ function AddAgendasAddress({
                           setIndexOfAgenda(agendaIndex);
                           address.agendas[indexOfAgenda].agendaDescriptionArm =
                             e.target.value;
-                          // console.log({ agendaIndex });
                         }}
                       />
                       {/* {agenda.agendaDescriptionArm} */}
@@ -131,7 +127,6 @@ function AddAgendasAddress({
                           setIndexOfAgenda(agendaIndex);
                           address.agendas[indexOfAgenda].agendaDescriptionRu =
                             e.target.value;
-                          // console.log({ agendaIndex });
                         }}
                       />
                       {/* {agenda.agendaDescriptionRu} */}

@@ -14,7 +14,7 @@ export const editEvent = (event, changePath) => {
         if (data.success) {
           dispatch(editEventSuccess(data));
           toast.dark("Event edited");
-          changePath();
+          // changePath();
         }
       })
       .catch((e) => {

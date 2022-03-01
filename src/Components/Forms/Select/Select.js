@@ -14,6 +14,7 @@ const Select = ({
   items = [],
   className = "",
   placeholderText = null,
+  defaultValue = "",
 }) => {
   const ref = useRef();
   const ul = useRef();
@@ -21,14 +22,19 @@ const Select = ({
   const [show, setShow] = useState(false);
   // const [value, setValue] = useState("");
   const [text, setText] = useState("");
+
   useEffect(() => {
     if (items.length > 0) {
-      let item = items.find((i) => i.id === value);
+      let item = items.find((i) => i.id === parseInt(value));
       // setCurrent(item === undefined ? { id: 0, name: "" } : item);
       // formOnChange(id, value);
       setText(item ? item.name : "");
     }
-  }, [items, value]);
+
+    if (!value) {
+      setText(defaultValue);
+    }
+  }, [items, value, defaultValue]);
 
   // const handleSelect = (item) => {
   //   formOnChange(id, item.id);

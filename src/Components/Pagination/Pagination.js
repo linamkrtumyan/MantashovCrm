@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Input from "../../Components/Forms/Input/Input";
 import "./pagination.css";
 import { connect } from "react-redux";
 import { changeCurrentPage } from "../../store";
 
 // const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
 const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
-  // console.log(totalPosts, "totalPosts");
   const postsPerPage = 10;
   // const totalPosts =50
   // const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +17,7 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
   }
-
+  
   return (
     <nav>
       {pageNumbers.length > 0 ? (
@@ -32,14 +29,16 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
             <button
               className="pgn_item"
               onClick={() => changeCurrentPage(1)}
-              disabled={currentPage - 1 <= 0}
+              disabled={currentPage <= 1}
+              style={{ cursor: `${currentPage <= 1 ? "default" : "pointer"}` }}
             >
               ❮❮
             </button>
             <button
               className="pgn_item"
               onClick={() => changeCurrentPage(currentPage - 1)}
-              disabled={currentPage - 1 <= 0}
+              disabled={currentPage <= 1}
+              style={{ cursor: `${currentPage <= 1 ? "default" : "pointer"}` }}
             >
               ❮
             </button>
@@ -58,6 +57,13 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
               className="pgn_item"
               onClick={() => changeCurrentPage(currentPage + 1)}
               disabled={currentPage >= pageNumbers[pageNumbers.length - 1]}
+              style={{
+                cursor: `${
+                  currentPage >= pageNumbers.length
+                    ? "default"
+                    : "pointer"
+                }`,
+              }}
             >
               ❯
             </button>
@@ -67,6 +73,13 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
                 changeCurrentPage(pageNumbers[pageNumbers.length - 1])
               }
               disabled={currentPage >= pageNumbers[pageNumbers.length - 1]}
+              style={{
+                cursor: `${
+                  currentPage >= pageNumbers.length
+                    ? "default"
+                    : "pointer"
+                }`,
+              }}
             >
               ❯❯
             </button>
@@ -78,7 +91,6 @@ const Pagination = ({ totalPosts, changeCurrentPage, currentPage }) => {
 };
 
 const mapStateToProps = (state) => {
-  // console.log(state, "pagination state");
   return {
     currentPage: state.paginationReducer.currentPage,
   };

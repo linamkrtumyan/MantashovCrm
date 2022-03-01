@@ -1,3 +1,4 @@
+import { formOnChange } from "../..";
 import { initForm } from "../../form/actions/initForm";
 import request from "../../request";
 import {
@@ -12,9 +13,7 @@ export const fetchEventDetails = (id) => {
     dispatch(fetchEventDetailsRequest());
     request(`/admin/events/event/details/${id}`)
       .then((data) => {
-        // console.log("mtav");
-        // console.log(data, "data");
-        dispatch(initForm(data));
+        // dispatch(formOnChange("shortDescriptionEng", data.shortDescriptionEng));
         dispatch(fetchEventDetailsSuccess(data));
       })
       .catch((e) => {

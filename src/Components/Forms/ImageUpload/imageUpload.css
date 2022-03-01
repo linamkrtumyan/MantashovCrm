@@ -53,3 +53,7 @@
   cursor: pointer;
   margin: 0 4px 4px 0;
 }
+
+.uploaded {
+  max-width: 500px;
+}

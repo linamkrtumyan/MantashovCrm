@@ -12,6 +12,7 @@ const initialState = {
   loading: false,
   error: null,
   fetch: false,
+  count: 0,
 };
 
 const applicantsReducer = (state = initialState, action) => {
@@ -27,6 +28,7 @@ const applicantsReducer = (state = initialState, action) => {
         loading: false,
         applicants: action.payload.applicants,
         error: null,
+        count: action.payload.count,
       };
     case FETCH_APPLICANTS_FAILURE:
       return {

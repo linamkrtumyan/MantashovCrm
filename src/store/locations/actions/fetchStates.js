@@ -8,7 +8,7 @@ import {
 
 export const fetchStates = (country) => {
   // console.log(country);
-  //   const country = store.getState().paginationReducer.currentPage - 1;
+  //   const country = store.getState().paginationReducer.currentPage;
   // console.log(page, "uxarkvox page");
   return (dispatch) => {
     // console.log("mtav");

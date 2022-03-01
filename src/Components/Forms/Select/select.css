@@ -18,6 +18,9 @@
   height: 25px;
   padding: 2px;
   cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .select_items li:hover {
   background: #f7f7f7;

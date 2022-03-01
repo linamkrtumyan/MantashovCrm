@@ -9,7 +9,6 @@ function Information() {
   const [tab, setTab] = useState(0);
 
   let data = localStorage.getItem("infoTab");
-  // console.log(data, "data");
 
   useEffect(() => {
     if (data === null) {
@@ -22,7 +21,6 @@ function Information() {
     data = localStorage.getItem("infoTab");
   }, [tab]);
 
-  // console.log(data, "data from session");
   return (
     <div>
       <div className="tabs is-boxed ">

@@ -5,9 +5,9 @@ import {
   UPLOAD_ONE_IMAGE_FAILURE,
 } from "../types";
 
-export const uploadOneImage = (img) => {
+export const uploadOneImage = (img, url) => {
   // console.log("mtav");
-  // console.log(img, "stacoxy");
+  // console.log(img, "stacoxy", URL.createObjectURL(img[0]));
   const data = new FormData();
   for (let i = 0; i < img.length; i++) {
     data.append(`image${i}`, img[i], img[i].name);
@@ -24,11 +24,10 @@ export const uploadOneImage = (img) => {
         return res.json();
       })
       .then((data) => {
-        dispatch(uploadOneImageSuccess(data));
+        dispatch(uploadOneImageSuccess(data, url));
       })
       .catch((e) => {
         dispatch(uploadOneImageFailure(e.message));
-        // console.log(e);
       });
   };
 };
@@ -39,10 +38,9 @@ const uploadOneImageRequest = () => {
   };
 };
 
-const uploadOneImageSuccess = (data) => {
-  // console.log(data, "data");
-  const header = data ? data : [];
-  //   console.log(typeof image);
+const uploadOneImageSuccess = (data, url) => {
+  const headerData = data ? data[0] : "";
+  const header = [{ url, name: headerData }];
   const loading = data ? false : true;
   return {
     type: UPLOAD_ONE_IMAGE_SUCCESS,

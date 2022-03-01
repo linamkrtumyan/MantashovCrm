@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { deleteNews, transferNewsDelete } from "../../../store";
+import { deleteNews } from "../../../store";
 import ModalComponent from "../../Modal/Modal";
 
 export const DeleteNews = ({ action, show, news, deleteNews }) => {
-  //   console.log(news, "news id");
+ 
   //   if (action) {
-  //     console.log("mtav deletei if");
   //     deleteNews(news);
   //   }
   //   useEffect(() => {
@@ -20,7 +19,6 @@ export const DeleteNews = ({ action, show, news, deleteNews }) => {
   );
 };
 const mapStateToProps = (state) => {
-  // console.log(state, "news delete state");
   return {
     // currentPage: state.paginationReducer.currentPage,
     //   show: state.modalReducer.show,

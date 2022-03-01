@@ -9,7 +9,6 @@ function EventDetails({ fetchEventDetails, eventDetails, images }) {
   const history = useHistory();
 
   let { id } = useParams();
-  // console.log(id, "////id");
   useEffect(() => {
     fetchEventDetails(id);
   }, []);
@@ -80,7 +79,6 @@ function EventDetails({ fetchEventDetails, eventDetails, images }) {
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     // newsByPage: state.newsReducer.newsByPage,
     eventDetails: state.eventReducer.eventDetails,

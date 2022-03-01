@@ -15,7 +15,6 @@ function MemberCard({ memberByPage, show, openModal, transferMemberDelete }) {
     history.push(`/member-details/${memberByPage.id}`);
   }
 
-  // console.log(memberByPage);
   if (show) {
     // return <ModalComponent show={show} />;
     return <DeleteMember show={show} />;
@@ -72,7 +71,6 @@ function MemberCard({ memberByPage, show, openModal, transferMemberDelete }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "news card state");
   return {
     // currentPage: state.paginationReducer.currentPage,
     show: state.modalReducer.show,

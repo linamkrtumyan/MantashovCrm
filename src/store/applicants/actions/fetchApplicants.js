@@ -37,6 +37,7 @@ const fetchApplicantsSuccess = (data) => {
     type: FETCH_APPLICANTS_SUCCESS,
     payload: {
       applicants,
+      count: data.count,
     },
   };
 };

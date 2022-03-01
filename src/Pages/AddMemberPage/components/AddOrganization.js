@@ -24,8 +24,8 @@ function AddOrganization({
 
   const handleAdd = () => {
     // oneOrganization
-    const organizationId = store.getState().formReducer.organizationId;
-    const positionId = store.getState().formReducer.positionId;
+    const organizationId = store.getState().formReducer.organizationId1;
+    const positionId = store.getState().formReducer.positionId1;
     if (!organizationId) {
       return toast.error("Please select some organization");
     }
@@ -39,13 +39,14 @@ function AddOrganization({
     if (
       !addedOrganizations.some(
         (org) =>
-          organizationId === org.organizationId && positionId === org.positionId
+          organizationId === org.organizationId1 &&
+          positionId === org.positionId1
       )
     ) {
       addedOrganizations.push(newOrganization);
       formOnChange("addedOrganizations", [...addedOrganizations]);
-      formOnChange("positionId", null);
-      formOnChange("organizationId", null);
+      formOnChange("positionId1", null);
+      formOnChange("organizationId1", null);
     }
   };
 
@@ -54,15 +55,15 @@ function AddOrganization({
       "addedOrganizations",
       addedOrganizations.filter(
         (o) =>
-          o.organizationId !== org.organizationId ||
-          o.positionId !== org.positionId
+          o.organizationId1 !== org.organizationId1 ||
+          o.positionId1 !== org.positionId1
       )
     );
   };
 
   return (
     <>
-      {addedOrganizations.map((org, index) => {
+      {addedOrganizations?.map((org, index) => {
         const orgValue = organizations.find(
           (organization) => organization.id === org.organizationId
         );
@@ -75,13 +76,31 @@ function AddOrganization({
             key={`${org.positionId}${org.organizationId}`}
             style={{ display: "flex" }}
           >
-            <div className="added_orgs">
+            {/* <div className="added_orgs">
               <p>{orgValue.name}</p>
             </div>
             <div className="added_orgs">
               <p>{posValue.name}</p>
-            </div>
-            <div onClick={() => handleDelete(org)}>
+            </div> */}
+
+            <Select
+              placeholder="Organization"
+              items={organizations}
+              id="organizationId"
+              defaultValue={orgValue?.name}
+            />
+
+            <Select
+              placeholder="Position"
+              items={positions}
+              id="positionId"
+              defaultValue={posValue?.name}
+            />
+
+            <div
+              onClick={() => handleDelete(org)}
+              style={{ margin: "14px 10px 10px" }}
+            >
               <div className="added_orgs">
                 <i
                   style={{ marginRight: "10px", cursor: "pointer" }}
@@ -97,14 +116,14 @@ function AddOrganization({
         <Select
           placeholder="Select Organization"
           items={organizations}
-          id="organizationId"
+          id="organizationId1"
           // value={organizationId}
         />
 
         <Select
           placeholder="Select Position"
           items={positions}
-          id="positionId"
+          id="positionId1"
         />
         <div onClick={handleAdd} style={{ margin: "24px 10px 10px 10px" }}>
           <div className="add_new_org">
@@ -118,7 +137,6 @@ function AddOrganization({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     organizations: state.organizationsReducer.organizations,
     positions: state.organizationsReducer.positions,

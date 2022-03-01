@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./newsCard.css";
 import { useHistory } from "react-router-dom";
-import ModalComponent from "../../Modal/Modal";
 import { connect } from "react-redux";
 import { openModal, deleteNews, transferNewsDelete } from "../../../store";
 import DeleteNews from "../DeleteNewsModal/DeleteNews";
@@ -17,7 +16,6 @@ function NewsCard({
   // const [show, setShow] = useState(false);
   // const handleShow = () => setShow(true);
 
-  // console.log(news, "news");
   let history = useHistory();
   function handleClick() {
     history.push(`/news-details/${news.id}`);
@@ -102,7 +100,6 @@ function NewsCard({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log(state, "news card state");
   return {
     // currentPage: state.paginationReducer.currentPage,
     show: state.modalReducer.show,

@@ -6,7 +6,11 @@ import "./addMember.css";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
-import Select from "../../Components/Forms/Select/Select";
+// import Select from "../../Components/Forms/Select/Select";
+import phoneIcon from "../../img/phone.png";
+import instagramIcon from "../../img/instagram.png";
+import facebookIcon from "../../img/facebook.png";
+import linkedinIcon from "../../img/linkedin.png";
 import {
   cleanForm,
   cleanImages,
@@ -47,9 +51,9 @@ function AddMember({
   cleanLocation,
   // organizationsType,
   addedOrganizations = [],
+  cleanImages,
 }) {
   const [dateNow] = useState(new Date(Date.now()).toISOString().split("T")[0]);
-  // console.log(isActive, "is active");
   const history = useHistory();
   useEffect(() => {
     fetchCountries();
@@ -58,7 +62,7 @@ function AddMember({
     cleanForm();
     cleanMember();
     cleanLocation();
-
+    cleanImages();
     // organizationsType.map((org) => {
     //   formOnChangeArray("organizations", org.name, "");
     // });
@@ -87,11 +91,11 @@ function AddMember({
   const handleCreate = (e) => {
     e.preventDefault();
     let {
-      locationArm,
-      locationEng,
-      locationRu,
+      // locationArm,
+      // locationEng,
+      // locationRu,
 
-      cityId,
+      // cityId,
       descriptionArm,
       descriptionEng,
       descriptionRu,
@@ -103,26 +107,32 @@ function AddMember({
       lastNameRu,
       birthdate,
       email,
+      phone,
+      instagram,
+      facebook,
+      linkedin,
+      turnover,
+      addedOrganizations,
       organizationId,
       positionId,
-      contacts = {},
+      // contacts = {},
     } = store.getState().formReducer;
-    const image = store.getState().imageReducer.header;
-    let keys = Object.keys(contacts);
-    const values = keys.map((key) => contacts[key]);
-    let ok = false;
-    values.map((value) => (value ? (ok = true) : (ok = false)));
-    const contacts1 = keys.map((key, index) =>
-      ok ? values[index].map((o) => ({ id: 1 + +key, value: o })) : []
-    );
-    let result = [];
-    contacts1.forEach((contact1) => (result = result.concat(contact1)));
+    const image = store.getState().imageReducer.header[0]?.name ?? null;
+    // let keys = Object.keys(contacts);
+    // const values = keys.map((key) => contacts[key]);
+    // let ok = false;
+    // values.map((value) => (value ? (ok = true) : (ok = false)));
+    // const contacts1 = keys.map((key, index) =>
+    //   ok ? values[index].map((o) => ({ id: 1 + +key, value: o })) : []
+    // );
+    // let result = [];
+    // contacts1.forEach((contact1) => (result = result.concat(contact1)));
 
     let member = {
-      locationArm,
-      locationEng,
-      locationRu,
-      cityId,
+      // locationArm,
+      // locationEng,
+      // locationRu,
+      // cityId,
 
       firstNameArm,
       lastNameArm,
@@ -136,16 +146,21 @@ function AddMember({
       descriptionRu,
       birthdate,
       email,
+      phone,
+      instagram,
+      facebook,
+      linkedin,
+      turnover,
       organizations: addedOrganizations,
-      positionId,
-      contacts: result,
+      // positionId,
+      // contacts: result,
     };
 
     const changePath = () => {
       history.push("/members");
     };
     addMember(member, changePath);
-    cleanForm();
+    // cleanForm();
   };
   return (
     <div>
@@ -197,18 +212,23 @@ function AddMember({
                   placeholder="Описание"
                 />
               </div>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Input
                   placeholder="Birthdate"
                   id="birthdate"
                   type="date"
                   max={dateNow}
                 />
+                <Input
+                  id="turnover"
+                  type="text"
+                  placeholder="Annual turnover"
+                />
               </div>
             </div>
           </div>
 
-          <div className="location_container">
+          {/* <div className="location_container">
             <div className="container_title">Location</div>
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -232,7 +252,7 @@ function AddMember({
                 <Input id="locationRu" type="text" placeholder="Адрес" />
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="location_container">
             <div className="container_title">Occupation</div>
@@ -240,6 +260,14 @@ function AddMember({
               <div>
                 <AddOrganization />
               </div>
+              {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Textarea
+                  id="orgdescriptionEng"
+                  type="text"
+                  placeholder="Organization Description"
+                  className="add_member-org_input"
+                />
+              </div> */}
             </div>
           </div>
 
@@ -248,11 +276,40 @@ function AddMember({
             <div className="container_body">
               <div style={{ display: "flex" }}>
                 <div className="" style={{ display: "flex", maxWidth: "100%" }}>
-                  {contactTypes.map((contactType) => (
+                  {/* {contactTypes.map((contactType) => (
                     <AddPhone key={contactType.id} contactType={contactType} />
-                  ))}
+                  ))} */}
+                  <Input
+                    id="phone"
+                    type="text"
+                    placeholder="Phone"
+                    labelIcon={phoneIcon}
+                  />
+                  <Input
+                    id="instagram"
+                    type="url"
+                    placeholder="Instagram"
+                    labelIcon={instagramIcon}
+                    required={false}
+                  />
+                  <Input
+                    id="facebook"
+                    type="url"
+                    placeholder="Facebook"
+                    labelIcon={facebookIcon}
+                    required={false}
+                  />
+                  <Input
+                    id="linkedin"
+                    type="url"
+                    placeholder="Linkedin"
+                    labelIcon={linkedinIcon}
+                    required={false}
+                  />
                 </div>
               </div>
+
+              <div style={{ display: "flex" }}></div>
               <div className="">
                 <Input
                   id="email"
@@ -288,7 +345,6 @@ function AddMember({
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -317,6 +373,7 @@ const mapDispatchToProps = (dispatch) => {
     cleanLocation: () => dispatch(cleanLocation()),
     formOnChangeArray: (firstKey, secondKey, value) =>
       dispatch(formOnChangeArray(firstKey, secondKey, value)),
+    cleanImages: () => dispatch(cleanImages()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddMember);

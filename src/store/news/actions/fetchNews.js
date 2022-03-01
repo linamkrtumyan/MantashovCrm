@@ -7,7 +7,7 @@ import {
 } from "../types";
 
 export const fetchNewsByPage = () => {
-  const page = store.getState().paginationReducer.currentPage - 1;
+  const page = store.getState().paginationReducer.currentPage;
   // console.log(page, "uxarkvox page");
   return (dispatch) => {
     dispatch(fetchNewsByPageRequest());

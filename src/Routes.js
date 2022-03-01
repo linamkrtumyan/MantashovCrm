@@ -23,6 +23,11 @@ import WithBulma from "./Pages/BulmaExp/WithBulma";
 import Information from "./Pages/InformationPage/Information";
 import EditEvent from "./Pages/EventsPage/EditEvent";
 import Applicant from "./Pages/Applicant/Applicant";
+import CreateEventDetails from "./Pages/CreateEventDetails/CreateEventDetails";
+import CreateNewsDetails from "./Pages/CreateNewsDetailsPage/CreateNewsDetails";
+import SpeakersPage from "./Pages/SpeakersPage/SpeakersPage";
+import AddSpeakerPage from "./Pages/AddSpeakerPage/AddSpeakerPage";
+import EditSpeaker from "./Pages/EditSpeakerPage/EditSpeaker";
 
 function Routes({ isLogin, userName }) {
   if (isLogin) {
@@ -41,9 +46,19 @@ function Routes({ isLogin, userName }) {
             <Route path="/edit-event/:id" component={EditEvent} exact />
             {/* <Route path="/past-events" component={PastEvents} exact />
             <Route path="/upcoming-events" component={UpcomingEvents} exact /> */}
-            <Route
+            {/* <Route
               path="/event-details/:id"
               component={EventDetailsPage}
+              exact
+            /> */}
+            <Route
+              path="/eventDetails/:eventId"
+              component={CreateEventDetails}
+              exact
+            />
+            <Route
+              path="/newsDetails/:newsId"
+              component={CreateNewsDetails}
               exact
             />
             <Route path="/members" component={MembersPage} exact />
@@ -56,6 +71,9 @@ function Routes({ isLogin, userName }) {
             <Route path="/bulma" component={WithBulma} exact />
             <Route path="/information" component={Information} exact />
             <Route path="/applicant" component={Applicant} exact />
+            <Route path="/speakers" component={SpeakersPage} exact />
+            <Route path="/add-speaker" component={AddSpeakerPage} exact />
+            <Route path="/edit-speaker/:id" component={EditSpeaker} exact />
             <Redirect to="/news" />
           </Switch>
         </div>

@@ -70,7 +70,6 @@ function Login({ onLoginFunction, cleanForm, authentiacting }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "login state ");
   return {
     authentiacting: state.loginReducer.authentiacting,
   };

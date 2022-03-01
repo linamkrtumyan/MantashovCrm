@@ -34,7 +34,6 @@ function Organizations({ fetchOrganizationsTable, organizationsTable, fetch }) {
     setDeleteId(id);
   }
   function handleEdit(id) {
-    // console.log(id, "ekac id****");
     setEditId(id);
     setEditModalOpen(true);
   }
@@ -146,7 +145,6 @@ function Organizations({ fetchOrganizationsTable, organizationsTable, fetch }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {
     organizationsTable: state.organizationsReducer.organizationsTable,
     loading: state.organizationsReducer.loading,
