@@ -100,11 +100,13 @@ function Organizations({ fetchOrganizationsTable, organizationsTable, fetch }) {
               </thead>
 
               <tbody>
-                {organizationsTable.map((organization, index) => {
+                {organizationsTable?.map((organization, index) => {
                   let categories = "";
-                  categories = organization.categories.reduce((prev,categories) => categories += ", " + prev);
-                  if(categories.length > 30){
-                    categories = categories.slice(0,30) + "...";
+                  categories = organization?.categories.reduce(
+                    (prev, categories) => (categories += ", " + prev)
+                  );
+                  if (categories && categories.length > 30) {
+                    categories = categories.slice(0, 30) + "...";
                   }
                   return (
                     <tr style={{ cursor: "default" }} key={organization.id}>

@@ -13,6 +13,7 @@ import store, {
   formOnChange,
   fetchOrganizations,
   fetchSpeakers,
+  fetchSpeakerById,
 } from "../../store";
 
 function EditSpeaker({
@@ -28,6 +29,7 @@ function EditSpeaker({
   fetch,
   organizationId,
   image,
+  fetchSpeakerById,
 }) {
   let history = useHistory();
   let { id } = useParams();
@@ -44,15 +46,10 @@ function EditSpeaker({
   }, [fetch]);
 
   useEffect(() => {
-    if (speakers.length) {
-      const speaker = speakers.find((s) => s.id === parseInt(id));
-      formOnChange("fullNameEng", `${speaker.nameEng}`);
-      formOnChange("fullNameArm", `${speaker.nameArm}`);
-      formOnChange("fullNameRu", `${speaker.nameRu}`);
-      formOnChange("organizationId", `${speaker.organizationId}`);
-      formOnChange("image", `${speaker.image}`);
+    if (id) {
+      fetchSpeakerById(id);
     }
-  }, [speakers]);
+  }, [id]);
 
   const cancelEdit = () => {
     history.push("/speakers");
@@ -61,7 +58,7 @@ function EditSpeaker({
   const handleEdit = (e) => {
     e.preventDefault();
 
-    let { fullNameEng, fullNameArm, fullNameRu, organizationId } =
+    let { nameEng, nameArm, nameRu, organizationId } =
       store.getState().formReducer;
     let header = store.getState().imageReducer.header;
     const changePath = () => {
@@ -69,11 +66,12 @@ function EditSpeaker({
     };
     let speaker = {
       id: parseInt(id),
-      fullNameEng,
-      fullNameArm,
-      fullNameRu,
+      fullNameEng: nameEng,
+      fullNameArm: nameArm,
+      fullNameRu: nameRu,
       organizationId,
       image: header && header[0] ? header[0].name : null,
+      imageDeleted: header && header[0] ? true : false,
     };
     editSpeaker(speaker, changePath);
     cleanForm();
@@ -122,13 +120,9 @@ function EditSpeaker({
             </div> */}
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="fullNameEng" type="text" placeholder="Fullname" />
-                <Input
-                  id="fullNameArm"
-                  type="text"
-                  placeholder="Անուն Ազգանուն"
-                />
-                <Input id="fullNameRu" type="text" placeholder="Имя Фамилия" />
+                <Input id="nameEng" type="text" placeholder="Fullname" />
+                <Input id="nameArm" type="text" placeholder="Անուն Ազգանուն" />
+                <Input id="nameRu" type="text" placeholder="Имя Фамилия" />
               </div>
               <Select
                 placeholder="Select Organization"
@@ -163,6 +157,7 @@ function EditSpeaker({
 }
 
 const mapStateToProps = (state) => {
+  console.log({ state });
   return {
     speakers: state.speakerReducer.speakers,
     organizations: state.organizationsReducer.organizations,
@@ -183,6 +178,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchOrganizations: () => dispatch(fetchOrganizations()),
     fetchSpeakers: () => {
       dispatch(fetchSpeakers());
+    },
+    fetchSpeakerById: (id) => {
+      dispatch(fetchSpeakerById(id));
     },
   };
 };

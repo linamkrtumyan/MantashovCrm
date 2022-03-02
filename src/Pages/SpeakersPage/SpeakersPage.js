@@ -78,7 +78,7 @@ function SpeakersPage({
                     <tr
                       key={speaker.id}
                       style={{ cursor: "pointer", position: "relative" }}
-                      onClick={() => handleDetails(speaker.id)}
+                      // onClick={() => handleDetails(speaker.id)}
                     >
                       <td onClick={() => handleDetails(speaker.id)}>
                         <img

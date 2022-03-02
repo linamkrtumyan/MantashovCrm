@@ -93,7 +93,7 @@ function ImageUpload({
         files.map((file) => {
           if (file.size / 1024 / 1024 > 5) {
             isUpload = false;
-          } 
+          }
           // else {
           //   isUpload = true;
           // }

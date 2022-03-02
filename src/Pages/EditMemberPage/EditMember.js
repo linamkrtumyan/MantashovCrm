@@ -47,6 +47,7 @@ function EditMember({
   fetchOrganizations,
   fetchPositions,
   cleanForm,
+  profileImage,
 }) {
   const history = useHistory();
   const path = useHistory();
@@ -189,7 +190,11 @@ function EditMember({
                 <>
                   <div className="member_image_container">
                     <img
-                      src={`/images/profile/${id}/profile_picture.png`}
+                      src={`${
+                        profileImage
+                          ? profileImage
+                          : "/images/profile/${id}/profile_picture.png"
+                      }`}
                       alt=""
                       className="member_edit_image"
                       style={{ width: "100%" }}
@@ -370,6 +375,7 @@ function EditMember({
 }
 
 const mapStateToProps = (state) => {
+  console.log({ state });
   return {
     countries: state.locationsReducer.countries,
     states: state.locationsReducer?.states,
@@ -382,6 +388,7 @@ const mapStateToProps = (state) => {
     organizations: state.organizationsReducer.organizations,
     organization: state.formReducer.organization,
     positions: state.organizationsReducer.positions,
+    profileImage: state.formReducer.image,
   };
 };
 

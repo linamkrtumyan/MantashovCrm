@@ -32,6 +32,8 @@ function CreateNewsDetails({
   addNewsBlock,
   getNewsDetails,
   deleteNewsBlock,
+  cleanImages,
+  cleanVideos,
 }) {
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
@@ -74,24 +76,30 @@ function CreateNewsDetails({
   };
 
   const saveBlockData = () => {
+    setNewBlock({
+      ...newBlock,
+      blockImages: image ?? [],
+      blockVideos: video ?? [],
+    });
     if (newBlock.topTextEng !== "") {
       let links = blockLinks ? blockLinks.split("\n") : [];
       setNewBlock({
         ...newBlock,
         links,
       });
+
       setRenderContent(renderContent + 1);
       addNewsBlock({ newsId: parseInt(newsId), block: newBlock });
       getNewsDetails(parseInt(newsId));
       setNewBlock({});
       setBlockLinks("");
       cleanImages();
+      cleanVideos();
       formOnChange(`shortDescriptionEng`, "");
       formOnChange(`shortDescriptionArm`, "");
       formOnChange(`shortDescriptionRu`, "");
       formOnChange(`blockImages`, []);
       formOnChange(`blockVideos`, []);
-      cleanVideos();
     } else {
       setRequiredClass("requiredField");
     }
@@ -536,6 +544,8 @@ const mapDispatchToProps = (dispatch) => {
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     getNewsDetails: (id) => dispatch(getNewsDetails(id)),
     deleteNewsBlock: (id) => dispatch(deleteNewsBlock(id)),
+    cleanImages: () => dispatch(cleanImages()),
+    cleanVideos: () => dispatch(cleanVideos()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewsDetails);

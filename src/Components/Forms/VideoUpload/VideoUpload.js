@@ -26,6 +26,17 @@ function VideoUpload({
     formOnChange(`${id}Deleted`, []);
   }, [id]);
 
+  useEffect(() => {
+    if (uploadedVideos) {
+      const filesArray = Array.from(uploadedVideos).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setSelectedVideos(filesArray);
+    } else {
+      setSelectedVideos(uploadedVideos);
+    }
+  }, [uploadedVideos]);
+
   const onVideoChange = (e) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files).map((file) =>
@@ -69,7 +80,7 @@ function VideoUpload({
       source.splice(delindex, 1);
       // selectedVideos.splice(delindex, 1);
     }
-    return source.map((videos) => {
+    return source?.map((videos) => {
       return (
         <div className="upload_cont">
           <video className="uploaded_images" key={videos.name} controls>

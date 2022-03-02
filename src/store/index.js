@@ -99,6 +99,7 @@ export {
   addSpeaker,
   editSpeaker,
   fetchSpeakersByPage,
+  fetchSpeakerById,
 } from "./speakers/actions";
 
 export { default } from "./configureStore";
