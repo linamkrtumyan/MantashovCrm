@@ -58,7 +58,7 @@ function VideoUpload({
       } else {
         uploadVideo(files, id);
         const arr = uploadedVideos ? uploadedVideos.concat(files) : files;
-        setSelectedVideos((prevVideos) => prevVideos.concat(filesArray));
+        // setSelectedVideos((prevVideos) => prevVideos.concat(filesArray));
         formOnChange(`${id}`, arr);
         setA(a + 1);
         Array.from(e.target.files).map((file) => {
@@ -82,8 +82,8 @@ function VideoUpload({
     }
     return source?.map((videos) => {
       return (
-        <div className="upload_cont">
-          <video className="uploaded_images" key={videos.name} controls>
+        <div className="upload_cont" key={videos}>
+          <video className="uploaded_images" controls>
             <source src={videos} type="video/mp4" />
             <source src={videos} type="video/ogg" />
             Your browser does not support the video tag.
