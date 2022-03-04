@@ -214,14 +214,14 @@ function EditNews({
 
   return (
     <>
-      <OpenImage
+      {/* <OpenImage
         openImgModal={openImgModal}
         setOpenImgModal={setOpenImgModal}
         imgPath={imgPath}
         id={id}
         folderPath="/images/news"
         detailsImages={detailsImages}
-      />
+      /> */}
 
       <div>
         <button onClick={() => history.goBack()} className="arrow_left">
@@ -394,6 +394,7 @@ function EditNews({
               <VideoUpload
                 label="Upload Videos"
                 containerClassName="uploaded"
+                id="blockVideos"
               />
             </div>
 
@@ -543,7 +544,7 @@ function EditNews({
                           }}
                         />
                       </div>
-                      <div style={{ display: "flex " }}>
+                      <div style={{ display: "flex ", marginBottom: 20 }}>
                         {block.images && block.images.length
                           ? block.images.map((img) => {
                               return (
@@ -635,6 +636,7 @@ function EditNews({
                           />
                         </div>
                       </div>
+                      <div style={{ display: "flex ", marginBottom: 20 }}>
                       {block.videos && block.videos.length
                         ? block.videos.map((video) => {
                             return (
@@ -682,6 +684,7 @@ function EditNews({
                             );
                           })
                         : null}
+                      </div>
                       <div style={{ display: "flex" }}>
                         <Button
                           title="Delete"
