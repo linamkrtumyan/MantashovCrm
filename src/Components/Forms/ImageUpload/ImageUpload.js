@@ -35,10 +35,6 @@ function ImageUpload({
   }, [id]);
 
   useEffect(() => {
-    setImagesLength(headers.length + image.length);
-  }, [headers, image]);
-
-  useEffect(() => {
     if (uploadedImages) {
       const filesArray = Array.from(uploadedImages).map((file) =>
         URL.createObjectURL(file)
@@ -55,6 +51,7 @@ function ImageUpload({
         limit &&
         // selectedFiles.length < limit &&
         e.target.files.length < limit
+        &&selectedFiles.length < limit
       ) {
         const filesArray = Array.from(e.target.files).map((file) =>
           URL.createObjectURL(file)
@@ -135,7 +132,6 @@ function ImageUpload({
   const renderPhotos = (source) => {
     if (delindex != null) {
       source.splice(delindex, 1);
-      // selectedFiles.splice(delindex, 1);
     }
     return source?.map((photo) => {
       return (
