@@ -147,12 +147,14 @@ function CreateEventDetails({
       headersImages.push(img.name);
     });
 
-    let addedImages = [];
+    // let addedImages = [];
     let deletedImages = [];
 
-    fixedImages?.map((img) => {
-      addedImages.push(img.name);
-    });
+    // console.log({ fixedImages });
+
+    // fixedImages?.map((img) => {
+    //   addedImages.push(img.name);
+    // });
 
     fixedImagesDeleted?.map((img) => {
       deletedImages.push(img.name);
@@ -160,7 +162,7 @@ function CreateEventDetails({
 
     let dataToSend = {
       id: parseInt(eventId),
-      addedImages,
+      addedImages: fixedImages,
       deletedImages,
       shortDescriptionEng,
       shortDescriptionArm,
@@ -170,7 +172,7 @@ function CreateEventDetails({
     cleanVideos();
     cleanForm();
     addEventShortDescription(dataToSend);
-    history.push("/events");
+    // history.push("/events");
   };
 
   const deleteBlockImage = (block, index) => {
@@ -329,7 +331,11 @@ function CreateEventDetails({
           label="Upload Images"
           containerClassName="uploaded"
           id="fixedImages"
-          limit={headers && headers.length ? 8 - headers.length : 8}
+          limit={
+            details && details.headers && details.headers.length
+              ? 8 - details.headers.length
+              : 8
+          }
         />
       </div>
       <div className="opened_field_container">
@@ -539,7 +545,9 @@ function CreateEventDetails({
 
                       <textarea
                         className="textarea"
-                        defaultValue={block.links}
+                        defaultValue={`${block.links?.map((link) => {
+                          return `${link + "" + `\n`}`;
+                        })}`}
                         onChange={(e) => {
                           const index = details.details.indexOf(block);
                           details.details[index].links = e.target.value;
@@ -640,46 +648,48 @@ function CreateEventDetails({
                         />
                       </div>
                     </div>
-                    {block.videos && block.videos.length
-                      ? block.videos.map((video) => {
-                          return (
-                            <div className="upload_cont">
-                              <video
-                                className="uploaded_images"
-                                key={video}
-                                controls
-                              >
-                                <source src={video} type="video/mp4" />
-                                <source src={video} type="video/ogg" />
-                                Your browser does not support the video tag.
-                              </video>
-                              <div className="middle">
-                                <div
-                                  onClick={() => {
-                                    const indexVideo =
-                                      block.videos.indexOf(video);
-                                    const indexBlock =
-                                      details.details.indexOf(block);
-                                    setForRender(forRender + 1);
-
-                                    deleteBlockVideos(block, indexVideo);
-                                  }}
+                    <div style={{ display: "flex ", marginBottom: 20 }}>
+                      {block.videos && block.videos.length
+                        ? block.videos.map((video) => {
+                            return (
+                              <div className="upload_cont">
+                                <video
+                                  className="uploaded_images"
+                                  key={video}
+                                  controls
                                 >
-                                  <svg viewBox="0 0 24 24" className="close">
-                                    <path
-                                      d="M 2 2 L 22 22 M 2 22 L22 2"
-                                      stroke="red"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="5"
-                                    />
-                                  </svg>
+                                  <source src={video} type="video/mp4" />
+                                  <source src={video} type="video/ogg" />
+                                  Your browser does not support the video tag.
+                                </video>
+                                <div className="middle">
+                                  <div
+                                    onClick={() => {
+                                      const indexVideo =
+                                        block.videos.indexOf(video);
+                                      const indexBlock =
+                                        details.details.indexOf(block);
+                                      setForRender(forRender + 1);
+
+                                      deleteBlockVideos(block, indexVideo);
+                                    }}
+                                  >
+                                    <svg viewBox="0 0 24 24" className="close">
+                                      <path
+                                        d="M 2 2 L 22 22 M 2 22 L22 2"
+                                        stroke="red"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="5"
+                                      />
+                                    </svg>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })
-                      : null}
+                            );
+                          })
+                        : null}
+                    </div>
                     <VideoUpload
                       label="Upload Videos"
                       containerClassName="uploaded"
@@ -711,12 +721,13 @@ function CreateEventDetails({
   );
 }
 const mapStateToProps = (state) => {
+  console.log({ state });
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
     headers: state.imageReducer?.headers,
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
-    fixedImages: state.formReducer?.fixedImages ?? [],
+    fixedImages: state.imageReducer?.fixedImages ?? [],
     fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
     eventDetails: state.eventReducer?.eventDetails,
     shortDescriptionEng: state.formReducer?.shortDescriptionEng ?? "",

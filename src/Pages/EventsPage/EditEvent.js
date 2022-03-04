@@ -11,7 +11,6 @@ import store, {
   fetchStates,
   fetchCities,
   cleanLocation,
-  // fetchEventDetailsForEdit,
   editEvent,
   editImages,
   cleanImages,
@@ -44,7 +43,6 @@ function EditEvent({
   cities,
   fetchCities,
   // cleanForm,
-  // fetchEventDetailsForEdit,
   editEvent,
 
   cleanImages,
@@ -63,13 +61,11 @@ function EditEvent({
   image,
   addEventBlock,
   eventDetailsForEdit,
+  headers,
+  images,
 }) {
   const history = useHistory();
 
-  const [changeImage, setChangeImage] = useState(false);
-  const [headerDeleted, setHeaderDeleted] = useState(false);
-  const [openImgModal, setOpenImgModal] = useState(false);
-  const [imgPath, setImgPath] = useState("");
   const [details, setDetails] = useState([]);
   const [forRender, setForRender] = useState(0);
   const [renderContent, setRenderContent] = useState(0);
@@ -82,7 +78,25 @@ function EditEvent({
   const [open, setOpen] = useState(false);
   const [requiredClass, setRequiredClass] = useState("");
 
+  const [eventHeaders, setEventHeaders] = useState([]);
+  const [eventImages, setEventImages] = useState([]);
+
   let { id } = useParams();
+
+  useEffect(() => {
+    eventDetailsForEdit && eventDetailsForEdit.headers
+      ? formOnChange("headers", eventDetailsForEdit.headers)
+      : formOnChange("headers", []);
+  }, [eventDetailsForEdit]);
+
+  useEffect(() => {
+    setEventHeaders(headers);
+    setEventImages(images);
+  }, [headers, images]);
+
+  useEffect(() => {
+    fetchEventDetails(parseInt(id));
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -92,9 +106,12 @@ function EditEvent({
   }, [id, forRender]);
 
   useEffect(() => {
+    fetchEventDetails(parseInt(id));
+  }, [renderContent]);
+
+  useEffect(() => {
     fetchCountries();
   }, []);
-
 
   useEffect(() => {
     if (countryId) {
@@ -135,11 +152,8 @@ function EditEvent({
       descriptionRu,
       endDate,
       startDate,
+      deletedHeaders,
     } = store.getState().formReducer;
-
-    const header = store.getState().imageReducer.header[0];
-    const addedImages = store.getState().imageReducer.image;
-    const deleted = store.getState().imageReducer.deletedImages;
 
     let event = {
       locationArm,
@@ -157,11 +171,7 @@ function EditEvent({
       startDate,
       isPublic,
       addedHeaders: [],
-      deletedHeaders: [],
-      // header,
-      // headerDeleted,
-      // addedImages,
-      // deletedImages: deleted,
+      deletedHeaders: deletedHeaders ?? [],
     };
 
     // const changePath = () => {
@@ -170,13 +180,8 @@ function EditEvent({
     editEvent(event);
     cleanImages();
     cleanForm();
+    setForRender(forRender + 1);
   };
-
-  // const openImageModal = (imagePath) => {
-  //   setImgPath(imagePath);
-  //   setOpenImgModal(true);
-  // };
-
   const handleEdit = (block) => {
     let editedBlock = block;
     const addedImgs = store.getState().formReducer[`block${block.id}`];
@@ -243,8 +248,12 @@ function EditEvent({
   };
 
   const handleEditShortDetails = () => {
-    let { shortDescriptionEng, shortDescriptionArm, shortDescriptionRu } =
-      store.getState().formReducer;
+    let {
+      shortDescriptionEng,
+      shortDescriptionArm,
+      shortDescriptionRu,
+      deletedFixedImages,
+    } = store.getState().formReducer;
 
     let details = {
       id,
@@ -252,7 +261,7 @@ function EditEvent({
       shortDescriptionArm,
       shortDescriptionRu,
       addedImages: [],
-      deletedImages: [],
+      deletedImages: deletedFixedImages,
     };
 
     editShortDetails(details);
@@ -288,17 +297,44 @@ function EditEvent({
     setForRender(renderContent + 1);
   };
 
+  const deleteHeader = (image, index) => {
+    console.log({ image, index });
+    let { deletedHeaders } = store.getState().formReducer;
+    let img = image.split("/");
+    if (deletedHeaders) {
+      let newDeleteds = deletedHeaders.concat([
+        img[image.split("/").length - 1],
+      ]);
+      formOnChange("deletedHeaders", newDeleteds);
+    } else {
+      formOnChange("deletedHeaders", [img[image.split("/").length - 1]]);
+    }
+    let newArr = eventHeaders
+      .slice(0, index)
+      .concat(eventHeaders.slice(index + 1));
+    formOnChange("headers", newArr);
+  };
+
+  const deleteImage = (image, index) => {
+    console.log({ image, index });
+    let { deletedFixedImages } = store.getState().formReducer;
+    let img = image.split("/");
+    if (deletedFixedImages) {
+      let newDeleteds = deletedFixedImages.concat([
+        img[image.split("/").length - 1],
+      ]);
+      formOnChange("deletedFixedImages", newDeleteds);
+    } else {
+      formOnChange("deletedFixedImages", [img[image.split("/").length - 1]]);
+    }
+    let newArr = eventImages
+      .slice(0, index)
+      .concat(eventImages.slice(index + 1));
+    formOnChange("images", newArr);
+  };
+
   return (
     <>
-      {/* <OpenImage
-        openImgModal={openImgModal}
-        setOpenImgModal={setOpenImgModal}
-        imgPath={imgPath}
-        id={id}
-        folderPath="/images/events"
-        detailsImages={detailsImages}
-      /> */}
-
       <div>
         <div>
           <button onClick={() => history.goBack()} className="arrow_left">
@@ -308,12 +344,7 @@ function EditEvent({
             <p>Edit Event</p>
           </div>
         </div>
-        <form
-          onFocus={scrollToView}
-          onSubmit={handleSubmit}
-          // className="add_event_container"
-        >
-          {/* <div> */}
+        <form onFocus={scrollToView} onSubmit={handleSubmit}>
           <div className="add_event_component">
             <div
               className="container_body"
@@ -343,24 +374,27 @@ function EditEvent({
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Input id="startDate" type="date" placeholder="Start Date" />
                 <Input id="endDate" type="date" placeholder="End Date" />
-                <div
-                  style={{
-                    marginTop: "auto",
-                    marginBottom: "auto",
-                    display: "flex",
-                    alignItems: "center",
-                    marginRight: 100,
-                  }}
-                >
-                  <label>Public</label>
-                  <input
-                    style={{ marginLeft: 8 }}
-                    type="checkbox"
-                    defaultChecked={store.getState().formReducer.isPublic}
-                    onChange={() => {
-                      setIsPublic(!isPublic);
+                <div className="input_container" style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      marginTop: "auto",
+                      marginBottom: "auto",
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: 100,
+                      width: "280px",
                     }}
-                  />
+                  >
+                    <label>Public</label>
+                    <input
+                      style={{ marginLeft: 8 }}
+                      type="checkbox"
+                      defaultChecked={store.getState().formReducer.isPublic}
+                      onChange={() => {
+                        setIsPublic(!isPublic);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -402,6 +436,47 @@ function EditEvent({
                   placeholder="Описание"
                 />
               </div>
+
+              <div
+                style={{
+                  display: "flex",
+                }}
+                className="container_body"
+              >
+                {eventHeaders && eventHeaders.length !== 0
+                  ? eventHeaders.map((image, index) => {
+                      return (
+                        <div className="edit_news_image_item" key={image}>
+                          <img
+                            alt=""
+                            className="edit_news_images"
+                            src={image}
+                          />
+                          <div className="middle">
+                            <div
+                              onClick={() => {
+                                deleteHeader(image, index);
+                              }}
+                            >
+                              <svg viewBox="0 0 24 24" className="close">
+                                <path
+                                  d="M 2 2 L 22 22 M 2 22 L22 2"
+                                  stroke="red"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="5"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+              {/* <div style={{ display: "flex", margin: "10px" }}>
+                <OneImageUpload label="Add Header" />
+              </div> */}
             </div>
           </div>
           <div className="event_action_container">
@@ -446,16 +521,15 @@ function EditEvent({
             }}
             className="container_body"
           >
-            {eventDetailsForEdit && eventDetailsForEdit.headers
-              ? eventDetailsForEdit.headers.map((image, index) => {
+            {eventImages && eventImages.length !== 0
+              ? eventImages.map((image, index) => {
                   return (
-                    <div className="edit_news_image_item" key={index}>
+                    <div className="edit_news_image_item" key={image}>
                       <img alt="" className="edit_news_images" src={image} />
-                      {/* <div className="middle">
+                      <div className="middle">
                         <div
                           onClick={() => {
-                            deletedImages(image);
-                            deleteEventImageFromStore(index);
+                            deleteImage(image, index);
                           }}
                         >
                           <svg viewBox="0 0 24 24" className="close">
@@ -468,35 +542,7 @@ function EditEvent({
                             />
                           </svg>
                         </div>
-                      </div> */}
-                    </div>
-                  );
-                })
-              : null}
-
-            {eventDetailsForEdit && eventDetailsForEdit.images
-              ? eventDetailsForEdit.images.map((image, index) => {
-                  return (
-                    <div className="edit_news_image_item" key={index}>
-                      <img alt="" className="edit_news_images" src={image} />
-                      {/* <div className="middle">
-                        <div
-                          onClick={() => {
-                            deletedImages(image);
-                            deleteEventImageFromStore(index);
-                          }}
-                        >
-                          <svg viewBox="0 0 24 24" className="close">
-                            <path
-                              d="M 2 2 L 22 22 M 2 22 L22 2"
-                              stroke="red"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="5"
-                            />
-                          </svg>
-                        </div>
-                      </div> */}
+                      </div>
                     </div>
                   );
                 })
@@ -516,6 +562,7 @@ function EditEvent({
             />
           </div>
         </div>
+        {/* <p>Add </p> */}
         <div
           className="plus_icon"
           onClick={openField}
@@ -645,10 +692,6 @@ function EditEvent({
                     value={blockLinks ? blockLinks : ""}
                     onChange={(e) => {
                       setBlockLinks(e.target.value);
-                      // setNewBlock({
-                      //   ...newBlock,
-                      //   links: e.target.value,
-                      // });
                     }}
                   />
                 </div>
@@ -828,45 +871,48 @@ function EditEvent({
                         />
                       </div>
                     </div>
-                    {block.videos && block.videos.length
-                      ? block.videos.map((video) => {
-                          return (
-                            <div className="upload_cont">
-                              <video
-                                className="uploaded_images"
-                                key={video}
-                                controls
-                              >
-                                <source src={video} type="video/mp4" />
-                                <source src={video} type="video/ogg" />
-                                Your browser does not support the video tag.
-                              </video>
-                              <div className="middle">
-                                <div
-                                  onClick={() => {
-                                    const indexVideo =
-                                      block.videos.indexOf(video);
-                                    const indexBlock =
-                                      details.details.indexOf(block);
-                                    setForRender(forRender + 1);
-                                    deleteBlockVideos(block, indexVideo);
-                                  }}
+                    <div style={{ display: "flex ", marginBottom: 20 }}>
+                      {block.videos && block.videos.length
+                        ? block.videos.map((video) => {
+                            return (
+                              <div className="upload_cont">
+                                <video
+                                  className="uploaded_images"
+                                  key={video}
+                                  controls
                                 >
-                                  <svg viewBox="0 0 24 24" className="close">
-                                    <path
-                                      d="M 2 2 L 22 22 M 2 22 L22 2"
-                                      stroke="red"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="5"
-                                    />
-                                  </svg>
+                                  <source src={video} type="video/mp4" />
+                                  <source src={video} type="video/ogg" />
+                                  Your browser does not support the video tag.
+                                </video>
+                                <div className="middle">
+                                  <div
+                                    onClick={() => {
+                                      const indexVideo =
+                                        block.videos.indexOf(video);
+                                      const indexBlock =
+                                        details.details.indexOf(block);
+                                      setForRender(forRender + 1);
+                                      deleteBlockVideos(block, indexVideo);
+                                    }}
+                                  >
+                                    <svg viewBox="0 0 24 24" className="close">
+                                      <path
+                                        d="M 2 2 L 22 22 M 2 22 L22 2"
+                                        stroke="red"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="5"
+                                      />
+                                    </svg>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })
-                      : null}
+                            );
+                          })
+                        : null}
+                    </div>
+
                     <VideoUpload
                       label="Upload Videos"
                       containerClassName="uploaded"
@@ -898,6 +944,7 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
+  console.log({ state });
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -909,6 +956,8 @@ const mapStateToProps = (state) => {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
     eventDetailsForEdit: state.eventReducer.eventDetailsForEdit,
+    headers: state.formReducer.headers,
+    images: state.formReducer.images,
   };
 };
 

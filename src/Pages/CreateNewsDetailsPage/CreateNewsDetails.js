@@ -111,11 +111,21 @@ function CreateNewsDetails({
   };
 
   const handleEdit = (block) => {
+    const addedImgs = store.getState().formReducer[`block${block.id}`];
+    const addedVids = store.getState().formReducer[`videoBlock${block.id}`];
+    let newAddedimgs = [];
+    let newAddedVids = [];
+    addedImgs?.map((img) => {
+      newAddedimgs.push(img.name);
+    });
+    addedVids?.map((img) => {
+      newAddedVids.push(img.name);
+    });
     let editedBlock = block;
     editedBlock.deletedImages = [];
-    editedBlock.addedImages = [];
+    editedBlock.addedImages = newAddedimgs;
     editedBlock.deletedVideos = [];
-    editedBlock.addedVideos = [];
+    editedBlock.addedVideos = newAddedVids;
     editNewsBlock(editedBlock);
   };
 
@@ -366,7 +376,7 @@ function CreateNewsDetails({
                         }}
                       />
                     </div>
-                    <div style={{ display: "flex " }}>
+                    <div style={{ display: "flex ", marginBottom: 20 }}>
                       {block.images && block.images.length
                         ? block.images.map((img) => {
                             return (
@@ -408,6 +418,12 @@ function CreateNewsDetails({
                           })
                         : null}
                     </div>
+                    <ImageUpload
+                      label="Upload Images"
+                      containerClassName="uploaded"
+                      id={`block${block.id}`}
+                      limit={0}
+                    />
                     <div
                       style={{
                         display: "flex",
@@ -454,49 +470,56 @@ function CreateNewsDetails({
                         />
                       </div>
                     </div>
-                    {block.videos && block.videos.length
-                      ? block.videos.map((video) => {
-                          return (
-                            <div className="upload_cont" key={video}>
-                              <video className="uploaded_images" controls>
-                                <source src={video} type="video/mp4" />
-                                <source src={video} type="video/ogg" />
-                                Your browser does not support the video tag.
-                              </video>
-                              <div className="middle">
-                                <div
-                                  onClick={() =>
-                                    // deleteVideo(source.indexOf(video))
-                                    {
-                                      const indexImg =
-                                        block.videos.indexOf(video);
-                                      const newArr = block.videoUrls.slice(
-                                        indexImg,
-                                        1
-                                      );
-                                      const indexBlock =
-                                        details.details.indexOf(block);
-                                      details.details[indexBlock].videos =
-                                        newArr;
-                                      setForRender(forRender + 1);
+                    <div style={{ display: "flex ", marginBottom: 20 }}>
+                      {block.videos && block.videos.length
+                        ? block.videos.map((video) => {
+                            return (
+                              <div className="upload_cont" key={video}>
+                                <video className="uploaded_images" controls>
+                                  <source src={video} type="video/mp4" />
+                                  <source src={video} type="video/ogg" />
+                                  Your browser does not support the video tag.
+                                </video>
+                                <div className="middle">
+                                  <div
+                                    onClick={() =>
+                                      // deleteVideo(source.indexOf(video))
+                                      {
+                                        const indexImg =
+                                          block.videos.indexOf(video);
+                                        const newArr = block.videoUrls.slice(
+                                          indexImg,
+                                          1
+                                        );
+                                        const indexBlock =
+                                          details.details.indexOf(block);
+                                        details.details[indexBlock].videos =
+                                          newArr;
+                                        setForRender(forRender + 1);
+                                      }
                                     }
-                                  }
-                                >
-                                  <svg viewBox="0 0 24 24" className="close">
-                                    <path
-                                      d="M 2 2 L 22 22 M 2 22 L22 2"
-                                      stroke="red"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="5"
-                                    />
-                                  </svg>
+                                  >
+                                    <svg viewBox="0 0 24 24" className="close">
+                                      <path
+                                        d="M 2 2 L 22 22 M 2 22 L22 2"
+                                        stroke="red"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="5"
+                                      />
+                                    </svg>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })
-                      : null}
+                            );
+                          })
+                        : null}
+                    </div>
+                    <VideoUpload
+                      label="Upload Videos"
+                      containerClassName="uploaded"
+                      id={`videoBlock${block.id}`}
+                    />
                     <div style={{ display: "flex" }}>
                       <Button
                         title="Delete"
