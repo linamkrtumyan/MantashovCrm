@@ -6,7 +6,6 @@ import "./editMember.css";
 import { useHistory, useParams } from "react-router-dom";
 import store, {
   fetchMemberForEdit,
-  fetchMemberForm,
   fetchCountries,
   fetchStates,
   fetchCities,
@@ -16,12 +15,10 @@ import store, {
   fetchOrganizations,
   fetchPositions,
   cleanForm,
+  cleanImages,
 } from "../../store";
-import Select from "../../Components/Forms/Select/Select";
 import { connect } from "react-redux";
-import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
-import EditPhone from "./components/EditPhone";
 import AddOrganization from "../AddMemberPage/components/AddOrganization";
 import { scrollToView } from "../../helpers/scrollToView";
 import instagramIcon from "../../img/instagram.png";
@@ -65,6 +62,7 @@ function EditMember({
     // fetchContactTypes();
     fetchCategories();
     fetchPositions();
+    cleanImages();
   }, []);
 
   // useEffect(() => {
@@ -190,11 +188,7 @@ function EditMember({
                 <>
                   <div className="member_image_container">
                     <img
-                      src={`${
-                        profileImage
-                          ? profileImage
-                          : "/images/profile/${id}/profile_picture.png"
-                      }`}
+                      src={`${profileImage ? profileImage : ""}`}
                       alt=""
                       className="member_edit_image"
                       style={{ width: "100%" }}
@@ -404,6 +398,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchOrganizations: (id) => dispatch(fetchOrganizations(id)),
     fetchPositions: () => dispatch(fetchPositions()),
     cleanForm: () => dispatch(cleanForm()),
+    cleanImages: () => dispatch(cleanImages()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditMember);
