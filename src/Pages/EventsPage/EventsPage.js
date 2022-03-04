@@ -42,6 +42,11 @@ function EventsPage({
   }, []);
 
   useEffect(() => {
+    fetchEventsByPage();
+  }, [])
+  
+
+  useEffect(() => {
     if (!loading) {
       fetchEventsByPage();
     }
