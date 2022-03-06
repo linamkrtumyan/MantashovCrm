@@ -79,20 +79,19 @@ function EditSpeaker({
   };
   return (
     <div>
+      <div>
+        <button onClick={() => history.goBack()} className="arrow_left">
+          <i className="fas fa-chevron-left"></i>
+        </button>
+        <div className="add_member_title">
+          <p>Edit Speaker</p>
+        </div>
+      </div>
       <form
         onFocus={scrollToView}
         onSubmit={(e) => handleEdit(e)}
         className="add_member_container"
       >
-        <div>
-          <button onClick={() => history.goBack()} className="arrow_left">
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <div className="add_member_title">
-            <p>Edit Speaker</p>
-          </div>
-        </div>
-
         <div className="add_member_component">
           <div className="location_container">
             {mainImg ? (
