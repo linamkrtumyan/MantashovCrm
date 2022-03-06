@@ -185,27 +185,24 @@ function EditMember({
               {changeImage ? (
                 <OneImageUpload label="Upload Image" />
               ) : (
-                <>
-                  <div className="member_image_container">
-                    <img
-                      src={`${profileImage ? profileImage : ""}`}
-                      alt=""
-                      className="member_edit_image"
-                      style={{ width: "100%" }}
-                    />
-                    <div className="member_image_middle">
-                      <div
-                        onClick={() => {
-                          setChangeImage(true);
-                          setImageDeleted(true);
-                        }}
-                        className="member_edit_text"
-                      >
-                        <i className="fas fa-times"></i>
-                      </div>
+                <div className="upload_cont" style={{ display: "flex" }}>
+                  <img
+                    src={`${profileImage ? profileImage : ""}`}
+                    alt=""
+                    className="uploaded_image"
+                  />
+                  <div className="middle">
+                    <div
+                      onClick={() => {
+                        setChangeImage(true);
+                        setImageDeleted(true);
+                      }}
+                      className="member_edit_text"
+                    >
+                      <i className="fas fa-times"></i>
                     </div>
                   </div>
-                </>
+                </div>
               )}
             </div>
             <div className="container_body">
