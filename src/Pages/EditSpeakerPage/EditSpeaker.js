@@ -156,7 +156,6 @@ function EditSpeaker({
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state });
   return {
     speakers: state.speakerReducer.speakers,
     organizations: state.organizationsReducer.organizations,

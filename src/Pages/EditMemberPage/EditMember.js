@@ -366,7 +366,6 @@ function EditMember({
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state });
   return {
     countries: state.locationsReducer.countries,
     states: state.locationsReducer?.states,

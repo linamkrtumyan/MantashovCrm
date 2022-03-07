@@ -96,6 +96,7 @@ function EditEvent({
 
   useEffect(() => {
     fetchEventDetails(parseInt(id));
+    fetchCountries();
   }, []);
 
   useEffect(() => {
@@ -108,10 +109,6 @@ function EditEvent({
   useEffect(() => {
     fetchEventDetails(parseInt(id));
   }, [renderContent]);
-
-  useEffect(() => {
-    fetchCountries();
-  }, []);
 
   useEffect(() => {
     if (countryId) {
@@ -155,6 +152,8 @@ function EditEvent({
       deletedHeaders,
     } = store.getState().formReducer;
 
+    let { addedHeaders } = store.getState().imageReducer;
+
     let event = {
       locationArm,
       locationEng,
@@ -170,7 +169,7 @@ function EditEvent({
       endDate,
       startDate,
       isPublic,
-      addedHeaders: [],
+      addedHeaders: addedHeaders ?? [],
       deletedHeaders: deletedHeaders ?? [],
     };
 
@@ -298,7 +297,6 @@ function EditEvent({
   };
 
   const deleteHeader = (image, index) => {
-    console.log({ image, index });
     let { deletedHeaders } = store.getState().formReducer;
     let img = image.split("/");
     if (deletedHeaders) {
@@ -316,7 +314,6 @@ function EditEvent({
   };
 
   const deleteImage = (image, index) => {
-    console.log({ image, index });
     let { deletedFixedImages } = store.getState().formReducer;
     let img = image.split("/");
     if (deletedFixedImages) {
@@ -474,9 +471,17 @@ function EditEvent({
                     })
                   : null}
               </div>
-              {/* <div style={{ display: "flex", margin: "10px" }}>
-                <OneImageUpload label="Add Header" />
-              </div> */}
+              <div style={{ display: "flex", margin: "10px" }}>
+                {/* <OneImageUpload label="Add Header" /> */}
+                <ImageUpload
+                  containerClassName="uploaded"
+                  label={`Add headers(${
+                    eventHeaders ? 3 - eventHeaders.length : 3
+                  })`}
+                  id="addedHeaders"
+                  limit={eventHeaders ? 3 - eventHeaders.length : 3}
+                />
+              </div>
             </div>
           </div>
           <div className="event_action_container">
@@ -944,7 +949,6 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state });
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,

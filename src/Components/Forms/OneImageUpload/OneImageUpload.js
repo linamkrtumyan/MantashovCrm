@@ -29,8 +29,9 @@ function OneImageUpload({
   useEffect(() => {
     if (headers.length && headers[index - 1] && index) {
       setImage(headers[index - 1].url);
-    } else if (!index && header) {
+    } else if (!index && header && header[0]) {
       setImage([header[0].url]);
+      // setImage([header[0]?.url ? header[0].url : []]);
     } else {
       setImage([]);
     }
@@ -39,7 +40,7 @@ function OneImageUpload({
   const handleDelete = () => {
     // let index;
     headers.map((img) => {
-      if (img === image) {
+      if (img.url === image[0]) {
         const index = headers.indexOf(img);
         deleteHeader(index);
       }
@@ -56,13 +57,7 @@ function OneImageUpload({
       ) : null}
       {image.length > 0 ? (
         <div className="upload_cont">
-          <img
-            className="uploaded_image"
-            src={
-              image
-            }
-            alt=""
-          />
+          <img className="uploaded_image" src={image} alt="" />
           <div className="middle">
             <div
               onClick={() => {

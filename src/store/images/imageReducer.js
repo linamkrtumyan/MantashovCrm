@@ -111,6 +111,7 @@ const reducer = (state = initialState, action) => {
           ...state.headers.slice(0, action.payload.deletedHeaderId),
           ...state.headers.slice(action.payload.deletedHeaderId + 1),
         ],
+        header: [],
       };
     default:
       return state;
