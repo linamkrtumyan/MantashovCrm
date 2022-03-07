@@ -63,6 +63,7 @@ function EditEvent({
   eventDetailsForEdit,
   headers,
   images,
+  addedHeaders,
 }) {
   const history = useHistory();
 
@@ -254,13 +255,15 @@ function EditEvent({
       deletedFixedImages,
     } = store.getState().formReducer;
 
+    let { addedFixedImages } = store.getState().imageReducer;
+
     let details = {
       id,
       shortDescriptionEng,
       shortDescriptionArm,
       shortDescriptionRu,
-      addedImages: [],
-      deletedImages: deletedFixedImages,
+      addedImages: addedFixedImages ?? [],
+      deletedImages: deletedFixedImages ?? [],
     };
 
     editShortDetails(details);
@@ -555,8 +558,38 @@ function EditEvent({
           </div>
 
           <div className="container_body">
+            <p style={{ paddingLeft: 15, paddingBottom: 10 }}>
+              Կցված նկարների քանակը չպետք է գերազանցի{" "}
+              {eventHeaders
+                ? addedHeaders
+                  ? eventImages
+                    ? 8 -
+                      (eventHeaders.length +
+                        addedHeaders.length +
+                        eventImages.length)
+                    : 8 - (eventHeaders.length + addedHeaders.length)
+                  : 8 - eventHeaders.length
+                : 8}{" "}
+              - ը։
+            </p>
             <div style={{ marginLeft: 15 }}>
-              <ImageUpload label="Add Images" />
+              <ImageUpload
+                label={`Add Images`}
+                containerClassName="uploaded"
+                limit={
+                  eventHeaders
+                    ? addedHeaders
+                      ? eventImages
+                        ? 8 -
+                          (eventHeaders.length +
+                            addedHeaders.length +
+                            eventImages.length)
+                        : 8 - (eventHeaders.length + addedHeaders.length)
+                      : 8 - eventHeaders.length
+                    : 8
+                }
+                id="addedFixedImages"
+              />
             </div>
           </div>
           <div>
@@ -962,6 +995,7 @@ const mapStateToProps = (state) => {
     eventDetailsForEdit: state.eventReducer.eventDetailsForEdit,
     headers: state.formReducer.headers,
     images: state.formReducer.images,
+    addedHeaders: state.imageReducer.addedHeaders,
   };
 };
 
