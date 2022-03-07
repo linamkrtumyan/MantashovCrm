@@ -25,9 +25,6 @@ function ImageUpload({
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
-  const [imagesLength, setImagesLength] = useState(
-    headers.length + image.length
-  );
 
   useEffect(() => {
     formOnChange(`${id}`, []);
@@ -35,23 +32,21 @@ function ImageUpload({
   }, [id]);
 
   useEffect(() => {
+    let filesArray = [];
     if (uploadedImages) {
-      const filesArray = Array.from(uploadedImages).map((file) =>
+      filesArray = Array.from(uploadedImages).map((file) =>
         URL.createObjectURL(file)
       );
-      setSelectedFiles(filesArray);
-    } else {
-      setSelectedFiles(uploadedImages);
     }
+    setSelectedFiles(filesArray);
   }, [uploadedImages]);
 
   const onImageChange = (e) => {
     if (e.target.files) {
       if (
         limit &&
-        // selectedFiles.length < limit &&
-        e.target.files.length < limit
-        &&selectedFiles.length < limit
+        e.target.files.length <= limit &&
+        selectedFiles.length + 1 <= limit
       ) {
         const filesArray = Array.from(e.target.files).map((file) =>
           URL.createObjectURL(file)
@@ -72,7 +67,7 @@ function ImageUpload({
           uploadImage(files, id);
           const arr = uploadedImages ? uploadedImages.concat(files) : files;
 
-          setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
           formOnChange(`${id}`, arr);
 
           // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
@@ -122,7 +117,7 @@ function ImageUpload({
     const newArr = uploadedImages
       .slice(0, a)
       .concat(uploadedImages.slice(a + 1));
-    deleteImageFromStore(a);
+    deleteImageFromStore(a, id);
     formOnChange(`${id}Deleted`, [deletedImages]);
     formOnChange(`${id}`, newArr);
     setDelindex(a);
@@ -130,9 +125,9 @@ function ImageUpload({
   };
 
   const renderPhotos = (source) => {
-    if (delindex != null) {
-      source.splice(delindex, 1);
-    }
+    // if (delindex != null) {
+    //   source.splice(delindex, 1);
+    // }
     return source?.map((photo) => {
       return (
         <div className="upload_cont" key={photo}>
@@ -204,7 +199,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     uploadImage: (img, key) => dispatch(uploadImage(img, key)),
-    deleteImageFromStore: (id) => dispatch(deleteImageFromStore(id)),
+    deleteImageFromStore: (id, key) => dispatch(deleteImageFromStore(id, key)),
     setUploadedPhotos: (photos) => dispatch(setUploadedPhotos(photos)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
   };

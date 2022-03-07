@@ -602,6 +602,12 @@ function EditNews({
                             })
                           : null}
                       </div>
+                      <ImageUpload
+                        label="Upload Images"
+                        containerClassName="uploaded"
+                        id={`block${block.id}`}
+                        limit={0}
+                      />
                       <div
                         style={{
                           display: "flex",
@@ -700,6 +706,11 @@ function EditNews({
                             })
                           : null}
                       </div>
+                      <VideoUpload
+                        label="Upload Videos"
+                        containerClassName="uploaded"
+                        id={`videoBlock${block.id}`}
+                      />
                       <div style={{ display: "flex" }}>
                         <Button
                           title="Delete"
