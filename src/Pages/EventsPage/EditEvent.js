@@ -184,21 +184,14 @@ function EditEvent({
   };
   const handleEdit = (block) => {
     let editedBlock = block;
-    const addedImgs = store.getState().formReducer[`block${block.id}`];
-    const addedVids = store.getState().formReducer[`videoBlock${block.id}`];
-    let newAddedimgs = [];
-    let newAddedVids = [];
-    addedImgs?.map((img) => {
-      newAddedimgs.push(img.name);
-    });
-    addedVids?.map((img) => {
-      newAddedVids.push(img.name);
-    });
+
     editedBlock.deletedImages = [];
-    editedBlock.addedImages = newAddedimgs;
+    editedBlock.addedImages =
+      store.getState().imageReducer[`block${block.id}`] ?? [];
 
     editedBlock.deletedVideos = [];
-    editedBlock.addedVideos = newAddedVids;
+    editedBlock.addedVideos =
+      store.getState().videoReducer[`videoBlock${block.id}`] ?? [];
     editEventBlock(editedBlock);
   };
 

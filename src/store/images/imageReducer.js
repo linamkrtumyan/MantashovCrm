@@ -33,6 +33,9 @@ const reducer = (state = initialState, action) => {
         imageUpload: true,
       };
     case UPLOAD_IMAGE_SUCCESS:
+      if (!state[action.payload.key]) {
+        state[action.payload.key] = [];
+      }
       return {
         ...state,
         loading: false,
@@ -44,7 +47,9 @@ const reducer = (state = initialState, action) => {
         error: null,
         imageUpload: action.payload.imageUpload,
         imgUrls: action.payload.imgUrls,
-        [action.payload.key]: action.payload.images,
+        [action.payload.key]: action.payload.images.concat(
+          state[action.payload.key]
+        ),
       };
     case UPLOAD_IMAGE_FAILURE:
       return {
