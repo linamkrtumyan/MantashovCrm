@@ -14,7 +14,7 @@ export const editNewsBlock = (block, changePath) => {
       .then((data) => {
         if (data.success) {
           dispatch(editNewsBlockSuccess(data));
-          toast.dark("Edited");
+          // toast.dark("Edited");
           //   changePath();
         }
       })

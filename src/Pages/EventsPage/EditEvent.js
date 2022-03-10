@@ -5,6 +5,7 @@ import Select from "../../Components/Forms/Select/Select";
 import Button from "../../Components/Forms/Button/Button";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
+import { toast } from "react-toastify";
 
 import store, {
   fetchCountries,
@@ -200,6 +201,7 @@ function EditEvent({
     editedBlock.deletedVideos = [];
     editedBlock.addedVideos = newAddedVids;
     editEventBlock(editedBlock);
+    toast.dark("Edited");
   };
 
   const handleDelete = (id) => {
@@ -737,8 +739,15 @@ function EditEvent({
               <div>
                 <Button
                   onClick={saveBlockData}
-                  title="Save"
+                  title="Save Block"
                   className="action_btn"
+                  disabled={
+                    newBlock.topTextEng &&
+                    newBlock.topTextArm &&
+                    newBlock.topTextRu
+                      ? false
+                      : true
+                  }
                 />
               </div>
             </div>
@@ -754,7 +763,7 @@ function EditEvent({
                   <div
                     className="location_container"
                     style={{ display: "block" }}
-                    key={block.id}
+                    key={block}
                   >
                     <div
                       style={{
@@ -820,20 +829,17 @@ function EditEvent({
                       {block.images && block.images.length
                         ? block.images.map((img) => {
                             return (
-                              <div className="upload_cont">
+                              <div className="upload_cont" key={img}>
                                 <img
                                   className="uploaded_images"
                                   src={img}
                                   alt=""
-                                  key={img}
                                 />
                                 <div className="middle">
                                   <div
                                     onClick={() => {
                                       const indexImg =
                                         block.images.indexOf(img);
-                                      const indexBlock =
-                                        details.details.indexOf(block);
                                       setForRender(forRender + 1);
                                       deleteBlockImage(block, indexImg);
                                     }}
@@ -913,12 +919,8 @@ function EditEvent({
                       {block.videos && block.videos.length
                         ? block.videos.map((video) => {
                             return (
-                              <div className="upload_cont">
-                                <video
-                                  className="uploaded_images"
-                                  key={video}
-                                  controls
-                                >
+                              <div className="upload_cont" key={video}>
+                                <video className="uploaded_images" controls>
                                   <source src={video} type="video/mp4" />
                                   <source src={video} type="video/ogg" />
                                   Your browser does not support the video tag.
@@ -926,12 +928,10 @@ function EditEvent({
                                 <div className="middle">
                                   <div
                                     onClick={() => {
-                                      const indexVideo =
+                                      const indexVid =
                                         block.videos.indexOf(video);
-                                      const indexBlock =
-                                        details.details.indexOf(block);
                                       setForRender(forRender + 1);
-                                      deleteBlockVideos(block, indexVideo);
+                                      deleteBlockVideos(block, indexVid);
                                     }}
                                   >
                                     <svg viewBox="0 0 24 24" className="close">

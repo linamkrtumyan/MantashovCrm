@@ -6,6 +6,7 @@ import "./editNews.css";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
 import store, {
   fetchNewsDetails,
@@ -95,7 +96,7 @@ function EditNews({
     let { titleArm, titleEng, titleRu } = store.getState().formReducer;
     // const addedImages = store.getState().imageReducer.image;
     // const deleted = store.getState().imageReducer.deletedImages;
-    const header = store.getState().imageReducer.header[0].name;
+    const header = store.getState().imageReducer.header[0]?.name ?? headerImage;
 
     // const changePath = () => {
     //   path.push("/news");
@@ -194,6 +195,7 @@ function EditNews({
     editedBlock.deletedVideos = [];
     editedBlock.addedVideos = newAddedVids;
     editNewsBlock(editedBlock);
+    toast.dark("Edited");
   };
 
   const sendData = () => {
@@ -222,6 +224,46 @@ function EditNews({
     cleanVideos();
     cleanForm();
     history.push("/news");
+  };
+
+  const deleteBlockImage = (block, index) => {
+    const deletedImage = block.images[index].split("/");
+    const blockData = {
+      id: block.id,
+      topTextEng: block.topTextEng,
+      topTextArm: block.topTextArm,
+      topTextRu: block.topTextRu,
+      bottomTextEng: block.bottomTextEng,
+      bottomTextArm: block.bottomTextArm,
+      bottomTextRu: block.bottomTextRu,
+      links: block.links,
+      deletedImages: [deletedImage[deletedImage.length - 1]],
+      addedImages: [],
+      deletedVideos: [],
+      addedVideos: [],
+    };
+    editNewsBlock(blockData);
+    setRenderContent(renderContent + 1);
+  };
+
+  const deleteBlockVideos = (block, index) => {
+    const deletedVideo = block.videos[index].split("/");
+    const blockData = {
+      id: block.id,
+      topTextEng: block.topTextEng,
+      topTextArm: block.topTextArm,
+      topTextRu: block.topTextRu,
+      bottomTextEng: block.bottomTextEng,
+      bottomTextArm: block.bottomTextArm,
+      bottomTextRu: block.bottomTextRu,
+      links: block.links,
+      deletedImages: [],
+      addedImages: [],
+      deletedVideos: [deletedVideo[deletedVideo.length - 1]],
+      addedVideos: [],
+    };
+    editNewsBlock(blockData);
+    setRenderContent(renderContent + 1);
   };
 
   return (
@@ -477,6 +519,13 @@ function EditNews({
             <div>
               <Button
                 onClick={saveBlockData}
+                disabled={
+                  newBlock.topTextEng &&
+                  newBlock.topTextArm &&
+                  newBlock.topTextRu
+                    ? false
+                    : true
+                }
                 title="Save Block"
                 className="action_btn"
               />
@@ -560,27 +609,19 @@ function EditNews({
                         {block.images && block.images.length
                           ? block.images.map((img) => {
                               return (
-                                <div className="upload_cont">
+                                <div className="upload_cont" key={img}>
                                   <img
                                     className="uploaded_images"
                                     src={img}
                                     alt=""
-                                    key={img}
                                   />
                                   <div className="middle">
                                     <div
                                       onClick={() => {
                                         const indexImg =
-                                          block.imgUrls.indexOf(img);
-                                        const newArr = block.imgUrls.slice(
-                                          indexImg,
-                                          1
-                                        );
-                                        const indexBlock =
-                                          details.details.indexOf(block);
-                                        details.details[indexBlock].images =
-                                          newArr;
+                                          block.images.indexOf(img);
                                         setForRender(forRender + 1);
+                                        deleteBlockImage(block, indexImg);
                                       }}
                                     >
                                       <svg
@@ -658,12 +699,8 @@ function EditNews({
                         {block.videos && block.videos.length
                           ? block.videos.map((video) => {
                               return (
-                                <div className="upload_cont">
-                                  <video
-                                    className="uploaded_images"
-                                    key={video}
-                                    controls
-                                  >
+                                <div className="upload_cont" key={video}>
+                                  <video className="uploaded_images" controls>
                                     <source src={video} type="video/mp4" />
                                     <source src={video} type="video/ogg" />
                                     Your browser does not support the video tag.
@@ -673,17 +710,10 @@ function EditNews({
                                       onClick={() =>
                                         // deleteVideo(source.indexOf(video))
                                         {
-                                          const indexImg =
+                                          const indexVid =
                                             block.videos.indexOf(video);
-                                          const newArr = block.videoUrls.slice(
-                                            indexImg,
-                                            1
-                                          );
-                                          const indexBlock =
-                                            details.details.indexOf(block);
-                                          details.details[indexBlock].videos =
-                                            newArr;
                                           setForRender(forRender + 1);
+                                          deleteBlockVideos(block, indexVid);
                                         }
                                       }
                                     >
@@ -739,6 +769,7 @@ function EditNews({
 }
 
 const mapStateToProps = (state) => {
+  console.log({ state }, "EditNews");
   return {
     header: state.imageReducer.header,
     news: state.newsReducer.newsDetails,
@@ -749,7 +780,7 @@ const mapStateToProps = (state) => {
     fixedImages: state.formReducer?.fixedImages ?? [],
     fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
     newsDetails: state.newsReducer?.newsDetails,
-    headerImage: state.formReducer?.image,
+    headerImage: state.formReducer?.image ?? "",
   };
 };
 

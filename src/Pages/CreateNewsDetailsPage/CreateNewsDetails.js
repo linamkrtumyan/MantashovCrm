@@ -16,6 +16,7 @@ import store, {
 } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 import { useHistory, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function CreateNewsDetails({
   image,
@@ -127,6 +128,7 @@ function CreateNewsDetails({
     editedBlock.deletedVideos = [];
     editedBlock.addedVideos = newAddedVids;
     editNewsBlock(editedBlock);
+    toast.dark("Edited");
   };
 
   const sendData = () => {
@@ -155,6 +157,46 @@ function CreateNewsDetails({
     cleanVideos();
     cleanForm();
     history.push("/news");
+  };
+
+  const deleteBlockImage = (block, index) => {
+    const deletedImage = block.images[index].split("/");
+    const blockData = {
+      id: block.id,
+      topTextEng: block.topTextEng,
+      topTextArm: block.topTextArm,
+      topTextRu: block.topTextRu,
+      bottomTextEng: block.bottomTextEng,
+      bottomTextArm: block.bottomTextArm,
+      bottomTextRu: block.bottomTextRu,
+      links: block.links,
+      deletedImages: [deletedImage[deletedImage.length - 1]],
+      addedImages: [],
+      deletedVideos: [],
+      addedVideos: [],
+    };
+    editNewsBlock(blockData);
+    setRenderContent(renderContent + 1);
+  };
+
+  const deleteBlockVideos = (block, index) => {
+    const deletedVideo = block.videos[index].split("/");
+    const blockData = {
+      id: block.id,
+      topTextEng: block.topTextEng,
+      topTextArm: block.topTextArm,
+      topTextRu: block.topTextRu,
+      bottomTextEng: block.bottomTextEng,
+      bottomTextArm: block.bottomTextArm,
+      bottomTextRu: block.bottomTextRu,
+      links: block.links,
+      deletedImages: [],
+      addedImages: [],
+      deletedVideos: [deletedVideo[deletedVideo.length - 1]],
+      addedVideos: [],
+    };
+    editNewsBlock(blockData);
+    setRenderContent(renderContent + 1);
   };
 
   return (
@@ -301,6 +343,11 @@ function CreateNewsDetails({
               onClick={saveBlockData}
               title="Save Block"
               className="action_btn"
+              disabled={
+                newBlock.topTextEng && newBlock.topTextArm && newBlock.topTextRu
+                  ? false
+                  : true
+              }
             />
           </div>
         </div>
@@ -390,16 +437,9 @@ function CreateNewsDetails({
                                   <div
                                     onClick={() => {
                                       const indexImg =
-                                        block.imgUrls.indexOf(img);
-                                      const newArr = block.imgUrls.slice(
-                                        indexImg,
-                                        1
-                                      );
-                                      const indexBlock =
-                                        details.details.indexOf(block);
-                                      details.details[indexBlock].images =
-                                        newArr;
+                                        block.images.indexOf(img);
                                       setForRender(forRender + 1);
+                                      deleteBlockImage(block, indexImg);
                                     }}
                                   >
                                     <svg viewBox="0 0 24 24" className="close">
@@ -482,22 +522,12 @@ function CreateNewsDetails({
                                 </video>
                                 <div className="middle">
                                   <div
-                                    onClick={() =>
-                                      // deleteVideo(source.indexOf(video))
-                                      {
-                                        const indexImg =
-                                          block.videos.indexOf(video);
-                                        const newArr = block.videoUrls.slice(
-                                          indexImg,
-                                          1
-                                        );
-                                        const indexBlock =
-                                          details.details.indexOf(block);
-                                        details.details[indexBlock].videos =
-                                          newArr;
-                                        setForRender(forRender + 1);
-                                      }
-                                    }
+                                    onClick={() => {
+                                      const indexVid =
+                                        block.videos.indexOf(video);
+                                      setForRender(forRender + 1);
+                                      deleteBlockVideos(block, indexVid);
+                                    }}
                                   >
                                     <svg viewBox="0 0 24 24" className="close">
                                       <path
@@ -546,6 +576,7 @@ function CreateNewsDetails({
   );
 }
 const mapStateToProps = (state) => {
+  console.log({ state });
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,

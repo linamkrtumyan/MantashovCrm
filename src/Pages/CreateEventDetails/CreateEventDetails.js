@@ -17,6 +17,7 @@ import store, {
 } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 import { useHistory, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function CreateEventDetails({
   image,
@@ -139,6 +140,7 @@ function CreateEventDetails({
     editedBlock.deletedVideos = [];
     editedBlock.addedVideos = newAddedVids;
     editEventBlock(editedBlock);
+    toast.dark("Edited");
   };
 
   const sendData = () => {
@@ -476,6 +478,13 @@ function CreateEventDetails({
                 onClick={saveBlockData}
                 title="Save Block"
                 className="action_btn"
+                disabled={
+                  newBlock.topTextEng &&
+                  newBlock.topTextArm &&
+                  newBlock.topTextRu
+                    ? false
+                    : true
+                }
               />
             </div>
           </div>
@@ -570,10 +579,7 @@ function CreateEventDetails({
                                     onClick={() => {
                                       const indexImg =
                                         block.images.indexOf(img);
-                                      const indexBlock =
-                                        details.details.indexOf(block);
                                       setForRender(forRender + 1);
-
                                       deleteBlockImage(block, indexImg);
                                     }}
                                   >
@@ -665,13 +671,10 @@ function CreateEventDetails({
                                 <div className="middle">
                                   <div
                                     onClick={() => {
-                                      const indexVideo =
+                                      const indexVid =
                                         block.videos.indexOf(video);
-                                      const indexBlock =
-                                        details.details.indexOf(block);
                                       setForRender(forRender + 1);
-
-                                      deleteBlockVideos(block, indexVideo);
+                                      deleteBlockVideos(block, indexVid);
                                     }}
                                   >
                                     <svg viewBox="0 0 24 24" className="close">
