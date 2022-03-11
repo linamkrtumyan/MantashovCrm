@@ -92,7 +92,6 @@ function AddEvent({
     setAllSpeakers(arr);
   }, [speakers]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 

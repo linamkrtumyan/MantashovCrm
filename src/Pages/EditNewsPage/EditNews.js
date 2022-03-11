@@ -70,6 +70,9 @@ function EditNews({
   let { id } = useParams();
   useEffect(() => {
     fetchNewsDetails(id);
+    return () => {
+      cleanImages();
+    };
   }, []);
 
   useEffect(() => {
@@ -96,8 +99,13 @@ function EditNews({
     let { titleArm, titleEng, titleRu } = store.getState().formReducer;
     // const addedImages = store.getState().imageReducer.image;
     // const deleted = store.getState().imageReducer.deletedImages;
-    const header = store.getState().imageReducer.header[0]?.name ?? headerImage;
 
+    let header = store.getState().imageReducer.header;
+    if (header.length) {
+      header = header.pop().name;
+    } else {
+      header = null;
+    }
     // const changePath = () => {
     //   path.push("/news");
     // };
@@ -115,7 +123,6 @@ function EditNews({
     };
 
     editNews(news);
-    cleanImages();
   };
 
   const openImageModal = (imagePath) => {
@@ -178,22 +185,13 @@ function EditNews({
     setRenderContent(renderContent + 1);
   };
 
-  const handleEdit = (block) => {
-    const addedImgs = store.getState().formReducer[`block${block.id}`];
-    const addedVids = store.getState().formReducer[`videoBlock${block.id}`];
-    let newAddedimgs = [];
-    let newAddedVids = [];
-    addedImgs?.map((img) => {
-      newAddedimgs.push(img.name);
-    });
-    addedVids?.map((img) => {
-      newAddedVids.push(img.name);
-    });
-    let editedBlock = block;
+  const handleEdit = (editedBlock) => {
     editedBlock.deletedImages = [];
-    editedBlock.addedImages = newAddedimgs;
+    editedBlock.addedImages =
+      store.getState().imageReducer[`block${editedBlock.id}`] ?? [];
     editedBlock.deletedVideos = [];
-    editedBlock.addedVideos = newAddedVids;
+    editedBlock.addedVideos =
+      store.getState().videoReducer[`videoBlock${editedBlock.id}`] ?? [];
     editNewsBlock(editedBlock);
     toast.dark("Edited");
   };
@@ -371,7 +369,11 @@ function EditNews({
                 />
               </div>
               <div>
-                <Button title="Save Changes" className="action_btn" />
+                <Button
+                  onFocus={(e) => e.stopPropagation()}
+                  title="Save Changes"
+                  className="action_btn"
+                />
               </div>
             </div>
           </form>

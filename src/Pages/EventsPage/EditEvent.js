@@ -185,21 +185,14 @@ function EditEvent({
   };
   const handleEdit = (block) => {
     let editedBlock = block;
-    const addedImgs = store.getState().formReducer[`block${block.id}`];
-    const addedVids = store.getState().formReducer[`videoBlock${block.id}`];
-    let newAddedimgs = [];
-    let newAddedVids = [];
-    addedImgs?.map((img) => {
-      newAddedimgs.push(img.name);
-    });
-    addedVids?.map((img) => {
-      newAddedVids.push(img.name);
-    });
+
     editedBlock.deletedImages = [];
-    editedBlock.addedImages = newAddedimgs;
+    editedBlock.addedImages =
+      store.getState().imageReducer[`block${block.id}`] ?? [];
 
     editedBlock.deletedVideos = [];
-    editedBlock.addedVideos = newAddedVids;
+    editedBlock.addedVideos =
+      store.getState().videoReducer[`videoBlock${block.id}`] ?? [];
     editEventBlock(editedBlock);
     toast.dark("Edited");
   };
@@ -374,8 +367,16 @@ function EditEvent({
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="startDate" type="date" placeholder="Start Date" />
-                <Input id="endDate" type="date" placeholder="End Date" />
+                <Input
+                  id="startDate"
+                  type="date"
+                  placeholder="Start Date"
+                />
+                <Input
+                  id="endDate"
+                  type="date"
+                  placeholder="End Date"
+                />
                 <div className="input_container" style={{ display: "flex" }}>
                   <div
                     style={{

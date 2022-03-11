@@ -122,23 +122,14 @@ function CreateEventDetails({
     setRenderContent(renderContent + 1);
   };
 
-  const handleEdit = (block) => {
-    let editedBlock = block;
-    const addedImgs = store.getState().formReducer[`block${block.id}`];
-    const addedVids = store.getState().formReducer[`videoBlock${block.id}`];
-    let newAddedimgs = [];
-    let newAddedVids = [];
-    addedImgs?.map((img) => {
-      newAddedimgs.push(img.name);
-    });
-    addedVids?.map((img) => {
-      newAddedVids.push(img.name);
-    });
+  const handleEdit = (editedBlock) => {
     editedBlock.deletedImages = [];
-    editedBlock.addedImages = newAddedimgs;
+    editedBlock.addedImages =
+      store.getState().imageReducer[`block${editedBlock.id}`] ?? [];
 
     editedBlock.deletedVideos = [];
-    editedBlock.addedVideos = newAddedVids;
+    editedBlock.addedVideos =
+      store.getState().videoReducer[`videoBlock${editedBlock.id}`] ?? [];
     editEventBlock(editedBlock);
     toast.dark("Edited");
   };

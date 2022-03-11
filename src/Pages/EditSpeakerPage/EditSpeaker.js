@@ -71,7 +71,7 @@ function EditSpeaker({
       fullNameRu: nameRu,
       organizationId,
       image: header && header[0] ? header[0].name : null,
-      imageDeleted: header && header[0] ? true : false,
+      imageDeleted: !mainImg,
     };
     editSpeaker(speaker, changePath);
     cleanForm();
