@@ -64,9 +64,9 @@ function NewsPage({
           <table className="table is-striped is-fullwidth is-hoverable">
             <thead>
               <tr>
-                <th>Photo</th>
-                <th>Title</th>
-                <th>Text</th>
+                <th style={{ width: "11%" }}>Photo</th>
+                <th style={{ width: "50%" }}>Title</th>
+                <th style={{ width: "49%" }}>Text</th>
               </tr>
             </thead>
 
@@ -78,6 +78,7 @@ function NewsPage({
                       style={{ cursor: "pointer" }}
                       onClick={() => handleDetails(news.id)}
                       key={index}
+                      className="tableRows"
                     >
                       <td>
                         <img
