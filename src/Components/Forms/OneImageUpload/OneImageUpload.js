@@ -31,14 +31,12 @@ function OneImageUpload({
       setImage(headers[index - 1].url);
     } else if (!index && header && header[0]) {
       setImage([header[0].url]);
-      // setImage([header[0]?.url ? header[0].url : []]);
     } else {
       setImage([]);
     }
   }, [headers, header]);
 
   const handleDelete = () => {
-    // let index;
     headers.map((img) => {
       if (img.url === image[0]) {
         const index = headers.indexOf(img);

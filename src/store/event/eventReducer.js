@@ -203,6 +203,7 @@ const reducer = (state = initialState, action) => {
         eventDetails: action.payload.eventDetails,
         detailsImages: action.payload.eventDetails.images,
         error: null,
+        
       };
     case FETCH_EVENT_DETAILS_FAILURE:
       return {
@@ -210,6 +211,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         eventDetails: [],
         error: action.payload.error,
+        
       };
 
     case DELETE_EVENT_IMAGE_FROM_STORE:

@@ -33,11 +33,12 @@ function CreateEventDetails({
   shortDescriptionRu,
   shortDescriptionArm,
   shortDescriptionEng,
-  fixedImages,
+  // fixedImages,
   addEventShortDescription,
   fixedImagesDeleted,
   cleanImages,
   cleanVideos,
+  fetch,
 }) {
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
@@ -46,6 +47,7 @@ function CreateEventDetails({
   const [requiredClass, setRequiredClass] = useState("");
   const [blockLinks, setBlockLinks] = useState("");
   const [details, setDetails] = useState([]);
+  const [fixedImages, setFixedImages] = useState([]);
 
   let history = useHistory();
   let { eventId } = useParams();
@@ -54,6 +56,7 @@ function CreateEventDetails({
   }, []);
   useEffect(() => {
     fetchEventDetails(parseInt(eventId));
+    formOnChange("eventId", parseInt(eventId));
   }, []);
 
   useEffect(() => {
@@ -61,6 +64,12 @@ function CreateEventDetails({
     formOnChange(`shortDescriptionEng`, eventDetails.shortDescriptionEng);
     formOnChange(`shortDescriptionArm`, eventDetails.shortDescriptionArm);
     formOnChange(`shortDescriptionRu`, eventDetails.shortDescriptionRu);
+    if (eventDetails.fixedImages) {
+      setFixedImages(eventDetails.fixedImages);
+      for (let i = 0; i < eventDetails.fixedImages.length; i++) {
+        formOnChange(`img${i + 1}`, eventDetails.fixedImages[i]);
+      }
+    }
   }, [eventDetails]);
 
   useEffect(() => {
@@ -72,11 +81,7 @@ function CreateEventDetails({
 
   useEffect(() => {
     fetchEventDetails(parseInt(eventId));
-  }, []);
-
-  useEffect(() => {
-    fetchEventDetails(parseInt(eventId));
-  }, [renderContent]);
+  }, [renderContent, fetch]);
 
   useEffect(() => {
     let links = blockLinks && blockLinks !== "" ? blockLinks.split("\n") : [];
@@ -140,23 +145,32 @@ function CreateEventDetails({
       headersImages.push(img.name);
     });
 
-    // let addedImages = [];
     let deletedImages = [];
-
-    // console.log({ fixedImages });
-
-    // fixedImages?.map((img) => {
-    //   addedImages.push(img.name);
-    // });
-
     fixedImagesDeleted?.map((img) => {
       deletedImages.push(img.name);
     });
 
+    // let {
+    //   img1,
+    //   img2,
+    //   img3,
+    //   img4,
+    //   img5,
+    //   img6,
+    //   img7,
+    //   img8,
+    //   img1Deleted,
+    //   img2Deleted,
+    //   img3Deleted,
+    //   img4Deleted,
+    //   img5Deleted,
+    //   img6Deleted,
+    //   img7Deleted,
+    //   img8Deleted,
+    // } = store.getState().formReducer;
+
     let dataToSend = {
       id: parseInt(eventId),
-      addedImages: fixedImages,
-      deletedImages,
       shortDescriptionEng,
       shortDescriptionArm,
       shortDescriptionRu,
@@ -312,7 +326,7 @@ function CreateEventDetails({
 
           } */}
       </div>
-      <div style={{ marginLeft: 30 }}>
+      {/* <div style={{ marginLeft: 30 }}>
         <p style={{ paddingBottom: 10 }}>
           Կցված նկարների քանակը չպետք է գերազանցի{" "}
           {details && details.headers && details.headers.length
@@ -330,7 +344,92 @@ function CreateEventDetails({
               : 8
           }
         />
+      </div> */}
+
+      <div style={{ marginLeft: "20px" }}>
+        <p>Upload images with the givven sizes.</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "20px 250px 20px 0",
+          }}
+        >
+          <ImageUpload
+            label="(330x330)"
+            containerClassName="uploaded"
+            id="image1"
+            limit={1}
+            width={330}
+            height={330}
+            key1="img1"
+          />
+          <ImageUpload
+            label="(700x390)"
+            containerClassName="uploaded"
+            id="image2"
+            limit={1}
+            width={700}
+            height={390}
+            key1="img2"
+          />
+          <ImageUpload
+            label="(460x260)"
+            containerClassName="uploaded"
+            id="image3"
+            limit={1}
+            width={460}
+            height={260}
+            key1="img3"
+          />
+          <ImageUpload
+            label="(500x490)"
+            containerClassName="uploaded"
+            id="image4"
+            limit={1}
+            width={500}
+            height={490}
+            key1="img4"
+          />
+          <ImageUpload
+            label="(300x300)"
+            containerClassName="uploaded"
+            id="image5"
+            limit={1}
+            width={300}
+            height={300}
+            key1="img5"
+          />
+          <ImageUpload
+            label="(180x180)"
+            containerClassName="uploaded"
+            id="image6"
+            limit={1}
+            width={180}
+            height={180}
+            key1="img6"
+          />
+          <ImageUpload
+            label="(210x120)"
+            containerClassName="uploaded"
+            id="image7"
+            limit={1}
+            width={210}
+            height={120}
+            key1="img7"
+          />
+          <ImageUpload
+            label="(200x120)"
+            containerClassName="uploaded"
+            id="image8"
+            limit={1}
+            width={200}
+            height={120}
+            key1="img8"
+          />
+        </div>
       </div>
+
       <div className="opened_field_container">
         <div className="plus_icon" onClick={openField}>
           <i className="fas fa-solid fa-plus"></i>
@@ -715,17 +814,19 @@ function CreateEventDetails({
   );
 }
 const mapStateToProps = (state) => {
+  // console.log({ state }, "{{{{{{}}}}}}");
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
     headers: state.imageReducer?.headers,
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
-    fixedImages: state.imageReducer?.fixedImages ?? [],
+    // fixedImages: state.imageReducer?.fixedImages ?? [],
     fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
     eventDetails: state.eventReducer?.eventDetails,
     shortDescriptionEng: state.formReducer?.shortDescriptionEng ?? "",
     shortDescriptionArm: state.formReducer?.shortDescriptionArm ?? "",
     shortDescriptionRu: state.formReducer?.shortDescriptionRu ?? "",
+    fetch: state.imageReducer.fetch,
   };
 };
 const mapDispatchToProps = (dispatch) => {

@@ -25,6 +25,7 @@ import store, {
   editShortDetails,
   addEventBlock,
   cleanVideos,
+  getSpeakers,
 } from "../../store";
 import { deletedImages } from "../../store/images/actions";
 
@@ -33,6 +34,7 @@ import { useHistory, useParams } from "react-router-dom";
 import OpenImage from "./components/images/OpenImage";
 import { scrollToView } from "../../helpers/scrollToView";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
+import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 
 function EditEvent({
   fetchCountries,
@@ -65,6 +67,8 @@ function EditEvent({
   headers,
   images,
   addedHeaders,
+  speakers,
+  getSpeakers,
 }) {
   const history = useHistory();
 
@@ -82,8 +86,17 @@ function EditEvent({
 
   const [eventHeaders, setEventHeaders] = useState([]);
   const [eventImages, setEventImages] = useState([]);
+  const [allSpeakers, setAllSpeakers] = useState([]);
 
   let { id } = useParams();
+
+  useEffect(() => {
+    let arr = [];
+    speakers?.map((item) => {
+      arr.push({ id: item.id, name: item.nameEng });
+    });
+    setAllSpeakers(arr);
+  }, [speakers]);
 
   useEffect(() => {
     eventDetailsForEdit && eventDetailsForEdit.headers
@@ -99,6 +112,7 @@ function EditEvent({
   useEffect(() => {
     fetchEventDetails(parseInt(id));
     fetchCountries();
+    getSpeakers();
   }, []);
 
   useEffect(() => {
@@ -152,6 +166,7 @@ function EditEvent({
       endDate,
       startDate,
       deletedHeaders,
+      speakers,
     } = store.getState().formReducer;
 
     let { addedHeaders } = store.getState().imageReducer;
@@ -171,6 +186,7 @@ function EditEvent({
       endDate,
       startDate,
       isPublic,
+      speakers,
       addedHeaders: addedHeaders ?? [],
       deletedHeaders: deletedHeaders ?? [],
     };
@@ -367,16 +383,8 @@ function EditEvent({
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input
-                  id="startDate"
-                  type="date"
-                  placeholder="Start Date"
-                />
-                <Input
-                  id="endDate"
-                  type="date"
-                  placeholder="End Date"
-                />
+                <Input id="startDate" type="date" placeholder="Start Date" />
+                <Input id="endDate" type="date" placeholder="End Date" />
                 <div className="input_container" style={{ display: "flex" }}>
                   <div
                     style={{
@@ -439,6 +447,13 @@ function EditEvent({
                   placeholder="Описание"
                 />
               </div>
+
+              <Multiselect
+                placeholder="Speakers"
+                items={allSpeakers}
+                id="speakers"
+                required={false}
+              />
 
               <div
                 style={{
@@ -983,6 +998,7 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
+  console.log({ state }, "|||||||||||||||||||||||||||");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -997,6 +1013,7 @@ const mapStateToProps = (state) => {
     headers: state.formReducer.headers,
     images: state.formReducer.images,
     addedHeaders: state.imageReducer.addedHeaders,
+    speakers: state.eventReducer?.speakers,
   };
 };
 
@@ -1019,6 +1036,7 @@ const mapDispatchToProps = (dispatch) => {
     editShortDetails: (details) => dispatch(editShortDetails(details)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     addEventBlock: (blockData) => dispatch(addEventBlock(blockData)),
+    getSpeakers: () => dispatch(getSpeakers()),
   };
 };
 

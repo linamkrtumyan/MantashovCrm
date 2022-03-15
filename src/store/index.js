@@ -65,6 +65,8 @@ export {
   uploadOneImage,
   deleteImageFromStore,
   deleteHeader,
+  setEventFixedImage,
+  deleteEventFixedImage,
 } from "./images/actions";
 export {
   uploadVideo,

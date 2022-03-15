@@ -9,6 +9,12 @@ import {
   UPLOAD_ONE_IMAGE_FAILURE,
   DELETE_IMAGE_FROM_STORE,
   DELETE_HEADER,
+  UPLOAD_FIXED_IMAGE_REQUEST,
+  UPLOAD_FIXED_IMAGE_SUCCESS,
+  UPLOAD_FIXED_IMAGE_FAILURE,
+  DELETE_EVENT_FIXED_IMAGE_REQUEST,
+  DELETE_EVENT_FIXED_IMAGE_SUCCESS,
+  DELETE_EVENT_FIXED_IMAGE_FAILURE,
 } from "./types";
 
 const initialState = {
@@ -21,10 +27,11 @@ const initialState = {
   headers: [],
   imageUpload: false,
   imgUrls: [],
+  fixedImages: [],
+  fetch: false,
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action, "Action  ****");
   switch (action.type) {
     case UPLOAD_IMAGE_REQUEST:
       return {
@@ -39,11 +46,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        // image: action.payload.image,
-        // image: [...state.image, action.payload.image],
         image: state.image.concat(action.payload.image),
-
-        // image: state.image.push(action.payload.image),
         error: null,
         imageUpload: action.payload.imageUpload,
         imgUrls: action.payload.imgUrls,
@@ -56,6 +59,58 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         image: "",
+        error: action.payload.error,
+        imageUpload: false,
+      };
+
+    case UPLOAD_FIXED_IMAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        imageUpload: true,
+      };
+    case UPLOAD_FIXED_IMAGE_SUCCESS:
+      if (!state[action.payload.key]) {
+        state[action.payload.key] = [];
+      }
+      return {
+        ...state,
+        loading: false,
+        // fixedImages: state.fixedImage.concat(action.payload.fixedImage),
+        error: null,
+        imageUpload: action.payload.imageUpload,
+        // [action.payload.key]: action.payload.images.concat(
+        //   state[action.payload.key]
+        // ),
+        // [action.payload.key]: action.payload.fixedImage,
+        fetch: action.payload.isFetch,
+      };
+    case UPLOAD_FIXED_IMAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        fixedImage: "",
+        error: action.payload.error,
+        imageUpload: false,
+      };
+    case DELETE_EVENT_FIXED_IMAGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_EVENT_FIXED_IMAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        imageUpload: false,
+        fetch: !state.fetch,
+      };
+    case DELETE_EVENT_FIXED_IMAGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        fixedImage: "",
         error: action.payload.error,
         imageUpload: false,
       };
@@ -97,6 +152,7 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
         oneImageLoading: false,
       };
+
     case DELETE_IMAGE_FROM_STORE:
       return {
         ...state,
