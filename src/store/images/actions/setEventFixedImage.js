@@ -9,7 +9,6 @@ export const setEventFixedImage = (img, eventId, key, isFetch) => {
 
   data.append(`${key}`, img[0], img[0].name);
 
-
   return (dispatch) => {
     dispatch(uploadFixedImageRequest());
 

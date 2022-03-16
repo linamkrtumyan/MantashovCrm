@@ -69,6 +69,7 @@ function EditEvent({
   addedHeaders,
   speakers,
   getSpeakers,
+  fetch,
 }) {
   const history = useHistory();
 
@@ -87,8 +88,9 @@ function EditEvent({
   const [eventHeaders, setEventHeaders] = useState([]);
   const [eventImages, setEventImages] = useState([]);
   const [allSpeakers, setAllSpeakers] = useState([]);
+  const [fixedImages, setFixedImages] = useState([]);
 
-  let { id } = useParams();
+  let { eventId } = useParams();
 
   useEffect(() => {
     let arr = [];
@@ -110,21 +112,22 @@ function EditEvent({
   }, [headers, images]);
 
   useEffect(() => {
-    fetchEventDetails(parseInt(id));
+    fetchEventDetails(parseInt(eventId));
     fetchCountries();
     getSpeakers();
   }, []);
 
   useEffect(() => {
-    if (id) {
-      getEventForEdit(parseInt(id));
-      fetchEventDetails(parseInt(id));
+    if (eventId) {
+      getEventForEdit(parseInt(eventId));
+      fetchEventDetails(parseInt(eventId));
+      formOnChange("eventId", parseInt(eventId));
     }
-  }, [id, forRender]);
+  }, [eventId, forRender]);
 
   useEffect(() => {
-    fetchEventDetails(parseInt(id));
-  }, [renderContent]);
+    fetchEventDetails(parseInt(eventId));
+  }, [renderContent, fetch]);
 
   useEffect(() => {
     if (countryId) {
@@ -142,7 +145,17 @@ function EditEvent({
     formOnChange("shortDescriptionEng", eventDetails.shortDescriptionEng);
     formOnChange("shortDescriptionArm", eventDetails.shortDescriptionArm);
     formOnChange("shortDescriptionRu", eventDetails.shortDescriptionRu);
+    if (eventDetails.fixedImages) {
+      setFixedImages(eventDetails.fixedImages);
+      for (let i = 0; i < eventDetails.fixedImages.length; i++) {
+        formOnChange(`img${i + 1}`, eventDetails.fixedImages[i]);
+      }
+    }
   }, [eventDetails]);
+
+  useEffect(() => {
+    formOnChange("eventId", parseInt(eventId));
+  }, [eventId]);
 
   const handleCancel = () => {
     cleanImages();
@@ -176,7 +189,7 @@ function EditEvent({
       locationEng,
       locationRu,
       cityId,
-      id: parseInt(id),
+      id: parseInt(eventId),
       nameArm,
       nameEng,
       nameRu,
@@ -269,12 +282,10 @@ function EditEvent({
     let { addedFixedImages } = store.getState().imageReducer;
 
     let details = {
-      id,
+      id: eventId,
       shortDescriptionEng,
       shortDescriptionArm,
       shortDescriptionRu,
-      addedImages: addedFixedImages ?? [],
-      deletedImages: deletedFixedImages ?? [],
     };
 
     editShortDetails(details);
@@ -295,8 +306,8 @@ function EditEvent({
       });
 
       setForRender(renderContent + 1);
-      addEventBlock({ eventId: parseInt(id), block: newBlock });
-      fetchEventDetails(parseInt(id));
+      addEventBlock({ eventId: parseInt(eventId), block: newBlock });
+      fetchEventDetails(parseInt(eventId));
       setNewBlock({});
       setBlockLinks("");
       cleanImages();
@@ -590,7 +601,7 @@ function EditEvent({
                 : 8}{" "}
               - ը։
             </p>
-            <div style={{ marginLeft: 15 }}>
+            {/* <div style={{ marginLeft: 15 }}>
               <ImageUpload
                 label={`Add Images`}
                 containerClassName="uploaded"
@@ -608,6 +619,106 @@ function EditEvent({
                 }
                 id="addedFixedImages"
               />
+            </div> */}
+
+            <div style={{ marginLeft: "20px" }}>
+              <p>Upload images with the givven sizes.</p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "20px 0 0 0",
+                }}
+              >
+                <ImageUpload
+                  label="(330x330)"
+                  containerClassName="fixed-uploaded"
+                  id="image1"
+                  limit={1}
+                  width={330}
+                  height={330}
+                  key1="img1"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(700x390)"
+                  containerClassName="fixed-uploaded"
+                  id="image2"
+                  limit={1}
+                  width={700}
+                  height={390}
+                  key1="img2"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(460x260)"
+                  containerClassName="fixed-uploaded"
+                  id="image3"
+                  limit={1}
+                  width={460}
+                  height={260}
+                  key1="img3"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(500x490)"
+                  containerClassName="fixed-uploaded"
+                  id="image4"
+                  limit={1}
+                  width={500}
+                  height={490}
+                  key1="img4"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(300x300)"
+                  containerClassName="fixed-uploaded"
+                  id="image5"
+                  limit={1}
+                  width={300}
+                  height={300}
+                  key1="img5"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(180x180)"
+                  containerClassName="fixed-uploaded"
+                  id="image6"
+                  limit={1}
+                  width={180}
+                  height={180}
+                  key1="img6"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(210x120)"
+                  containerClassName="fixed-uploaded"
+                  id="image7"
+                  limit={1}
+                  width={210}
+                  height={120}
+                  key1="img7"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(200x120)"
+                  containerClassName="fixed-uploaded"
+                  id="image8"
+                  limit={1}
+                  width={200}
+                  height={120}
+                  key1="img8"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+              </div>
             </div>
           </div>
           <div>
@@ -998,7 +1109,7 @@ function EditEvent({
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state }, "|||||||||||||||||||||||||||");
+  // console.log({ state }, "|||||||||||||||||||||||||||");
   return {
     countries: state.locationsReducer.countries,
     countryId: state.formReducer?.countryId,
@@ -1014,6 +1125,7 @@ const mapStateToProps = (state) => {
     images: state.formReducer.images,
     addedHeaders: state.imageReducer.addedHeaders,
     speakers: state.eventReducer?.speakers,
+    fetch: state.imageReducer.fetch,
   };
 };
 

@@ -352,80 +352,97 @@ function CreateEventDetails({
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "20px 250px 20px 0",
+            padding: "20px 0 0 0",
+            marginRight: "150px",
           }}
         >
           <ImageUpload
             label="(330x330)"
-            containerClassName="uploaded"
+            containerClassName="fixed-uploaded"
             id="image1"
             limit={1}
             width={330}
             height={330}
             key1="img1"
+            className="fixed-size-lbl"
+            contentClassName="fixed-uploader-content"
           />
           <ImageUpload
             label="(700x390)"
-            containerClassName="uploaded"
+            containerClassName="fixed-uploaded"
             id="image2"
             limit={1}
             width={700}
             height={390}
             key1="img2"
+            className="fixed-size-lbl"
+            contentClassName="fixed-uploader-content"
           />
           <ImageUpload
             label="(460x260)"
-            containerClassName="uploaded"
+            containerClassName="fixed-uploaded"
             id="image3"
             limit={1}
             width={460}
             height={260}
             key1="img3"
+            className="fixed-size-lbl"
+            contentClassName="fixed-uploader-content"
           />
           <ImageUpload
             label="(500x490)"
-            containerClassName="uploaded"
+            containerClassName="fixed-uploaded"
             id="image4"
             limit={1}
             width={500}
             height={490}
             key1="img4"
+            className="fixed-size-lbl"
+            contentClassName="fixed-uploader-content"
           />
           <ImageUpload
             label="(300x300)"
-            containerClassName="uploaded"
+            containerClassName="fixed-uploaded"
             id="image5"
             limit={1}
             width={300}
             height={300}
             key1="img5"
+            className="fixed-size-lbl"
+            contentClassName="fixed-uploader-content"
           />
           <ImageUpload
             label="(180x180)"
-            containerClassName="uploaded"
+            containerClassName="fixed-uploaded"
             id="image6"
             limit={1}
             width={180}
             height={180}
             key1="img6"
+            className="fixed-size-lbl"
+            contentClassName="fixed-uploader-content"
           />
           <ImageUpload
             label="(210x120)"
-            containerClassName="uploaded"
+            containerClassName="fixed-uploaded"
             id="image7"
             limit={1}
             width={210}
             height={120}
             key1="img7"
+            className="fixed-size-lbl"
+            contentClassName="fixed-uploader-content"
           />
           <ImageUpload
             label="(200x120)"
-            containerClassName="uploaded"
+            containerClassName="fixed-uploaded"
             id="image8"
             limit={1}
             width={200}
             height={120}
             key1="img8"
+            className="fixed-size-lbl"
+            contentClassName="fixed-uploader-content"
           />
         </div>
       </div>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+
 import store, {
   deleteImageFromStore,
   uploadImage,
@@ -15,6 +17,7 @@ function ImageUpload({
   label = "",
   className = "",
   containerClassName = "",
+  contentClassName = "",
   imageUpload,
   headers,
   image,
@@ -34,6 +37,8 @@ function ImageUpload({
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
+
+  let { eventId } = useParams();
 
   useEffect(() => {
     formOnChange(`${id}`, []);
@@ -89,8 +94,8 @@ function ImageUpload({
                   `Please upload image with (${width}px x ${height}px) sizes.`
                 );
               } else {
-                let { eventId } = store.getState().formReducer;
-                setEventFixedImage(files, eventId, key1, !isFetch);
+                // let { eventId } = store.getState().formReducer;
+                setEventFixedImage(files, parseInt(eventId), key1, !isFetch);
                 // formOnChange(`${id}`, files);
                 setA(a + 1);
               }
@@ -112,8 +117,8 @@ function ImageUpload({
   };
 
   const deleteImage = (a) => {
+    // let { eventId } = store.getState().formReducer;
     if (key1) {
-      let { eventId } = store.getState().formReducer;
       deleteEventFixedImage(eventId, key1);
       formOnChange(`${key1}`, "");
     } else {
@@ -136,8 +141,7 @@ function ImageUpload({
     return source?.map((photo) => {
       return (
         <>
-          {
-          photo && photo !== "" && (
+          {photo && photo !== "" && (
             <div className="upload_cont" key={photo}>
               <img className="uploaded_images" src={photo} alt="" />
 
@@ -155,15 +159,14 @@ function ImageUpload({
                 </div>
               </div>
             </div>
-          )
-          }
+          )}
         </>
       );
     });
   };
 
   return (
-    <div className="upload_container">
+    <div className={`upload_container ${contentClassName}`}>
       <div>
         <label
           // htmlFor="multiple-file-upload"

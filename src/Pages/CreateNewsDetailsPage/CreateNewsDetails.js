@@ -567,7 +567,7 @@ function CreateNewsDetails({
   );
 }
 const mapStateToProps = (state) => {
-  console.log({ state });
+  // console.log({ state });
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,

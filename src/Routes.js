@@ -43,7 +43,7 @@ function Routes({ isLogin, userName }) {
             <Route path="/news" component={NewsPage} exact />
             <Route path="/events" component={EventsPage} exact />
             <Route path="/add-event" component={AddEvent} exact />
-            <Route path="/edit-event/:id" component={EditEvent} exact />
+            <Route path="/edit-event/:eventId" component={EditEvent} exact />
             {/* <Route path="/past-events" component={PastEvents} exact />
             <Route path="/upcoming-events" component={UpcomingEvents} exact /> */}
             {/* <Route
