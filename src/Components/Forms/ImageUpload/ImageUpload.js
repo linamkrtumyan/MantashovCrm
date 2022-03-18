@@ -103,14 +103,36 @@ function ImageUpload({
           };
           e.target.value = "";
         } else {
-          uploadImage(files, id);
-          const arr = uploadedImages ? uploadedImages.concat(files) : files;
-          formOnChange(`${id}`, arr);
-          // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-          setA(a + 1);
-          Array.from(e.target.files).map((file) => {
-            URL.revokeObjectURL(file);
-          });
+          if (
+            limit &&
+            limit !== 0 &&
+            e.target.files.length <= limit &&
+            selectedFiles.length <= limit
+          ) {
+            console.log({ limit }, "if limitttt");
+            console.log(
+              { limit },
+              "e.target.files.length <= limit && selectedFiles.length <= limit"
+            );
+            uploadImage(files, id);
+            const arr = uploadedImages ? uploadedImages.concat(files) : files;
+            formOnChange(`${id}`, arr);
+            // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+            setA(a + 1);
+            Array.from(e.target.files).map((file) => {
+              URL.revokeObjectURL(file);
+            });
+          } else if (!limit && limit !== 0) {
+            console.log({ limit }, " else !limitttt");
+            uploadImage(files, id);
+            const arr = uploadedImages ? uploadedImages.concat(files) : files;
+            formOnChange(`${id}`, arr);
+            // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+            setA(a + 1);
+            Array.from(e.target.files).map((file) => {
+              URL.revokeObjectURL(file);
+            });
+          }
         }
       }
     }
@@ -180,7 +202,8 @@ function ImageUpload({
           type="file"
           // id="multiple-file-upload"
           id={`${id}`}
-          accept="image/png, image/gif, image/jpeg"
+          // accept="image/png, image/gif, image/jpeg image/svg"
+          accept="image/*"
           name="myfile"
           onChange={(e) => {
             // onImageChange(e);
