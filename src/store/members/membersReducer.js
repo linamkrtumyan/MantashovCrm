@@ -44,7 +44,6 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action, "action");
   switch (action.type) {
     case FETCH_MEMBERS_BY_PAGE_REQUEST:
       return {

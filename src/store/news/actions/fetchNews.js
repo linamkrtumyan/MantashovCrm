@@ -8,17 +8,14 @@ import {
 
 export const fetchNewsByPage = () => {
   const page = store.getState().paginationReducer.currentPage;
-  // console.log(page, "uxarkvox page");
   return (dispatch) => {
     dispatch(fetchNewsByPageRequest());
     request(`/admin/news/${page}`)
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchNewsByPageSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchNewsByPageFailure(e.message));
-        // console.log(e);
       });
   };
 };

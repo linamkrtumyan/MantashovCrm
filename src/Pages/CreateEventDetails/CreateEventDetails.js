@@ -150,25 +150,6 @@ function CreateEventDetails({
       deletedImages.push(img.name);
     });
 
-    // let {
-    //   img1,
-    //   img2,
-    //   img3,
-    //   img4,
-    //   img5,
-    //   img6,
-    //   img7,
-    //   img8,
-    //   img1Deleted,
-    //   img2Deleted,
-    //   img3Deleted,
-    //   img4Deleted,
-    //   img5Deleted,
-    //   img6Deleted,
-    //   img7Deleted,
-    //   img8Deleted,
-    // } = store.getState().formReducer;
-
     let dataToSend = {
       id: parseInt(eventId),
       shortDescriptionEng,
@@ -179,7 +160,7 @@ function CreateEventDetails({
     cleanVideos();
     cleanForm();
     addEventShortDescription(dataToSend);
-    // history.push("/events");
+    history.push("/events");
   };
 
   const deleteBlockImage = (block, index) => {
@@ -831,7 +812,6 @@ function CreateEventDetails({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log({ state }, "{{{{{{}}}}}}");
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,

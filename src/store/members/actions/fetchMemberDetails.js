@@ -16,7 +16,6 @@ export const fetchMemberDetails = (id) => {
       })
       .catch((e) => {
         dispatch(fetchMemberDetailsFailure(e.message));
-        // console.log(e);
       });
   };
 };

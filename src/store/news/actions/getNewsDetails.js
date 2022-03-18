@@ -16,7 +16,6 @@ export const getNewsDetails = (id) => {
       })
       .catch((e) => {
         dispatch(fetchNewsDetailsFailure(e.message));
-        // console.log(e);
       });
   };
 };

@@ -6,21 +6,16 @@ import {
 } from "../types";
 
 export const uploadOneImage = (img, url) => {
-  // console.log("mtav");
-  // console.log(img, "stacoxy", URL.createObjectURL(img[0]));
   const data = new FormData();
   for (let i = 0; i < img.length; i++) {
     data.append(`image${i}`, img[i], img[i].name);
   }
 
-  // console.log(data, "uxarkvoxy");
 
   return (dispatch) => {
     dispatch(uploadOneImageRequest());
-    // console.log("stieq");
     fetch("/admin/image", { method: "POST", body: data })
       .then((res) => {
-        // console.log(res, "res");
         return res.json();
       })
       .then((data) => {

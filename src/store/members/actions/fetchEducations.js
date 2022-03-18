@@ -7,18 +7,15 @@ import {
 } from "../types";
 
 export const fetchEducations = () => {
-  // console.log(page, "uxarkvox page");
 
   return (dispatch) => {
     dispatch(fetchEducationsRequest());
     request("/admin/members/educations/all")
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchEducationsSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchEducationsFailure(e.message));
-        // console.log(e);
       });
   };
 };

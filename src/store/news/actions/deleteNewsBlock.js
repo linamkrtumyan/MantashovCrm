@@ -7,19 +7,16 @@ import {
 import { toast } from "react-toastify";
 
 export const deleteNewsBlock = (id) => {
-  // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deleteNewsBlockRequest());
     request(`/admin/news/newsDetails/${id}`, "DELETE")
       .then((data) => {
-        // console.log(data, "data");
         dispatch(deleteNewsBlockSuccess(data));
         toast.dark("News removed");
       })
       .catch((e) => {
         dispatch(deleteNewsBlockFailure(e.message));
         toast.error("Something bad happened");
-        // console.log(e);
       });
   };
 };

@@ -9,8 +9,6 @@ import {
 } from "../types";
 
 export const fetchOrganizationDetails = (id) => {
-  // console.log("mtav feetch");
-  // console.log(id, "/////////********");
 
   return (dispatch) => {
     dispatch(fetchOrganizationDetailsRequest());
@@ -22,7 +20,6 @@ export const fetchOrganizationDetails = (id) => {
           .organizationsReducer.categories.filter((c) =>
             categoryIds.some((cat) => cat === c.id)
           );
-        // console.log("data", data);
 
         dispatch(initForm(data));
 
@@ -30,7 +27,6 @@ export const fetchOrganizationDetails = (id) => {
       })
       .catch((e) => {
         dispatch(fetchOrganizationDetailsFailure(e.message));
-        // console.log(e);
       });
   };
 };

@@ -12,7 +12,6 @@ export const addSpeaker = (speaker, changePath) => {
     dispatch(addSpeakerRequest());
     request("/admin/speakers/speaker", "POST", speaker)
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
           dispatch(addSpeakerSuccess(data));
           toast.dark("Speaker added");

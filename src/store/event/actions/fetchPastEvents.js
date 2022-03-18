@@ -7,20 +7,14 @@ import {
 } from "../types";
 
 export const fetchPastEvents = (page) => {
-  // console.log(page, "page");
-  //   const page = store.getState().paginationReducer.currentPage;
-  // const page = 0;
-  // console.log(page, "uxarkvox page");
   return (dispatch) => {
     dispatch(fetchPastEventsRequest());
     request(`/admin/events/past/${page}`)
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchPastEventsSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchPastEventsFailure(e.message));
-        // console.log(e);
       });
   };
 };

@@ -109,11 +109,6 @@ function ImageUpload({
             e.target.files.length <= limit &&
             selectedFiles.length <= limit
           ) {
-            console.log({ limit }, "if limitttt");
-            console.log(
-              { limit },
-              "e.target.files.length <= limit && selectedFiles.length <= limit"
-            );
             uploadImage(files, id);
             const arr = uploadedImages ? uploadedImages.concat(files) : files;
             formOnChange(`${id}`, arr);
@@ -123,7 +118,6 @@ function ImageUpload({
               URL.revokeObjectURL(file);
             });
           } else if (!limit && limit !== 0) {
-            console.log({ limit }, " else !limitttt");
             uploadImage(files, id);
             const arr = uploadedImages ? uploadedImages.concat(files) : files;
             formOnChange(`${id}`, arr);

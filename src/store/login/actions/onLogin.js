@@ -4,14 +4,12 @@ import request from "../../request";
 import { ON_LOGIN_REQUEST, ON_LOGIN_SUCCESS, ON_LOGIN_FAILURE } from "../types";
 
 export const onLoginFunction = (login) => {
-  // console.log(login, "uxarkvoxy");
 
   return (dispatch) => {
     dispatch(onLoginRequest());
     request("/admin/auth/login", "POST", login)
       .then((data) => {
         if (data.success) {
-          // console.log(data, "login data");
 
           dispatch(authorize());
           dispatch(onLoginSuccess(data));
@@ -20,7 +18,6 @@ export const onLoginFunction = (login) => {
       .catch((e) => {
         dispatch(onLoginFailure(e.message));
         toast.error("wrong email or password");
-        // console.log(e);
       });
   };
 };

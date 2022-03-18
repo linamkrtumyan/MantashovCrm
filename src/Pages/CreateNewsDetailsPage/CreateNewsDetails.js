@@ -139,11 +139,6 @@ function CreateNewsDetails({
       deletedImages.push(img.name);
     });
 
-    // let dataToSend = {
-    //   id: parseInt(newsId),
-    //   addedImages,
-    //   deletedImages,
-    // };
     cleanImages();
     cleanVideos();
     cleanForm();
@@ -567,7 +562,6 @@ function CreateNewsDetails({
   );
 }
 const mapStateToProps = (state) => {
-  // console.log({ state });
   return {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,

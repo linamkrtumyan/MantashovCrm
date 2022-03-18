@@ -7,13 +7,11 @@ import {
 import { toast } from "react-toastify";
 
 export const deleteCategory = (id) => {
-  // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deleteCategoryRequest());
 
     request(`/admin/organizations/category/${id}`, "DELETE")
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
           dispatch(deleteCategorySuccess(data));
           toast.dark("Category removed");
@@ -24,7 +22,6 @@ export const deleteCategory = (id) => {
       .catch((e) => {
         dispatch(deleteCategoryFailure(e.message));
         toast.error("Something bad happened");
-        // console.log(e);
       });
   };
 };

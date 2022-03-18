@@ -7,18 +7,15 @@ import {
 } from "../types";
 
 export const fetchCategoriesAll = () => {
-  // console.log(page, "uxarkvox page");
 
   return (dispatch) => {
     dispatch(fetchCategoriesAllRequest());
     request("/admin/organizations/categoriesForAdmin")
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchCategoriesAllSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchCategoriesAllFailure(e.message));
-        // console.log(e);
       });
   };
 };
