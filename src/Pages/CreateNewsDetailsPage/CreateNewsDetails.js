@@ -251,7 +251,6 @@ function CreateNewsDetails({
               label="Upload Images"
               containerClassName="uploaded"
               id="blockImages"
-              limit={0}
             />
             <VideoUpload
               label="Upload Videos"
@@ -448,7 +447,6 @@ function CreateNewsDetails({
                       label="Upload Images"
                       containerClassName="uploaded"
                       id={`block${block.id}`}
-                      limit={0}
                     />
                     <div
                       style={{

@@ -38,6 +38,7 @@ function ImageUpload({
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
 
+
   let { eventId } = useParams();
 
   useEffect(() => {
@@ -118,6 +119,15 @@ function ImageUpload({
               URL.revokeObjectURL(file);
             });
           } else if (!limit && limit !== 0) {
+            uploadImage(files, id);
+            const arr = uploadedImages ? uploadedImages.concat(files) : files;
+            formOnChange(`${id}`, arr);
+            // setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+            setA(a + 1);
+            Array.from(e.target.files).map((file) => {
+              URL.revokeObjectURL(file);
+            });
+          } else {
             uploadImage(files, id);
             const arr = uploadedImages ? uploadedImages.concat(files) : files;
             formOnChange(`${id}`, arr);

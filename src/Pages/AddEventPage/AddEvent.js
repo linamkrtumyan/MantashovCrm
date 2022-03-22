@@ -66,6 +66,7 @@ function AddEvent({
     formOnChangeArray("agendasAddresses", "agendas", []);
     getSpeakers();
     cleanImages();
+    eventId = null;
   }, []);
 
   useEffect(() => {
