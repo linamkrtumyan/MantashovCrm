@@ -189,21 +189,6 @@ function AddEvent({
               <Select placeholder="State" items={states} id="stateId" />
               <Select placeholder="City" items={cities} id="cityId" />
             </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Textarea
-                id="descriptionEng"
-                type="text"
-                placeholder="Description"
-              />
-              <Textarea
-                id="descriptionArm"
-                type="text"
-                placeholder="Նկարագիր"
-              />
-              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
-            </div>
-
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Input
                 id="locationEng"
@@ -223,6 +208,20 @@ function AddEvent({
                 placeholder="Адрес"
                 required={false}
               />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Textarea
+                id="descriptionEng"
+                type="text"
+                placeholder="Description"
+              />
+              <Textarea
+                id="descriptionArm"
+                type="text"
+                placeholder="Նկարագիր"
+              />
+              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>

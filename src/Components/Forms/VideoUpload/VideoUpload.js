@@ -27,14 +27,14 @@ function VideoUpload({
   }, [id]);
 
   useEffect(() => {
+    let filesArray = [];
     if (uploadedVideos) {
-      const filesArray = Array.from(uploadedVideos).map((file) =>
+      filesArray = Array.from(uploadedVideos).map((file) =>
         URL.createObjectURL(file)
       );
-      setSelectedVideos(filesArray);
-    } else {
-      setSelectedVideos(uploadedVideos);
     }
+    setSelectedVideos(filesArray);
+    setA(a + 1);
   }, [uploadedVideos]);
 
   const onVideoChange = (e) => {
@@ -66,30 +66,37 @@ function VideoUpload({
         });
       }
     }
-
-    setDelindex(null);
   };
 
   const deleteVideo = (a) => {
+    let deletedVideos = uploadedVideos[a];
+    const newArr = uploadedVideos
+      .slice(0, a)
+      .concat(uploadedVideos.slice(a + 1));
     deleteVideoFromStore(a, id);
+    formOnChange(`${id}Deleted`, [uploadedVideos]);
+    formOnChange(`${id}`, newArr);
     setDelindex(a);
   };
 
   const renderVideos = (source) => {
-    if (delindex != null) {
-      source.splice(delindex, 1);
-      // selectedVideos.splice(delindex, 1);
-    }
-    return source?.map((videos) => {
+    // if (delindex != null) {
+    //   source.splice(delindex, 1);
+    // }
+    return source?.map((video) => {
       return (
-        <div className="upload_cont" key={videos}>
+        <div className="upload_cont" key={video}>
           <video className="uploaded_images" controls>
-            <source src={videos} type="video/mp4" />
-            <source src={videos} type="video/ogg" />
+            <source src={video} type="video/mp4" />
+            <source src={video} type="video/ogg" />
             Your browser does not support the video tag.
           </video>
           <div className="middle">
-            <div onClick={() => deleteVideo(source.indexOf(videos))}>
+            <div
+              onClick={() => {
+                deleteVideo(source.indexOf(video));
+              }}
+            >
               <svg viewBox="0 0 24 24" className="close">
                 <path
                   d="M 2 2 L 22 22 M 2 22 L22 2"
@@ -110,7 +117,7 @@ function VideoUpload({
     <div className="upload_container">
       <div>
         <label
-          htmlFor="multiple-file-upload2"
+          htmlFor={`${id}`}
           className={`multiple-custom-file-upload ${className}`}
         >
           <i className="fas fa-cloud-upload-alt"></i>
@@ -118,7 +125,7 @@ function VideoUpload({
         </label>
         <input
           type="file"
-          id="multiple-file-upload2"
+          id={`${id}`}
           accept="video/*"
           name="myfile"
           onChange={(e) => {

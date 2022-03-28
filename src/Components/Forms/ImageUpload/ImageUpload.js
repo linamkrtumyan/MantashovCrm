@@ -38,7 +38,6 @@ function ImageUpload({
   const [delindex, setDelindex] = useState(null);
   const [a, setA] = useState(0);
 
-
   let { eventId } = useParams();
 
   useEffect(() => {
