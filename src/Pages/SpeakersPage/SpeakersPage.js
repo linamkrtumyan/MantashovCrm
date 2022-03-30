@@ -62,7 +62,7 @@ function SpeakersPage({
     <div>
       <div className="members_container">
         <div className="is-flex is-justify-content-flex-end">
-          <SearchBar id="speakersSearch" containerClass="searchbar-container" />
+          <SearchBar id="speakersSearch" containerClass="searchbar-container"url="/speakers" />
           <AddSpeakerCard />
         </div>
 

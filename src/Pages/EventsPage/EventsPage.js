@@ -113,7 +113,11 @@ function EventsPage({
         setInfoId={setInfoId}
       />
       <div className="is-flex is-justify-content-flex-end">
-        <SearchBar id="eventsSearch" containerClass="searchbar-container" />
+        <SearchBar
+          id="eventsSearch"
+          containerClass="searchbar-container"
+          url="/events"
+        />
         <AddEventCard />
       </div>
       {eventsByPage && eventsByPage.length ? (

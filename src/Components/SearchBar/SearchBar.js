@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 // import { useHistory } from "react-router-dom";
 import { formOnChange } from "../../store";
 import "./SearchBar.css";
 
-function SearchBar({ id, containerClass, searchValue, formOnChange }) {
-
-  //   const history = useHistory();
+function SearchBar({ id, containerClass, searchValue, formOnChange, url }) {
+  const history = useHistory();
+  const { currentPage } = useParams();
   const [value, setValue] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
+    if (currentPage !== 1) {
+      history.push(`${url}/1`);
+    }
     formOnChange(`${id}`, value);
   };
 

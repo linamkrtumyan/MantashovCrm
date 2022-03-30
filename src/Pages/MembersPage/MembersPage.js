@@ -72,7 +72,7 @@ function MembersPage({
           <div className="is-flex is-justify-content-flex-end">
             <SearchBar
               id="membersSearch"
-              containerClass="searchbar-container"
+              containerClass="searchbar-container" url="/members"
             />
             <AddMemberCard />
           </div>

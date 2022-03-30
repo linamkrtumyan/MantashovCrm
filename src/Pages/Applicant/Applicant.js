@@ -66,7 +66,11 @@ function Applicant({
       </div>
 
       <div className="is-flex is-justify-content-flex-end">
-        <SearchBar id="applicantsSearch" containerClass="searchbar-container" />
+        <SearchBar
+          id="applicantsSearch"
+          containerClass="searchbar-container"
+          url="/applicant"
+        />
       </div>
       {applicants && applicants.length ? (
         <>

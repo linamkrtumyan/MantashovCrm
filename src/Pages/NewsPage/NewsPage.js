@@ -59,7 +59,7 @@ function NewsPage({
     <div>
       <div className="members_container">
         <div className="is-flex is-justify-content-flex-end">
-          <SearchBar id="newsSearch" containerClass="searchbar-container" />
+          <SearchBar id="newsSearch" containerClass="searchbar-container" url="/news" />
           <AddNewsCard />
         </div>
 
