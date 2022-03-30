@@ -9,7 +9,6 @@ import {
 } from "../types";
 
 export const fetchOrganizationDetails = (id) => {
-
   return (dispatch) => {
     dispatch(fetchOrganizationDetailsRequest());
     request(`/admin/organizations/organization/${id}`)

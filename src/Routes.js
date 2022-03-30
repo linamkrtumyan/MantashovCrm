@@ -40,10 +40,6 @@ function Routes({ isLogin, userName }) {
 
         <div style={{ marginLeft: "200px", paddingTop: "100px" }}>
           <Switch>
-            <Route path="/news" component={NewsPage} exact />
-            <Route path="/events" component={EventsPage} exact />
-            <Route path="/add-event" component={AddEvent} exact />
-            <Route path="/edit-event/:eventId" component={EditEvent} exact />
             {/* <Route path="/past-events" component={PastEvents} exact />
             <Route path="/upcoming-events" component={UpcomingEvents} exact /> */}
             {/* <Route
@@ -51,6 +47,10 @@ function Routes({ isLogin, userName }) {
               component={EventDetailsPage}
               exact
             /> */}
+            <Route path="/news/:currentPage" component={NewsPage} exact />
+            <Route path="/events/:currentPage" component={EventsPage} exact />
+            <Route path="/add-event" component={AddEvent} exact />
+            <Route path="/edit-event/:eventId" component={EditEvent} exact />
             <Route
               path="/eventDetails/:eventId"
               component={CreateEventDetails}
@@ -61,7 +61,7 @@ function Routes({ isLogin, userName }) {
               component={CreateNewsDetails}
               exact
             />
-            <Route path="/members" component={MembersPage} exact />
+            <Route path="/members/:currentPage" component={MembersPage} exact />
             <Route path="/member-details/:id" component={MemberDetails} exact />
             <Route path="/add-member" component={AddMember} exact />
             <Route path="/edit-member/:id" component={EditMember} exact />
@@ -70,11 +70,15 @@ function Routes({ isLogin, userName }) {
             <Route path="/edit-news/:id" component={EditNews} exact />
             <Route path="/bulma" component={WithBulma} exact />
             <Route path="/information" component={Information} exact />
-            <Route path="/applicant" component={Applicant} exact />
-            <Route path="/speakers" component={SpeakersPage} exact />
+            <Route path="/applicant/:currentPage" component={Applicant} exact />
+            <Route
+              path="/speakers/:currentPage"
+              component={SpeakersPage}
+              exact
+            />
             <Route path="/add-speaker" component={AddSpeakerPage} exact />
             <Route path="/edit-speaker/:id" component={EditSpeaker} exact />
-            <Redirect to="/news" />
+            <Redirect to="/news/1" />
           </Switch>
         </div>
         {/* <Footer /> */}

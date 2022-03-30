@@ -83,7 +83,7 @@ function EditMember({
   // }, [category]);
 
   const handleCancel = () => {
-    history.push("/members");
+    history.push("/members/1");
   };
 
   const handleSubmit = (e) => {

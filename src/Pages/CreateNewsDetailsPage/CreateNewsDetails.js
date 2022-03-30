@@ -142,7 +142,7 @@ function CreateNewsDetails({
     cleanImages();
     cleanVideos();
     cleanForm();
-    history.push("/news");
+    history.push("/news/1");
   };
 
   const deleteBlockImage = (block, index) => {

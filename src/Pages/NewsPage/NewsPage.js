@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./newsPage.css";
 import NewsCard from "../../Components/News/NewsCard/NewsCard";
 import AddNewsCard from "../../Components/News/AddNewsCard/AddNewsCard";
 import Pagination from "../../Components/Pagination/Pagination";
 import { connect } from "react-redux";
-import { changeCurrentPage, fetchNewsByPage } from "../../store";
+import store, { changeCurrentPage, fetchNewsByPage } from "../../store";
 import Loading from "../../Components/Loading/Loading";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import SearchBar from "../../Components/SearchBar/SearchBar";
+import { useQuery } from "../../Hooks/useQuery";
 
 function NewsPage({
   fetchNewsByPage,
@@ -14,21 +16,27 @@ function NewsPage({
   count,
   loading,
   noNews,
-  currentPage,
+  // currentPage,
   changeCurrentPage,
   action,
+  searchValue,
 }) {
   let history = useHistory();
+  let { currentPage } = useParams();
 
   useEffect(() => {
     changeCurrentPage(1);
   }, []);
 
+  // useEffect(() => {
+  //   fetchNewsByPage(currentPage);
+  // }, []);
+
   useEffect(() => {
     if (!loading) {
-      fetchNewsByPage();
+      fetchNewsByPage(currentPage, searchValue ?? "");
     }
-  }, [currentPage, action]);
+  }, [currentPage, action, searchValue]);
 
   function handleDetails(id) {
     history.push(`/edit-news/${id}`);
@@ -37,7 +45,7 @@ function NewsPage({
   if (loading) {
     return <Loading />;
   }
-  if (noNews) {
+  if (noNews && (!searchValue || searchValue == "")) {
     return (
       <div className="noData">
         <div>
@@ -50,7 +58,10 @@ function NewsPage({
   return (
     <div>
       <div className="members_container">
-        <AddNewsCard />
+        <div className="is-flex is-justify-content-flex-end">
+          <SearchBar id="newsSearch" containerClass="searchbar-container" />
+          <AddNewsCard />
+        </div>
 
         <div
           style={{
@@ -105,13 +116,17 @@ function NewsPage({
                 })
               ) : (
                 <tr>
-                  <td colSpan="3">No data</td>
+                  <td colSpan="3">
+                    {!searchValue || searchValue === ""
+                      ? "No data"
+                      : "Nothing found"}
+                  </td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
-        <Pagination totalPosts={count} />
+        <Pagination totalPosts={count} url="/news" />
       </div>
     </div>
   );
@@ -122,15 +137,17 @@ const mapStateToProps = (state) => {
     count: state.newsReducer.count,
     loading: state.newsReducer.loading,
     noNews: state.newsReducer.newsByPage.length === 0,
-    currentPage: state.paginationReducer.currentPage,
+    // currentPage: state.paginationReducer.currentPage,
     action: state.modalReducer.action,
+    searchValue: state.formReducer?.newsSearch ?? "",
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
-    fetchNewsByPage: () => dispatch(fetchNewsByPage()),
+    fetchNewsByPage: (page, searchValue) =>
+      dispatch(fetchNewsByPage(page, searchValue)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewsPage);

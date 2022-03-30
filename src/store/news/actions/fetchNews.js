@@ -6,11 +6,11 @@ import {
   FETCH_NEWS_BY_PAGE_FAILURE,
 } from "../types";
 
-export const fetchNewsByPage = () => {
-  const page = store.getState().paginationReducer.currentPage;
+export const fetchNewsByPage = (page, searchValue) => {
+  // const page = store.getState().paginationReducer.currentPage;
   return (dispatch) => {
     dispatch(fetchNewsByPageRequest());
-    request(`/admin/news/${page}`)
+    request(`/admin/news/${page}?searchValue=${searchValue}`)
       .then((data) => {
         dispatch(fetchNewsByPageSuccess(data));
       })

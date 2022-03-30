@@ -7,12 +7,12 @@ import {
 } from "../types";
 import { changeCurrentPage } from "../../pagination/actions";
 
-export const fetchEventsByPage = () => {
-  const page = store.getState().paginationReducer.currentPage;
+export const fetchEventsByPage = (page, searchValue) => {
+  // const page = store.getState().paginationReducer.currentPage;
 
   return (dispatch) => {
     dispatch(fetchEventsByPageRequest());
-    request(`/admin/events/${page}`)
+    request(`/admin/events/${page}?searchValue=${searchValue}`)
       .then((data) => {
         dispatch(fetchEventsByPageSuccess(data));
         if (data.count > 0 && data.events.length === 0) {

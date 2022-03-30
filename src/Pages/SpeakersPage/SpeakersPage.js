@@ -4,8 +4,9 @@ import { fetchSpeakers, deleteSpeaker, fetchSpeakersByPage } from "../../store";
 import { connect } from "react-redux";
 import Loading from "../../Components/Loading/Loading";
 import AddSpeakerCard from "../../Components/Speakers/AddSpeakerCard/AddSpeakerCard";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Pagination from "../../Components/Pagination/Pagination";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 function SpeakersPage({
   fetchSpeakers,
@@ -16,19 +17,21 @@ function SpeakersPage({
   count,
   speakersByPage,
   fetchSpeakersByPage,
+  searchValue,
 }) {
   let history = useHistory();
+  let { currentPage } = useParams();
 
-  useEffect(() => {
-    fetchSpeakersByPage();
-  }, []);
+  // useEffect(() => {
+  //   fetchSpeakersByPage(currentPage);
+  // }, []);
 
   useEffect(() => {
     if (!loading) {
       // fetchSpeakers();
-      fetchSpeakersByPage();
+      fetchSpeakersByPage(currentPage, searchValue ?? "");
     }
-  }, [fetch]);
+  }, [fetch, searchValue]);
 
   const handleDetails = (id) => {
     history.push(`/edit-speaker/${id}`);
@@ -41,7 +44,10 @@ function SpeakersPage({
   if (loading) {
     return <Loading />;
   }
-  if (!speakersByPage || !speakersByPage.length) {
+  if (
+    !speakersByPage ||
+    (!speakersByPage.length && (!searchValue || searchValue == ""))
+  ) {
     return (
       <div className="noData">
         <div>
@@ -55,7 +61,10 @@ function SpeakersPage({
   return (
     <div>
       <div className="members_container">
-        <AddSpeakerCard />
+        <div className="is-flex is-justify-content-flex-end">
+          <SearchBar id="speakersSearch" containerClass="searchbar-container" />
+          <AddSpeakerCard />
+        </div>
 
         <div
           style={{
@@ -126,7 +135,12 @@ function SpeakersPage({
                 })
               ) : (
                 <tr>
-                  <td colSpan="5">No data</td>
+                  <td colSpan="5">
+                    {" "}
+                    {!searchValue || searchValue === ""
+                      ? "No data"
+                      : "Nothing found"}
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -145,6 +159,7 @@ const mapStateToProps = (state) => {
     loading: state.speakerReducer.loading,
     count: state.speakerReducer.count,
     speakersByPage: state.speakerReducer.speakersByPage,
+    searchValue: state.formReducer?.speakersSearch ?? "",
   };
 };
 
@@ -156,8 +171,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteSpeaker: (id) => {
       dispatch(deleteSpeaker(id));
     },
-    fetchSpeakersByPage: () => {
-      dispatch(fetchSpeakersByPage());
+    fetchSpeakersByPage: (page, searchValue) => {
+      dispatch(fetchSpeakersByPage(page, searchValue));
     },
   };
 };

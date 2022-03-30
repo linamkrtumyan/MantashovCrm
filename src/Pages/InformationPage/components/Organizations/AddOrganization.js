@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Input from "../../../../Components/Forms/Input/Input";
 import Multiselect from "../../../../Components/Forms/MultiSelect/Multiselect";
+import OneImageUpload from "../../../../Components/Forms/OneImageUpload/OneImageUpload";
 import Select from "../../../../Components/Forms/Select/Select";
 import Textarea from "../../../../Components/Forms/Textarea/Textarea";
 import store, {
@@ -17,7 +18,6 @@ import store, {
   cleanOrganization,
 } from "../../../../store";
 import request from "../../../../store/request";
-
 
 function AddOrganization({
   modalOpen,
@@ -38,7 +38,6 @@ function AddOrganization({
   addOrganization,
   cleanForm,
 }) {
-
   useEffect(() => {
     cleanOrganization();
     cleanForm();
@@ -69,7 +68,7 @@ function AddOrganization({
       categoryIds,
       hashTags,
     } = store.getState().formReducer;
-
+    const image = store.getState().imageReducer.header[0]?.name ?? null;
     let organization = {
       address: { locationArm, locationEng, locationRu, cityId: city },
       organization: {
@@ -78,6 +77,7 @@ function AddOrganization({
         nameRu,
         categoryIds,
         hashTags,
+        image,
       },
     };
     setModalOpen(false);
@@ -99,13 +99,18 @@ function AddOrganization({
           ></button>
         </header>
         <section className="modal-card-body has-text-centered">
+          <div
+            className="is-flex is-justify-content-center"
+            style={{ marginBottom: "20px" }}
+          >
+            <OneImageUpload label="Header Image" />
+          </div>
           <div className="is-flex ">
             <Input id="nameArm" type="text" placeholder="Անվանում" />
             <Input id="nameEng" type="text" placeholder="Name" />
             <Input id="nameRu" type="text" placeholder="Название" />
           </div>
           <div className="is-flex is-justify-content-center">
-            
             <Multiselect
               placeholder="Select Sphere"
               items={categories}

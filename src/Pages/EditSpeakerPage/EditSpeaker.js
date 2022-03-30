@@ -52,7 +52,7 @@ function EditSpeaker({
   }, [id]);
 
   const cancelEdit = () => {
-    history.push("/speakers");
+    history.push("/speakers/1");
   };
 
   const handleEdit = (e) => {
@@ -62,7 +62,7 @@ function EditSpeaker({
       store.getState().formReducer;
     let header = store.getState().imageReducer.header;
     const changePath = () => {
-      history.push("/speakers");
+      history.push("/speakers/1");
     };
     let speaker = {
       id: parseInt(id),

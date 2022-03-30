@@ -6,8 +6,9 @@ import Pagination from "../../Components/Pagination/Pagination";
 import { connect } from "react-redux";
 import Loading from "../../Components/Loading/Loading";
 import { changeCurrentPage, fetchMembersByPage } from "../../store";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ResetPassword from "./components/ResetPassword";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 function MembersPage({
   fetchMembersByPage,
@@ -15,14 +16,16 @@ function MembersPage({
   loading,
   noMembers,
   count,
-  currentPage,
+  // currentPage,
   changeCurrentPage,
   action,
+  searchValue,
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [memberId, setMemberId] = useState(null);
 
   let history = useHistory();
+  let { currentPage } = useParams();
 
   useEffect(() => {
     changeCurrentPage(1);
@@ -30,9 +33,9 @@ function MembersPage({
 
   useEffect(() => {
     if (!loading) {
-      fetchMembersByPage();
+      fetchMembersByPage(currentPage, searchValue ?? "");
     }
-  }, [currentPage, action]);
+  }, [currentPage, action, searchValue]);
 
   function handleDetails(id) {
     history.push(`/edit-member/${id}`);
@@ -46,7 +49,7 @@ function MembersPage({
   if (loading) {
     return <Loading />;
   }
-  if (noMembers) {
+  if (noMembers && (!searchValue || searchValue == "")) {
     return (
       <div className="noData">
         <div>
@@ -66,7 +69,13 @@ function MembersPage({
       />
       <div>
         <div className="members_container">
-          <AddMemberCard />
+          <div className="is-flex is-justify-content-flex-end">
+            <SearchBar
+              id="membersSearch"
+              containerClass="searchbar-container"
+            />
+            <AddMemberCard />
+          </div>
 
           <div
             style={{
@@ -138,14 +147,18 @@ function MembersPage({
                   })
                 ) : (
                   <tr>
-                    <td colSpan="5">No data</td>
+                    <td colSpan="5">
+                      {!searchValue || searchValue === ""
+                        ? "No data"
+                        : "Nothing found"}
+                    </td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
 
-          <Pagination totalPosts={count} />
+          <Pagination totalPosts={count} url="/members" />
         </div>
       </div>
     </>
@@ -158,15 +171,17 @@ const mapStateToProps = (state) => {
     loading: state.membersReducer.loading,
     noMembers: state.membersReducer.membersByPage.length === 0,
     count: state.membersReducer.count,
-    currentPage: state.paginationReducer.currentPage,
+    // currentPage: state.paginationReducer.currentPage,
     action: state.modalReducer.action,
+    searchValue: state.formReducer?.membersSearch ?? "",
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
-    fetchMembersByPage: () => dispatch(fetchMembersByPage()),
+    fetchMembersByPage: (page, searchValue) =>
+      dispatch(fetchMembersByPage(page, searchValue)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MembersPage);

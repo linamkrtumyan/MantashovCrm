@@ -160,7 +160,7 @@ function EditEvent({
   const handleCancel = () => {
     cleanImages();
     cleanForm();
-    history.push("/events");
+    history.push("/events/1");
   };
 
   const handleSubmit = (e) => {
@@ -205,7 +205,7 @@ function EditEvent({
     };
 
     // const changePath = () => {
-    //   history.push("/events");
+    //   history.push("/events/1");
     // };
     editEvent(event);
     cleanImages();

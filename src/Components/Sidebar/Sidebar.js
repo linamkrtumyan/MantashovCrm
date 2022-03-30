@@ -37,7 +37,7 @@ function Sidebar() {
           <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
             <NavLink
               className="menu_title"
-              to="/news"
+              to="/news/1"
               activeClassName="active-link"
               // onClick={() => closeMenu()}
             >
@@ -59,7 +59,7 @@ function Sidebar() {
             </NavLink>
             <NavLink
               className="menu_title"
-              to="/events"
+              to="/events/1"
               activeClassName="active-link"
               // onClick={() => closeMenu()}
             >
@@ -82,7 +82,7 @@ function Sidebar() {
 
             <NavLink
               className="menu_title"
-              to="/members"
+              to="/members/1"
               activeClassName="active-link"
               // onClick={() => closeMenu()}
             >
@@ -137,7 +137,7 @@ function Sidebar() {
 
             <NavLink
               className="menu_title"
-              to="/applicant"
+              to="/applicant/1"
               activeClassName="active-link"
               // onClick={() => closeMenu()}
             >
@@ -156,7 +156,7 @@ function Sidebar() {
 
             <NavLink
               className="menu_title"
-              to="/speakers"
+              to="/speakers/1"
               activeClassName="active-link"
               // onClick={() => closeMenu()}
             >

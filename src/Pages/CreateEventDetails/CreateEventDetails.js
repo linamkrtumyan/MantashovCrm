@@ -160,7 +160,7 @@ function CreateEventDetails({
     cleanVideos();
     cleanForm();
     addEventShortDescription(dataToSend);
-    history.push("/events");
+    history.push("/events/1");
   };
 
   const deleteBlockImage = (block, index) => {
@@ -201,6 +201,18 @@ function CreateEventDetails({
     };
     editEventBlock(blockData);
     setRenderContent(renderContent + 1);
+  };
+
+  const callback = () => {
+    const { shortDescriptionEng, shortDescriptionArm, shortDescriptionRu } =
+      store.getState().formReducer;
+    const data = {
+      id: eventId,
+      shortDescriptionEng,
+      shortDescriptionArm,
+      shortDescriptionRu,
+    };
+    addEventShortDescription(data);
   };
 
   return (
@@ -347,6 +359,7 @@ function CreateEventDetails({
             key1="img1"
             className="fixed-size-lbl"
             contentClassName="fixed-uploader-content"
+            callback={callback}
           />
           <ImageUpload
             label="(700x390)"
@@ -358,6 +371,7 @@ function CreateEventDetails({
             key1="img2"
             className="fixed-size-lbl"
             contentClassName="fixed-uploader-content"
+            callback={callback}
           />
           <ImageUpload
             label="(460x260)"
@@ -369,6 +383,7 @@ function CreateEventDetails({
             key1="img3"
             className="fixed-size-lbl"
             contentClassName="fixed-uploader-content"
+            callback={callback}
           />
           <ImageUpload
             label="(500x490)"
@@ -380,6 +395,7 @@ function CreateEventDetails({
             key1="img4"
             className="fixed-size-lbl"
             contentClassName="fixed-uploader-content"
+            callback={callback}
           />
           <ImageUpload
             label="(300x300)"
@@ -391,6 +407,7 @@ function CreateEventDetails({
             key1="img5"
             className="fixed-size-lbl"
             contentClassName="fixed-uploader-content"
+            callback={callback}
           />
           <ImageUpload
             label="(180x180)"
@@ -402,6 +419,7 @@ function CreateEventDetails({
             key1="img6"
             className="fixed-size-lbl"
             contentClassName="fixed-uploader-content"
+            callback={callback}
           />
           <ImageUpload
             label="(210x120)"
@@ -413,6 +431,7 @@ function CreateEventDetails({
             key1="img7"
             className="fixed-size-lbl"
             contentClassName="fixed-uploader-content"
+            callback={callback}
           />
           <ImageUpload
             label="(200x120)"
@@ -424,6 +443,7 @@ function CreateEventDetails({
             key1="img8"
             className="fixed-size-lbl"
             contentClassName="fixed-uploader-content"
+            callback={callback}
           />
         </div>
       </div>

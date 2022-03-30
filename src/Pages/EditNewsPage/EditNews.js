@@ -80,7 +80,7 @@ function EditNews({
   }, [renderContent, id]);
 
   const handleCancel = () => {
-    history.push("/news");
+    history.push("/news/1");
   };
 
   useEffect(() => {
@@ -221,7 +221,7 @@ function EditNews({
     cleanImages();
     cleanVideos();
     cleanForm();
-    history.push("/news");
+    history.push("/news/1");
   };
 
   const deleteBlockImage = (block, index) => {

@@ -33,6 +33,7 @@ function ImageUpload({
   imageWithKey,
   deleteEventFixedImage,
   isFetch,
+  callback = () => {},
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [delindex, setDelindex] = useState(null);
@@ -95,6 +96,7 @@ function ImageUpload({
                 );
               } else {
                 // let { eventId } = store.getState().formReducer;
+                callback();
                 setEventFixedImage(files, parseInt(eventId), key1, !isFetch);
                 // formOnChange(`${id}`, files);
                 setA(a + 1);

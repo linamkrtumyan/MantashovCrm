@@ -157,7 +157,7 @@ function AddEvent({
   };
 
   const handleCancel = () => {
-    history.push("/events");
+    history.push("/events/1");
     cleanForm();
     // editAgendas([]);
   };
