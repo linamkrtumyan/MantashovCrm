@@ -47,7 +47,7 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
 
   const handleCancel = () => {
     cleanImages();
-    path.push("/news");
+    path.push("/news/1");
   };
 
   return (

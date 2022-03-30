@@ -122,7 +122,7 @@ function EditMember({
     // const cont = Object.values(contacts);
 
     const changePath = () => {
-      path.push("/members");
+      path.push("/members/1");
     };
     let member = {
       // locationArm,
