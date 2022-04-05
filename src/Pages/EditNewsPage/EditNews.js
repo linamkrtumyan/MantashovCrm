@@ -192,7 +192,16 @@ function EditNews({
     editedBlock.deletedVideos = [];
     editedBlock.addedVideos =
       store.getState().videoReducer[`videoBlock${editedBlock.id}`] ?? [];
-    editNewsBlock(editedBlock);
+    editNewsBlock(editedBlock, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+
+    formOnChange(`block${editedBlock.id}`, []);
+    formOnChange(`videoBlock${editedBlock.id}`, []);
+
+    // setRenderContent(renderContent + 1);
     toast.dark("Edited");
   };
 
@@ -697,12 +706,15 @@ function EditNews({
                       </div>
                       <div style={{ display: "flex ", marginBottom: 20 }}>
                         {block.videos && block.videos.length
-                          ? block.videos.map((video) => {
+                          ? block.videos.map((video, index) => {
                               return (
                                 <div className="upload_cont" key={video}>
-                                  <video className="uploaded_images" controls>
-                                    <source src={video} type="video/mp4" />
-                                    <source src={video} type="video/ogg" />
+                                  <video
+                                    className="uploaded_images"
+                                    poster={block.thumbnails[index]}
+                                  >
+                                    {/* <source src={video} type="video/mp4" />
+                                    <source src={video} type="video/ogg" /> */}
                                     Your browser does not support the video tag.
                                   </video>
                                   <div className="middle">
@@ -794,7 +806,8 @@ const mapDispatchToProps = (dispatch) => {
     addNewsBlock: (blockData) => dispatch(addNewsBlock(blockData)),
     getNewsDetails: (id) => dispatch(getNewsDetails(id)),
     deleteNewsBlock: (id) => dispatch(deleteNewsBlock(id)),
-    editNewsBlock: (block) => dispatch(editNewsBlock(block)),
+    editNewsBlock: (block, callback) =>
+      dispatch(editNewsBlock(block, callback)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditNews);

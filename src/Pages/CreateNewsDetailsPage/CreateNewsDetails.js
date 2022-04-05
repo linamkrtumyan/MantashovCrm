@@ -118,7 +118,13 @@ function CreateNewsDetails({
     editedBlock.deletedVideos = [];
     editedBlock.addedVideos =
       store.getState().videoReducer[`videoBlock${editedBlock.id}`] ?? [];
-    editNewsBlock(editedBlock);
+    editNewsBlock(editedBlock, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+    formOnChange(`block${editedBlock.id}`, []);
+    formOnChange(`videoBlock${editedBlock.id}`, []);
     toast.dark("Edited");
   };
 
@@ -496,12 +502,15 @@ function CreateNewsDetails({
                     </div>
                     <div style={{ display: "flex ", marginBottom: 20 }}>
                       {block.videos && block.videos.length
-                        ? block.videos.map((video) => {
+                        ? block.videos.map((video, index) => {
                             return (
                               <div className="upload_cont" key={video}>
-                                <video className="uploaded_images" controls>
-                                  <source src={video} type="video/mp4" />
-                                  <source src={video} type="video/ogg" />
+                                <video
+                                  className="uploaded_images"
+                                  poster={block.thumbnails[index]}
+                                >
+                                  {/* <source src={video} type="video/mp4" />
+                                  <source src={video} type="video/ogg" /> */}
                                   Your browser does not support the video tag.
                                 </video>
                                 <div className="middle">

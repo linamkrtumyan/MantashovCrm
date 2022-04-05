@@ -9,6 +9,7 @@ import { changeCurrentPage, fetchMembersByPage } from "../../store";
 import { useHistory, useParams } from "react-router-dom";
 import ResetPassword from "./components/ResetPassword";
 import SearchBar from "../../Components/SearchBar/SearchBar";
+import TableBody from "./components/TableBody";
 
 function MembersPage({
   fetchMembersByPage,
@@ -29,6 +30,7 @@ function MembersPage({
 
   useEffect(() => {
     changeCurrentPage(1);
+    fetchMembersByPage(1, "");
   }, []);
 
   useEffect(() => {
@@ -37,19 +39,10 @@ function MembersPage({
     }
   }, [currentPage, action, searchValue]);
 
-  function handleDetails(id) {
-    history.push(`/edit-member/${id}`);
-  }
-
-  const handleReset = (id) => {
-    setMemberId(id);
-    setModalOpen(true);
-  };
-
   if (loading) {
     return <Loading />;
   }
-  if (noMembers && (!searchValue || searchValue == "")) {
+  if (noMembers && !searchValue && searchValue !== "") {
     return (
       <div className="noData">
         <div>
@@ -72,7 +65,8 @@ function MembersPage({
           <div className="is-flex is-justify-content-flex-end">
             <SearchBar
               id="membersSearch"
-              containerClass="searchbar-container" url="/members"
+              containerClass="searchbar-container"
+              url="/members"
             />
             <AddMemberCard />
           </div>
@@ -86,76 +80,27 @@ function MembersPage({
               maxHeight: "65vh",
             }}
           >
-            <table className="table is-striped is-fullwidth is-hoverable">
-              <thead>
-                <tr>
-                  <th>Photo</th>
-                  <th>Full Name</th>
-                  <th>Organization</th>
-                  <th>Phone</th>
-                  {/* <th>Location</th> */}
-                  <th></th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {membersByPage.length > 0 ? (
-                  membersByPage.map((memberByPage, index) => {
-                    return (
-                      <tr
-                        key={memberByPage.id}
-                        style={{ cursor: "pointer", position: "relative" }}
-                        // onClick={() => handleDetails(memberByPage.id)}
-                      >
-                        <td onClick={() => handleDetails(memberByPage.id)}>
-                          <img
-                            alt=""
-                            className="membercard_img"
-                            src={`${memberByPage.image}`}
-                          />
-                        </td>
-                        <td onClick={() => handleDetails(memberByPage.id)}>
-                          {memberByPage.fullName}
-                        </td>
-                        <td onClick={() => handleDetails(memberByPage.id)}>
-                          {memberByPage.organization && (
-                            <p key={memberByPage.organization}>
-                              {memberByPage.organization.name}{" "}
-                              {memberByPage.organization.position}
-                            </p>
-                          )}
-                        </td>
-                        <td onClick={() => handleDetails(memberByPage.id)}>
-                          {memberByPage.phone}
-                        </td>
-                        {/* <td onClick={() => handleDetails(memberByPage.id)}>
-                          {memberByPage.location}
-                        </td> */}
-                        {/* <div
-                          onClick={() => handleReset(memberByPage.id)}
-                          style={{ zIndex: "10", position: "absolute" }}
-                        > */}
-                        <td
-                          // style={{ zIndex: "999999", position: "absolute" }}
-                          onClick={() => handleReset(memberByPage.id)}
-                        >
-                          <i className="fas fa-key"></i>
-                        </td>
-                        {/* </div> */}
-                      </tr>
-                    );
-                  })
-                ) : (
+            {loading ? (
+              <Loading />
+            ) : (
+              <table className="table is-striped is-fullwidth is-hoverable">
+                <thead>
                   <tr>
-                    <td colSpan="5">
-                      {!searchValue || searchValue === ""
-                        ? "No data"
-                        : "Nothing found"}
-                    </td>
+                    <th>Photo</th>
+                    <th>Full Name</th>
+                    <th>Organization</th>
+                    <th>Phone</th>
+                    {/* <th>Location</th> */}
+                    <th></th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+
+                <TableBody
+                  setModalOpen={setModalOpen}
+                  setMemberId={setMemberId}
+                />
+              </table>
+            )}
           </div>
 
           <Pagination totalPosts={count} url="/members" />
@@ -173,7 +118,7 @@ const mapStateToProps = (state) => {
     count: state.membersReducer.count,
     // currentPage: state.paginationReducer.currentPage,
     action: state.modalReducer.action,
-    searchValue: state.formReducer?.membersSearch ?? "",
+    searchValue: state.formReducer?.membersSearch,
   };
 };
 

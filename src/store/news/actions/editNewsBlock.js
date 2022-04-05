@@ -6,7 +6,7 @@ import {
 } from "../types";
 import { toast } from "react-toastify";
 
-export const editNewsBlock = (block, changePath) => {
+export const editNewsBlock = (block, callback = () => {}) => {
   // set api for block edit
   return (dispatch) => {
     dispatch(editNewsBlockRequest());
@@ -15,7 +15,7 @@ export const editNewsBlock = (block, changePath) => {
         if (data.success) {
           dispatch(editNewsBlockSuccess(data));
           // toast.dark("Edited");
-          //   changePath();
+          callback();
         }
       })
       .catch((e) => {

@@ -86,7 +86,10 @@ function VideoUpload({
     return source?.map((video) => {
       return (
         <div className="upload_cont" key={video}>
-          <video className="uploaded_images" controls>
+          <video
+            className="uploaded_images"
+            // controls
+          >
             <source src={video} type="video/mp4" />
             <source src={video} type="video/ogg" />
             Your browser does not support the video tag.

@@ -222,7 +222,13 @@ function EditEvent({
     editedBlock.deletedVideos = [];
     editedBlock.addedVideos =
       store.getState().videoReducer[`videoBlock${block.id}`] ?? [];
-    editEventBlock(editedBlock);
+    editEventBlock(editedBlock, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+    formOnChange(`block${editedBlock.id}`, []);
+    formOnChange(`videoBlock${editedBlock.id}`, []);
     toast.dark("Edited");
   };
 
@@ -1044,12 +1050,15 @@ function EditEvent({
                     </div>
                     <div style={{ display: "flex ", marginBottom: 20 }}>
                       {block.videos && block.videos.length
-                        ? block.videos.map((video) => {
+                        ? block.videos.map((video, index) => {
                             return (
                               <div className="upload_cont" key={video}>
-                                <video className="uploaded_images" controls>
-                                  <source src={video} type="video/mp4" />
-                                  <source src={video} type="video/ogg" />
+                                <video
+                                  className="uploaded_images"
+                                  poster={block.thumbnails[index]}
+                                >
+                                  {/* <source src={video} type="video/mp4" />
+                                  <source src={video} type="video/ogg" /> */}
                                   Your browser does not support the video tag.
                                 </video>
                                 <div className="middle">
@@ -1142,7 +1151,7 @@ const mapDispatchToProps = (dispatch) => {
     deletedImages: (img) => dispatch(deletedImages(img)),
     deleteEventImageFromStore: (id) => dispatch(deleteEventImageFromStore(id)),
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
-    editEventBlock: (block) => dispatch(editEventBlock(block)),
+    editEventBlock: (block, callback) => dispatch(editEventBlock(block, callback)),
     getEventForEdit: (id) => dispatch(getEventForEdit(id)),
     editShortDetails: (details) => dispatch(editShortDetails(details)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),

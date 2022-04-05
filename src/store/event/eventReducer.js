@@ -45,7 +45,7 @@ import {
 } from "./types";
 
 const initialState = {
-  loading: false,
+  loading: true,
   pastEvents: [],
   upcomingEvents: [],
   error: null,
@@ -106,13 +106,14 @@ const reducer = (state = initialState, action) => {
     case FETCH_EVENTS_BY_PAGE_REQUEST:
       return {
         ...state,
-        loading: true,
+        // fetch: true,
+        // loading: true,
       };
     case FETCH_EVENTS_BY_PAGE_SUCCESS:
       return {
         ...state,
         loading: false,
-
+        // fetch: ,
         eventsByPage: action.payload.eventsByPage.events,
         count: action.payload.eventsByPage.count,
         // membersByPage: [],
@@ -123,7 +124,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-
         eventsByPage: [],
         error: action.payload.error,
       };
@@ -203,7 +203,6 @@ const reducer = (state = initialState, action) => {
         eventDetails: action.payload.eventDetails,
         detailsImages: action.payload.eventDetails.images,
         error: null,
-        
       };
     case FETCH_EVENT_DETAILS_FAILURE:
       return {
@@ -211,7 +210,6 @@ const reducer = (state = initialState, action) => {
         loading: false,
         eventDetails: [],
         error: action.payload.error,
-        
       };
 
     case DELETE_EVENT_IMAGE_FROM_STORE:

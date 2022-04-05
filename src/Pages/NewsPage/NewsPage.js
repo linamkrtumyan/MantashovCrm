@@ -9,6 +9,7 @@ import Loading from "../../Components/Loading/Loading";
 import { useHistory, useParams } from "react-router-dom";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import { useQuery } from "../../Hooks/useQuery";
+import TableBody from "./components/TableBody";
 
 function NewsPage({
   fetchNewsByPage,
@@ -26,11 +27,8 @@ function NewsPage({
 
   useEffect(() => {
     changeCurrentPage(1);
+    fetchNewsByPage(1, "");
   }, []);
-
-  // useEffect(() => {
-  //   fetchNewsByPage(currentPage);
-  // }, []);
 
   useEffect(() => {
     if (!loading) {
@@ -38,14 +36,11 @@ function NewsPage({
     }
   }, [currentPage, action, searchValue]);
 
-  function handleDetails(id) {
-    history.push(`/edit-news/${id}`);
-  }
-
   if (loading) {
     return <Loading />;
   }
-  if (noNews && (!searchValue || searchValue == "")) {
+
+  if (noNews && !searchValue && searchValue !== "") {
     return (
       <div className="noData">
         <div>
@@ -59,7 +54,11 @@ function NewsPage({
     <div>
       <div className="members_container">
         <div className="is-flex is-justify-content-flex-end">
-          <SearchBar id="newsSearch" containerClass="searchbar-container" url="/news" />
+          <SearchBar
+            id="newsSearch"
+            containerClass="searchbar-container"
+            url="/news"
+          />
           <AddNewsCard />
         </div>
 
@@ -72,59 +71,21 @@ function NewsPage({
             maxHeight: "65vh",
           }}
         >
-          <table className="table is-striped is-fullwidth is-hoverable">
-            <thead>
-              <tr>
-                <th style={{ width: "11%" }}>Photo</th>
-                <th style={{ width: "50%" }}>Title</th>
-                <th style={{ width: "49%" }}>Text</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {newsByPage.length > 0 ? (
-                newsByPage.map((news, index) => {
-                  return (
-                    <tr
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleDetails(news.id)}
-                      key={index}
-                      className="tableRows"
-                    >
-                      <td>
-                        <img
-                          alt=""
-                          className="newscard_img"
-                          onError={(e) => {
-                            e.preventDefault();
-                            e.target.onerror = null;
-                            e.target.src =
-                              require("../../img/unnamed.png").default;
-                          }}
-                          // src={`/images/newsHeader/${news.id}/header.png`}
-                          src={`${news.image}`}
-                        />
-                      </td>
-                      <td>{news.title}</td>
-                      <td
-                      // style={{ width: "30%" }}
-                      >
-                        {news.text}
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
+          {loading ? (
+            <Loading />
+          ) : (
+            <table className="table is-striped is-fullwidth is-hoverable">
+              <thead>
                 <tr>
-                  <td colSpan="3">
-                    {!searchValue || searchValue === ""
-                      ? "No data"
-                      : "Nothing found"}
-                  </td>
+                  <th style={{ width: "11%" }}>Photo</th>
+                  <th style={{ width: "50%" }}>Title</th>
+                  <th style={{ width: "49%" }}>Text</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+
+              <TableBody />
+            </table>
+          )}
         </div>
         <Pagination totalPosts={count} url="/news" />
       </div>
@@ -139,7 +100,7 @@ const mapStateToProps = (state) => {
     noNews: state.newsReducer.newsByPage.length === 0,
     // currentPage: state.paginationReducer.currentPage,
     action: state.modalReducer.action,
-    searchValue: state.formReducer?.newsSearch ?? "",
+    searchValue: state.formReducer?.newsSearch,
   };
 };
 

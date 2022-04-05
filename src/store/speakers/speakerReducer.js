@@ -21,7 +21,7 @@ import {
 
 const initialState = {
   speakers: [],
-  loading: false,
+  loading: true,
   error: null,
   fetch: false,
   speakersByPage: [],
@@ -49,7 +49,7 @@ const speakerReducer = (state = initialState, action) => {
       };
 
     case FETCH_SPEAKERS_BY_PAGE_REQUEST:
-      return { ...state, loading: true };
+      return { ...state};
     case FETCH_SPEAKERS_BY_PAGE_SUCCESS:
       return {
         ...state,
