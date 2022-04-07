@@ -372,7 +372,9 @@ function EditEvent({
             <p>Edit Event</p>
           </div>
         </div>
-        <form onFocus={scrollToView} onSubmit={handleSubmit}>
+        <form 
+        // onFocus={scrollToView}
+         onSubmit={handleSubmit}>
           <div className="add_event_component">
             <div
               className="container_body"
