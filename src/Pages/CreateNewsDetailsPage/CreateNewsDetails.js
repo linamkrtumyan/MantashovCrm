@@ -364,7 +364,7 @@ function CreateNewsDetails({
               title="Save Block"
               className="action_btn"
               disabled={
-                newBlock.topTextEng && newBlock.topTextArm && newBlock.topTextRu
+                newBlock.topTextEng || newBlock.topTextArm || newBlock.topTextRu
                   ? false
                   : true
               }
