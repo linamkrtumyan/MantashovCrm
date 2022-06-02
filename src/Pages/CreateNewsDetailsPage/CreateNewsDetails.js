@@ -13,6 +13,8 @@ import store, {
   addNewsBlock,
   getNewsDetails,
   deleteNewsBlock,
+  cleanImagesWithKey,
+  cleanVideosWithKey,
 } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 import { useHistory, useParams } from "react-router-dom";
@@ -35,6 +37,9 @@ function CreateNewsDetails({
   deleteNewsBlock,
   cleanImages,
   cleanVideos,
+  successOfDetails,
+  cleanImagesWithKey,
+  cleanVideosWithKey,
 }) {
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
@@ -48,10 +53,17 @@ function CreateNewsDetails({
   let { newsId } = useParams();
   useEffect(() => {
     window.scrollTo(0, 0);
+    getNewsDetails(parseInt(newsId));
   }, []);
   useEffect(() => {
     getNewsDetails(parseInt(newsId));
   }, [renderContent, newsId]);
+
+  // useEffect(() => {
+  //   if (successOfDetails) {
+  //     getNewsDetails(parseInt(newsId));
+  //   }
+  // }, [successOfDetails]);
 
   useEffect(() => {
     setDetails(newsDetails);
@@ -72,47 +84,59 @@ function CreateNewsDetails({
     });
   }, [blockLinks]);
 
-  const openField = () => {
-    setOpen(true);
-  };
+  // const openField = () => {
+  //   setOpen(true);
+  // };
 
-  const saveBlockData = () => {
+  useEffect(() => {
+    let blockImages = image ?? [];
+    let blockVideos = video ?? [];
     setNewBlock({
       ...newBlock,
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
+      blockImages,
+      blockVideos,
     });
-    if (newBlock.topTextEng !== "") {
-      let links = blockLinks ? blockLinks.split("\n") : [];
-      setNewBlock({
-        ...newBlock,
-        links,
-      });
+  }, [image, video]);
 
-      setRenderContent(renderContent + 1);
-      addNewsBlock({ newsId: parseInt(newsId), block: newBlock });
-      getNewsDetails(parseInt(newsId));
-      setNewBlock({});
-      setBlockLinks("");
-      cleanImages();
-      cleanVideos();
-      formOnChange(`shortDescriptionEng`, "");
-      formOnChange(`shortDescriptionArm`, "");
-      formOnChange(`shortDescriptionRu`, "");
-      formOnChange(`blockImages`, []);
-      formOnChange(`blockVideos`, []);
-    } else {
-      setRequiredClass("requiredField");
-    }
+  const saveBlockData = () => {
+    let links = blockLinks ? blockLinks.split("\n") : [];
+    setNewBlock({
+      ...newBlock,
+      links,
+    });
+
+    // setRenderContent(renderContent + 1);
+    addNewsBlock({ newsId: parseInt(newsId), block: newBlock }, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+
+    setBlockLinks("");
+    cleanImages();
+    cleanVideos();
+    formOnChange(`blockImages`, []);
+    formOnChange(`blockVideos`, []);
+    cleanImagesWithKey(`blockImages`);
+    cleanVideosWithKey(`blockVideos`);
+    getNewsDetails(parseInt(newsId));
+    setNewBlock({});
   };
 
   const handleDelete = (id) => {
-    deleteNewsBlock(id);
+    deleteNewsBlock(
+      id
+      // , () =>
+      // setTimeout(() => {
+      //   setRenderContent(renderContent + 1);
+      // }, 2000)
+    );
     setRenderContent(renderContent + 1);
   };
 
   const handleEdit = (editedBlock) => {
     editedBlock.deletedImages = [];
+
     editedBlock.addedImages =
       store.getState().imageReducer[`block${editedBlock.id}`] ?? [];
     editedBlock.deletedVideos = [];
@@ -123,6 +147,10 @@ function CreateNewsDetails({
         setRenderContent(renderContent + 1);
       }, 2000)
     );
+    cleanImagesWithKey(`block${editedBlock.id}`);
+    cleanVideosWithKey(`videoBlock${editedBlock.id}`);
+    cleanImages();
+    cleanVideos();
     formOnChange(`block${editedBlock.id}`, []);
     formOnChange(`videoBlock${editedBlock.id}`, []);
     toast.dark("Edited");
@@ -321,10 +349,6 @@ function CreateNewsDetails({
                 value={blockLinks ? blockLinks : ""}
                 onChange={(e) => {
                   setBlockLinks(e.target.value);
-                  // setNewBlock({
-                  //   ...newBlock,
-                  //   links: e.target.value,
-                  // });
                 }}
               />
             </div>
@@ -570,8 +594,8 @@ function CreateNewsDetails({
 }
 const mapStateToProps = (state) => {
   return {
-    image: state.imageReducer?.image,
-    video: state.videoReducer?.video,
+    image: state.imageReducer?.blockImages,
+    video: state.videoReducer?.blockVideos,
     headers: state.imageReducer?.headers,
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
     fixedImages: state.formReducer?.fixedImages ?? [],
@@ -579,19 +603,24 @@ const mapStateToProps = (state) => {
     imgUrls: state.imageReducer?.imgUrls,
     videoUrls: state.videoReducer?.videoUrls,
     newsDetails: state.newsReducer?.newsDetails,
+    successOfDetails: state.newsReducer.successOfDetails,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNewsBlock: (blockData) => dispatch(addNewsBlock(blockData)),
+    addNewsBlock: (blockData, callback) =>
+      dispatch(addNewsBlock(blockData, callback)),
     fetchEventDetails: (id) => dispatch(fetchEventDetails(id)),
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
-    editNewsBlock: (block) => dispatch(editNewsBlock(block)),
+    editNewsBlock: (block, callback) =>
+      dispatch(editNewsBlock(block, callback)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     getNewsDetails: (id) => dispatch(getNewsDetails(id)),
-    deleteNewsBlock: (id) => dispatch(deleteNewsBlock(id)),
+    deleteNewsBlock: (id, callback) => dispatch(deleteNewsBlock(id, callback)),
     cleanImages: () => dispatch(cleanImages()),
     cleanVideos: () => dispatch(cleanVideos()),
+    cleanImagesWithKey: (key) => dispatch(cleanImagesWithKey(key)),
+    cleanVideosWithKey: (key) => dispatch(cleanVideosWithKey(key)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewsDetails);

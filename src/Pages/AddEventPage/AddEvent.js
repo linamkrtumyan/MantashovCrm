@@ -314,7 +314,6 @@ const mapStateToProps = (state) => {
     cities: state.locationsReducer.cities,
     agendas: state.eventReducer?.agendas,
     speakers: state.eventReducer?.speakers,
-    // selectedSpeakers: state.formReducer?.speakers ?? [],
     headers: state.imageReducer?.headers,
     image: state.imageReducer?.image,
     eventId: state.eventReducer?.eventId,

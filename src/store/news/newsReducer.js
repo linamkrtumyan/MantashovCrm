@@ -40,6 +40,7 @@ const initialState = {
   detailsImages: [],
   newsDetailsBlocks: [],
   newsId: null,
+  successOfDetails: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -126,6 +127,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: null,
         newsId: action.payload.newsId,
+        successOfDetails: action.payload.successOfDetails,
       };
     case ADD_NEWS_DETAILS_FAILURE:
       return {

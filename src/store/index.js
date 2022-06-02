@@ -67,12 +67,14 @@ export {
   deleteHeader,
   setEventFixedImage,
   deleteEventFixedImage,
+  cleanImagesWithKey,
 } from "./images/actions";
 export {
   uploadVideo,
   cleanVideos,
   deletedVideos,
   deleteVideoFromStore,
+  cleanVideosWithKey,
 } from "./videos/actions";
 export { openModal, closeModal, callAction } from "./modal/actions";
 export {

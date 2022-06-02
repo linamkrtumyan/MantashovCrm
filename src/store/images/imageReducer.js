@@ -15,6 +15,7 @@ import {
   DELETE_EVENT_FIXED_IMAGE_REQUEST,
   DELETE_EVENT_FIXED_IMAGE_SUCCESS,
   DELETE_EVENT_FIXED_IMAGE_FAILURE,
+  CLEAN_IMAGES_WITH_KEY,
 } from "./types";
 
 const initialState = {
@@ -122,6 +123,14 @@ const reducer = (state = initialState, action) => {
         headers: [],
         header: "",
         imgUrls: [],
+      };
+    case CLEAN_IMAGES_WITH_KEY:
+      if (!state[action.payload.key]) {
+        state[action.payload.key] = [];
+      }
+      return {
+        ...state,
+        [action.payload.key]: [],
       };
     case DELETED_IMAGES:
       return {

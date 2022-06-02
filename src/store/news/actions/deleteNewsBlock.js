@@ -6,13 +6,14 @@ import {
 } from "../types";
 import { toast } from "react-toastify";
 
-export const deleteNewsBlock = (id) => {
+export const deleteNewsBlock = (id, callback = () => {}) => {
   return (dispatch) => {
     dispatch(deleteNewsBlockRequest());
     request(`/admin/news/newsDetails/${id}`, "DELETE")
       .then((data) => {
         dispatch(deleteNewsBlockSuccess(data));
         toast.dark("News removed");
+        callback();
       })
       .catch((e) => {
         dispatch(deleteNewsBlockFailure(e.message));

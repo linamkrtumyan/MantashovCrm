@@ -38,7 +38,7 @@ function OneImageUpload({
 
   const handleDelete = () => {
     headers.map((img) => {
-      if (img.url === image[0]) {
+      if (img.url == image) {
         const index = headers.indexOf(img);
         deleteHeader(index);
       }

@@ -22,13 +22,17 @@ function NewsPage({
   action,
   searchValue,
 }) {
-  let history = useHistory();
   let { currentPage } = useParams();
+  const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
     changeCurrentPage(1);
     fetchNewsByPage(1, "");
   }, []);
+
+  useEffect(() => {
+    fetchNewsByPage(currentPage, "");
+  }, [deleted]);
 
   useEffect(() => {
     if (!loading) {
@@ -78,12 +82,13 @@ function NewsPage({
               <thead>
                 <tr>
                   <th style={{ width: "11%" }}>Photo</th>
-                  <th style={{ width: "50%" }}>Title</th>
+                  <th style={{ width: "30%" }}>Title</th>
                   <th style={{ width: "49%" }}>Text</th>
+                  <th style={{ width: "10%" }}></th>
                 </tr>
               </thead>
 
-              <TableBody />
+              <TableBody setDeleted={setDeleted} />
             </table>
           )}
         </div>
@@ -98,7 +103,6 @@ const mapStateToProps = (state) => {
     count: state.newsReducer.count,
     loading: state.newsReducer.loading,
     noNews: state.newsReducer.newsByPage.length === 0,
-    // currentPage: state.paginationReducer.currentPage,
     action: state.modalReducer.action,
     searchValue: state.formReducer?.newsSearch,
   };

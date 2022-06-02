@@ -7,7 +7,6 @@ import {
 import { toast } from "react-toastify";
 
 export const editNewsBlock = (block, callback = () => {}) => {
-  // set api for block edit
   return (dispatch) => {
     dispatch(editNewsBlockRequest());
     request("/admin/news/newsDetails", "PUT", block)

@@ -14,6 +14,8 @@ import store, {
   editEventBlock,
   formOnChange,
   addEventShortDescription,
+  cleanImagesWithKey,
+  cleanVideosWithKey,
 } from "../../store";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
 import { useHistory, useParams } from "react-router-dom";
@@ -39,10 +41,12 @@ function CreateEventDetails({
   cleanImages,
   cleanVideos,
   fetch,
+  cleanImagesWithKey,
+  cleanVideosWithKey,
 }) {
   const [open, setOpen] = useState(false);
   const [renderContent, setRenderContent] = useState(0);
-  const [newBlock, setNewBlock] = useState({});
+  const [eventBlock, setEventBlock] = useState({});
   const [forRender, setForRender] = useState(0);
   const [requiredClass, setRequiredClass] = useState("");
   const [blockLinks, setBlockLinks] = useState("");
@@ -85,8 +89,8 @@ function CreateEventDetails({
 
   useEffect(() => {
     let links = blockLinks && blockLinks !== "" ? blockLinks.split("\n") : [];
-    setNewBlock({
-      ...newBlock,
+    setEventBlock({
+      ...eventBlock,
       links,
     });
   }, [blockLinks]);
@@ -95,31 +99,38 @@ function CreateEventDetails({
     setOpen(true);
   };
 
-  const saveBlockData = () => {
-    setNewBlock({
-      ...newBlock,
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
+  useEffect(() => {
+    let blockImages = image ?? [];
+    let blockVideos = video ?? [];
+    setEventBlock({
+      ...eventBlock,
+      blockImages,
+      blockVideos,
     });
-    if (newBlock.topTextEng !== "") {
-      let links = blockLinks ? blockLinks.split("\n") : [];
-      setNewBlock({
-        ...newBlock,
-        links,
-      });
+  }, [image, video]);
 
-      setRenderContent(renderContent + 1);
-      addEventBlock({ eventId: parseInt(eventId), block: newBlock });
-      fetchEventDetails(parseInt(eventId));
-      setNewBlock({});
-      setBlockLinks("");
-      cleanImages();
-      formOnChange(`blockImages`, []);
-      formOnChange(`blockVideos`, []);
-      cleanVideos();
-    } else {
-      setRequiredClass("requiredField");
-    }
+  const saveBlockData = () => {
+    let links = blockLinks ? blockLinks.split("\n") : [];
+    setEventBlock({
+      ...eventBlock,
+      links,
+    });
+
+    // setRenderContent(renderContent + 1);
+    addEventBlock({ eventId: parseInt(eventId), block: eventBlock }, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+    fetchEventDetails(parseInt(eventId));
+    setEventBlock({});
+    setBlockLinks("");
+    cleanImages();
+    cleanImagesWithKey(`blockImages`);
+    cleanVideosWithKey(`blockVideos`);
+    formOnChange(`blockImages`, []);
+    formOnChange(`blockVideos`, []);
+    cleanVideos();
   };
 
   const handleDelete = (id) => {
@@ -142,6 +153,10 @@ function CreateEventDetails({
     );
     formOnChange(`block${editedBlock.id}`, []);
     formOnChange(`videoBlock${editedBlock.id}`, []);
+    cleanImagesWithKey(`block${editedBlock.id}`);
+    cleanVideosWithKey(`videoBlock${editedBlock.id}`);
+    cleanImages();
+    cleanVideos();
     toast.dark("Edited");
   };
 
@@ -464,17 +479,17 @@ function CreateEventDetails({
               <div style={{ marginTop: 20 }}>
                 <label
                   htmlFor="descriptionEng1"
-                  className={newBlock.topTextEng === "" ? requiredClass : ""}
+                  className={eventBlock.topTextEng === "" ? requiredClass : ""}
                 >
                   Description 1
                 </label>
 
                 <textarea
                   className="add_news_input textarea eventText"
-                  value={newBlock.topTextEng ? newBlock.topTextEng : ""}
+                  value={eventBlock.topTextEng ? eventBlock.topTextEng : ""}
                   onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
+                    setEventBlock({
+                      ...eventBlock,
                       topTextEng: e.target.value,
                     });
                   }}
@@ -485,10 +500,10 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={newBlock.topTextArm ? newBlock.topTextArm : ""}
+                  value={eventBlock.topTextArm ? eventBlock.topTextArm : ""}
                   onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
+                    setEventBlock({
+                      ...eventBlock,
                       topTextArm: e.target.value,
                     });
                   }}
@@ -499,10 +514,10 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={newBlock.topTextRu ? newBlock.topTextRu : ""}
+                  value={eventBlock.topTextRu ? eventBlock.topTextRu : ""}
                   onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
+                    setEventBlock({
+                      ...eventBlock,
                       topTextRu: e.target.value,
                     });
                   }}
@@ -529,10 +544,12 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={newBlock.bottomTextEng ? newBlock.bottomTextEng : ""}
+                  value={
+                    eventBlock.bottomTextEng ? eventBlock.bottomTextEng : ""
+                  }
                   onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
+                    setEventBlock({
+                      ...eventBlock,
                       bottomTextEng: e.target.value,
                     });
                   }}
@@ -544,10 +561,12 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={newBlock.bottomTextArm ? newBlock.bottomTextArm : ""}
+                  value={
+                    eventBlock.bottomTextArm ? eventBlock.bottomTextArm : ""
+                  }
                   onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
+                    setEventBlock({
+                      ...eventBlock,
                       bottomTextArm: e.target.value,
                     });
                   }}
@@ -558,10 +577,10 @@ function CreateEventDetails({
 
                 <textarea
                   className="add_news_input textarea"
-                  value={newBlock.bottomTextRu ? newBlock.bottomTextRu : ""}
+                  value={eventBlock.bottomTextRu ? eventBlock.bottomTextRu : ""}
                   onChange={(e) => {
-                    setNewBlock({
-                      ...newBlock,
+                    setEventBlock({
+                      ...eventBlock,
                       bottomTextRu: e.target.value,
                     });
                   }}
@@ -579,10 +598,6 @@ function CreateEventDetails({
                   value={blockLinks ? blockLinks : ""}
                   onChange={(e) => {
                     setBlockLinks(e.target.value);
-                    // setNewBlock({
-                    //   ...newBlock,
-                    //   links: e.target.value,
-                    // });
                   }}
                 />
               </div>
@@ -593,9 +608,9 @@ function CreateEventDetails({
                 title="Save Block"
                 className="action_btn"
                 disabled={
-                  newBlock.topTextEng &&
-                  newBlock.topTextArm &&
-                  newBlock.topTextRu
+                  eventBlock.topTextEng &&
+                  eventBlock.topTextArm &&
+                  eventBlock.topTextRu
                     ? false
                     : true
                 }
@@ -840,8 +855,8 @@ function CreateEventDetails({
 }
 const mapStateToProps = (state) => {
   return {
-    image: state.imageReducer?.image,
-    video: state.videoReducer?.video,
+    image: state.imageReducer?.blockImages,
+    video: state.videoReducer?.blockVideos,
     headers: state.imageReducer?.headers,
     eventDetailsBlocks: state.eventReducer.eventDetailsBlocks,
     // fixedImages: state.imageReducer?.fixedImages ?? [],
@@ -856,7 +871,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addEventDetails: (blockData) => dispatch(addEventDetails(blockData)),
-    addEventBlock: (blockData) => dispatch(addEventBlock(blockData)),
+    addEventBlock: (blockData, callback) =>
+      dispatch(addEventBlock(blockData, callback)),
     fetchEventDetails: (id) => dispatch(fetchEventDetails(id)),
     addEventShortDescription: (data) =>
       dispatch(addEventShortDescription(data)),
@@ -866,6 +882,8 @@ const mapDispatchToProps = (dispatch) => {
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     cleanImages: () => dispatch(cleanImages()),
     cleanVideos: () => dispatch(cleanVideos()),
+    cleanImagesWithKey: (key) => dispatch(cleanImagesWithKey(key)),
+    cleanVideosWithKey: (key) => dispatch(cleanVideosWithKey(key)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEventDetails);
