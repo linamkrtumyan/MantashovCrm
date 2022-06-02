@@ -101,7 +101,6 @@ function EditNews({
   const handleCreate = (e) => {
     e.preventDefault();
     let { titleArm, titleEng, titleRu } = store.getState().formReducer;
-
     let header = store.getState().imageReducer.header;
     if (header.length) {
       header = header.pop().name;
@@ -329,6 +328,7 @@ function EditNews({
                       placeholder="Title"
                       className="add_news_input"
                       textareaSize="textareaSize"
+                      required={false}
                     />
                   </div>
                   <div className="news_inputs_container">
@@ -338,6 +338,7 @@ function EditNews({
                       placeholder="Վերնագիր"
                       className="add_news_input"
                       textareaSize="textareaSize"
+                      required={false}
                     />
                   </div>
 
@@ -348,6 +349,7 @@ function EditNews({
                       placeholder="Заглавие"
                       className="add_news_input"
                       textareaSize="textareaSize"
+                      required={false}
                     />
                     {/* <button
                       onClick={() => setIsActive(!isActive)}
@@ -416,6 +418,7 @@ function EditNews({
                       topTextEng: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
               <div style={{ marginTop: 20 }}>
@@ -430,6 +433,7 @@ function EditNews({
                       topTextArm: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
               <div style={{ marginTop: 20 }}>
@@ -444,6 +448,7 @@ function EditNews({
                       topTextRu: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
             </div>
@@ -473,6 +478,7 @@ function EditNews({
                       bottomTextEng: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
 
@@ -488,6 +494,7 @@ function EditNews({
                       bottomTextArm: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
               <div style={{ marginTop: 20 }}>
@@ -502,6 +509,7 @@ function EditNews({
                       bottomTextRu: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
             </div>
@@ -527,6 +535,12 @@ function EditNews({
             <div>
               <Button
                 onClick={saveBlockData}
+                disabled={false
+                  // newBlock.topTextEng &&
+                  // newBlock.topTextArm &&
+                  // newBlock.topTextRu
+                  //   ? false
+                  //   : true
                 disabled={
                   newBlock.topTextEng &&
                   newBlock.topTextArm &&
@@ -569,6 +583,7 @@ function EditNews({
                                 e.target.value;
                               // addEventDetails(details.details);
                             }}
+                            required={false}
                           />
                         </div>
                         <div className="input_container">
@@ -583,6 +598,7 @@ function EditNews({
                                 e.target.value;
                               // addEventDetails(details.details);
                             }}
+                            required={false}
                           />
                         </div>
                         <div className="input_container">
@@ -596,6 +612,7 @@ function EditNews({
                               details.details[index].topTextRu = e.target.value;
                               // addEventDetails(details.details);
                             }}
+                            required={false}
                           />
                         </div>
                       </div>
@@ -673,6 +690,7 @@ function EditNews({
                               details.details[index].bottomTextEng =
                                 e.target.value;
                             }}
+                            required={false}
                           />
                         </div>
                         <div className="input_container">
@@ -686,6 +704,7 @@ function EditNews({
                               details.details[index].bottomTextArm =
                                 e.target.value;
                             }}
+                            required={false}
                           />
                         </div>
                         <div className="input_container">
@@ -699,6 +718,7 @@ function EditNews({
                               details.details[index].bottomTextRu =
                                 e.target.value;
                             }}
+                            required={false}
                           />
                         </div>
                       </div>

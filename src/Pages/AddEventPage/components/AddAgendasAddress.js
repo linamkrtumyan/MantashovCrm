@@ -102,6 +102,7 @@ function AddAgendasAddress({
                           address.agendas[indexOfAgenda].agendaDescriptionEng =
                             e.target.value;
                         }}
+                        required={false}
                       />
                       {/* {agenda.agendaDescriptionEng} */}
                     </div>
@@ -115,6 +116,7 @@ function AddAgendasAddress({
                           address.agendas[indexOfAgenda].agendaDescriptionArm =
                             e.target.value;
                         }}
+                        required={false}
                       />
                       {/* {agenda.agendaDescriptionArm} */}
                     </div>
@@ -128,6 +130,7 @@ function AddAgendasAddress({
                           address.agendas[indexOfAgenda].agendaDescriptionRu =
                             e.target.value;
                         }}
+                        required={false}
                       />
                       {/* {agenda.agendaDescriptionRu} */}
                     </div>

@@ -33,13 +33,13 @@ function AddSphere({
     <>
       <tr>
         <td>
-          <Input id="nameEng" type="text" />
+          <Input id="nameEng" type="text"   required={false}/>
         </td>
         <td>
-          <Input id="nameArm" type="text" />
+          <Input id="nameArm" type="text"   required={false}/>
         </td>
         <td>
-          <Input id="nameRu" type="text" />
+          <Input id="nameRu" type="text"   required={false}/>
         </td>
         <td>
           <div style={{ cursor: "pointer" }} onClick={handleCreate}>

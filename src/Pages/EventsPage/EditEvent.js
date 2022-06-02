@@ -323,6 +323,7 @@ function EditEvent({
       });
 
       setForRender(renderContent + 1);
+
       addEventBlock({ eventId: parseInt(eventId), block: eventBlock }, () =>
         setTimeout(() => {
           setRenderContent(renderContent + 1);
@@ -387,6 +388,7 @@ function EditEvent({
             <p>Edit Event</p>
           </div>
         </div>
+
         <form
           // onFocus={scrollToView}
           onSubmit={handleSubmit}
@@ -402,9 +404,9 @@ function EditEvent({
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="nameEng" type="text" placeholder="Name" />
-                <Input id="nameArm" type="text" placeholder="Անվանում" />
-                <Input id="nameRu" type="text" placeholder="Имя" />
+                <Input id="nameEng" type="text" placeholder="Name"   required={false}/>
+                <Input id="nameArm" type="text" placeholder="Անվանում"   required={false}/>
+                <Input id="nameRu" type="text" placeholder="Имя"   required={false}/>
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -470,16 +472,75 @@ function EditEvent({
                   id="descriptionEng"
                   type="text"
                   placeholder="Description"
+                  required={false}
                 />
                 <Textarea
                   id="descriptionArm"
                   type="text"
                   placeholder="Նկարագիր"
+                  required={false}
                 />
                 <Textarea
                   id="descriptionRu"
                   type="text"
                   placeholder="Описание"
+                  required={false}
+                />
+              </div>
+
+              <Multiselect
+                placeholder="Speakers"
+                items={allSpeakers}
+                id="speakers"
+                required={false}
+              />
+
+              <div
+                style={{
+                  display: "flex",
+                }}
+                className="container_body"
+              >
+                {eventHeaders && eventHeaders.length !== 0
+                  ? eventHeaders.map((image, index) => {
+                      return (
+                        <div className="edit_news_image_item" key={image}>
+                          <img
+                            alt=""
+                            className="edit_news_images"
+                            src={image}
+                          />
+                          <div className="middle">
+                            <div
+                              onClick={() => {
+                                deleteHeader(image, index);
+                              }}
+                            >
+                              <svg viewBox="0 0 24 24" className="close">
+                                <path
+                                  d="M 2 2 L 22 22 M 2 22 L22 2"
+                                  stroke="red"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="5"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+              <div style={{ display: "flex", margin: "10px" }}>
+                {/* <OneImageUpload label="Add Header" /> */}
+                <ImageUpload
+                  containerClassName="uploaded"
+                  label={`Add headers(${
+                    eventHeaders ? 3 - eventHeaders.length : 3
+                  })`}
+                  id="addedHeaders"
+                  limit={eventHeaders ? 3 - eventHeaders.length : 3}
                 />
               </div>
 
@@ -571,16 +632,19 @@ function EditEvent({
               id="shortDescriptionEng"
               type="text"
               placeholder="Short Description"
+              required={false}
             />
             <Textarea
               id="shortDescriptionArm"
               type="text"
               placeholder="Համառոտ նկարագիր"
+              required={false}
             />
             <Textarea
               id="shortDescriptionRu"
               type="text"
               placeholder=" Краткое описание"
+              required={false}
             />
           </div>
           <div
@@ -780,6 +844,7 @@ function EditEvent({
                         topTextEng: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
                 <div style={{ marginTop: 20 }}>
@@ -794,6 +859,7 @@ function EditEvent({
                         topTextArm: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
                 <div style={{ marginTop: 20 }}>
@@ -808,6 +874,7 @@ function EditEvent({
                         topTextRu: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
               </div>
@@ -840,6 +907,7 @@ function EditEvent({
                         bottomTextEng: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
 
@@ -857,6 +925,7 @@ function EditEvent({
                         bottomTextArm: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
                 <div style={{ marginTop: 20 }}>
@@ -873,6 +942,7 @@ function EditEvent({
                         bottomTextRu: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
               </div>
@@ -937,6 +1007,7 @@ function EditEvent({
                             details.details[index].topTextEng = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -950,6 +1021,7 @@ function EditEvent({
                             details.details[index].topTextArm = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -963,6 +1035,7 @@ function EditEvent({
                             details.details[index].topTextRu = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                     </div>
@@ -1041,6 +1114,7 @@ function EditEvent({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -1055,6 +1129,7 @@ function EditEvent({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -1069,6 +1144,7 @@ function EditEvent({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                     </div>

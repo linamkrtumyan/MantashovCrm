@@ -16,7 +16,6 @@
 .tableRows td {
   word-break: break-word;
 }
-
 /* .newsText {
   -webkit-line-clamp: 4;
   text-overflow: ellipsis;

@@ -87,6 +87,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                           // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
+                        required={false}
                       />
                     </div>
 
@@ -102,6 +103,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                           // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
+                        required={false}
                       />
                     </div>
 
@@ -117,6 +119,7 @@ function AgendaEdit({ eventForEdit, formOnChange, editAgendas }) {
                           // formOnChange("editedAndAddedAgendas", agendas);
                           editAgendas(agendas);
                         }}
+                        required={false}
                       />
                     </div>
 

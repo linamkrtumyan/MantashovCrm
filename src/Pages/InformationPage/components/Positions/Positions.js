@@ -125,6 +125,7 @@ function Spheres({
                             className="input input_width"
                             defaultValue={position.nameEng}
                             onChange={handleOnChange}
+                            required={false}
                           />
                         </td>
                         <td>
@@ -133,6 +134,7 @@ function Spheres({
                             className="input input_width"
                             defaultValue={position.nameArm}
                             onChange={handleOnChange}
+                            required={false}
                           />
                         </td>
                         <td>
@@ -141,6 +143,7 @@ function Spheres({
                             className="input input_width"
                             defaultValue={position.nameRu}
                             onChange={handleOnChange}
+                            required={false}
                           />
                         </td>
 

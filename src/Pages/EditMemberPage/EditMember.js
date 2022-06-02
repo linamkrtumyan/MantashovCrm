@@ -207,14 +207,14 @@ function EditMember({
             </div>
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="firstNameEng" type="text" placeholder="First Name" />
-                <Input id="firstNameArm" type="text" placeholder="Անուն" />
-                <Input id="firstNameRu" type="text" placeholder="Имя" />
+                <Input id="firstNameEng" type="text" placeholder="First Name"   required={false}/>
+                <Input id="firstNameArm" type="text" placeholder="Անուն"   required={false}/>
+                <Input id="firstNameRu" type="text" placeholder="Имя"   required={false}/>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="lastNameEng" type="text" placeholder="Last Name" />
-                <Input id="lastNameArm" type="text" placeholder="Ազգանուն" />
-                <Input id="lastNameRu" type="text" placeholder="Фамилия" />
+                <Input id="lastNameEng" type="text" placeholder="Last Name"  required={false} />
+                <Input id="lastNameArm" type="text" placeholder="Ազգանուն"   required={false}/>
+                <Input id="lastNameRu" type="text" placeholder="Фамилия"   required={false}/>
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -222,16 +222,19 @@ function EditMember({
                   id="descriptionEng"
                   type="text"
                   placeholder="Description"
+                  required={false}
                 />
                 <Textarea
                   id="descriptionArm"
                   type="text"
                   placeholder="Նկարագիր"
+                  required={false}
                 />
                 <Textarea
                   id="descriptionRu"
                   type="text"
                   placeholder="Описание"
+                  required={false}
                 />
               </div>
 

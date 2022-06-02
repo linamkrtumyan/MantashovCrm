@@ -153,6 +153,7 @@ function CreateEventDetails({
     );
     formOnChange(`block${editedBlock.id}`, []);
     formOnChange(`videoBlock${editedBlock.id}`, []);
+
     cleanImagesWithKey(`block${editedBlock.id}`);
     cleanVideosWithKey(`videoBlock${editedBlock.id}`);
     cleanImages();
@@ -271,6 +272,7 @@ function CreateEventDetails({
             onChange={(e) => {
               formOnChange(`shortDescriptionEng`, e.target.value);
             }}
+            required={false}
           />
         </div>
 
@@ -296,6 +298,7 @@ function CreateEventDetails({
             onChange={(e) => {
               formOnChange(`shortDescriptionArm`, e.target.value);
             }}
+            required={false}
           />
         </div>
 
@@ -321,6 +324,7 @@ function CreateEventDetails({
             onChange={(e) => {
               formOnChange(`shortDescriptionRu`, e.target.value);
             }}
+            required={false}
           />
         </div>
       </div>
@@ -493,6 +497,7 @@ function CreateEventDetails({
                       topTextEng: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
               <div style={{ marginTop: 20 }}>
@@ -507,6 +512,7 @@ function CreateEventDetails({
                       topTextArm: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
               <div style={{ marginTop: 20 }}>
@@ -521,6 +527,7 @@ function CreateEventDetails({
                       topTextRu: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
             </div>
@@ -553,6 +560,7 @@ function CreateEventDetails({
                       bottomTextEng: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
 
@@ -570,6 +578,7 @@ function CreateEventDetails({
                       bottomTextArm: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
               <div style={{ marginTop: 20 }}>
@@ -584,6 +593,7 @@ function CreateEventDetails({
                       bottomTextRu: e.target.value,
                     });
                   }}
+                  required={false}
                 />
               </div>
             </div>
@@ -608,11 +618,15 @@ function CreateEventDetails({
                 title="Save Block"
                 className="action_btn"
                 disabled={
-                  eventBlock.topTextEng &&
-                  eventBlock.topTextArm &&
-                  eventBlock.topTextRu
-                    ? false
-                    : true
+                  //newBlock.topTextEng &&
+                  //newBlock.topTextArm &&
+                  //newBlock.topTextRu
+                 // eventBlock.topTextEng &&
+                  //eventBlock.topTextArm &&
+                  //eventBlock.topTextRu
+                    //? 
+                  false
+                    //: true
                 }
               />
             </div>
@@ -647,6 +661,7 @@ function CreateEventDetails({
                             details.details[index].topTextEng = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -660,6 +675,7 @@ function CreateEventDetails({
                             details.details[index].topTextArm = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -673,6 +689,7 @@ function CreateEventDetails({
                             details.details[index].topTextRu = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                     </div>
@@ -752,6 +769,7 @@ function CreateEventDetails({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -766,6 +784,7 @@ function CreateEventDetails({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -780,6 +799,7 @@ function CreateEventDetails({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                     </div>

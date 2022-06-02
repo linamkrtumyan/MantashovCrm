@@ -27,7 +27,6 @@ function TableBody({
     deleteNews(id);
     setDeleted((prev) => !prev);
   };
-
   return (
     <tbody>
       {newsByPage.length > 0 ? (

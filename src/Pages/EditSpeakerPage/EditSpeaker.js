@@ -119,9 +119,10 @@ function EditSpeaker({
             </div> */}
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="nameEng" type="text" placeholder="Fullname" />
-                <Input id="nameArm" type="text" placeholder="Անուն Ազգանուն" />
-                <Input id="nameRu" type="text" placeholder="Имя Фамилия" />
+                <Input id="nameEng" type="text" placeholder="Fullname"   required={false}/>
+                <Input id="nameArm" type="text" placeholder="Անուն Ազգանուն"   required={false}/>
+                <Input id="nameRu" type="text" placeholder="Имя Фамилия"   required={false}/>
+
               </div>
               <Select
                 placeholder="Select Organization"

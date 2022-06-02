@@ -160,9 +160,9 @@ function EditOrganization({
             )}
           </div>
           <div className="is-flex ">
-            <Input id="nameArm" type="text" placeholder="Անվանում" />
-            <Input id="nameEng" type="text" placeholder="Name" />
-            <Input id="nameRu" type="text" placeholder="Название" />
+            <Input id="nameArm" type="text" placeholder="Անվանում" required={false}/>
+            <Input id="nameEng" type="text" placeholder="Name" required={false}/>
+            <Input id="nameRu" type="text" placeholder="Название" required={false}/>
           </div>
           <div className="is-flex is-justify-content-center">
             <Multiselect
@@ -185,9 +185,9 @@ function EditOrganization({
           </div>
 
           <div className="is-flex ">
-            <Input id="locationArm" type="text" placeholder="Հասցե" />
-            <Input id="locationEng" type="text" placeholder="Address" />
-            <Input id="locationRu" type="text" placeholder="Адрес" />
+            <Input id="locationArm" type="text" placeholder="Հասցե" required={false}/>
+            <Input id="locationEng" type="text" placeholder="Address" required={false}/>
+            <Input id="locationRu" type="text" placeholder="Адрес" required={false}/>
           </div>
           <div>
             <div className="is-flex is-justify-content-center">

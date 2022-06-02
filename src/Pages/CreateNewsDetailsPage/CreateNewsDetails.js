@@ -136,7 +136,6 @@ function CreateNewsDetails({
 
   const handleEdit = (editedBlock) => {
     editedBlock.deletedImages = [];
-
     editedBlock.addedImages =
       store.getState().imageReducer[`block${editedBlock.id}`] ?? [];
     editedBlock.deletedVideos = [];
@@ -249,6 +248,7 @@ function CreateNewsDetails({
                     topTextEng: e.target.value,
                   });
                 }}
+                required={false}
               />
             </div>
             <div style={{ marginTop: 20 }}>
@@ -263,6 +263,7 @@ function CreateNewsDetails({
                     topTextArm: e.target.value,
                   });
                 }}
+                required={false}
               />
             </div>
             <div style={{ marginTop: 20 }}>
@@ -277,6 +278,7 @@ function CreateNewsDetails({
                     topTextRu: e.target.value,
                   });
                 }}
+                required={false}
               />
             </div>
           </div>
@@ -306,6 +308,7 @@ function CreateNewsDetails({
                     bottomTextEng: e.target.value,
                   });
                 }}
+                required={false}
               />
             </div>
 
@@ -321,6 +324,7 @@ function CreateNewsDetails({
                     bottomTextArm: e.target.value,
                   });
                 }}
+                required={false}
               />
             </div>
             <div style={{ marginTop: 20 }}>
@@ -335,6 +339,7 @@ function CreateNewsDetails({
                     bottomTextRu: e.target.value,
                   });
                 }}
+                required={false}
               />
             </div>
           </div>
@@ -395,6 +400,7 @@ function CreateNewsDetails({
                             details.details[index].topTextEng = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -408,6 +414,7 @@ function CreateNewsDetails({
                             details.details[index].topTextArm = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -421,6 +428,7 @@ function CreateNewsDetails({
                             details.details[index].topTextRu = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                     </div>
@@ -495,6 +503,7 @@ function CreateNewsDetails({
                             details.details[index].bottomTextEng =
                               e.target.value;
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -508,6 +517,7 @@ function CreateNewsDetails({
                             details.details[index].bottomTextArm =
                               e.target.value;
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -521,6 +531,7 @@ function CreateNewsDetails({
                             details.details[index].bottomTextRu =
                               e.target.value;
                           }}
+                          required={false}
                         />
                       </div>
                     </div>

@@ -180,9 +180,9 @@ function AddEvent({
         <div className="add_event_component">
           <div className="container_body">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Input id="nameEng" type="text" placeholder="Name" />
-              <Input id="nameArm" type="text" placeholder="Անվանում" />
-              <Input id="nameRu" type="text" placeholder="Имя" />
+              <Input id="nameEng" type="text" placeholder="Name"   required={false}/>
+              <Input id="nameArm" type="text" placeholder="Անվանում"   required={false}/>
+              <Input id="nameRu" type="text" placeholder="Имя"   required={false}/>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Select placeholder="Country" items={countries} id="countryId" />
@@ -215,13 +215,16 @@ function AddEvent({
                 id="descriptionEng"
                 type="text"
                 placeholder="Description"
+                required={false}
               />
               <Textarea
                 id="descriptionArm"
                 type="text"
                 placeholder="Նկարագիր"
+                required={false}
               />
-              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
+              <Textarea id="descriptionRu" type="text" placeholder="Описание"   required={false}/>
+              />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -229,19 +232,22 @@ function AddEvent({
                 id="startDate"
                 type="datetime-local"
                 placeholder="Start Date"
+               
               />
               <Input
                 id="endDate"
                 type="datetime-local"
                 placeholder="End Date"
                 min={startDate}
+               
               />
 
               <Multiselect
                 placeholder="Speakers"
                 items={allSpeakers}
                 id="speakers"
-                required={false}
+            
+              
               />
             </div>
 
