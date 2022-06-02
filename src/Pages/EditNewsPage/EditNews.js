@@ -541,12 +541,6 @@ function EditNews({
                   // newBlock.topTextRu
                   //   ? false
                   //   : true
-                disabled={
-                  newBlock.topTextEng &&
-                  newBlock.topTextArm &&
-                  newBlock.topTextRu
-                    ? false
-                    : true
                 }
                 title="Save Block"
                 className="action_btn"
