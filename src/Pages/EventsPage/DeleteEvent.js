@@ -11,7 +11,7 @@ function DeleteEvent({ modalOpen, setModalOpen, id, deleteEvent, cleanEvent }) {
   const handleDelete = () => {
     // if (id) {
     const changePath = () => {
-      history.push("/events");
+      history.push("/events/1");
     };
     deleteEvent(id, changePath);
     setModalOpen(false);

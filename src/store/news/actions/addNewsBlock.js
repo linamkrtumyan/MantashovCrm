@@ -7,13 +7,7 @@ import {
 } from "../types";
 import { toast } from "react-toastify";
 
-export const addNewsBlock = (block) => {
-  const data = new FormData();
-  const { blockImages } = store.getState().imageReducer;
-  const { blockVideos } = store.getState().videoReducer;
-
-  block.block.blockImages = blockImages ?? [];
-  block.block.blockVideos = blockVideos ?? [];
+export const addNewsBlock = (block, callback = () => {}) => {
 
   return (dispatch) => {
     dispatch(addNewsBlockRequest());
@@ -22,7 +16,9 @@ export const addNewsBlock = (block) => {
         if (data.success) {
           dispatch(addNewsBlockSuccess(data));
           toast.dark("News details added");
+
           //   cleanForm();
+          callback();
         } else {
           //   cleanForm();
         }
@@ -43,7 +39,7 @@ const addNewsBlockRequest = () => {
 const addNewsBlockSuccess = (data) => {
   return {
     type: ADD_NEWS_DETAILS_SUCCESS,
-    payload: { newsId: data.id },
+    payload: { newsId: data.id, successOfDetails: data.success },
   };
 };
 

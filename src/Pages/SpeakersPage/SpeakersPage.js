@@ -1,42 +1,50 @@
 import React, { useState, useEffect } from "react";
 import "./speakersPage.css";
-import { fetchSpeakers, deleteSpeaker, fetchSpeakersByPage } from "../../store";
+import {
+  deleteSpeaker,
+  fetchSpeakersByPage,
+  changeCurrentPage,
+} from "../../store";
 import { connect } from "react-redux";
 import Loading from "../../Components/Loading/Loading";
 import AddSpeakerCard from "../../Components/Speakers/AddSpeakerCard/AddSpeakerCard";
-import { useHistory } from "react-router-dom";
 import Pagination from "../../Components/Pagination/Pagination";
+import SearchBar from "../../Components/SearchBar/SearchBar";
+import TableBody from "./components/TableBody";
+import { useParams } from "react-router-dom";
 
 function SpeakersPage({
-  fetchSpeakers,
-  deleteSpeaker,
-  speakers,
   loading,
-  fetch,
   count,
   speakersByPage,
   fetchSpeakersByPage,
+  searchValue,
 }) {
-  let history = useHistory();
+  let { currentPage } = useParams();
+  const [deleted, setDeleted] = useState(false);
+  useEffect(() => {
+    changeCurrentPage(1);
+    fetchSpeakersByPage(1, "");
+  }, []);
+  useEffect(() => {
+    fetchSpeakersByPage(currentPage, "");
+  }, [deleted]);
+
   useEffect(() => {
     if (!loading) {
-      // fetchSpeakers();
-      fetchSpeakersByPage();
+      fetchSpeakersByPage(currentPage, searchValue ?? "");
     }
-  }, [fetch]);
-
-  const handleDetails = (id) => {
-    history.push(`/edit-speaker/${id}`);
-  };
-
-  const handleDelete = (id) => {
-    deleteSpeaker(id);
-  };
+  }, [searchValue, currentPage]);
 
   if (loading) {
     return <Loading />;
   }
-  if (!speakersByPage || !speakersByPage.length) {
+  if (
+    // !speakersByPage ||
+    !speakersByPage.length &&
+    !searchValue &&
+    searchValue !== ""
+  ) {
     return (
       <div className="noData">
         <div>
@@ -50,7 +58,14 @@ function SpeakersPage({
   return (
     <div>
       <div className="members_container">
-        <AddSpeakerCard />
+        <div className="is-flex is-justify-content-flex-end">
+          <SearchBar
+            id="speakersSearch"
+            containerClass="searchbar-container"
+            url="/speakers"
+          />
+          <AddSpeakerCard />
+        </div>
 
         <div
           style={{
@@ -71,60 +86,7 @@ function SpeakersPage({
               </tr>
             </thead>
 
-            <tbody>
-              {speakersByPage.length > 0 ? (
-                speakersByPage.map((speaker, index) => {
-                  return (
-                    <tr
-                      key={speaker.id}
-                      style={{ cursor: "pointer", position: "relative" }}
-                      onClick={() => handleDetails(speaker.id)}
-                    >
-                      <td onClick={() => handleDetails(speaker.id)}>
-                        <img
-                          alt=""
-                          className="membercard_img"
-                          src={`${speaker.image}`}
-                        />
-                      </td>
-                      <td onClick={() => handleDetails(speaker.id)}>
-                        {speaker.fullName}
-                      </td>
-                      <td onClick={() => handleDetails(speaker.id)}>
-                        {
-                          // speaker
-                          // .organizations.map((org) => (
-                          <p key={speaker.organization}>
-                            {speaker.organization}
-                          </p>
-                          // ))
-                        }
-                      </td>
-                      {/* <td onClick={() => handleDetails(speaker.id)}>
-                          {speaker.location}
-                        </td> */}
-                      {/* <div
-                          onClick={() => handleReset(speaker.id)}
-                          style={{ zIndex: "10", position: "absolute" }}
-                        > */}
-                      <td
-                        // style={{ zIndex: "999999", position: "absolute" }}
-                        onClick={() => {
-                          handleDelete(speaker.id);
-                        }}
-                      >
-                        <i className="far fa-trash-alt"></i>
-                      </td>
-                      {/* </div> */}
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan="5">No data</td>
-                </tr>
-              )}
-            </tbody>
+            <TableBody setDeleted={setDeleted} />
           </table>
         </div>
         <Pagination totalPosts={count} />
@@ -135,24 +97,22 @@ function SpeakersPage({
 
 const mapStateToProps = (state) => {
   return {
-    speakers: state.speakerReducer.speakers,
     fetch: state.speakerReducer.fetch,
     loading: state.speakerReducer.loading,
     count: state.speakerReducer.count,
     speakersByPage: state.speakerReducer.speakersByPage,
+    searchValue: state.formReducer?.speakersSearch,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchSpeakers: () => {
-      dispatch(fetchSpeakers());
-    },
+    changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
     deleteSpeaker: (id) => {
       dispatch(deleteSpeaker(id));
     },
-    fetchSpeakersByPage: () => {
-      dispatch(fetchSpeakersByPage());
+    fetchSpeakersByPage: (page, searchValue) => {
+      dispatch(fetchSpeakersByPage(page, searchValue));
     },
   };
 };

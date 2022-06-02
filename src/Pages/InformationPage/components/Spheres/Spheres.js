@@ -108,7 +108,7 @@ function Spheres({
 
               <tbody>
                 {add ? <AddSphere setAdd={setAdd} /> : null}
-                {spheres.map((sphere, index) => {
+                {spheres?.map((sphere, index) => {
                   if (editingId === sphere.id) {
                     return (
                       <tr style={{ cursor: "default" }} key={sphere.id}>

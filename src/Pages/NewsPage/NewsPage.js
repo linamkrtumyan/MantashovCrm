@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./newsPage.css";
 import NewsCard from "../../Components/News/NewsCard/NewsCard";
 import AddNewsCard from "../../Components/News/AddNewsCard/AddNewsCard";
 import Pagination from "../../Components/Pagination/Pagination";
 import { connect } from "react-redux";
-import { changeCurrentPage, fetchNewsByPage } from "../../store";
+import store, { changeCurrentPage, fetchNewsByPage } from "../../store";
 import Loading from "../../Components/Loading/Loading";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import SearchBar from "../../Components/SearchBar/SearchBar";
+import { useQuery } from "../../Hooks/useQuery";
+import TableBody from "./components/TableBody";
 
 function NewsPage({
   fetchNewsByPage,
@@ -14,30 +17,34 @@ function NewsPage({
   count,
   loading,
   noNews,
-  currentPage,
+  // currentPage,
   changeCurrentPage,
   action,
+  searchValue,
 }) {
-  let history = useHistory();
+  let { currentPage } = useParams();
+  const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
     changeCurrentPage(1);
+    fetchNewsByPage(1, "");
   }, []);
 
   useEffect(() => {
-    if (!loading) {
-      fetchNewsByPage();
-    }
-  }, [currentPage, action]);
+    fetchNewsByPage(currentPage, "");
+  }, [deleted]);
 
-  function handleDetails(id) {
-    history.push(`/edit-news/${id}`);
-  }
+  useEffect(() => {
+    if (!loading) {
+      fetchNewsByPage(currentPage, searchValue ?? "");
+    }
+  }, [currentPage, action, searchValue]);
 
   if (loading) {
     return <Loading />;
   }
-  if (noNews) {
+
+  if (noNews && !searchValue && searchValue !== "") {
     return (
       <div className="noData">
         <div>
@@ -50,7 +57,14 @@ function NewsPage({
   return (
     <div>
       <div className="members_container">
-        <AddNewsCard />
+        <div className="is-flex is-justify-content-flex-end">
+          <SearchBar
+            id="newsSearch"
+            containerClass="searchbar-container"
+            url="/news"
+          />
+          <AddNewsCard />
+        </div>
 
         <div
           style={{
@@ -61,76 +75,44 @@ function NewsPage({
             maxHeight: "65vh",
           }}
         >
-          <table className="table is-striped is-fullwidth is-hoverable">
-            <thead>
-              <tr>
-                <th>Photo</th>
-                <th>Title</th>
-                <th>Text</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {newsByPage.length > 0 ? (
-                newsByPage.map((news, index) => {
-                  return (
-                    <tr
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleDetails(news.id)}
-                      key={index}
-                    >
-                      <td>
-                        <img
-                          alt=""
-                          className="newscard_img"
-                          onError={(e) => {
-                            e.preventDefault();
-                            e.target.onerror = null;
-                            e.target.src =
-                              require("../../img/unnamed.png").default;
-                          }}
-                          // src={`/images/newsHeader/${news.id}/header.png`}
-                          src={`${news.image}`}
-                        />
-                      </td>
-                      <td>{news.title}</td>
-                      <td
-                      // style={{ width: "30%" }}
-                      >
-                        {news.text}
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
+          {loading ? (
+            <Loading />
+          ) : (
+            <table className="table is-striped is-fullwidth is-hoverable">
+              <thead>
                 <tr>
-                  <td colSpan="3">No data</td>
+                  <th style={{ width: "11%" }}>Photo</th>
+                  <th style={{ width: "30%" }}>Title</th>
+                  <th style={{ width: "49%" }}>Text</th>
+                  <th style={{ width: "10%" }}></th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+
+              <TableBody setDeleted={setDeleted} />
+            </table>
+          )}
         </div>
-        <Pagination totalPosts={count} />
+        <Pagination totalPosts={count} url="/news" />
       </div>
     </div>
   );
 }
 const mapStateToProps = (state) => {
-  // console.log({ action: state.modalReducer.action });
   return {
     newsByPage: state.newsReducer.newsByPage,
     count: state.newsReducer.count,
     loading: state.newsReducer.loading,
     noNews: state.newsReducer.newsByPage.length === 0,
-    currentPage: state.paginationReducer.currentPage,
     action: state.modalReducer.action,
+    searchValue: state.formReducer?.newsSearch,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
-    fetchNewsByPage: () => dispatch(fetchNewsByPage()),
+    fetchNewsByPage: (page, searchValue) =>
+      dispatch(fetchNewsByPage(page, searchValue)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewsPage);

@@ -65,12 +65,16 @@ export {
   uploadOneImage,
   deleteImageFromStore,
   deleteHeader,
+  setEventFixedImage,
+  deleteEventFixedImage,
+  cleanImagesWithKey,
 } from "./images/actions";
 export {
   uploadVideo,
   cleanVideos,
   deletedVideos,
   deleteVideoFromStore,
+  cleanVideosWithKey,
 } from "./videos/actions";
 export { openModal, closeModal, callAction } from "./modal/actions";
 export {
@@ -99,6 +103,7 @@ export {
   addSpeaker,
   editSpeaker,
   fetchSpeakersByPage,
+  fetchSpeakerById,
 } from "./speakers/actions";
 
 export { default } from "./configureStore";

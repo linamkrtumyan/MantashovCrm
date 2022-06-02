@@ -15,10 +15,8 @@ function ModalComponent({
   id,
 }) {
   const handleClose = () => {
-    // console.log("object");
   };
   const logsmth = () => {
-    // console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
   };
   return (
     <div>

@@ -38,7 +38,7 @@ function Textarea({
         // placeholder={placeholder}
         onInput={(e) => auto_grow(e)}
         type={type}
-        value={value}
+        value={value ?? ""}
         required={required}
       />
     </div>

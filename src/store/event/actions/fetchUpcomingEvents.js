@@ -7,19 +7,14 @@ import {
 } from "../types";
 
 export const fetchUpcomingEvents = (page) => {
-  //   const page = store.getState().paginationReducer.currentPage;
-  // const page = 0;
-  // console.log(page, "uxarkvox page");
   return (dispatch) => {
     dispatch(fetchUpcomingEventsRequest());
     request(`/admin/events/upcoming/${page}`)
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchUpcomingEventsSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchUpcomingEventsFailure(e.message));
-        // console.log(e);
       });
   };
 };

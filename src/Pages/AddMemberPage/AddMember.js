@@ -85,7 +85,7 @@ function AddMember({
   // }, [categoryId]);
 
   const cancelAdd = () => {
-    history.push("/members");
+    history.push("/members/1");
   };
 
   const handleCreate = (e) => {
@@ -157,7 +157,7 @@ function AddMember({
     };
 
     const changePath = () => {
-      history.push("/members");
+      history.push("/members/1");
     };
     addMember(member, changePath);
     // cleanForm();

@@ -66,6 +66,7 @@ function AddEvent({
     formOnChangeArray("agendasAddresses", "agendas", []);
     getSpeakers();
     cleanImages();
+    eventId = null;
   }, []);
 
   useEffect(() => {
@@ -91,7 +92,6 @@ function AddEvent({
     });
     setAllSpeakers(arr);
   }, [speakers]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -157,7 +157,7 @@ function AddEvent({
   };
 
   const handleCancel = () => {
-    history.push("/events");
+    history.push("/events/1");
     cleanForm();
     // editAgendas([]);
   };
@@ -189,21 +189,6 @@ function AddEvent({
               <Select placeholder="State" items={states} id="stateId" />
               <Select placeholder="City" items={cities} id="cityId" />
             </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Textarea
-                id="descriptionEng"
-                type="text"
-                placeholder="Description"
-              />
-              <Textarea
-                id="descriptionArm"
-                type="text"
-                placeholder="Նկարագիր"
-              />
-              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
-            </div>
-
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Input
                 id="locationEng"
@@ -223,6 +208,20 @@ function AddEvent({
                 placeholder="Адрес"
                 required={false}
               />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Textarea
+                id="descriptionEng"
+                type="text"
+                placeholder="Description"
+              />
+              <Textarea
+                id="descriptionArm"
+                type="text"
+                placeholder="Նկարագիր"
+              />
+              <Textarea id="descriptionRu" type="text" placeholder="Описание" />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -315,7 +314,6 @@ const mapStateToProps = (state) => {
     cities: state.locationsReducer.cities,
     agendas: state.eventReducer?.agendas,
     speakers: state.eventReducer?.speakers,
-    // selectedSpeakers: state.formReducer?.speakers ?? [],
     headers: state.imageReducer?.headers,
     image: state.imageReducer?.image,
     eventId: state.eventReducer?.eventId,

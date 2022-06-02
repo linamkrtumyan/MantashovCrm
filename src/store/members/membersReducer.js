@@ -29,7 +29,7 @@ import {
 } from "./types";
 
 const initialState = {
-  loading: false,
+  loading: true,
   membersByPage: [],
   error: null,
   count: 0,
@@ -44,12 +44,10 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action, "action");
   switch (action.type) {
     case FETCH_MEMBERS_BY_PAGE_REQUEST:
       return {
         ...state,
-        loading: true,
       };
     case FETCH_MEMBERS_BY_PAGE_SUCCESS:
       return {

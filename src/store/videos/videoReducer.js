@@ -5,6 +5,7 @@ import {
   CLEAN_VIDEOS,
   DELETED_VIDEOS,
   DELETE_VIDEO_FROM_STORE,
+  CLEAN_VIDEOS_WITH_KEY,
 } from "./types";
 
 const initialState = {
@@ -25,6 +26,9 @@ const reducer = (state = initialState, action) => {
         videoUpload: true,
       };
     case UPLOAD_VIDEO_SUCCESS:
+      if (!state[action.payload.key]) {
+        state[action.payload.key] = [];
+      }
       return {
         ...state,
         loading: false,
@@ -32,7 +36,9 @@ const reducer = (state = initialState, action) => {
         error: null,
         videoUpload: action.payload.videoUpload,
         videoUrls: action.payload.videoUrls,
-        [action.payload.key]: action.payload.videos,
+        [action.payload.key]: action.payload.videos.concat(
+          state[action.payload.key]
+        ),
       };
     case UPLOAD_VIDEO_FAILURE:
       return {
@@ -47,6 +53,15 @@ const reducer = (state = initialState, action) => {
         ...state,
         video: [],
         deletedVideos: [],
+        videoUrls: [],
+      };
+    case CLEAN_VIDEOS_WITH_KEY:
+      if (!state[action.payload.key]) {
+        state[action.payload.key] = [];
+      }
+      return {
+        ...state,
+        [action.payload.key]: [],
       };
     case DELETED_VIDEOS:
       return {

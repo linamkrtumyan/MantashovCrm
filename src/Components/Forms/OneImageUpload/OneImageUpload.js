@@ -29,7 +29,7 @@ function OneImageUpload({
   useEffect(() => {
     if (headers.length && headers[index - 1] && index) {
       setImage(headers[index - 1].url);
-    } else if (!index && header) {
+    } else if (!index && header && header[0]) {
       setImage([header[0].url]);
     } else {
       setImage([]);
@@ -37,9 +37,8 @@ function OneImageUpload({
   }, [headers, header]);
 
   const handleDelete = () => {
-    // let index;
     headers.map((img) => {
-      if (img === image) {
+      if (img.url == image) {
         const index = headers.indexOf(img);
         deleteHeader(index);
       }
@@ -56,20 +55,10 @@ function OneImageUpload({
       ) : null}
       {image.length > 0 ? (
         <div className="upload_cont">
-          <img
-            className="uploaded_image"
-            src={
-              image
-              // headers[index - 1]?.url
-              // ? headers[index - 1].url : image
-            }
-            alt=""
-          />
+          <img className="uploaded_image" src={image} alt="" />
           <div className="middle">
             <div
-              // onClick={() => deleteImage(source.indexOf(photo))}
               onClick={() => {
-                // setImage([]);
                 setImage([]);
                 handleDelete();
               }}
@@ -87,10 +76,6 @@ function OneImageUpload({
           </div>
         </div>
       ) : (
-        // <div>
-        //   <img className="upload_img" src={image} />
-        //   <p>aa</p>
-        // </div>
         <div className="">
           <label htmlFor="one-file-upload" className="custom-file-upload">
             <i className="fas fa-cloud-upload-alt"></i>

@@ -20,7 +20,6 @@ export const uploadVideo = (vid, key) => {
       })
       .catch((e) => {
         dispatch(uploadVideoFailure(e.message));
-        // console.log({e});
       });
   };
 };

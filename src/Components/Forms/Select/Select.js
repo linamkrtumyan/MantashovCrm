@@ -60,7 +60,7 @@ const Select = ({
   useOutsideClick(ref, handleSelect);
 
   return (
-    <div ref={ref} className="input_container control  has-icons-right">
+    <div ref={ref} className="input_container control has-icons-right">
       <label htmlFor={id}>{placeholder}</label>
 
       <input

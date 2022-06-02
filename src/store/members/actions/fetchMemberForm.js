@@ -7,18 +7,15 @@ import {
 } from "../types";
 
 export const fetchMemberForm = () => {
-  // console.log(page, "uxarkvox page");
 
   return (dispatch) => {
     dispatch(fetchMembersFormRequest());
     request("/admin/members/member/form")
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchMembersFormSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchMembersFormFailure(e.message));
-        // console.log(e);
       });
   };
 };

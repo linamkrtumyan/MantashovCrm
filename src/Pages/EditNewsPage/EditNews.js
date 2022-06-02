@@ -6,6 +6,7 @@ import "./editNews.css";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
 import store, {
   fetchNewsDetails,
@@ -19,6 +20,8 @@ import store, {
   deleteNewsBlock,
   editNewsBlock,
   cleanForm,
+  cleanImagesWithKey,
+  cleanVideosWithKey,
 } from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import { deletedImages } from "../../store/images/actions";
@@ -48,6 +51,8 @@ function EditNews({
   fixedImagesDeleted,
   newsDetails,
   headerImage,
+  cleanImagesWithKey,
+  cleanVideosWithKey,
 }) {
   const [mainImg, setMainImg] = useState(true);
   const [isActive, setIsActive] = useState(true);
@@ -69,6 +74,9 @@ function EditNews({
   let { id } = useParams();
   useEffect(() => {
     fetchNewsDetails(id);
+    return () => {
+      cleanImages();
+    };
   }, []);
 
   useEffect(() => {
@@ -76,7 +84,7 @@ function EditNews({
   }, [renderContent, id]);
 
   const handleCancel = () => {
-    history.push("/news");
+    history.push("/news/1");
   };
 
   useEffect(() => {
@@ -93,28 +101,25 @@ function EditNews({
   const handleCreate = (e) => {
     e.preventDefault();
     let { titleArm, titleEng, titleRu } = store.getState().formReducer;
-    // const addedImages = store.getState().imageReducer.image;
-    // const deleted = store.getState().imageReducer.deletedImages;
-    const header = store.getState().imageReducer.header[0].name;
 
-    // const changePath = () => {
-    //   path.push("/news");
-    // };
-
+    let header = store.getState().imageReducer.header;
+    if (header.length) {
+      header = header.pop().name;
+    } else {
+      header = null;
+    }
     let news = {
       titleArm,
       titleEng,
       titleRu,
-      isActive,
+      // isActive,
       headerDeleted: !mainImg,
       id,
       header,
-      // addedImages: addedImages,
-      // deletedImages: deleted,
     };
 
     editNews(news);
-    cleanImages();
+    history.push("/news/1");
   };
 
   const openImageModal = (imagePath) => {
@@ -123,10 +128,12 @@ function EditNews({
   };
 
   useEffect(() => {
+    let blockImages = image ?? [];
+    let blockVideos = video ?? [];
     setNewBlock({
       ...newBlock,
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
+      blockImages,
+      blockVideos,
     });
   }, [image, video]);
 
@@ -143,31 +150,30 @@ function EditNews({
   };
 
   const saveBlockData = () => {
+    let links = blockLinks ? blockLinks.split("\n") : [];
     setNewBlock({
       ...newBlock,
-
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
+      links,
     });
-    if (newBlock.topTextEng !== "") {
-      let links = blockLinks ? blockLinks.split("\n") : [];
-      setNewBlock({
-        ...newBlock,
-        links,
-      });
-      setRenderContent(renderContent + 1);
-      addNewsBlock({ newsId: parseInt(id), block: newBlock });
-      getNewsDetails(parseInt(id));
-      setNewBlock({});
-      setBlockLinks("");
-      cleanImages();
-      formOnChange(`shortDescriptionEng`, "");
-      formOnChange(`shortDescriptionArm`, "");
-      formOnChange(`shortDescriptionRu`, "");
-      cleanVideos();
-    } else {
-      setRequiredClass("requiredField");
-    }
+
+    setRenderContent(renderContent + 1);
+    addNewsBlock({ newsId: parseInt(id), block: newBlock }, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+    getNewsDetails(parseInt(id));
+    setNewBlock({});
+    setBlockLinks("");
+    cleanImages();
+    cleanVideos();
+    cleanImagesWithKey(`blockImages`);
+    cleanVideosWithKey(`blockVideos`);
+    formOnChange(`shortDescriptionEng`, "");
+    formOnChange(`shortDescriptionArm`, "");
+    formOnChange(`shortDescriptionRu`, "");
+    formOnChange(`blockImages`, []);
+    formOnChange(`blockVideos`, []);
   };
 
   const handleDelete = (id) => {
@@ -175,13 +181,27 @@ function EditNews({
     setRenderContent(renderContent + 1);
   };
 
-  const handleEdit = (block) => {
-    let editedBlock = block;
+  const handleEdit = (editedBlock) => {
     editedBlock.deletedImages = [];
-    editedBlock.addedImages = [];
+    editedBlock.addedImages =
+      store.getState().imageReducer[`block${editedBlock.id}`] ?? [];
     editedBlock.deletedVideos = [];
-    editedBlock.addedVideos = [];
-    editNewsBlock(editedBlock);
+    editedBlock.addedVideos =
+      store.getState().videoReducer[`videoBlock${editedBlock.id}`] ?? [];
+    editNewsBlock(editedBlock, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+
+    formOnChange(`block${editedBlock.id}`, []);
+    formOnChange(`videoBlock${editedBlock.id}`, []);
+    cleanImagesWithKey(`block${editedBlock.id}`);
+    cleanVideosWithKey(`videoBlock${editedBlock.id}`);
+    cleanImages();
+    cleanVideos();
+    // setRenderContent(renderContent + 1);
+    toast.dark("Edited");
   };
 
   const sendData = () => {
@@ -209,19 +229,59 @@ function EditNews({
     cleanImages();
     cleanVideos();
     cleanForm();
-    history.push("/news");
+    history.push("/news/1");
+  };
+
+  const deleteBlockImage = (block, index) => {
+    const deletedImage = block.images[index].split("/");
+    const blockData = {
+      id: block.id,
+      topTextEng: block.topTextEng,
+      topTextArm: block.topTextArm,
+      topTextRu: block.topTextRu,
+      bottomTextEng: block.bottomTextEng,
+      bottomTextArm: block.bottomTextArm,
+      bottomTextRu: block.bottomTextRu,
+      links: block.links,
+      deletedImages: [deletedImage[deletedImage.length - 1]],
+      addedImages: [],
+      deletedVideos: [],
+      addedVideos: [],
+    };
+    editNewsBlock(blockData);
+    setRenderContent(renderContent + 1);
+  };
+
+  const deleteBlockVideos = (block, index) => {
+    const deletedVideo = block.videos[index].split("/");
+    const blockData = {
+      id: block.id,
+      topTextEng: block.topTextEng,
+      topTextArm: block.topTextArm,
+      topTextRu: block.topTextRu,
+      bottomTextEng: block.bottomTextEng,
+      bottomTextArm: block.bottomTextArm,
+      bottomTextRu: block.bottomTextRu,
+      links: block.links,
+      deletedImages: [],
+      addedImages: [],
+      deletedVideos: [deletedVideo[deletedVideo.length - 1]],
+      addedVideos: [],
+    };
+    editNewsBlock(blockData);
+    setRenderContent(renderContent + 1);
   };
 
   return (
     <>
-      <OpenImage
+      {/* <OpenImage
         openImgModal={openImgModal}
         setOpenImgModal={setOpenImgModal}
         imgPath={imgPath}
         id={id}
         folderPath="/images/news"
         detailsImages={detailsImages}
-      />
+      /> */}
 
       <div>
         <button onClick={() => history.goBack()} className="arrow_left">
@@ -289,7 +349,7 @@ function EditNews({
                       className="add_news_input"
                       textareaSize="textareaSize"
                     />
-                    <button
+                    {/* <button
                       onClick={() => setIsActive(!isActive)}
                       style={{
                         width: "800px",
@@ -298,9 +358,8 @@ function EditNews({
                       type="button"
                       className={isActive ? "button red" : "button"}
                     >
-                      {/* <input type="checkbox" /> */}
                       <p>{isActive ? "Active" : "Passive"}</p>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
@@ -317,7 +376,11 @@ function EditNews({
                 />
               </div>
               <div>
-                <Button title="Save Changes" className="action_btn" />
+                <Button
+                  onFocus={(e) => e.stopPropagation()}
+                  title="Save Changes"
+                  className="action_btn"
+                />
               </div>
             </div>
           </form>
@@ -389,11 +452,11 @@ function EditNews({
                 label="Upload Images"
                 containerClassName="uploaded"
                 id="blockImages"
-                limit={0}
               />
               <VideoUpload
                 label="Upload Videos"
                 containerClassName="uploaded"
+                id="blockVideos"
               />
             </div>
 
@@ -464,6 +527,13 @@ function EditNews({
             <div>
               <Button
                 onClick={saveBlockData}
+                disabled={
+                  newBlock.topTextEng &&
+                  newBlock.topTextArm &&
+                  newBlock.topTextRu
+                    ? false
+                    : true
+                }
                 title="Save Block"
                 className="action_btn"
               />
@@ -543,31 +613,23 @@ function EditNews({
                           }}
                         />
                       </div>
-                      <div style={{ display: "flex " }}>
+                      <div style={{ display: "flex ", marginBottom: 20 }}>
                         {block.images && block.images.length
                           ? block.images.map((img) => {
                               return (
-                                <div className="upload_cont">
+                                <div className="upload_cont" key={img}>
                                   <img
                                     className="uploaded_images"
                                     src={img}
                                     alt=""
-                                    key={img}
                                   />
                                   <div className="middle">
                                     <div
                                       onClick={() => {
                                         const indexImg =
-                                          block.imgUrls.indexOf(img);
-                                        const newArr = block.imgUrls.slice(
-                                          indexImg,
-                                          1
-                                        );
-                                        const indexBlock =
-                                          details.details.indexOf(block);
-                                        details.details[indexBlock].images =
-                                          newArr;
+                                          block.images.indexOf(img);
                                         setForRender(forRender + 1);
+                                        deleteBlockImage(block, indexImg);
                                       }}
                                     >
                                       <svg
@@ -589,6 +651,11 @@ function EditNews({
                             })
                           : null}
                       </div>
+                      <ImageUpload
+                        label="Upload Images"
+                        containerClassName="uploaded"
+                        id={`block${block.id}`}
+                      />
                       <div
                         style={{
                           display: "flex",
@@ -635,53 +702,55 @@ function EditNews({
                           />
                         </div>
                       </div>
-                      {block.videos && block.videos.length
-                        ? block.videos.map((video) => {
-                            return (
-                              <div className="upload_cont">
-                                <video
-                                  className="uploaded_images"
-                                  key={video}
-                                  controls
-                                >
-                                  <source src={video} type="video/mp4" />
-                                  <source src={video} type="video/ogg" />
-                                  Your browser does not support the video tag.
-                                </video>
-                                <div className="middle">
-                                  <div
-                                    onClick={() =>
-                                      // deleteVideo(source.indexOf(video))
-                                      {
-                                        const indexImg =
-                                          block.videos.indexOf(video);
-                                        const newArr = block.videoUrls.slice(
-                                          indexImg,
-                                          1
-                                        );
-                                        const indexBlock =
-                                          details.details.indexOf(block);
-                                        details.details[indexBlock].videos =
-                                          newArr;
-                                        setForRender(forRender + 1);
-                                      }
-                                    }
+                      <div style={{ display: "flex ", marginBottom: 20 }}>
+                        {block.videos && block.videos.length
+                          ? block.videos.map((video, index) => {
+                              return (
+                                <div className="upload_cont" key={video}>
+                                  <video
+                                    className="uploaded_images"
+                                    poster={block.thumbnails[index]}
                                   >
-                                    <svg viewBox="0 0 24 24" className="close">
-                                      <path
-                                        d="M 2 2 L 22 22 M 2 22 L22 2"
-                                        stroke="red"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="5"
-                                      />
-                                    </svg>
+                                    {/* <source src={video} type="video/mp4" />
+                                    <source src={video} type="video/ogg" /> */}
+                                    Your browser does not support the video tag.
+                                  </video>
+                                  <div className="middle">
+                                    <div
+                                      onClick={() =>
+                                        // deleteVideo(source.indexOf(video))
+                                        {
+                                          const indexVid =
+                                            block.videos.indexOf(video);
+                                          setForRender(forRender + 1);
+                                          deleteBlockVideos(block, indexVid);
+                                        }
+                                      }
+                                    >
+                                      <svg
+                                        viewBox="0 0 24 24"
+                                        className="close"
+                                      >
+                                        <path
+                                          d="M 2 2 L 22 22 M 2 22 L22 2"
+                                          stroke="red"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="5"
+                                        />
+                                      </svg>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            );
-                          })
-                        : null}
+                              );
+                            })
+                          : null}
+                      </div>
+                      <VideoUpload
+                        label="Upload Videos"
+                        containerClassName="uploaded"
+                        id={`videoBlock${block.id}`}
+                      />
                       <div style={{ display: "flex" }}>
                         <Button
                           title="Delete"
@@ -714,13 +783,13 @@ const mapStateToProps = (state) => {
     header: state.imageReducer.header,
     news: state.newsReducer.newsDetails,
     detailsImages: state.newsReducer.detailsImages,
-    image: state.imageReducer?.image,
-    video: state.videoReducer?.video,
+    image: state.imageReducer?.blockImages,
+    video: state.videoReducer?.blockVideos,
     headers: state.imageReducer?.headers,
     fixedImages: state.formReducer?.fixedImages ?? [],
     fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
     newsDetails: state.newsReducer?.newsDetails,
-    headerImage: state.formReducer?.image,
+    headerImage: state.formReducer?.image ?? "",
   };
 };
 
@@ -732,10 +801,14 @@ const mapDispatchToProps = (dispatch) => {
     cleanImages: () => dispatch(cleanImages()),
     deletedImages: (img) => dispatch(deletedImages(img)),
     deleteNewsImageFromStore: (id) => dispatch(deleteNewsImageFromStore(id)),
-    addNewsBlock: (blockData) => dispatch(addNewsBlock(blockData)),
+    addNewsBlock: (blockData, callback) =>
+      dispatch(addNewsBlock(blockData, callback)),
     getNewsDetails: (id) => dispatch(getNewsDetails(id)),
     deleteNewsBlock: (id) => dispatch(deleteNewsBlock(id)),
-    editNewsBlock: (block) => dispatch(editNewsBlock(block)),
+    editNewsBlock: (block, callback) =>
+      dispatch(editNewsBlock(block, callback)),
+    cleanImagesWithKey: (key) => dispatch(cleanImagesWithKey(key)),
+    cleanVideosWithKey: (key) => dispatch(cleanVideosWithKey(key)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditNews);

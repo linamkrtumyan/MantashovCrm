@@ -7,15 +7,13 @@ import {
 } from "../types";
 import { changeCurrentPage } from "../../pagination/actions";
 
-export const fetchMembersByPage = () => {
-  const page = store.getState().paginationReducer.currentPage;
-  // console.log(page, "uxarkvox page");
+export const fetchMembersByPage = (page,searchValue) => {
+  // const page = store.getState().paginationReducer.currentPage;
 
   return (dispatch) => {
     dispatch(fetchMembersByPageRequest());
-    request(`/admin/members/${page}`)
+    request(`/admin/members/${page}?searchValue=${searchValue}`)
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchMembersByPageSuccess(data));
         if (data.count > 0 && data.members.length === 0) {
           dispatch(changeCurrentPage(page));
@@ -23,7 +21,6 @@ export const fetchMembersByPage = () => {
       })
       .catch((e) => {
         dispatch(fetchMembersByPageFailure(e.message));
-        // console.log(e);
       });
   };
 };

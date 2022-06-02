@@ -12,3 +12,16 @@
 .all_newscard_container {
   padding: 0 30px;
 }
+
+.tableRows td {
+  word-break: break-word;
+}
+
+/* .newsText {
+  -webkit-line-clamp: 4;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+} */

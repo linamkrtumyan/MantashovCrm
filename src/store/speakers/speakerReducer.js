@@ -14,21 +14,42 @@ import {
   FETCH_SPEAKERS_BY_PAGE_REQUEST,
   FETCH_SPEAKERS_BY_PAGE_SUCCESS,
   FETCH_SPEAKERS_BY_PAGE_FAILURE,
+  FETCH_SPEAKER_BY_ID_REQUEST,
+  FETCH_SPEAKER_BY_ID_SUCCESS,
+  FETCH_SPEAKER_BY_ID_FAILURE,
 } from "./types";
 
 const initialState = {
   speakers: [],
-  loading: false,
+  loading: true,
   error: null,
   fetch: false,
   speakersByPage: [],
   count: 0,
+  speakerDetails: {},
 };
 
 const speakerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_SPEAKERS_BY_PAGE_REQUEST:
+    case FETCH_SPEAKER_BY_ID_REQUEST:
       return { ...state, loading: true };
+    case FETCH_SPEAKER_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        speakerDetails: action.payload.speakerDetails,
+      };
+    case FETCH_SPEAKER_BY_ID_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        speakerDetails: {},
+      };
+
+    case FETCH_SPEAKERS_BY_PAGE_REQUEST:
+      return { ...state};
     case FETCH_SPEAKERS_BY_PAGE_SUCCESS:
       return {
         ...state,

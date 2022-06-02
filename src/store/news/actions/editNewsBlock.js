@@ -6,16 +6,15 @@ import {
 } from "../types";
 import { toast } from "react-toastify";
 
-export const editNewsBlock = (block, changePath) => {
-  // set api for block edit
+export const editNewsBlock = (block, callback = () => {}) => {
   return (dispatch) => {
     dispatch(editNewsBlockRequest());
     request("/admin/news/newsDetails", "PUT", block)
       .then((data) => {
         if (data.success) {
           dispatch(editNewsBlockSuccess(data));
-          toast.dark("Edited");
-          //   changePath();
+          // toast.dark("Edited");
+          callback();
         }
       })
       .catch((e) => {

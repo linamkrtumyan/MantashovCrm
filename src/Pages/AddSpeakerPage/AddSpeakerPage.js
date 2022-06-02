@@ -29,7 +29,7 @@ function AddSpeakerPage({
   }, []);
 
   const cancelAdd = () => {
-    history.push("/speakers");
+    history.push("/speakers/1");
   };
 
   const handleCreate = (e) => {
@@ -47,7 +47,7 @@ function AddSpeakerPage({
       image: header ? header.name : null,
     };
     const changePath = () => {
-      history.push("/speakers");
+      history.push("/speakers/1");
     };
     addSpeaker(speaker, changePath);
     cleanForm();

@@ -8,7 +8,6 @@ import {
 } from "../types";
 
 export const fetchEventDetails = (id) => {
-  // console.log(id, "editiid");
   return (dispatch) => {
     dispatch(fetchEventDetailsRequest());
     request(`/admin/events/event/details/${id}`)
@@ -18,7 +17,6 @@ export const fetchEventDetails = (id) => {
       })
       .catch((e) => {
         dispatch(fetchEventDetailsFailure(e.message));
-        // console.log(e);
       });
   };
 };
