@@ -29,7 +29,7 @@ import {
 } from "./types";
 
 const initialState = {
-  loading: false,
+  loading: true,
   newsByPage: [],
   error: null,
   count: 0,
@@ -43,7 +43,6 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action, " action payload");
   switch (action.type) {
     case ADD_NEWS_DETAILS:
       return {
@@ -53,7 +52,7 @@ const reducer = (state = initialState, action) => {
     case FETCH_NEWS_BY_PAGE_REQUEST:
       return {
         ...state,
-        loading: true,
+        // loading: true,
       };
     case FETCH_NEWS_BY_PAGE_SUCCESS:
       return {

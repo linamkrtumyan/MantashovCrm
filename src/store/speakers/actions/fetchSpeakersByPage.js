@@ -7,12 +7,12 @@ import {
 } from "../types";
 import { changeCurrentPage } from "../../pagination/actions";
 
-export const fetchSpeakersByPage = () => {
-  const page = store.getState().paginationReducer.currentPage;
+export const fetchSpeakersByPage = (page, searchValue) => {
+  // const page = store.getState().paginationReducer.currentPage;
 
   return (dispatch) => {
     dispatch(fetchSpeakersByPageRequest());
-    request(`/admin/speakers/${page}`)
+    request(`/admin/speakers/${page}?searchValue=${searchValue}`)
       .then((data) => {
         dispatch(fetchSpeakersByPageSuccess(data));
         if (data.count > 0 && data.speakers.length === 0) {

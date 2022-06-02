@@ -13,6 +13,7 @@ import store, {
   formOnChange,
   fetchOrganizations,
   fetchSpeakers,
+  fetchSpeakerById,
 } from "../../store";
 
 function EditSpeaker({
@@ -28,6 +29,7 @@ function EditSpeaker({
   fetch,
   organizationId,
   image,
+  fetchSpeakerById,
 }) {
   let history = useHistory();
   let { id } = useParams();
@@ -44,36 +46,32 @@ function EditSpeaker({
   }, [fetch]);
 
   useEffect(() => {
-    if (speakers.length) {
-      const speaker = speakers.find((s) => s.id === parseInt(id));
-      formOnChange("fullNameEng", `${speaker.nameEng}`);
-      formOnChange("fullNameArm", `${speaker.nameArm}`);
-      formOnChange("fullNameRu", `${speaker.nameRu}`);
-      formOnChange("organizationId", `${speaker.organizationId}`);
-      formOnChange("image", `${speaker.image}`);
+    if (id) {
+      fetchSpeakerById(id);
     }
-  }, [speakers]);
+  }, [id]);
 
   const cancelEdit = () => {
-    history.push("/speakers");
+    history.push("/speakers/1");
   };
 
   const handleEdit = (e) => {
     e.preventDefault();
 
-    let { fullNameEng, fullNameArm, fullNameRu, organizationId } =
+    let { nameEng, nameArm, nameRu, organizationId } =
       store.getState().formReducer;
     let header = store.getState().imageReducer.header;
     const changePath = () => {
-      history.push("/speakers");
+      history.push("/speakers/1");
     };
     let speaker = {
       id: parseInt(id),
-      fullNameEng,
-      fullNameArm,
-      fullNameRu,
+      fullNameEng: nameEng,
+      fullNameArm: nameArm,
+      fullNameRu: nameRu,
       organizationId,
       image: header && header[0] ? header[0].name : null,
+      imageDeleted: !mainImg,
     };
     editSpeaker(speaker, changePath);
     cleanForm();
@@ -81,20 +79,19 @@ function EditSpeaker({
   };
   return (
     <div>
+      <div>
+        <button onClick={() => history.goBack()} className="arrow_left">
+          <i className="fas fa-chevron-left"></i>
+        </button>
+        <div className="add_member_title">
+          <p>Edit Speaker</p>
+        </div>
+      </div>
       <form
         onFocus={scrollToView}
         onSubmit={(e) => handleEdit(e)}
         className="add_member_container"
       >
-        <div>
-          <button onClick={() => history.goBack()} className="arrow_left">
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <div className="add_member_title">
-            <p>Edit Speaker</p>
-          </div>
-        </div>
-
         <div className="add_member_component">
           <div className="location_container">
             {mainImg ? (
@@ -122,13 +119,9 @@ function EditSpeaker({
             </div> */}
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="fullNameEng" type="text" placeholder="Fullname" />
-                <Input
-                  id="fullNameArm"
-                  type="text"
-                  placeholder="Անուն Ազգանուն"
-                />
-                <Input id="fullNameRu" type="text" placeholder="Имя Фамилия" />
+                <Input id="nameEng" type="text" placeholder="Fullname"   required={false}/>
+                <Input id="nameArm" type="text" placeholder="Անուն Ազգանուն"   required={false}/>
+                <Input id="nameRu" type="text" placeholder="Имя Фамилия"   required={false}/>
               </div>
               <Select
                 placeholder="Select Organization"
@@ -183,6 +176,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchOrganizations: () => dispatch(fetchOrganizations()),
     fetchSpeakers: () => {
       dispatch(fetchSpeakers());
+    },
+    fetchSpeakerById: (id) => {
+      dispatch(fetchSpeakerById(id));
     },
   };
 };

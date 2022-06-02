@@ -7,12 +7,10 @@ import {
 } from "../types";
 
 export const fetchMemberForEdit = (id) => {
-  // console.log(id, "editiid");
   return (dispatch) => {
     dispatch(fetchMemberForEditRequest());
     request(`/admin/members/member/${id}`)
       .then((data) => {
-        // console.log("mtav");
         data.addedOrganizations = data.organizations ? data.organizations : [];
         delete data.organizations;
         dispatch(initForm(data));
@@ -20,7 +18,6 @@ export const fetchMemberForEdit = (id) => {
       })
       .catch((e) => {
         dispatch(fetchMemberForEditFailure(e.message));
-        // console.log(e);
       });
   };
 };

@@ -59,7 +59,6 @@ function ResetPassword({ modalOpen, setModalOpen, id, resetPassword }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state, "state");
   return {};
 };
 

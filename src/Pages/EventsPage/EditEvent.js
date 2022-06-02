@@ -5,13 +5,13 @@ import Select from "../../Components/Forms/Select/Select";
 import Button from "../../Components/Forms/Button/Button";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
+import { toast } from "react-toastify";
 
 import store, {
   fetchCountries,
   fetchStates,
   fetchCities,
   cleanLocation,
-  // fetchEventDetailsForEdit,
   editEvent,
   editImages,
   cleanImages,
@@ -25,6 +25,7 @@ import store, {
   editShortDetails,
   addEventBlock,
   cleanVideos,
+  getSpeakers,
 } from "../../store";
 import { deletedImages } from "../../store/images/actions";
 
@@ -33,6 +34,7 @@ import { useHistory, useParams } from "react-router-dom";
 import OpenImage from "./components/images/OpenImage";
 import { scrollToView } from "../../helpers/scrollToView";
 import VideoUpload from "../../Components/Forms/VideoUpload/VideoUpload";
+import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 
 function EditEvent({
   fetchCountries,
@@ -44,7 +46,6 @@ function EditEvent({
   cities,
   fetchCities,
   // cleanForm,
-  // fetchEventDetailsForEdit,
   editEvent,
 
   cleanImages,
@@ -63,13 +64,15 @@ function EditEvent({
   image,
   addEventBlock,
   eventDetailsForEdit,
+  headers,
+  images,
+  addedHeaders,
+  speakers,
+  getSpeakers,
+  fetch,
 }) {
   const history = useHistory();
 
-  const [changeImage, setChangeImage] = useState(false);
-  const [headerDeleted, setHeaderDeleted] = useState(false);
-  const [openImgModal, setOpenImgModal] = useState(false);
-  const [imgPath, setImgPath] = useState("");
   const [details, setDetails] = useState([]);
   const [forRender, setForRender] = useState(0);
   const [renderContent, setRenderContent] = useState(0);
@@ -82,19 +85,49 @@ function EditEvent({
   const [open, setOpen] = useState(false);
   const [requiredClass, setRequiredClass] = useState("");
 
-  let { id } = useParams();
+  const [eventHeaders, setEventHeaders] = useState([]);
+  const [eventImages, setEventImages] = useState([]);
+  const [allSpeakers, setAllSpeakers] = useState([]);
+  const [fixedImages, setFixedImages] = useState([]);
+
+  let { eventId } = useParams();
 
   useEffect(() => {
-    if (id) {
-      getEventForEdit(parseInt(id));
-      fetchEventDetails(parseInt(id));
-    }
-  }, [id, forRender]);
+    let arr = [];
+    speakers?.map((item) => {
+      arr.push({ id: item.id, name: item.nameEng });
+    });
+    setAllSpeakers(arr);
+  }, [speakers]);
 
   useEffect(() => {
+    eventDetailsForEdit && eventDetailsForEdit.headers
+      ? formOnChange("headers", eventDetailsForEdit.headers)
+      : formOnChange("headers", []);
+  }, [eventDetailsForEdit]);
+
+  useEffect(() => {
+    setEventHeaders(headers);
+    setEventImages(images);
+  }, [headers, images]);
+
+  useEffect(() => {
+    fetchEventDetails(parseInt(eventId));
     fetchCountries();
+    getSpeakers();
   }, []);
 
+  useEffect(() => {
+    if (eventId) {
+      getEventForEdit(parseInt(eventId));
+      fetchEventDetails(parseInt(eventId));
+      formOnChange("eventId", parseInt(eventId));
+    }
+  }, [eventId, forRender]);
+
+  useEffect(() => {
+    fetchEventDetails(parseInt(eventId));
+  }, [renderContent, fetch]);
 
   useEffect(() => {
     if (countryId) {
@@ -112,12 +145,22 @@ function EditEvent({
     formOnChange("shortDescriptionEng", eventDetails.shortDescriptionEng);
     formOnChange("shortDescriptionArm", eventDetails.shortDescriptionArm);
     formOnChange("shortDescriptionRu", eventDetails.shortDescriptionRu);
+    if (eventDetails.fixedImages) {
+      setFixedImages(eventDetails.fixedImages);
+      for (let i = 0; i < eventDetails.fixedImages.length; i++) {
+        formOnChange(`img${i + 1}`, eventDetails.fixedImages[i]);
+      }
+    }
   }, [eventDetails]);
+
+  useEffect(() => {
+    formOnChange("eventId", parseInt(eventId));
+  }, [eventId]);
 
   const handleCancel = () => {
     cleanImages();
     cleanForm();
-    history.push("/events");
+    history.push("/events/1");
   };
 
   const handleSubmit = (e) => {
@@ -135,18 +178,18 @@ function EditEvent({
       descriptionRu,
       endDate,
       startDate,
+      deletedHeaders,
+      speakers,
     } = store.getState().formReducer;
 
-    const header = store.getState().imageReducer.header[0];
-    const addedImages = store.getState().imageReducer.image;
-    const deleted = store.getState().imageReducer.deletedImages;
+    let { addedHeaders } = store.getState().imageReducer;
 
     let event = {
       locationArm,
       locationEng,
       locationRu,
       cityId,
-      id: parseInt(id),
+      id: parseInt(eventId),
       nameArm,
       nameEng,
       nameRu,
@@ -156,45 +199,37 @@ function EditEvent({
       endDate,
       startDate,
       isPublic,
-      addedHeaders: [],
-      deletedHeaders: [],
-      // header,
-      // headerDeleted,
-      // addedImages,
-      // deletedImages: deleted,
+      speakers,
+      addedHeaders: addedHeaders ?? [],
+      deletedHeaders: deletedHeaders ?? [],
     };
 
     // const changePath = () => {
-    //   history.push("/events");
+    //   history.push("/events/1");
     // };
     editEvent(event);
     cleanImages();
     cleanForm();
+    setForRender(forRender + 1);
   };
-
-  // const openImageModal = (imagePath) => {
-  //   setImgPath(imagePath);
-  //   setOpenImgModal(true);
-  // };
-
   const handleEdit = (block) => {
     let editedBlock = block;
-    const addedImgs = store.getState().formReducer[`block${block.id}`];
-    const addedVids = store.getState().formReducer[`videoBlock${block.id}`];
-    let newAddedimgs = [];
-    let newAddedVids = [];
-    addedImgs?.map((img) => {
-      newAddedimgs.push(img.name);
-    });
-    addedVids?.map((img) => {
-      newAddedVids.push(img.name);
-    });
+
     editedBlock.deletedImages = [];
-    editedBlock.addedImages = newAddedimgs;
+    editedBlock.addedImages =
+      store.getState().imageReducer[`block${block.id}`] ?? [];
 
     editedBlock.deletedVideos = [];
-    editedBlock.addedVideos = newAddedVids;
-    editEventBlock(editedBlock);
+    editedBlock.addedVideos =
+      store.getState().videoReducer[`videoBlock${block.id}`] ?? [];
+    editEventBlock(editedBlock, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+    formOnChange(`block${editedBlock.id}`, []);
+    formOnChange(`videoBlock${editedBlock.id}`, []);
+    toast.dark("Edited");
   };
 
   const handleDelete = (id) => {
@@ -243,16 +278,20 @@ function EditEvent({
   };
 
   const handleEditShortDetails = () => {
-    let { shortDescriptionEng, shortDescriptionArm, shortDescriptionRu } =
-      store.getState().formReducer;
-
-    let details = {
-      id,
+    let {
       shortDescriptionEng,
       shortDescriptionArm,
       shortDescriptionRu,
-      addedImages: [],
-      deletedImages: [],
+      deletedFixedImages,
+    } = store.getState().formReducer;
+
+    let { addedFixedImages } = store.getState().imageReducer;
+
+    let details = {
+      id: eventId,
+      shortDescriptionEng,
+      shortDescriptionArm,
+      shortDescriptionRu,
     };
 
     editShortDetails(details);
@@ -273,8 +312,8 @@ function EditEvent({
       });
 
       setForRender(renderContent + 1);
-      addEventBlock({ eventId: parseInt(id), block: newBlock });
-      fetchEventDetails(parseInt(id));
+      addEventBlock({ eventId: parseInt(eventId), block: newBlock });
+      fetchEventDetails(parseInt(eventId));
       setNewBlock({});
       setBlockLinks("");
       cleanImages();
@@ -288,17 +327,42 @@ function EditEvent({
     setForRender(renderContent + 1);
   };
 
+  const deleteHeader = (image, index) => {
+    let { deletedHeaders } = store.getState().formReducer;
+    let img = image.split("/");
+    if (deletedHeaders) {
+      let newDeleteds = deletedHeaders.concat([
+        img[image.split("/").length - 1],
+      ]);
+      formOnChange("deletedHeaders", newDeleteds);
+    } else {
+      formOnChange("deletedHeaders", [img[image.split("/").length - 1]]);
+    }
+    let newArr = eventHeaders
+      .slice(0, index)
+      .concat(eventHeaders.slice(index + 1));
+    formOnChange("headers", newArr);
+  };
+
+  const deleteImage = (image, index) => {
+    let { deletedFixedImages } = store.getState().formReducer;
+    let img = image.split("/");
+    if (deletedFixedImages) {
+      let newDeleteds = deletedFixedImages.concat([
+        img[image.split("/").length - 1],
+      ]);
+      formOnChange("deletedFixedImages", newDeleteds);
+    } else {
+      formOnChange("deletedFixedImages", [img[image.split("/").length - 1]]);
+    }
+    let newArr = eventImages
+      .slice(0, index)
+      .concat(eventImages.slice(index + 1));
+    formOnChange("images", newArr);
+  };
+
   return (
     <>
-      {/* <OpenImage
-        openImgModal={openImgModal}
-        setOpenImgModal={setOpenImgModal}
-        imgPath={imgPath}
-        id={id}
-        folderPath="/images/events"
-        detailsImages={detailsImages}
-      /> */}
-
       <div>
         <div>
           <button onClick={() => history.goBack()} className="arrow_left">
@@ -308,12 +372,9 @@ function EditEvent({
             <p>Edit Event</p>
           </div>
         </div>
-        <form
-          onFocus={scrollToView}
-          onSubmit={handleSubmit}
-          // className="add_event_container"
-        >
-          {/* <div> */}
+        <form 
+        // onFocus={scrollToView}
+         onSubmit={handleSubmit}>
           <div className="add_event_component">
             <div
               className="container_body"
@@ -325,9 +386,9 @@ function EditEvent({
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="nameEng" type="text" placeholder="Name" />
-                <Input id="nameArm" type="text" placeholder="Անվանում" />
-                <Input id="nameRu" type="text" placeholder="Имя" />
+                <Input id="nameEng" type="text" placeholder="Name"   required={false}/>
+                <Input id="nameArm" type="text" placeholder="Անվանում"   required={false}/>
+                <Input id="nameRu" type="text" placeholder="Имя"   required={false}/>
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -343,24 +404,27 @@ function EditEvent({
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Input id="startDate" type="date" placeholder="Start Date" />
                 <Input id="endDate" type="date" placeholder="End Date" />
-                <div
-                  style={{
-                    marginTop: "auto",
-                    marginBottom: "auto",
-                    display: "flex",
-                    alignItems: "center",
-                    marginRight: 100,
-                  }}
-                >
-                  <label>Public</label>
-                  <input
-                    style={{ marginLeft: 8 }}
-                    type="checkbox"
-                    defaultChecked={store.getState().formReducer.isPublic}
-                    onChange={() => {
-                      setIsPublic(!isPublic);
+                <div className="input_container" style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      marginTop: "auto",
+                      marginBottom: "auto",
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: 100,
+                      width: "280px",
                     }}
-                  />
+                  >
+                    <label>Public</label>
+                    <input
+                      style={{ marginLeft: 8 }}
+                      type="checkbox"
+                      defaultChecked={store.getState().formReducer.isPublic}
+                      onChange={() => {
+                        setIsPublic(!isPublic);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -390,16 +454,75 @@ function EditEvent({
                   id="descriptionEng"
                   type="text"
                   placeholder="Description"
+                  required={false}
                 />
                 <Textarea
                   id="descriptionArm"
                   type="text"
                   placeholder="Նկարագիր"
+                  required={false}
                 />
                 <Textarea
                   id="descriptionRu"
                   type="text"
                   placeholder="Описание"
+                  required={false}
+                />
+              </div>
+
+              <Multiselect
+                placeholder="Speakers"
+                items={allSpeakers}
+                id="speakers"
+                required={false}
+              />
+
+              <div
+                style={{
+                  display: "flex",
+                }}
+                className="container_body"
+              >
+                {eventHeaders && eventHeaders.length !== 0
+                  ? eventHeaders.map((image, index) => {
+                      return (
+                        <div className="edit_news_image_item" key={image}>
+                          <img
+                            alt=""
+                            className="edit_news_images"
+                            src={image}
+                          />
+                          <div className="middle">
+                            <div
+                              onClick={() => {
+                                deleteHeader(image, index);
+                              }}
+                            >
+                              <svg viewBox="0 0 24 24" className="close">
+                                <path
+                                  d="M 2 2 L 22 22 M 2 22 L22 2"
+                                  stroke="red"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="5"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+              <div style={{ display: "flex", margin: "10px" }}>
+                {/* <OneImageUpload label="Add Header" /> */}
+                <ImageUpload
+                  containerClassName="uploaded"
+                  label={`Add headers(${
+                    eventHeaders ? 3 - eventHeaders.length : 3
+                  })`}
+                  id="addedHeaders"
+                  limit={eventHeaders ? 3 - eventHeaders.length : 3}
                 />
               </div>
             </div>
@@ -428,16 +551,19 @@ function EditEvent({
               id="shortDescriptionEng"
               type="text"
               placeholder="Short Description"
+              required={false}
             />
             <Textarea
               id="shortDescriptionArm"
               type="text"
               placeholder="Համառոտ նկարագիր"
+              required={false}
             />
             <Textarea
               id="shortDescriptionRu"
               type="text"
               placeholder=" Краткое описание"
+              required={false}
             />
           </div>
           <div
@@ -446,16 +572,15 @@ function EditEvent({
             }}
             className="container_body"
           >
-            {eventDetailsForEdit && eventDetailsForEdit.headers
-              ? eventDetailsForEdit.headers.map((image, index) => {
+            {eventImages && eventImages.length !== 0
+              ? eventImages.map((image, index) => {
                   return (
-                    <div className="edit_news_image_item" key={index}>
+                    <div className="edit_news_image_item" key={image}>
                       <img alt="" className="edit_news_images" src={image} />
-                      {/* <div className="middle">
+                      <div className="middle">
                         <div
                           onClick={() => {
-                            deletedImages(image);
-                            deleteEventImageFromStore(index);
+                            deleteImage(image, index);
                           }}
                         >
                           <svg viewBox="0 0 24 24" className="close">
@@ -468,35 +593,7 @@ function EditEvent({
                             />
                           </svg>
                         </div>
-                      </div> */}
-                    </div>
-                  );
-                })
-              : null}
-
-            {eventDetailsForEdit && eventDetailsForEdit.images
-              ? eventDetailsForEdit.images.map((image, index) => {
-                  return (
-                    <div className="edit_news_image_item" key={index}>
-                      <img alt="" className="edit_news_images" src={image} />
-                      {/* <div className="middle">
-                        <div
-                          onClick={() => {
-                            deletedImages(image);
-                            deleteEventImageFromStore(index);
-                          }}
-                        >
-                          <svg viewBox="0 0 24 24" className="close">
-                            <path
-                              d="M 2 2 L 22 22 M 2 22 L22 2"
-                              stroke="red"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="5"
-                            />
-                          </svg>
-                        </div>
-                      </div> */}
+                      </div>
                     </div>
                   );
                 })
@@ -504,8 +601,138 @@ function EditEvent({
           </div>
 
           <div className="container_body">
-            <div style={{ marginLeft: 15 }}>
-              <ImageUpload label="Add Images" />
+            <p style={{ paddingLeft: 15, paddingBottom: 10 }}>
+              Կցված նկարների քանակը չպետք է գերազանցի{" "}
+              {eventHeaders
+                ? addedHeaders
+                  ? eventImages
+                    ? 8 -
+                      (eventHeaders.length +
+                        addedHeaders.length +
+                        eventImages.length)
+                    : 8 - (eventHeaders.length + addedHeaders.length)
+                  : 8 - eventHeaders.length
+                : 8}{" "}
+              - ը։
+            </p>
+            {/* <div style={{ marginLeft: 15 }}>
+              <ImageUpload
+                label={`Add Images`}
+                containerClassName="uploaded"
+                limit={
+                  eventHeaders
+                    ? addedHeaders
+                      ? eventImages
+                        ? 8 -
+                          (eventHeaders.length +
+                            addedHeaders.length +
+                            eventImages.length)
+                        : 8 - (eventHeaders.length + addedHeaders.length)
+                      : 8 - eventHeaders.length
+                    : 8
+                }
+                id="addedFixedImages"
+              />
+            </div> */}
+
+            <div style={{ marginLeft: "20px" }}>
+              <p>Upload images with the givven sizes.</p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "20px 0 0 0",
+                }}
+              >
+                <ImageUpload
+                  label="(330x330)"
+                  containerClassName="fixed-uploaded"
+                  id="image1"
+                  limit={1}
+                  width={330}
+                  height={330}
+                  key1="img1"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(700x390)"
+                  containerClassName="fixed-uploaded"
+                  id="image2"
+                  limit={1}
+                  width={700}
+                  height={390}
+                  key1="img2"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(460x260)"
+                  containerClassName="fixed-uploaded"
+                  id="image3"
+                  limit={1}
+                  width={460}
+                  height={260}
+                  key1="img3"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(500x490)"
+                  containerClassName="fixed-uploaded"
+                  id="image4"
+                  limit={1}
+                  width={500}
+                  height={490}
+                  key1="img4"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(300x300)"
+                  containerClassName="fixed-uploaded"
+                  id="image5"
+                  limit={1}
+                  width={300}
+                  height={300}
+                  key1="img5"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(180x180)"
+                  containerClassName="fixed-uploaded"
+                  id="image6"
+                  limit={1}
+                  width={180}
+                  height={180}
+                  key1="img6"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(210x120)"
+                  containerClassName="fixed-uploaded"
+                  id="image7"
+                  limit={1}
+                  width={210}
+                  height={120}
+                  key1="img7"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+                <ImageUpload
+                  label="(200x120)"
+                  containerClassName="fixed-uploaded"
+                  id="image8"
+                  limit={1}
+                  width={200}
+                  height={120}
+                  key1="img8"
+                  className="fixed-size-lbl"
+                  contentClassName="fixed-uploader-content"
+                />
+              </div>
             </div>
           </div>
           <div>
@@ -516,6 +743,7 @@ function EditEvent({
             />
           </div>
         </div>
+        {/* <p>Add </p> */}
         <div
           className="plus_icon"
           onClick={openField}
@@ -544,6 +772,7 @@ function EditEvent({
                         topTextEng: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
                 <div style={{ marginTop: 20 }}>
@@ -558,6 +787,7 @@ function EditEvent({
                         topTextArm: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
                 <div style={{ marginTop: 20 }}>
@@ -572,6 +802,7 @@ function EditEvent({
                         topTextRu: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
               </div>
@@ -602,6 +833,7 @@ function EditEvent({
                         bottomTextEng: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
 
@@ -617,6 +849,7 @@ function EditEvent({
                         bottomTextArm: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
                 <div style={{ marginTop: 20 }}>
@@ -631,6 +864,7 @@ function EditEvent({
                         bottomTextRu: e.target.value,
                       });
                     }}
+                    required={false}
                   />
                 </div>
               </div>
@@ -645,10 +879,6 @@ function EditEvent({
                     value={blockLinks ? blockLinks : ""}
                     onChange={(e) => {
                       setBlockLinks(e.target.value);
-                      // setNewBlock({
-                      //   ...newBlock,
-                      //   links: e.target.value,
-                      // });
                     }}
                   />
                 </div>
@@ -656,8 +886,15 @@ function EditEvent({
               <div>
                 <Button
                   onClick={saveBlockData}
-                  title="Save"
+                  title="Save Block"
                   className="action_btn"
+                  disabled={
+                    newBlock.topTextEng &&
+                    newBlock.topTextArm &&
+                    newBlock.topTextRu
+                      ? false
+                      : true
+                  }
                 />
               </div>
             </div>
@@ -673,7 +910,7 @@ function EditEvent({
                   <div
                     className="location_container"
                     style={{ display: "block" }}
-                    key={block.id}
+                    key={block}
                   >
                     <div
                       style={{
@@ -692,6 +929,7 @@ function EditEvent({
                             details.details[index].topTextEng = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -705,6 +943,7 @@ function EditEvent({
                             details.details[index].topTextArm = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -718,6 +957,7 @@ function EditEvent({
                             details.details[index].topTextRu = e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                     </div>
@@ -739,20 +979,17 @@ function EditEvent({
                       {block.images && block.images.length
                         ? block.images.map((img) => {
                             return (
-                              <div className="upload_cont">
+                              <div className="upload_cont" key={img}>
                                 <img
                                   className="uploaded_images"
                                   src={img}
                                   alt=""
-                                  key={img}
                                 />
                                 <div className="middle">
                                   <div
                                     onClick={() => {
                                       const indexImg =
                                         block.images.indexOf(img);
-                                      const indexBlock =
-                                        details.details.indexOf(block);
                                       setForRender(forRender + 1);
                                       deleteBlockImage(block, indexImg);
                                     }}
@@ -797,6 +1034,7 @@ function EditEvent({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -811,6 +1049,7 @@ function EditEvent({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                       <div className="input_container">
@@ -825,48 +1064,49 @@ function EditEvent({
                               e.target.value;
                             // addEventDetails(details.details);
                           }}
+                          required={false}
                         />
                       </div>
                     </div>
-                    {block.videos && block.videos.length
-                      ? block.videos.map((video) => {
-                          return (
-                            <div className="upload_cont">
-                              <video
-                                className="uploaded_images"
-                                key={video}
-                                controls
-                              >
-                                <source src={video} type="video/mp4" />
-                                <source src={video} type="video/ogg" />
-                                Your browser does not support the video tag.
-                              </video>
-                              <div className="middle">
-                                <div
-                                  onClick={() => {
-                                    const indexVideo =
-                                      block.videos.indexOf(video);
-                                    const indexBlock =
-                                      details.details.indexOf(block);
-                                    setForRender(forRender + 1);
-                                    deleteBlockVideos(block, indexVideo);
-                                  }}
+                    <div style={{ display: "flex ", marginBottom: 20 }}>
+                      {block.videos && block.videos.length
+                        ? block.videos.map((video, index) => {
+                            return (
+                              <div className="upload_cont" key={video}>
+                                <video
+                                  className="uploaded_images"
+                                  poster={block.thumbnails[index]}
                                 >
-                                  <svg viewBox="0 0 24 24" className="close">
-                                    <path
-                                      d="M 2 2 L 22 22 M 2 22 L22 2"
-                                      stroke="red"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="5"
-                                    />
-                                  </svg>
+                                  {/* <source src={video} type="video/mp4" />
+                                  <source src={video} type="video/ogg" /> */}
+                                  Your browser does not support the video tag.
+                                </video>
+                                <div className="middle">
+                                  <div
+                                    onClick={() => {
+                                      const indexVid =
+                                        block.videos.indexOf(video);
+                                      setForRender(forRender + 1);
+                                      deleteBlockVideos(block, indexVid);
+                                    }}
+                                  >
+                                    <svg viewBox="0 0 24 24" className="close">
+                                      <path
+                                        d="M 2 2 L 22 22 M 2 22 L22 2"
+                                        stroke="red"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="5"
+                                      />
+                                    </svg>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })
-                      : null}
+                            );
+                          })
+                        : null}
+                    </div>
+
                     <VideoUpload
                       label="Upload Videos"
                       containerClassName="uploaded"
@@ -909,6 +1149,11 @@ const mapStateToProps = (state) => {
     image: state.imageReducer?.image,
     video: state.videoReducer?.video,
     eventDetailsForEdit: state.eventReducer.eventDetailsForEdit,
+    headers: state.formReducer.headers,
+    images: state.formReducer.images,
+    addedHeaders: state.imageReducer.addedHeaders,
+    speakers: state.eventReducer?.speakers,
+    fetch: state.imageReducer.fetch,
   };
 };
 
@@ -926,11 +1171,12 @@ const mapDispatchToProps = (dispatch) => {
     deletedImages: (img) => dispatch(deletedImages(img)),
     deleteEventImageFromStore: (id) => dispatch(deleteEventImageFromStore(id)),
     deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
-    editEventBlock: (block) => dispatch(editEventBlock(block)),
+    editEventBlock: (block, callback) => dispatch(editEventBlock(block, callback)),
     getEventForEdit: (id) => dispatch(getEventForEdit(id)),
     editShortDetails: (details) => dispatch(editShortDetails(details)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
     addEventBlock: (blockData) => dispatch(addEventBlock(blockData)),
+    getSpeakers: () => dispatch(getSpeakers()),
   };
 };
 

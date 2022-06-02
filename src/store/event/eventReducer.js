@@ -45,7 +45,7 @@ import {
 } from "./types";
 
 const initialState = {
-  loading: false,
+  loading: true,
   pastEvents: [],
   upcomingEvents: [],
   error: null,
@@ -106,13 +106,14 @@ const reducer = (state = initialState, action) => {
     case FETCH_EVENTS_BY_PAGE_REQUEST:
       return {
         ...state,
-        loading: true,
+        // fetch: true,
+        // loading: true,
       };
     case FETCH_EVENTS_BY_PAGE_SUCCESS:
       return {
         ...state,
         loading: false,
-
+        // fetch: ,
         eventsByPage: action.payload.eventsByPage.events,
         count: action.payload.eventsByPage.count,
         // membersByPage: [],
@@ -123,7 +124,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-
         eventsByPage: [],
         error: action.payload.error,
       };

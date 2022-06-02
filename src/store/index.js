@@ -65,6 +65,8 @@ export {
   uploadOneImage,
   deleteImageFromStore,
   deleteHeader,
+  setEventFixedImage,
+  deleteEventFixedImage,
 } from "./images/actions";
 export {
   uploadVideo,
@@ -99,6 +101,7 @@ export {
   addSpeaker,
   editSpeaker,
   fetchSpeakersByPage,
+  fetchSpeakerById,
 } from "./speakers/actions";
 
 export { default } from "./configureStore";

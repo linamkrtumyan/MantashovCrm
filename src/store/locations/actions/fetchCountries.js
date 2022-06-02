@@ -7,18 +7,15 @@ import {
 } from "../types";
 
 export const fetchCountries = () => {
-  // console.log(page, "uxarkvox page");
 
   return (dispatch) => {
     dispatch(fetchCountriesRequest());
     request("/admin/locations/countries")
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchCountriesSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchCountriesFailure(e.message));
-        // console.log(e);
       });
   };
 };

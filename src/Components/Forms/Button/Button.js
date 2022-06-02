@@ -3,6 +3,7 @@ import "./button.css";
 
 function Button({
   onClick = () => {},
+  onFocus,
   type = "",
   title = "",
   disabled = false,
@@ -11,6 +12,7 @@ function Button({
   return (
     <div className="button_container">
       <button
+        onFocus={onFocus}
         onClick={onClick}
         type={type}
         disabled={disabled}

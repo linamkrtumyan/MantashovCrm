@@ -8,14 +8,11 @@ import {
 import { toast } from "react-toastify";
 
 export const addMember = (member, changePath) => {
-  // console.log(member, "stacav");
   return (dispatch) => {
     dispatch(addMemberRequest());
     request("/admin/members/member", "POST", member)
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
-          // console.log(data, "news data");
           dispatch(addMemberSuccess(data));
           toast.dark("Member added");
 
@@ -29,7 +26,6 @@ export const addMember = (member, changePath) => {
       .catch((e) => {
         dispatch(addMemberFailure(e.message));
         toast.error("Something bad happened");
-        // console.log(e);
       });
   };
 };
@@ -41,8 +37,6 @@ const addMemberRequest = () => {
 };
 
 const addMemberSuccess = (data) => {
-  // console.log(data, "news success data");
-  //   const login = data ? data : [];
   return {
     type: ADD_MEMBER_SUCCESS,
     payload: {

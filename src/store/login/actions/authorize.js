@@ -18,7 +18,6 @@ export const authorize = () => {
       })
       .catch((e) => {
         dispatch(authorizeFailure(e.message));
-        // console.log(e);
       });
   };
 };

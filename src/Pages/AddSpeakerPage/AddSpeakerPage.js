@@ -29,7 +29,7 @@ function AddSpeakerPage({
   }, []);
 
   const cancelAdd = () => {
-    history.push("/speakers");
+    history.push("/speakers/1");
   };
 
   const handleCreate = (e) => {
@@ -47,7 +47,7 @@ function AddSpeakerPage({
       image: header ? header.name : null,
     };
     const changePath = () => {
-      history.push("/speakers");
+      history.push("/speakers/1");
     };
     addSpeaker(speaker, changePath);
     cleanForm();
@@ -76,13 +76,14 @@ function AddSpeakerPage({
             </div>
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="fullNameEng" type="text" placeholder="Fullname" />
+                <Input id="fullNameEng" type="text" placeholder="Fullname" required={false}/>
                 <Input
                   id="fullNameArm"
                   type="text"
                   placeholder="Անուն Ազգանուն"
+                  required={false}
                 />
-                <Input id="fullNameRu" type="text" placeholder="Имя Фамилия" />
+                <Input id="fullNameRu" type="text" placeholder="Имя Фамилия" required={false}/>
               </div>
               <Select
                 placeholder="Select Organization"

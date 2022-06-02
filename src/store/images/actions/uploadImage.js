@@ -5,15 +5,11 @@ import {
 } from "../types";
 
 export const uploadImage = (img, key) => {
-  // console.log("mtav");
-  // console.log(img, "stacoxy");
   const data = new FormData();
 
   for (let i = 0; i < img.length; i++) {
     data.append(`image${i}`, img[i], img[i].name);
   }
-
-  // console.log(data, "uxarkvoxy");
 
   return (dispatch) => {
     dispatch(uploadImageRequest());
@@ -27,7 +23,6 @@ export const uploadImage = (img, key) => {
       })
       .catch((e) => {
         dispatch(uploadImageFailure(e.message));
-        // console.log({e});
       });
   };
 };

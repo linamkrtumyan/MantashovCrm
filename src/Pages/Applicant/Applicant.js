@@ -8,58 +8,40 @@ import {
   formOnChange,
 } from "../../store";
 import Pagination from "../../Components/Pagination/Pagination";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import SearchBar from "../../Components/SearchBar/SearchBar";
+import TableBody from "./components/TableBody";
+import Loading from "../../Components/Loading/Loading";
+
 
 function Applicant({
   fetchApplicants,
   editApplicantStatus,
   applicants,
   loading,
-  currentPage,
+  // currentPage,
   fetch,
   formOnChange,
   count,
+  searchValue,
 }) {
-  const history = useHistory();
-
   useEffect(() => {
     changeCurrentPage(1);
+    fetchApplicants(1, "");
   }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      fetchApplicants();
-    }
-  }, [currentPage, fetch]);
-
-  const collectApplicantData = (applicant) => {
-    formOnChange("firstNameEng", `${applicant.fullName?.split(" ")[0]}`);
-    formOnChange("firstNameArm", `${applicant.fullName?.split(" ")[0]}`);
-    formOnChange("firstNameRu", `${applicant.fullName?.split(" ")[0]}`);
-
-    formOnChange("lastNameEng", `${applicant.fullName?.split(" ")[1]}`);
-    formOnChange("lastNameArm", `${applicant.fullName?.split(" ")[1]}`);
-    formOnChange("lastNameRu", `${applicant.fullName?.split(" ")[1]}`);
-
-    formOnChange("email", `${applicant.email}`);
-    formOnChange("phone", `${applicant.phone}`);
-    formOnChange("turnover", `${applicant.turnover}`);
-  };
-
-  const changeApplicantStatus = (applicant, statusId) => {
-    editApplicantStatus(applicant.id, statusId);
-    collectApplicantData(applicant);
-    if (statusId === 1) {
-      setTimeout(() => {
-        history.push("add-member");
-      }, 1000);
-    }
-  };
 
   return (
     <div>
       <div className="applicant_page_title_container">
         <p className="applicant_page_title">Applicants</p>
+      </div>
+
+      <div className="is-flex is-justify-content-flex-end">
+        <SearchBar
+          id="applicantsSearch"
+          containerClass="searchbar-container"
+          url="/applicant"
+        />
       </div>
       <table
         className="table is-striped  
@@ -77,64 +59,10 @@ function Applicant({
           </tr>
         </thead>
 
-        <tbody>
-          {applicants.map((applicant, index) => {
-            return (
-              <tr style={{ cursor: "default" }} key={applicant.id}>
-                <td>{applicant.fullName}</td>
-                <td>{applicant.email}</td>
-                <td>{applicant.phone}</td>
-                <td>{applicant.turnover}</td>
-                <td>
-                  {/* <Input id="status" type="text" /> */}
-                  {applicant.status
-                    ? applicant.status === 1
-                      ? "Approved"
-                      : "Ignored"
-                    : "-"}
-                </td>
-                <td>
-                  <div
-                    className="delete-agenda-btn"
-                    onClick={() => {
-                      changeApplicantStatus(applicant, 1);
-                    }}
-                    style={{
-                      display: `${applicant.status === 1 ? "none" : ""}`,
-                    }}
-                  >
-                    <i
-                      style={{ width: 17, height: 17 }}
-                      className="fas fa-check"
-                    ></i>
-                  </div>
-                </td>
-                <td>
-                  <div
-                    className="delete-agenda-btn"
-                    onClick={() => {
-                      changeApplicantStatus(applicant, 2);
-                    }}
-                    style={{
-                      display: `${applicant.status === 2 ? "none" : ""}`,
-                    }}
-                  >
-                    <i
-                      className="fas fa-times "
-                      style={{
-                        width: 17,
-                        height: 17,
-                      }}
-                    ></i>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <TableBody />
       </table>
       <div style={{ marginTop: 20, marginBottom: 20 }}>
-        <Pagination totalPosts={count} />
+        <Pagination totalPosts={count} url="/applicant" />
       </div>
     </div>
   );
@@ -144,16 +72,17 @@ const mapStateToProps = (state) => {
   return {
     applicants: state.applicantsReducer.applicants,
     loading: state.applicantsReducer.loading,
-    currentPage: state.paginationReducer.currentPage,
+    // currentPage: state.paginationReducer.currentPage,
     fetch: state.applicantsReducer.fetch,
     count: state.applicantsReducer.count,
+    searchValue: state.formReducer?.applicantsSearch ?? "",
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchApplicants: () => {
-      dispatch(fetchApplicants());
+    fetchApplicants: (page, searchValue) => {
+      dispatch(fetchApplicants(page, searchValue));
     },
     editApplicantStatus: (id, statusId) => {
       dispatch(editApplicantStatus(id, statusId));

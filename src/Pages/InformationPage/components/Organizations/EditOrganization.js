@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Input from "../../../../Components/Forms/Input/Input";
 import Multiselect from "../../../../Components/Forms/MultiSelect/Multiselect";
+import OneImageUpload from "../../../../Components/Forms/OneImageUpload/OneImageUpload";
 import Select from "../../../../Components/Forms/Select/Select";
 import Textarea from "../../../../Components/Forms/Textarea/Textarea";
 import store, {
@@ -16,6 +17,7 @@ import store, {
   cleanForm,
   cleanLocation,
   cleanOrganization,
+  cleanImages,
 } from "../../../../store";
 import { editOrganization } from "../../../../store/organizations/actions";
 
@@ -38,16 +40,20 @@ function EditOrganization({
   cleanForm,
   cleanOrganization,
   setEditId,
+  headerImage,
+  cleanImages,
 }) {
-  useEffect(() => {
-    if (id) {
-      fetchOrganizationDetails(id);
-    }
-  }, [id]);
+  const [mainImg, setMainImg] = useState(true);
+  const [orgImage, setOrgImage] = useState("");
+
   useEffect(() => {
     cleanForm();
     fetchCountries();
     fetchCategories();
+    if (id) {
+      fetchOrganizationDetails(id);
+    }
+    setOrgImage(headerImage);
   }, []);
 
   useEffect(() => {
@@ -61,7 +67,17 @@ function EditOrganization({
     }
   }, [stateId]);
 
-  const handleDelete = () => {
+  useEffect(() => {
+    if (id) {
+      fetchOrganizationDetails(id);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    setOrgImage(headerImage);
+  }, [headerImage]);
+
+  const handleEdit = () => {
     let {
       locationArm,
       locationEng,
@@ -73,17 +89,29 @@ function EditOrganization({
       categoryIds,
       hashTags,
     } = store.getState().formReducer;
-
+    const image = store.getState().imageReducer.header[0]?.name ?? null;
     let organization = {
       address: { locationArm, locationEng, locationRu, cityId },
-      organization: { id, nameArm, nameEng, nameRu, categoryIds, hashTags },
+      organization: {
+        id,
+        nameArm,
+        nameEng,
+        nameRu,
+        categoryIds,
+        hashTags,
+        image,
+        imageDeleted: !mainImg,
+      },
     };
     setModalOpen(false);
     editOrganization(organization);
     cleanForm();
+    cleanImages();
     setEditId(null);
     cleanOrganization();
+    setMainImg(true);
   };
+
   return (
     <div className={"modal " + (modalOpen ? "is-active" : "")}>
       <div className="modal-background"></div>
@@ -104,13 +132,40 @@ function EditOrganization({
           ></button>
         </header>
         <section className="modal-card-body has-text-centered">
+          <div
+            className="is-flex is-justify-content-center"
+            style={{ marginBottom: "20px" }}
+          >
+            {mainImg ? (
+              <div className="upload_cont">
+                <img className="uploaded_image" src={`${headerImage}`} alt="" />
+                <div className="middle">
+                  <div onClick={() => setMainImg(false)}>
+                    <svg viewBox="0 0 24 24" className="close">
+                      <path
+                        d="M 2 2 L 22 22 M 2 22 L22 2"
+                        stroke="red"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="5"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              // );
+              // }
+              <OneImageUpload label="Header Image" />
+            )}
+          </div>
           <div className="is-flex ">
-            <Input id="nameArm" type="text" placeholder="Անվանում" />
-            <Input id="nameEng" type="text" placeholder="Name" />
-            <Input id="nameRu" type="text" placeholder="Название" />
+            <Input id="nameArm" type="text" placeholder="Անվանում" required={false}/>
+            <Input id="nameEng" type="text" placeholder="Name" required={false}/>
+            <Input id="nameRu" type="text" placeholder="Название" required={false}/>
           </div>
           <div className="is-flex is-justify-content-center">
-          <Multiselect
+            <Multiselect
               placeholder="Select Sphere"
               items={categories}
               id="categoryIds"
@@ -130,9 +185,9 @@ function EditOrganization({
           </div>
 
           <div className="is-flex ">
-            <Input id="locationArm" type="text" placeholder="Հասցե" />
-            <Input id="locationEng" type="text" placeholder="Address" />
-            <Input id="locationRu" type="text" placeholder="Адрес" />
+            <Input id="locationArm" type="text" placeholder="Հասցե" required={false}/>
+            <Input id="locationEng" type="text" placeholder="Address" required={false}/>
+            <Input id="locationRu" type="text" placeholder="Адрес" required={false}/>
           </div>
           <div>
             <div className="is-flex is-justify-content-center">
@@ -152,7 +207,7 @@ function EditOrganization({
           >
             Cancel
           </button>
-          <button onClick={handleDelete} className="button is-primary">
+          <button onClick={handleEdit} className="button is-primary">
             Save
           </button>
         </footer>
@@ -169,6 +224,7 @@ const mapStateToProps = (state) => {
     stateId: state.formReducer?.stateId,
     cities: state.locationsReducer.cities,
     categories: state.organizationsReducer.categories,
+    headerImage: state.formReducer?.image,
   };
 };
 
@@ -184,6 +240,7 @@ const mapDispatchToProps = (dispatch) => {
     editOrganization: (organization) =>
       dispatch(editOrganization(organization)),
     cleanForm: () => dispatch(cleanForm()),
+    cleanImages: () => dispatch(cleanImages()),
     cleanLocation: () => dispatch(cleanLocation()),
     cleanOrganization: () => dispatch(cleanOrganization()),
   };

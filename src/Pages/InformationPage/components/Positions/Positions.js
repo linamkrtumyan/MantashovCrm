@@ -115,7 +115,7 @@ function Spheres({
 
               <tbody>
                 {add ? <AddPosition setAdd={setAdd} /> : null}
-                {positions.map((position, index) => {
+                {positions?.map((position, index) => {
                   if (editingId === position.id) {
                     return (
                       <tr style={{ cursor: "default" }} key={position.id}>
@@ -125,6 +125,7 @@ function Spheres({
                             className="input input_width"
                             defaultValue={position.nameEng}
                             onChange={handleOnChange}
+                            required={false}
                           />
                         </td>
                         <td>
@@ -133,6 +134,7 @@ function Spheres({
                             className="input input_width"
                             defaultValue={position.nameArm}
                             onChange={handleOnChange}
+                            required={false}
                           />
                         </td>
                         <td>
@@ -141,6 +143,7 @@ function Spheres({
                             className="input input_width"
                             defaultValue={position.nameRu}
                             onChange={handleOnChange}
+                            required={false}
                           />
                         </td>
 

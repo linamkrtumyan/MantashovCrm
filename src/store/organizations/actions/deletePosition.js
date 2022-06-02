@@ -7,12 +7,10 @@ import {
 import { toast } from "react-toastify";
 
 export const deletePosition = (id) => {
-  // console.log(id, "uxarkvoxy");
   return (dispatch) => {
     dispatch(deletePositionRequest());
     request(`/admin/organizations/position/${id}`, "DELETE")
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
           dispatch(deletePositionSuccess(data));
           toast.dark("Position removed");
@@ -23,7 +21,6 @@ export const deletePosition = (id) => {
       .catch((e) => {
         dispatch(deletePositionFailure(e.message));
         toast.error("Something bad happened");
-        // console.log(e);
       });
   };
 };

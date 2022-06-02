@@ -63,6 +63,7 @@ function AddAgenda({
               type="text"
               placeholder="Description"
             />
+              required={false}
           </div>
           <div style={{marginRight: 10}}>
             <textarea
@@ -80,6 +81,7 @@ function AddAgenda({
               id="agendaDescriptionArm"
               type="text"
               placeholder="Նկարագիր"
+              required={false}
             />
           </div>
           <div>
@@ -98,6 +100,7 @@ function AddAgenda({
               id="agendaDescriptionRu"
               type="text"
               placeholder="Описание"
+              required={false}
             />
           </div>
         </div>

@@ -6,7 +6,6 @@ import "./editMember.css";
 import { useHistory, useParams } from "react-router-dom";
 import store, {
   fetchMemberForEdit,
-  fetchMemberForm,
   fetchCountries,
   fetchStates,
   fetchCities,
@@ -16,12 +15,10 @@ import store, {
   fetchOrganizations,
   fetchPositions,
   cleanForm,
+  cleanImages,
 } from "../../store";
-import Select from "../../Components/Forms/Select/Select";
 import { connect } from "react-redux";
-import Multiselect from "../../Components/Forms/MultiSelect/Multiselect";
 import OneImageUpload from "../../Components/Forms/OneImageUpload/OneImageUpload";
-import EditPhone from "./components/EditPhone";
 import AddOrganization from "../AddMemberPage/components/AddOrganization";
 import { scrollToView } from "../../helpers/scrollToView";
 import instagramIcon from "../../img/instagram.png";
@@ -47,6 +44,7 @@ function EditMember({
   fetchOrganizations,
   fetchPositions,
   cleanForm,
+  profileImage,
 }) {
   const history = useHistory();
   const path = useHistory();
@@ -64,6 +62,7 @@ function EditMember({
     // fetchContactTypes();
     fetchCategories();
     fetchPositions();
+    cleanImages();
   }, []);
 
   // useEffect(() => {
@@ -84,7 +83,7 @@ function EditMember({
   // }, [category]);
 
   const handleCancel = () => {
-    history.push("/members");
+    history.push("/members/1");
   };
 
   const handleSubmit = (e) => {
@@ -123,7 +122,7 @@ function EditMember({
     // const cont = Object.values(contacts);
 
     const changePath = () => {
-      path.push("/members");
+      path.push("/members/1");
     };
     let member = {
       // locationArm,
@@ -186,39 +185,36 @@ function EditMember({
               {changeImage ? (
                 <OneImageUpload label="Upload Image" />
               ) : (
-                <>
-                  <div className="member_image_container">
-                    <img
-                      src={`/images/profile/${id}/profile_picture.png`}
-                      alt=""
-                      className="member_edit_image"
-                      style={{ width: "100%" }}
-                    />
-                    <div className="member_image_middle">
-                      <div
-                        onClick={() => {
-                          setChangeImage(true);
-                          setImageDeleted(true);
-                        }}
-                        className="member_edit_text"
-                      >
-                        <i className="fas fa-times"></i>
-                      </div>
+                <div className="upload_cont" style={{ display: "flex" }}>
+                  <img
+                    src={`${profileImage ? profileImage : ""}`}
+                    alt=""
+                    className="uploaded_image"
+                  />
+                  <div className="middle">
+                    <div
+                      onClick={() => {
+                        setChangeImage(true);
+                        setImageDeleted(true);
+                      }}
+                      className="member_edit_text"
+                    >
+                      <i className="fas fa-times"></i>
                     </div>
                   </div>
-                </>
+                </div>
               )}
             </div>
             <div className="container_body">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="firstNameEng" type="text" placeholder="First Name" />
-                <Input id="firstNameArm" type="text" placeholder="Անուն" />
-                <Input id="firstNameRu" type="text" placeholder="Имя" />
+                <Input id="firstNameEng" type="text" placeholder="First Name"   required={false}/>
+                <Input id="firstNameArm" type="text" placeholder="Անուն"   required={false}/>
+                <Input id="firstNameRu" type="text" placeholder="Имя"   required={false}/>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Input id="lastNameEng" type="text" placeholder="Last Name" />
-                <Input id="lastNameArm" type="text" placeholder="Ազգանուն" />
-                <Input id="lastNameRu" type="text" placeholder="Фамилия" />
+                <Input id="lastNameEng" type="text" placeholder="Last Name"  required={false} />
+                <Input id="lastNameArm" type="text" placeholder="Ազգանուն"   required={false}/>
+                <Input id="lastNameRu" type="text" placeholder="Фамилия"   required={false}/>
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -226,16 +222,19 @@ function EditMember({
                   id="descriptionEng"
                   type="text"
                   placeholder="Description"
+                  required={false}
                 />
                 <Textarea
                   id="descriptionArm"
                   type="text"
                   placeholder="Նկարագիր"
+                  required={false}
                 />
                 <Textarea
                   id="descriptionRu"
                   type="text"
                   placeholder="Описание"
+                  required={false}
                 />
               </div>
 
@@ -382,6 +381,7 @@ const mapStateToProps = (state) => {
     organizations: state.organizationsReducer.organizations,
     organization: state.formReducer.organization,
     positions: state.organizationsReducer.positions,
+    profileImage: state.formReducer.image,
   };
 };
 
@@ -397,6 +397,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchOrganizations: (id) => dispatch(fetchOrganizations(id)),
     fetchPositions: () => dispatch(fetchPositions()),
     cleanForm: () => dispatch(cleanForm()),
+    cleanImages: () => dispatch(cleanImages()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditMember);

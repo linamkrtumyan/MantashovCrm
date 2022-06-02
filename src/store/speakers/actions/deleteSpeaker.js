@@ -12,7 +12,7 @@ export const deleteSpeaker = (id) => {
     request(`/admin/speakers/${id}`, "DELETE")
       .then((data) => {
         dispatch(deleteSpeakerSuccess(data));
-        toast.dark("Member removed");
+        toast.dark("Speaker removed");
       })
       .catch((e) => {
         dispatch(deleteSpeakerFailure(e.errorMessage));

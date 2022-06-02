@@ -7,18 +7,15 @@ import {
 } from "../types";
 
 export const fetchContactTypes = () => {
-  // console.log(page, "uxarkvox page");
 
   return (dispatch) => {
     dispatch(fetchContactTypesRequest());
     request("/admin/members/contact/types")
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchContactTypesSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchContactTypesFailure(e.message));
-        // console.log(e);
       });
   };
 };

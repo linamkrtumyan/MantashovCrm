@@ -57,3 +57,16 @@
   display: flex;
   border-radius: 50%;
 }
+
+.fixed-uploaded {
+  max-width: 100px;
+}
+
+.fixed-size-lbl {
+  width: 100px;
+}
+
+.fixed-uploader-content {
+  width: 100px;
+  margin-right: 10px;
+}

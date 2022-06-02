@@ -8,12 +8,10 @@ import {
 import { toast } from "react-toastify";
 
 export const resetPassword = (member, closeModal) => {
-  // console.log(member, "stacav");
   return (dispatch) => {
     dispatch(resetPasswordRequest());
     request("/admin/members/member/recover-password", "POST", member)
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
           dispatch(resetPasswordSuccess(data));
           closeModal();
@@ -23,7 +21,6 @@ export const resetPassword = (member, closeModal) => {
       .catch((e) => {
         dispatch(resetPasswordFailure(e.message));
         toast.error("Something bad happened");
-        // console.log(e);
       });
   };
 };
@@ -35,8 +32,6 @@ const resetPasswordRequest = () => {
 };
 
 const resetPasswordSuccess = (data) => {
-  // console.log(data, "news success data");
-  //   const login = data ? data : [];
   return {
     type: RESET_PASSWORD_SUCCESS,
     payload: {

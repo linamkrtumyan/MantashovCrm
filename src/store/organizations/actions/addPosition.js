@@ -8,14 +8,11 @@ import {
 import { toast } from "react-toastify";
 
 export const addPosition = (position, changePath) => {
-  // console.log(member, "stacav");
   return (dispatch) => {
     dispatch(addPositionRequest());
     request("/admin/organizations/position", "POST", position)
       .then((data) => {
-        // console.log(data, "data");
         if (data.success) {
-          // console.log(data, "news data");
           dispatch(addPositionSuccess(data));
           toast.dark("Position added");
           changePath();
@@ -24,7 +21,6 @@ export const addPosition = (position, changePath) => {
       .catch((e) => {
         dispatch(addPositionFailure(e.message));
         toast.error("Something bad happened");
-        // console.log(e);
       });
   };
 };

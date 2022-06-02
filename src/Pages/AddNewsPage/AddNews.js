@@ -47,7 +47,7 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
 
   const handleCancel = () => {
     cleanImages();
-    path.push("/news");
+    path.push("/news/1");
   };
 
   return (
@@ -72,6 +72,7 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
                   placeholder="Title"
                   className="add_news_input"
                   textareaSize="textareaSize"
+                  required={false}
                 />
               </div>
               <div className="news_inputs_container">
@@ -81,6 +82,7 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
                   placeholder="Վերնագիր"
                   className="add_news_input"
                   textareaSize="textareaSize"
+                  required={false}
                 />
               </div>
 
@@ -91,6 +93,7 @@ function AddNews({ addNews, cleanForm, cleanImages, newsId }) {
                   placeholder="Заглавие"
                   className="add_news_input"
                   textareaSize="textareaSize"
+                  required={false}
                 />
               </div>
             </div>

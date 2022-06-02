@@ -26,6 +26,17 @@ function VideoUpload({
     formOnChange(`${id}Deleted`, []);
   }, [id]);
 
+  useEffect(() => {
+    let filesArray = [];
+    if (uploadedVideos) {
+      filesArray = Array.from(uploadedVideos).map((file) =>
+        URL.createObjectURL(file)
+      );
+    }
+    setSelectedVideos(filesArray);
+    setA(a + 1);
+  }, [uploadedVideos]);
+
   const onVideoChange = (e) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files).map((file) =>
@@ -47,7 +58,7 @@ function VideoUpload({
       } else {
         uploadVideo(files, id);
         const arr = uploadedVideos ? uploadedVideos.concat(files) : files;
-        setSelectedVideos((prevVideos) => prevVideos.concat(filesArray));
+        // setSelectedVideos((prevVideos) => prevVideos.concat(filesArray));
         formOnChange(`${id}`, arr);
         setA(a + 1);
         Array.from(e.target.files).map((file) => {
@@ -55,30 +66,40 @@ function VideoUpload({
         });
       }
     }
-
-    setDelindex(null);
   };
 
   const deleteVideo = (a) => {
+    let deletedVideos = uploadedVideos[a];
+    const newArr = uploadedVideos
+      .slice(0, a)
+      .concat(uploadedVideos.slice(a + 1));
     deleteVideoFromStore(a, id);
+    formOnChange(`${id}Deleted`, [uploadedVideos]);
+    formOnChange(`${id}`, newArr);
     setDelindex(a);
   };
 
   const renderVideos = (source) => {
-    if (delindex != null) {
-      source.splice(delindex, 1);
-      // selectedVideos.splice(delindex, 1);
-    }
-    return source.map((videos) => {
+    // if (delindex != null) {
+    //   source.splice(delindex, 1);
+    // }
+    return source?.map((video) => {
       return (
-        <div className="upload_cont">
-          <video className="uploaded_images" key={videos.name} controls>
-            <source src={videos} type="video/mp4" />
-            <source src={videos} type="video/ogg" />
+        <div className="upload_cont" key={video}>
+          <video
+            className="uploaded_images"
+            // controls
+          >
+            <source src={video} type="video/mp4" />
+            <source src={video} type="video/ogg" />
             Your browser does not support the video tag.
           </video>
           <div className="middle">
-            <div onClick={() => deleteVideo(source.indexOf(videos))}>
+            <div
+              onClick={() => {
+                deleteVideo(source.indexOf(video));
+              }}
+            >
               <svg viewBox="0 0 24 24" className="close">
                 <path
                   d="M 2 2 L 22 22 M 2 22 L22 2"
@@ -99,7 +120,7 @@ function VideoUpload({
     <div className="upload_container">
       <div>
         <label
-          htmlFor="multiple-file-upload2"
+          htmlFor={`${id}`}
           className={`multiple-custom-file-upload ${className}`}
         >
           <i className="fas fa-cloud-upload-alt"></i>
@@ -107,7 +128,7 @@ function VideoUpload({
         </label>
         <input
           type="file"
-          id="multiple-file-upload2"
+          id={`${id}`}
           accept="video/*"
           name="myfile"
           onChange={(e) => {

@@ -33,7 +33,6 @@ const onLogoutSuccess = () => {
 };
 
 const onLogoutFailure = (error) => {
-  // console.log("mtav onLogoutFailure");
   return {
     type: ON_LOGOUT_FAILURE,
     payload: { error },

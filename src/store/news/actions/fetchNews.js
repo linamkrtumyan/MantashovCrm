@@ -6,19 +6,16 @@ import {
   FETCH_NEWS_BY_PAGE_FAILURE,
 } from "../types";
 
-export const fetchNewsByPage = () => {
-  const page = store.getState().paginationReducer.currentPage;
-  // console.log(page, "uxarkvox page");
+export const fetchNewsByPage = (page, searchValue) => {
+  // const page = store.getState().paginationReducer.currentPage;
   return (dispatch) => {
     dispatch(fetchNewsByPageRequest());
-    request(`/admin/news/${page}`)
+    request(`/admin/news/${page}?searchValue=${searchValue}`)
       .then((data) => {
-        // console.log(data, "data");
         dispatch(fetchNewsByPageSuccess(data));
       })
       .catch((e) => {
         dispatch(fetchNewsByPageFailure(e.message));
-        // console.log(e);
       });
   };
 };

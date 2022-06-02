@@ -7,12 +7,12 @@ import {
 } from "../types";
 import { changeCurrentPage } from "../../pagination/actions";
 
-export const fetchApplicants = () => {
-  const page = store.getState().paginationReducer.currentPage;
+export const fetchApplicants = (page, searchValue) => {
+  // const page = store.getState().paginationReducer.currentPage;
 
   return (dispatch) => {
     dispatch(fetchApplicantsRequest());
-    request(`/admin/applicants/${page}`)
+    request(`/admin/applicants/${page}?searchValue=${searchValue}`)
       .then((data) => {
         dispatch(fetchApplicantsSuccess(data));
         if (data.count > 0 && data.applicants.length === 0) {

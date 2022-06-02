@@ -21,7 +21,6 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action, "Action  ****");
   switch (action.type) {
     case ON_LOGIN_REQUEST:
       return {

@@ -55,8 +55,8 @@ function AddOrganization({
       "addedOrganizations",
       addedOrganizations.filter(
         (o) =>
-          o.organizationId1 !== org.organizationId1 ||
-          o.positionId1 !== org.positionId1
+          o.organizationId !== org.organizationId ||
+          o.positionId !== org.positionId
       )
     );
   };
