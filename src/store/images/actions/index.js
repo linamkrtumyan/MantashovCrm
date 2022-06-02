@@ -6,3 +6,4 @@ export { deleteImageFromStore } from "./deleteImageFromStore";
 export { deleteHeader } from "./deleteHeader";
 export { setEventFixedImage } from "./setEventFixedImage";
 export { deleteEventFixedImage } from "./deleteEventFixedImage";
+export { cleanImagesWithKey } from "./cleanImagesWithKey";

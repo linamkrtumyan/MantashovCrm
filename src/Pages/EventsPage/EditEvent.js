@@ -76,7 +76,7 @@ function EditEvent({
   const [details, setDetails] = useState([]);
   const [forRender, setForRender] = useState(0);
   const [renderContent, setRenderContent] = useState(0);
-  const [newBlock, setNewBlock] = useState({
+  const [eventBlock, setEventBlock] = useState({
     blockImages: [],
     blockVideos: [],
   });
@@ -156,6 +156,14 @@ function EditEvent({
   useEffect(() => {
     formOnChange("eventId", parseInt(eventId));
   }, [eventId]);
+
+  useEffect(() => {
+    let links = blockLinks && blockLinks !== "" ? blockLinks.split("\n") : [];
+    setEventBlock({
+      ...eventBlock,
+      links,
+    });
+  }, [blockLinks]);
 
   const handleCancel = () => {
     cleanImages();
@@ -302,19 +310,27 @@ function EditEvent({
   };
 
   const saveBlockData = () => {
-    if (newBlock.topTextEng !== "") {
+    setEventBlock({
+      ...eventBlock,
+      blockImages: image ?? [],
+      blockVideos: video ?? [],
+    });
+    if (eventBlock.topTextEng !== "") {
       let links = blockLinks ? blockLinks.split("\n") : [];
-      setNewBlock({
-        ...newBlock,
+      setEventBlock({
+        ...eventBlock,
         links,
-        blockImages: image ?? [],
-        blockVideos: video ?? [],
       });
 
       setForRender(renderContent + 1);
-      addEventBlock({ eventId: parseInt(eventId), block: newBlock });
+
+      addEventBlock({ eventId: parseInt(eventId), block: eventBlock }, () =>
+        setTimeout(() => {
+          setRenderContent(renderContent + 1);
+        }, 2000)
+      );
       fetchEventDetails(parseInt(eventId));
-      setNewBlock({});
+      setEventBlock({});
       setBlockLinks("");
       cleanImages();
       formOnChange(`shortDescriptionEng`, "");
@@ -372,9 +388,11 @@ function EditEvent({
             <p>Edit Event</p>
           </div>
         </div>
-        <form 
-        // onFocus={scrollToView}
-         onSubmit={handleSubmit}>
+
+        <form
+          // onFocus={scrollToView}
+          onSubmit={handleSubmit}
+        >
           <div className="add_event_component">
             <div
               className="container_body"
@@ -525,6 +543,69 @@ function EditEvent({
                   limit={eventHeaders ? 3 - eventHeaders.length : 3}
                 />
               </div>
+
+              <Multiselect
+                placeholder="Speakers"
+                items={allSpeakers}
+                id="speakers"
+                required={false}
+              />
+
+              <div
+                style={{
+                  display: "flex",
+                }}
+                className="container_body"
+              >
+                {eventHeaders && eventHeaders.length !== 0
+                  ? eventHeaders.map((image, index) => {
+                      return (
+                        <div className="edit_news_image_item" key={image}>
+                          <img
+                            alt=""
+                            className="edit_news_images"
+                            src={image}
+                          />
+                          <div className="middle">
+                            <div
+                              onClick={() => {
+                                deleteHeader(image, index);
+                              }}
+                            >
+                              <svg viewBox="0 0 24 24" className="close">
+                                <path
+                                  d="M 2 2 L 22 22 M 2 22 L22 2"
+                                  stroke="red"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="5"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+              <div style={{ display: "flex", margin: "10px" }}>
+                {/* <OneImageUpload label="Add Header" /> */}
+                <ImageUpload
+                  disabled={
+                    eventHeaders
+                      ? 3 - eventHeaders.length == 0
+                        ? true
+                        : false
+                      : false
+                  }
+                  containerClassName="uploaded"
+                  label={`Add headers(${
+                    eventHeaders ? 3 - eventHeaders.length : 3
+                  })`}
+                  id="addedHeaders"
+                  limit={eventHeaders ? 3 - eventHeaders.length : 3}
+                />
+              </div>
             </div>
           </div>
           <div className="event_action_container">
@@ -575,7 +656,10 @@ function EditEvent({
             {eventImages && eventImages.length !== 0
               ? eventImages.map((image, index) => {
                   return (
-                    <div className="edit_news_image_item" key={image}>
+                    <div
+                      className="edit_news_image_item"
+                      key={`${image}${index}`}
+                    >
                       <img alt="" className="edit_news_images" src={image} />
                       <div className="middle">
                         <div
@@ -601,20 +685,6 @@ function EditEvent({
           </div>
 
           <div className="container_body">
-            <p style={{ paddingLeft: 15, paddingBottom: 10 }}>
-              Կցված նկարների քանակը չպետք է գերազանցի{" "}
-              {eventHeaders
-                ? addedHeaders
-                  ? eventImages
-                    ? 8 -
-                      (eventHeaders.length +
-                        addedHeaders.length +
-                        eventImages.length)
-                    : 8 - (eventHeaders.length + addedHeaders.length)
-                  : 8 - eventHeaders.length
-                : 8}{" "}
-              - ը։
-            </p>
             {/* <div style={{ marginLeft: 15 }}>
               <ImageUpload
                 label={`Add Images`}
@@ -758,17 +828,19 @@ function EditEvent({
                 <div style={{ marginTop: 20 }}>
                   <label
                     htmlFor="descriptionEng1"
-                    className={newBlock.topTextEng === "" ? requiredClass : ""}
+                    className={
+                      eventBlock.topTextEng === "" ? requiredClass : ""
+                    }
                   >
                     Description 1
                   </label>
 
                   <textarea
                     className="add_news_input textarea eventText"
-                    value={newBlock.topTextEng ? newBlock.topTextEng : ""}
+                    value={eventBlock.topTextEng ? eventBlock.topTextEng : ""}
                     onChange={(e) => {
-                      setNewBlock({
-                        ...newBlock,
+                      setEventBlock({
+                        ...eventBlock,
                         topTextEng: e.target.value,
                       });
                     }}
@@ -780,10 +852,10 @@ function EditEvent({
 
                   <textarea
                     className="add_news_input textarea"
-                    value={newBlock.topTextArm ? newBlock.topTextArm : ""}
+                    value={eventBlock.topTextArm ? eventBlock.topTextArm : ""}
                     onChange={(e) => {
-                      setNewBlock({
-                        ...newBlock,
+                      setEventBlock({
+                        ...eventBlock,
                         topTextArm: e.target.value,
                       });
                     }}
@@ -795,10 +867,10 @@ function EditEvent({
 
                   <textarea
                     className="add_news_input textarea"
-                    value={newBlock.topTextRu ? newBlock.topTextRu : ""}
+                    value={eventBlock.topTextRu ? eventBlock.topTextRu : ""}
                     onChange={(e) => {
-                      setNewBlock({
-                        ...newBlock,
+                      setEventBlock({
+                        ...eventBlock,
                         topTextRu: e.target.value,
                       });
                     }}
@@ -826,10 +898,12 @@ function EditEvent({
 
                   <textarea
                     className="add_news_input textarea"
-                    value={newBlock.bottomTextEng ? newBlock.bottomTextEng : ""}
+                    value={
+                      eventBlock.bottomTextEng ? eventBlock.bottomTextEng : ""
+                    }
                     onChange={(e) => {
-                      setNewBlock({
-                        ...newBlock,
+                      setEventBlock({
+                        ...eventBlock,
                         bottomTextEng: e.target.value,
                       });
                     }}
@@ -842,10 +916,12 @@ function EditEvent({
 
                   <textarea
                     className="add_news_input textarea"
-                    value={newBlock.bottomTextArm ? newBlock.bottomTextArm : ""}
+                    value={
+                      eventBlock.bottomTextArm ? eventBlock.bottomTextArm : ""
+                    }
                     onChange={(e) => {
-                      setNewBlock({
-                        ...newBlock,
+                      setEventBlock({
+                        ...eventBlock,
                         bottomTextArm: e.target.value,
                       });
                     }}
@@ -857,10 +933,12 @@ function EditEvent({
 
                   <textarea
                     className="add_news_input textarea"
-                    value={newBlock.bottomTextRu ? newBlock.bottomTextRu : ""}
+                    value={
+                      eventBlock.bottomTextRu ? eventBlock.bottomTextRu : ""
+                    }
                     onChange={(e) => {
-                      setNewBlock({
-                        ...newBlock,
+                      setEventBlock({
+                        ...eventBlock,
                         bottomTextRu: e.target.value,
                       });
                     }}
@@ -889,9 +967,9 @@ function EditEvent({
                   title="Save Block"
                   className="action_btn"
                   disabled={
-                    newBlock.topTextEng &&
-                    newBlock.topTextArm &&
-                    newBlock.topTextRu
+                    eventBlock.topTextEng &&
+                    eventBlock.topTextArm &&
+                    eventBlock.topTextRu
                       ? false
                       : true
                   }
@@ -968,7 +1046,9 @@ function EditEvent({
 
                       <textarea
                         className="textarea"
-                        defaultValue={block.links}
+                        defaultValue={`${block.links?.map((link) => {
+                          return `${link + "" + `\n`}`;
+                        })}`}
                         onChange={(e) => {
                           const index = details.details.indexOf(block);
                           details.details[index].links = e.target.value;
@@ -1170,12 +1250,15 @@ const mapDispatchToProps = (dispatch) => {
     cleanImages: () => dispatch(cleanImages()),
     deletedImages: (img) => dispatch(deletedImages(img)),
     deleteEventImageFromStore: (id) => dispatch(deleteEventImageFromStore(id)),
-    deleteEventBlock: (id) => dispatch(deleteEventBlock(id)),
-    editEventBlock: (block, callback) => dispatch(editEventBlock(block, callback)),
+    deleteEventBlock: (id, callback) =>
+      dispatch(deleteEventBlock(id, callback)),
+    editEventBlock: (block, callback) =>
+      dispatch(editEventBlock(block, callback)),
     getEventForEdit: (id) => dispatch(getEventForEdit(id)),
     editShortDetails: (details) => dispatch(editShortDetails(details)),
     formOnChange: (key, value) => dispatch(formOnChange(key, value)),
-    addEventBlock: (blockData) => dispatch(addEventBlock(blockData)),
+    addEventBlock: (blockData, callback) =>
+      dispatch(addEventBlock(blockData, callback)),
     getSpeakers: () => dispatch(getSpeakers()),
   };
 };

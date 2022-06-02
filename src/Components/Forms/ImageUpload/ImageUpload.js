@@ -33,6 +33,7 @@ function ImageUpload({
   imageWithKey,
   deleteEventFixedImage,
   isFetch,
+  disabled,
   callback = () => {},
 }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -165,11 +166,11 @@ function ImageUpload({
     // if (delindex != null) {
     //   source.splice(delindex, 1);
     // }
-    return source?.map((photo) => {
+    return source?.map((photo, index) => {
       return (
         <>
           {photo && photo !== "" && (
-            <div className="upload_cont" key={photo}>
+            <div className="upload_cont" key={`${photo}${index}`}>
               <img className="uploaded_images" src={photo} alt="" />
 
               <div className="middle">
@@ -204,6 +205,7 @@ function ImageUpload({
           <p>{label}</p>
         </label>
         <input
+          disabled={disabled ?? false}
           type="file"
           // id="multiple-file-upload"
           id={`${id}`}

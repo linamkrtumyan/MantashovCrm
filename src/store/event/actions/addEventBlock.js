@@ -7,7 +7,7 @@ import {
 } from "../types";
 import { toast } from "react-toastify";
 
-export const addEventBlock = (block, changePath) => {
+export const addEventBlock = (block, callback = () => {}) => {
   const { blockImages } = store.getState().imageReducer;
   const { blockVideos } = store.getState().videoReducer;
 
@@ -19,8 +19,8 @@ export const addEventBlock = (block, changePath) => {
       .then((data) => {
         if (data.success) {
           dispatch(addEventBlockSuccess(data));
-          //   toast.dark("Event added");
-          // changePath();
+          toast.dark("Event details added");
+          callback();
         }
       })
       .catch((e) => {

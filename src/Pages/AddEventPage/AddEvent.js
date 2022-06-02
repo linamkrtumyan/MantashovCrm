@@ -224,6 +224,7 @@ function AddEvent({
                 required={false}
               />
               <Textarea id="descriptionRu" type="text" placeholder="Описание"   required={false}/>
+              />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -319,7 +320,6 @@ const mapStateToProps = (state) => {
     cities: state.locationsReducer.cities,
     agendas: state.eventReducer?.agendas,
     speakers: state.eventReducer?.speakers,
-    // selectedSpeakers: state.formReducer?.speakers ?? [],
     headers: state.imageReducer?.headers,
     image: state.imageReducer?.image,
     eventId: state.eventReducer?.eventId,

@@ -5,14 +5,14 @@ import {
   DELETE_BLOCK_FAILURE,
 } from "../types";
 
-export const deleteEventBlock = (id, changePath) => {
+export const deleteEventBlock = (id, callback = () => {}) => {
   return (dispatch) => {
     dispatch(deleteEventBlockRequest());
     request(`/admin/events/eventDetails/${id}`, "DELETE")
       .then((data) => {
         if (data.success) {
           dispatch(deleteEventBlockSuccess(data));
-          // changePath();
+          callback();
         }
       })
       .catch((e) => {

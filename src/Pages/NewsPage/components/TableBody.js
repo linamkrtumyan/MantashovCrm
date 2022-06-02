@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchNewsByPage, changeCurrentPage } from "../../../store";
+import { fetchNewsByPage, changeCurrentPage, deleteNews } from "../../../store";
 import { useParams, useHistory } from "react-router-dom";
 
 function TableBody({
@@ -10,6 +10,8 @@ function TableBody({
   action,
   loading,
   changeCurrentPage,
+  deleteNews,
+  setDeleted,
 }) {
   let history = useHistory();
   let { currentPage } = useParams();
@@ -21,6 +23,10 @@ function TableBody({
     history.push(`/edit-news/${id}`);
   }
 
+  const handleDelete = (id) => {
+    deleteNews(id);
+    setDeleted((prev) => !prev);
+  };
   return (
     <tbody>
       {newsByPage.length > 0 ? (
@@ -28,11 +34,10 @@ function TableBody({
           return (
             <tr
               style={{ cursor: "pointer" }}
-              onClick={() => handleDetails(news.id)}
               key={index}
-              className="tableRows"
+              className="tableRows newsTable"
             >
-              <td>
+              <td onClick={() => handleDetails(news.id)}>
                 <img
                   alt=""
                   className="newscard_img"
@@ -45,11 +50,16 @@ function TableBody({
                   src={`${news.image}`}
                 />
               </td>
-              <td>{news.title}</td>
-              <td
-              // style={{ width: "30%" }}
-              >
+              <td onClick={() => handleDetails(news.id)}>{news.title}</td>
+              <td onClick={() => handleDetails(news.id)} className="newsText">
                 {news.text}
+              </td>
+              <td
+                onClick={() => {
+                  handleDelete(news.id);
+                }}
+              >
+                <i className="far fa-trash-alt"></i>
               </td>
             </tr>
           );
@@ -76,6 +86,7 @@ const mapDispatchToProps = (dispatch) => {
     changeCurrentPage: (page) => dispatch(changeCurrentPage(page)),
     fetchNewsByPage: (page, searchValue) =>
       dispatch(fetchNewsByPage(page, searchValue)),
+    deleteNews: (id) => dispatch(deleteNews(id)),
   };
 };
 

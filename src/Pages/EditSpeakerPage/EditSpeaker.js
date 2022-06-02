@@ -122,6 +122,7 @@ function EditSpeaker({
                 <Input id="nameEng" type="text" placeholder="Fullname"   required={false}/>
                 <Input id="nameArm" type="text" placeholder="Անուն Ազգանուն"   required={false}/>
                 <Input id="nameRu" type="text" placeholder="Имя Фамилия"   required={false}/>
+
               </div>
               <Select
                 placeholder="Select Organization"

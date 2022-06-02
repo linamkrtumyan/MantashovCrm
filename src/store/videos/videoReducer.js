@@ -5,6 +5,7 @@ import {
   CLEAN_VIDEOS,
   DELETED_VIDEOS,
   DELETE_VIDEO_FROM_STORE,
+  CLEAN_VIDEOS_WITH_KEY,
 } from "./types";
 
 const initialState = {
@@ -52,6 +53,15 @@ const reducer = (state = initialState, action) => {
         ...state,
         video: [],
         deletedVideos: [],
+        videoUrls: [],
+      };
+    case CLEAN_VIDEOS_WITH_KEY:
+      if (!state[action.payload.key]) {
+        state[action.payload.key] = [];
+      }
+      return {
+        ...state,
+        [action.payload.key]: [],
       };
     case DELETED_VIDEOS:
       return {

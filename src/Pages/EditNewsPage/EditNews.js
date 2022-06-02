@@ -20,6 +20,8 @@ import store, {
   deleteNewsBlock,
   editNewsBlock,
   cleanForm,
+  cleanImagesWithKey,
+  cleanVideosWithKey,
 } from "../../store";
 import ImageUpload from "../../Components/Forms/ImageUpload/ImageUpload";
 import { deletedImages } from "../../store/images/actions";
@@ -49,6 +51,8 @@ function EditNews({
   fixedImagesDeleted,
   newsDetails,
   headerImage,
+  cleanImagesWithKey,
+  cleanVideosWithKey,
 }) {
   const [mainImg, setMainImg] = useState(true);
   const [isActive, setIsActive] = useState(true);
@@ -97,32 +101,24 @@ function EditNews({
   const handleCreate = (e) => {
     e.preventDefault();
     let { titleArm, titleEng, titleRu } = store.getState().formReducer;
-    // const addedImages = store.getState().imageReducer.image;
-    // const deleted = store.getState().imageReducer.deletedImages;
-
     let header = store.getState().imageReducer.header;
     if (header.length) {
       header = header.pop().name;
     } else {
       header = null;
     }
-    // const changePath = () => {
-    //   path.push("/news");
-    // };
-
     let news = {
       titleArm,
       titleEng,
       titleRu,
-      isActive,
+      // isActive,
       headerDeleted: !mainImg,
       id,
       header,
-      // addedImages: addedImages,
-      // deletedImages: deleted,
     };
 
     editNews(news);
+    history.push("/news/1");
   };
 
   const openImageModal = (imagePath) => {
@@ -131,10 +127,12 @@ function EditNews({
   };
 
   useEffect(() => {
+    let blockImages = image ?? [];
+    let blockVideos = video ?? [];
     setNewBlock({
       ...newBlock,
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
+      blockImages,
+      blockVideos,
     });
   }, [image, video]);
 
@@ -151,33 +149,30 @@ function EditNews({
   };
 
   const saveBlockData = () => {
+    let links = blockLinks ? blockLinks.split("\n") : [];
     setNewBlock({
       ...newBlock,
-      blockImages: image ?? [],
-      blockVideos: video ?? [],
+      links,
     });
-    if (newBlock.topTextEng !== "") {
-      let links = blockLinks ? blockLinks.split("\n") : [];
-      setNewBlock({
-        ...newBlock,
-        links,
-      });
 
-      setRenderContent(renderContent + 1);
-      addNewsBlock({ newsId: parseInt(id), block: newBlock });
-      getNewsDetails(parseInt(id));
-      setNewBlock({});
-      setBlockLinks("");
-      cleanImages();
-      cleanVideos();
-      formOnChange(`shortDescriptionEng`, "");
-      formOnChange(`shortDescriptionArm`, "");
-      formOnChange(`shortDescriptionRu`, "");
-      formOnChange(`blockImages`, []);
-      formOnChange(`blockVideos`, []);
-    } else {
-      setRequiredClass("requiredField");
-    }
+    setRenderContent(renderContent + 1);
+    addNewsBlock({ newsId: parseInt(id), block: newBlock }, () =>
+      setTimeout(() => {
+        setRenderContent(renderContent + 1);
+      }, 2000)
+    );
+    getNewsDetails(parseInt(id));
+    setNewBlock({});
+    setBlockLinks("");
+    cleanImages();
+    cleanVideos();
+    cleanImagesWithKey(`blockImages`);
+    cleanVideosWithKey(`blockVideos`);
+    formOnChange(`shortDescriptionEng`, "");
+    formOnChange(`shortDescriptionArm`, "");
+    formOnChange(`shortDescriptionRu`, "");
+    formOnChange(`blockImages`, []);
+    formOnChange(`blockVideos`, []);
   };
 
   const handleDelete = (id) => {
@@ -200,7 +195,10 @@ function EditNews({
 
     formOnChange(`block${editedBlock.id}`, []);
     formOnChange(`videoBlock${editedBlock.id}`, []);
-
+    cleanImagesWithKey(`block${editedBlock.id}`);
+    cleanVideosWithKey(`videoBlock${editedBlock.id}`);
+    cleanImages();
+    cleanVideos();
     // setRenderContent(renderContent + 1);
     toast.dark("Edited");
   };
@@ -353,7 +351,7 @@ function EditNews({
                       textareaSize="textareaSize"
                       required={false}
                     />
-                    <button
+                    {/* <button
                       onClick={() => setIsActive(!isActive)}
                       style={{
                         width: "800px",
@@ -362,9 +360,8 @@ function EditNews({
                       type="button"
                       className={isActive ? "button red" : "button"}
                     >
-                      {/* <input type="checkbox" /> */}
                       <p>{isActive ? "Active" : "Passive"}</p>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
@@ -544,6 +541,12 @@ function EditNews({
                   // newBlock.topTextRu
                   //   ? false
                   //   : true
+                disabled={
+                  newBlock.topTextEng &&
+                  newBlock.topTextArm &&
+                  newBlock.topTextRu
+                    ? false
+                    : true
                 }
                 title="Save Block"
                 className="action_btn"
@@ -800,8 +803,8 @@ const mapStateToProps = (state) => {
     header: state.imageReducer.header,
     news: state.newsReducer.newsDetails,
     detailsImages: state.newsReducer.detailsImages,
-    image: state.imageReducer?.image,
-    video: state.videoReducer?.video,
+    image: state.imageReducer?.blockImages,
+    video: state.videoReducer?.blockVideos,
     headers: state.imageReducer?.headers,
     fixedImages: state.formReducer?.fixedImages ?? [],
     fixedImagesDeleted: state.formReducer?.fixedImagesDeleted ?? [],
@@ -818,11 +821,14 @@ const mapDispatchToProps = (dispatch) => {
     cleanImages: () => dispatch(cleanImages()),
     deletedImages: (img) => dispatch(deletedImages(img)),
     deleteNewsImageFromStore: (id) => dispatch(deleteNewsImageFromStore(id)),
-    addNewsBlock: (blockData) => dispatch(addNewsBlock(blockData)),
+    addNewsBlock: (blockData, callback) =>
+      dispatch(addNewsBlock(blockData, callback)),
     getNewsDetails: (id) => dispatch(getNewsDetails(id)),
     deleteNewsBlock: (id) => dispatch(deleteNewsBlock(id)),
     editNewsBlock: (block, callback) =>
       dispatch(editNewsBlock(block, callback)),
+    cleanImagesWithKey: (key) => dispatch(cleanImagesWithKey(key)),
+    cleanVideosWithKey: (key) => dispatch(cleanVideosWithKey(key)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditNews);
